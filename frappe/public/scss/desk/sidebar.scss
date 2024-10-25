@@ -233,7 +233,7 @@ body {
 
 @include media-breakpoint-up(sm) {
 	// for bigger screens, expand / collapse on hover
-	.body-sidebar-container:hover {
+	.body-sidebar-container {
 		@include body-sidebar-expanded();
 	}
 }

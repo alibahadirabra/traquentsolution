@@ -232,7 +232,8 @@ frappe.views.Workspace = class Workspace {
 
 			this.prepare_editorjs();
 			$(".item-anchor").removeClass("disable-click");
-			$(".body-sidebar-container").removeClass("expanded");
+			//Abra changes: Remove the expanded class from the sidebar
+			// $(".body-sidebar-container").removeClass("expanded");
 
 			this.remove_page_skeleton();
 			frappe.app.sidebar.set_current_app(app);

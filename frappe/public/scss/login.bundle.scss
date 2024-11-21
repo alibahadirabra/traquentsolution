@@ -4,6 +4,7 @@ body {
 	@include media-breakpoint-up(sm) {
 		background-color: var(--bg-light-gray);
 	}
+
 	.page-content-wrapper {
 		min-height: calc(100vh - 220px);
 	}
@@ -11,7 +12,102 @@ body {
 		display: none;
 	}
 }
+body[data-path="login"] {
+	@include media-breakpoint-up(sm) {
+	  background-image: url("/assets/frappe/images/pattern.png");
+	  background-size: cover; /* Resmi sayfa boyutuna göre ayarlar */
+	  background-position: center; /* Resmi ortalar */
+	  background-repeat: no-repeat;
+	}
+  }
 
+body[data-path=login] .navbar-light {
+    border-bottom: 1px solid transparent;
+    background: transparent;
+}
+body[data-path=login] .navbar .container{
+	.navbar-toggler{
+		display: none;
+	}
+	.navbar-brand {
+		background-image: url(/assets/frappe/images/frappe-framework-logo.svg);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		width: 32px;
+		height: 50px;
+		border-bottom: none;
+		background-color: transparent;
+		span {
+			display: none;
+		}
+	}
+}
+
+body[data-path=login] #page-login .page_content .for-login,
+body[data-path=login] #page-login .page_content .for-signup,
+body[data-path=login] #page-login .page_content .for-login-with-email-link,
+body[data-path=login] #page-login .page_content .for-forgot{
+	position: relative;
+    top: 80px;
+    background-color: #fff;
+    border-radius: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+	padding: 32px !important;
+    border-radius: var(--border-radius-md);
+    border: 1px solid var(--border-color);
+	.page-card-head{
+		padding: 0 !important;
+		text-align: justify;
+		h2{
+			margin: 16px 0;
+		}
+	}
+	.page-card{
+		padding: 0 !important;
+		border: none !important;
+		form{
+			max-width: none;
+			margin: 0;
+		}
+		.page-card-body {
+			.sr-only{
+				position: relative;
+				width: auto;
+				height: auto;	
+				color: #0A0D14;
+			}
+		}
+	}
+	.page-card-body{
+		.email-field svg,
+		.password-field svg{
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			z-index: 1;
+		}
+		.email-field input,
+		.password-field input{
+			height: 40px;
+		}
+		.password-field span{
+			top: 11px;
+		}
+	}
+	.page-card-actions{
+		button{
+			height: 40px;
+			background-color: #F800B5;
+		}
+	}
+	.social-logins .login-with-email-link .btn-login-with-email-link{
+		background: none !important;
+		justify-content: flex-end;
+		text-decoration: underline;
+	}
+}
 .for-forgot,
 .for-login-with-email-link,
 .for-signup,

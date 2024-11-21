@@ -26,8 +26,11 @@ $disabled-input-height: 22px;
 	--btn-shadow: var(--shadow-xs);
 
 	// navbar
-	--navbar-height: 48px;
+	//--navbar-height: 48px;
+	--navbar-height: 85px;
 
+	//nav-bottom
+	--nav-bottom-background: var(--pink-300);
 	// SVG Colors
 	--icon-fill: transparent;
 	--icon-fill-bg: var(--fg-color);
@@ -96,7 +99,8 @@ $disabled-input-height: 22px;
 	--awesomplete-hover-bg: var(--control-bg);
 
 	// Button Colors
-	--btn-primary: var(--gray-900);
+	//--btn-primary: var(--gray-900);
+	--btn-primary: var(--base-pink);
 	--btn-default-bg: var(--gray-100);
 	--btn-default-hover-bg: var(--gray-300);
 

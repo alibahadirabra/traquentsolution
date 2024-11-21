@@ -43,14 +43,23 @@ frappe.ui.Sidebar = class Sidebar {
 		).prependTo("body");
 
 		this.$sidebar = this.wrapper.find(".sidebar-items");
-
+		setTimeout(() => {
+			$(".navbar .container .body-sidebar-top").append(this.$sidebar);
+		}, 100);
 		if (this.has_access) {
-			this.wrapper
-				.find(".body-sidebar .edit-sidebar-link")
-				.removeClass("hidden")
-				.on("click", () => {
-					frappe.quick_edit("Workspace Settings");
-				});
+			// this.wrapper
+			// 	.find(".edit-sidebar-link")
+			// 	.removeClass("hidden")
+			// 	.on("click", () => {
+			// 		frappe.quick_edit("Workspace Settings");
+			// 	});
+			$(".navbar-nav")
+			.find(".nav-item")
+			.find(".edit-sidebar-link")
+			.removeClass("hidden")
+			.on("click", () => {
+				frappe.quick_edit("Workspace Settings");
+			});
 		}
 
 		this.setup_app_switcher();
@@ -308,8 +317,13 @@ frappe.ui.Sidebar = class Sidebar {
 		);
 		if (child_items.length > 0) {
 			let child_container = $item_container.find(".sidebar-child-item");
-			child_container.addClass("hidden");
+			//child_container.addClass("hidden");
 			this.prepare_sidebar(child_items, child_container, $item_container);
+		}
+		if (child_items.length < 0) {
+			//let child_container = $item_container.find(".sidebar-child-item");
+			child_container.addClass("hidden");
+			//this.prepare_sidebar(child_items, child_container, $item_container);
 		}
 
 		$item_container.appendTo(container);

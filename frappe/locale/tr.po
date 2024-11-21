@@ -3222,7 +3222,7 @@ msgstr "Ana Ekrana Dön"
 msgid "Back to Home"
 msgstr "Ana Sayfaya Git"
 
-#: frappe/www/login.html:181 frappe/www/login.html:212
+#: frappe/www/login.html:200 frappe/www/login.html:231
 msgid "Back to Login"
 msgstr "Girişe Geri Dön"
 
@@ -5873,9 +5873,13 @@ msgstr "Yeni Kayıt Oluştur"
 msgid "Create a new {0}"
 msgstr "Yeni {0} Oluştur"
 
-#: frappe/www/login.html:142
+#: frappe/www/login.html:161
 msgid "Create a {0} Account"
 msgstr "{0} Hesabı Oluşturun"
+
+#: frappe/www/login.html:80
+msgid "Login"
+msgstr "Giriş"
 
 #. Description of a DocType
 #: frappe/email/doctype/newsletter/newsletter.json
@@ -8122,7 +8126,7 @@ msgstr "E-Posta Gönderme"
 msgid "Don't encode HTML tags like &lt;script&gt; or just characters like &lt; or &gt;, as they could be intentionally used in this field"
 msgstr " HTML etiketlerini &lt;script&gt; gibi veya sadece &lt; ve &gt; gibi karakterleri kodlamayın, çünkü bunlar bu alanda kasıtlı olarak kullanılabilir"
 
-#: frappe/www/login.html:119 frappe/www/login.html:135
+#: frappe/www/login.html:138 frappe/www/login.html:154
 #: frappe/www/update-password.html:44
 msgid "Don't have an account?"
 msgstr "Hesabınız yok mu?"
@@ -8671,8 +8675,8 @@ msgstr "E-posta Hesabı ayarlanmamış. Lütfen Ayarlar > E-posta Hesabı bölü
 #: frappe/desk/page/setup_wizard/setup_wizard.js:462
 #: frappe/email/doctype/email_account/email_account.json
 #: frappe/integrations/doctype/google_contacts/google_contacts.json
-#: frappe/www/complete_signup.html:11 frappe/www/login.html:164
-#: frappe/www/login.html:196
+#: frappe/www/complete_signup.html:11 frappe/www/login.html:183
+#: frappe/www/login.html:215
 msgid "Email Address"
 msgstr "E-posta Address"
 
@@ -10881,7 +10885,7 @@ msgstr "Kullanıcıyı Şifresini Değiştirmesi İçin Zorla"
 msgid "Force Web Capture Mode for Uploads"
 msgstr "Yüklemeler İçin Web Yakalama Modunu Zorla"
 
-#: frappe/www/login.html:35
+#: frappe/www/login.html:41
 msgid "Forgot Password?"
 msgstr "Şifremi Unuttum"
 
@@ -12124,7 +12128,7 @@ msgstr "İpucu: Parolaya semboller, sayılar ve büyük harfler ekleyin."
 #: frappe/website/doctype/blog_post/blog_post.py:273
 #: frappe/website/doctype/website_settings/website_settings.json
 #: frappe/website/web_template/primary_navbar/primary_navbar.html:9
-#: frappe/www/contact.py:22 frappe/www/login.html:150 frappe/www/me.html:76
+#: frappe/www/contact.py:22 frappe/www/login.html:169 frappe/www/me.html:76
 #: frappe/www/message.html:27
 msgid "Home"
 msgstr "Ana Sayfa"
@@ -13785,7 +13789,7 @@ msgstr "JavaScript Formatı: frappe.query_reports['REPORTNAME'] = {}"
 msgid "Javascript"
 msgstr "Javascript"
 
-#: frappe/www/login.html:71
+#: frappe/www/login.html:90
 msgid "Javascript is disabled on your browser"
 msgstr "JavaScript tarayıcınızda devredışı bırakılmış"
 
@@ -14968,7 +14972,8 @@ msgstr "Çıkış Yapıldı"
 #: frappe/templates/includes/navbar/dropdown_login.html:15
 #: frappe/templates/includes/navbar/navbar_login.html:25
 #: frappe/website/page_renderers/not_permitted_page.py:22
-#: frappe/www/login.html:42
+#: frappe/www/login.html:80
+#: frappe/www/login.html:48
 msgid "Login"
 msgstr "Giriş"
 
@@ -15051,11 +15056,11 @@ msgstr "{0} adresine giriş yapın"
 msgid "Login token required"
 msgstr ""
 
-#: frappe/www/login.html:106 frappe/www/login.html:190
+#: frappe/www/login.html:125 frappe/www/login.html:209
 msgid "Login with Email Link"
 msgstr "E-posta ile Giriş"
 
-#: frappe/www/login.html:46
+#: frappe/www/login.html:52
 msgid "Login with LDAP"
 msgstr "LDAP ile giriş yapın"
 
@@ -15075,7 +15080,7 @@ msgstr "E-posta bağlantısı sona erme süresi (Dakika)"
 msgid "Login with username and password is not allowed."
 msgstr "Kullanıcı adı ve şifre ile giriş yapılmasına izin verilmiyor."
 
-#: frappe/www/login.html:97
+#: frappe/www/login.html:116
 msgid "Login with {0}"
 msgstr "{0} ile Giriş Yapın"
 
@@ -18598,7 +18603,7 @@ msgstr "Pasif"
 #: frappe/desk/page/setup_wizard/setup_wizard.js:470
 #: frappe/email/doctype/email_account/email_account.json
 #: frappe/website/doctype/web_form_field/web_form_field.json
-#: frappe/www/login.html:21
+#: frappe/www/login.html:24
 msgid "Password"
 msgstr "Şifre"
 
@@ -21628,7 +21633,7 @@ msgstr "Yerleşimi Sıfırla"
 msgid "Reset OTP Secret"
 msgstr "Tek Kullanımlık Şifreyi Sıfırla"
 
-#: frappe/core/doctype/user/user.js:163 frappe/www/login.html:179
+#: frappe/core/doctype/user/user.js:163 frappe/www/login.html:198
 #: frappe/www/me.html:48 frappe/www/update-password.html:3
 #: frappe/www/update-password.html:19
 msgid "Reset Password"
@@ -23316,7 +23321,7 @@ msgstr "Referans tarihinden önceki veya sonraki günleri gönderin"
 msgid "Send enquiries to this email address"
 msgstr "Sorularınızı bu e-posta adresine gönderin"
 
-#: frappe/templates/includes/login/login.js:72 frappe/www/login.html:210
+#: frappe/templates/includes/login/login.js:72 frappe/www/login.html:229
 msgid "Send login link"
 msgstr "Giriş bağlantısını gönder"
 
@@ -23919,7 +23924,7 @@ msgstr "Kısa Yollar"
 
 #: frappe/public/js/frappe/widgets/base_widget.js:46
 #: frappe/public/js/frappe/widgets/base_widget.js:178
-#: frappe/templates/includes/login/login.js:85 frappe/www/login.html:30
+#: frappe/templates/includes/login/login.js:85 frappe/www/login.html:36
 msgid "Show"
 msgstr "Göster"
 
@@ -24246,8 +24251,8 @@ msgstr "Kayıt ve Doğrulama"
 msgid "Sign Up is disabled"
 msgstr "Kaydolma devre dışı bırakıldı"
 
-#: frappe/templates/signup.html:16 frappe/www/login.html:120
-#: frappe/www/login.html:136 frappe/www/update-password.html:45
+#: frappe/templates/signup.html:16 frappe/www/login.html:155
+#: frappe/www/login.html:139 frappe/www/update-password.html:45
 msgid "Sign up"
 msgstr "Yeni Kayıt"
 
@@ -24271,11 +24276,11 @@ msgstr "Kayıtlar"
 msgid "Signature"
 msgstr "İmza"
 
-#: frappe/www/login.html:148
+#: frappe/www/login.html:167
 msgid "Signup Disabled"
 msgstr "Kayıt devre dışı bırakıldı"
 
-#: frappe/www/login.html:149
+#: frappe/www/login.html:168
 msgid "Signups have been disabled for this website."
 msgstr "Bu web sitesi için kayıtlar devre dışı bırakıldı."
 
@@ -30033,7 +30038,7 @@ msgstr "{0} adresine erişmek için giriş yapmış olmanız gerekiyor."
 msgid "You need to create these first: "
 msgstr "Öncelikle şunları oluşturmanız gerekiyor: "
 
-#: frappe/www/login.html:73
+#: frappe/www/login.html:92
 msgid "You need to enable JavaScript for your app to work."
 msgstr "Uygulamanızın çalışması için JavaScript'i etkinleştirmeniz gerekiyor."
 
@@ -30484,7 +30489,7 @@ msgstr "i̇çe Aktar"
 msgid "in minutes"
 msgstr "dakika"
 
-#: frappe/templates/signup.html:11 frappe/www/login.html:10
+#: frappe/templates/signup.html:11 frappe/www/login.html:13
 msgid "jane@example.com"
 msgstr "eposta@ornek.com.tr"
 

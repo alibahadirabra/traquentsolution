@@ -13,6 +13,10 @@
 
 [data-page-route=Workspaces] .layout-main {
 	max-width: none !important;
+  
+}
+[data-page-route=Workspaces]  .page-head .container{
+  max-width: none !important;
 }
 .navbar {
     .container {

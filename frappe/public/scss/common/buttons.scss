@@ -100,10 +100,14 @@
 	white-space: nowrap;
 	--icon-stroke: currentColor;
 	--icon-fill-bg: var(--btn-primary);
-
+	&:hover{
+		background-color: var(--base-dark) !important;
+	}
 	&:active {
 		color: var(--gray-100) !important;
-		background-color: var(--invert-neutral) !important;
+		background-color: var(--btn-primary) !important;
+		border-color: var(--base-lighter) !important;
+		box-shadow: var(--base-lighter) !important;
 	}
 }
 
@@ -126,8 +130,15 @@
 		background-color: var(--bg-dark-gray);
 		box-shadow: none;
 	}
-	.btn-primary:active {
-		color: var(--gray-900) !important;
-		background-color: var(--invert-neutral) !important;
+	.btn-primary{
+		color: var(--neutral-white) !important;
+		background-color: var(--base-dark) !important;
+		&:active {
+			color: var(--neutral-white) !important;
+			background-color: var(--base-pink) !important;
+		}
+		&:hover{
+			background-color: var(--base-pink) !important;
+		}
 	}
 }

@@ -111,3 +111,10 @@
 		@extend .my-auto;
 	}
 }
+
+@media (max-width: 768px) {
+    .navbar .container .body-sidebar-top {
+        display: none !important;
+    }
+	
+}

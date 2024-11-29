@@ -55,6 +55,11 @@ frappe.ui.Sidebar = class Sidebar {
 		$('.body-sidebar-container').on('mouseleave', function() {
 			$(this).attr('style', 'display: none !important;');
 		});
+		$('.body-sidebar-bottom .close-sidebar-link').on('click', function(event) {
+			console.log("hello")
+			event.preventDefault();  // <a> etiketinin varsayılan link davranışını iptal ediyoruz
+			$('.body-sidebar-container').attr('style', 'display: none !important;');
+		});
 		if (this.has_access) {
 			// this.wrapper
 			// 	.find(".edit-sidebar-link")

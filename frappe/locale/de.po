@@ -24772,8 +24772,8 @@ msgid "Started At"
 msgstr "Gestartet am"
 
 #: frappe/desk/page/setup_wizard/setup_wizard.js:274
-msgid "Starting Frappe ..."
-msgstr "Frappé starten..."
+msgid "Starting Creinda ..."
+msgstr "Creinda starten..."
 
 #. Label of the starts_on (Datetime) field in DocType 'Event'
 #: frappe/desk/doctype/event/event.json

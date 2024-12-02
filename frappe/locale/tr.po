@@ -24773,8 +24773,8 @@ msgid "Started At"
 msgstr "Başlangıç"
 
 #: frappe/desk/page/setup_wizard/setup_wizard.js:274
-msgid "Starting Frappe ..."
-msgstr "Frappe Başlatılıyor..."
+msgid "Starting Creinda ..."
+msgstr "Creinda Başlatılıyor..."
 
 #. Label of the starts_on (Datetime) field in DocType 'Event'
 #: frappe/desk/doctype/event/event.json

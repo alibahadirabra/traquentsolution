@@ -48,7 +48,6 @@ frappe.ui.Sidebar = class Sidebar {
 			$(" .body-sidebar-top").append(this.$sidebar);
 		}, 100);
 		$('.navbar-home').on('click', function(event) {
-			console.log("hello")
 			event.preventDefault();  // <a> etiketinin varsayılan link davranışını iptal ediyoruz
 			$('.body-sidebar-container').attr('style', 'display: block !important;');
 		});
@@ -56,7 +55,6 @@ frappe.ui.Sidebar = class Sidebar {
 			$(this).attr('style', 'display: none !important;');
 		});
 		$('.body-sidebar-bottom .close-sidebar-link').on('click', function(event) {
-			console.log("hello")
 			event.preventDefault();  // <a> etiketinin varsayılan link davranışını iptal ediyoruz
 			$('.body-sidebar-container').attr('style', 'display: none !important;');
 		});

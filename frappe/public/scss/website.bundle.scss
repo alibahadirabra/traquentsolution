@@ -4,7 +4,7 @@ body[data-path^="update-profile"],
 body[data-path="update-password"],
 body[data-path="third_party_apps"] {
 	@include media-breakpoint-up(sm) {
-	  background-image: url("/assets/frappe/images/pattern.png");
+	  background-image: url("/assets/frappe/images/pattern.svg");
 	  background-size: cover; /* Resmi sayfa boyutuna göre ayarlar */
 	  background-position: center; /* Resmi ortalar */
 	  background-repeat: no-repeat;
@@ -18,6 +18,19 @@ body[data-path="third_party_apps"] {
 		}
 	}
 }
+/*#UPDATES --sevval*/
+@font-face {
+	font-family: 'Manrope';
+	src: url('/assets/frappe/css/fonts/manrope/Manrope-VariableFont_wght.ttf') format('tff');
+	font-weight: normal;
+	font-style: normal;
+  }
+  
+  // Bu fontu global olarak kullan
+body {
+	font-family: 'Manrope', sans-serif !important;
+}
+/**/
 body[data-path="me"] {
 	#page-me{
 		.page_content .portal-footer a{
@@ -25,7 +38,7 @@ body[data-path="me"] {
 			color: #fff;
 			border-radius: 5px;
 			padding: 10px 25px;
-			font-family: 'Lato', sans-serif;
+			//font-family: 'Lato', sans-serif;/*#UPDATES --sevval*/
 			font-weight: 500;
 			background: transparent;
 			cursor: pointer;
@@ -37,14 +50,14 @@ body[data-path="me"] {
 			 4px 4px 5px 0px rgba(0,0,0,.1);
 			outline: none;
 			border: none;
-			background: #F800B5;
-  			background: linear-gradient(0deg, rgba(236,0,189) 0%, rgba(179,1,237) 100%);
+			background: #0C0B35;/*#UPDATES --sevval*/
+  			background: linear-gradient(0deg, #0C0B35 0%, #1A198A 100%);/*#UPDATES --sevval*/
 			  &:hover {
-				color: #F800B5;
+				color: #0C0B35;/*#UPDATES --sevval*/
 				background: transparent;
 				box-shadow:none;
 				svg{
-					stroke: #F800B5 !important;
+					stroke: #0C0B35 !important;/*#UPDATES --sevval*/
 				}
 			  }
 			  &:before,
@@ -55,7 +68,7 @@ body[data-path="me"] {
 				right:0;
 				height:2px;
 				width:0;
-				background: #F800B5;
+				background: #0C0B35;/*#UPDATES --sevval*/
 				box-shadow:
 				 -1px -1px 5px 0px #fff,
 				 7px 7px 20px 0px #0003,

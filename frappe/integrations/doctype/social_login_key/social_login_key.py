@@ -177,7 +177,7 @@ class SocialLoginKey(Document):
 			"provider_name": "Frappe",
 			"enable_social_login": 1,
 			"custom_base_url": 1,
-			"icon": "/assets/frappe/images/frappe-favicon.svg",
+			"icon": "/assets/frappe/images/traquent_mini.svg", #UPDATES --sevval
 			"redirect_url": "/api/method/frappe.integrations.oauth2_logins.login_via_frappe",
 			"api_endpoint": "/api/method/frappe.integrations.oauth2.openid_profile",
 			"api_endpoint_args": None,

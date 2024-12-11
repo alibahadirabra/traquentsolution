@@ -3,6 +3,14 @@ $disabled-input-height: 22px;
 
 :root,
 [data-theme="light"] {
+	/*#UPDATES --sevval*/
+	#logo-dark {
+		display: none;
+	}
+	#logo-light {
+		display: block;
+	}
+	/**/
 	--brand-color: var(--primary);
 
 	--padding-xs: 5px;
@@ -30,7 +38,7 @@ $disabled-input-height: 22px;
 	--navbar-height: 85px;
 
 	//nav-bottom
-	--nav-bottom-background: var(--pink-300);
+	--nav-bottom-background: var(--custom-orange-300);
 	// SVG Colors
 	--icon-fill: transparent;
 	--icon-fill-bg: var(--fg-color);
@@ -100,7 +108,7 @@ $disabled-input-height: 22px;
 
 	// Button Colors
 	//--btn-primary: var(--gray-900);
-	--btn-primary: var(--base-pink);
+	--btn-primary: var(--custom-500);
 	--btn-default-bg: var(--gray-100);
 	--btn-default-hover-bg: var(--gray-300);
 

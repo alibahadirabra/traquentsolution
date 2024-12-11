@@ -101,13 +101,13 @@
 	--icon-stroke: currentColor;
 	--icon-fill-bg: var(--btn-primary);
 	&:hover{
-		background-color: var(--base-dark) !important;
+		background-color: var(--custom-800) !important;/*#UPDATES --sevval*/
 	}
 	&:active {
 		color: var(--gray-100) !important;
 		background-color: var(--btn-primary) !important;
-		border-color: var(--base-lighter) !important;
-		box-shadow: var(--base-lighter) !important;
+		border-color: var(--custom-300) !important;/*#UPDATES --sevval*/
+		box-shadow: var(--custom-300) !important;/*#UPDATES --sevval*/
 	}
 }
 
@@ -132,13 +132,13 @@
 	}
 	.btn-primary{
 		color: var(--neutral-white) !important;
-		background-color: var(--base-dark) !important;
+		background-color: var(--custom-orange-500) !important;/*#UPDATES --sevval*/
 		&:active {
 			color: var(--neutral-white) !important;
-			background-color: var(--base-pink) !important;
+			background-color: var(--custom-orange-300) !important;/*#UPDATES --sevval*/
 		}
 		&:hover{
-			background-color: var(--base-pink) !important;
+			background-color: var(--custom-orange-500) !important;/*#UPDATES --sevval*/
 		}
 	}
 }

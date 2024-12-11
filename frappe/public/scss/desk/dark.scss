@@ -1,5 +1,13 @@
 $check-icon-dark: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M1 4.00001L2.66667 5.80001L7 1.20001' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
 [data-theme="dark"] {
+	/*#UPDATES --sevval*/
+	#logo-dark {
+		display: block;
+	}
+	#logo-light {
+		display: none;
+	}
+	/**/
 	--neutral: var(--neutral-black);
 	--invert-neutral: var(--neutral-white);
 	// TODO: Update Pallete for dark mode.
@@ -42,10 +50,10 @@ $check-icon-dark: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xm
 	// Button Colors
 	--btn-default-bg: var(--gray-800);
 	--btn-default-hover-bg: var(--gray-700);
-	--btn-primary: var(--pink-500);
+	--btn-primary: var(--custom-orange-500);
 
 	//nav-bottom
-	--nav-bottom-background: var(--pink-800);
+	--nav-bottom-background: var(--custom-orange-500);
 
 	// Border Colors
 	--border-primary: var(--gray-200);

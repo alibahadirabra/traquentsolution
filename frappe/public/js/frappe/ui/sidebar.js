@@ -118,14 +118,14 @@ frappe.ui.Sidebar = class Sidebar {
 		this.setup_select_app(app_switcher_menu);
 	}
 
-	add_app_item(app, app_switcher_menu) {
+	add_app_item(app, app_switcher_menu) {//#UPDATES --sevval img>src>rul
 		$(`<div class="app-item" data-app-name="${app.app_name}"
 			data-app-route="${app.app_route}">
 			<a>
 				<div class="sidebar-item-icon">
 					<img
 						class="app-logo"
-						src="${app.app_logo_url}"
+						src="/assets/frappe/images/traquent_mini.svg" 
 						alt="${__("App Logo")}"
 					>
 				</div>
@@ -142,7 +142,7 @@ frappe.ui.Sidebar = class Sidebar {
 			app_name: "private",
 			app_title: __("My Workspaces"),
 			app_route: "/app/private",
-			app_logo_url: "/assets/frappe/images/frappe-framework-logo.svg",
+			app_logo_url: "/assets/frappe/images/traquent_mini.svg",//#UPDATES --sevval img>src>rul
 			workspaces: private_pages,
 		};
 
@@ -399,7 +399,7 @@ frappe.ui.Sidebar = class Sidebar {
 									: `<span class="indicator ${item.indicator_color}"></span>`
 							}
 						</span>
-						<span class="sidebar-item-label">${__(item.title)}<span>
+						 <span class="sidebar-item-label">${__(item.title)}<span>
 					</a>
 					<div class="sidebar-item-control"></div>
 				</div>

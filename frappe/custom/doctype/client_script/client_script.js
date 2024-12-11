@@ -103,8 +103,13 @@ frappe.ui.form.on('${doctype}', {
 		frm.set_value("script", script + boilerplate);
 	},
 });
+//UPDATES --sevval
+const SAMPLE_HTML = `
+<p>Please contact a qualified person for assistance.</p>
+`;
 
-const SAMPLE_HTML = `<h3>Client Script Help</h3>
+//UPDATES --sevval
+{/* <h3>Client Script Help</h3>
 <p>Client Scripts are executed only on the client-side (i.e. in Forms). Here are some examples to get you started</p>
 <pre><code>
 
@@ -155,4 +160,5 @@ frappe.ui.form.on('Sales Invoice',  {
     }
 })
 
-</code></pre>`;
+</code></pre> */}
+//

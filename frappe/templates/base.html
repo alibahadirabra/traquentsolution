@@ -13,9 +13,10 @@
 	<title>{% block title %}{{ title | striptags }}{% endblock %}</title>
 
 	{% block favicon %}
+	<!--#UPDATES --sevval link>href-->
 	<link
 		rel="shortcut icon"
-		href="{{ (favicon or "/assets/frappe/images/frappe-favicon.svg") | abs_url }}"
+		href="{{ (favicon or "/assets/frappe/images/traquent_mini.svg") | abs_url }}"
 		type="image/x-icon"
 	>
 	{% endblock %}

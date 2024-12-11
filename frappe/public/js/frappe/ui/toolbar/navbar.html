@@ -9,11 +9,13 @@
 						<div class="d-flex align-items-center">
 							<div class="sidebar-item-icon">
 								<img class="app-logo"
-									src="{{ frappe.boot.app_data[0].app_logo_url }}" alt="{%= ("App Logo") %}">
+									src="{{ frappe.boot.app_data[0].app_logo_url }}" alt="{%= ("App Logo") %}" style="width: 110px;" id="logo-light"><!--#UPDATES --sevval-->
+								<img src="/assets/frappe/images/traquent_white.png" alt="Dark Logo" style="width: 110px;" id="logo-dark"><!--#UPDATES --sevval-->
+
 							</div>
-							<div class="sidebar-item-label" style="margin-left: 5px; margin-top: 1px">
-								Creinda
-							</div>
+							<!-- <div class="sidebar-item-label" style="margin-left: 5px; margin-top: 1px">
+								Traquent
+							</div> --><!--#UPDATES --sevval-->
 						</div>
 						<!-- <div class="sidebar-item-control">
 							<button class="btn-reset drop-icon show-in-edit-mode">
@@ -35,7 +37,10 @@
 					class="app-logo"
 					src="{{ frappe.boot.app_data[0].app_logo_url }}"
 					alt="{{ __("App Logo") }}"
+					id="logo-light"
 				>
+				<img src="/assets/frappe/images/traquent_white.png" alt="Dark Logo" style="width: 110px;" id="logo-dark">
+
 			</a>
 			<!-- <ul class="nav navbar-nav d-none d-sm-flex" id="navbar-breadcrumbs"></ul> -->
 			<div class="collapse navbar-collapse justify-content-end">

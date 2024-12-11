@@ -14,7 +14,7 @@ body {
 }
 body[data-path="login"] {
 	@include media-breakpoint-up(sm) {
-	  background-image: url("/assets/frappe/images/pattern.png");
+	  background-image: url("/assets/frappe/images/pattern.svg");/*#UPDATES --sevval*/
 	  background-size: cover; /* Resmi sayfa boyutuna göre ayarlar */
 	  background-position: center; /* Resmi ortalar */
 	  background-repeat: no-repeat;
@@ -30,14 +30,17 @@ body[data-path=login] .navbar .container{
 		display: none;
 	}
 	.navbar-brand {
-		background-image: url(/assets/frappe/images/frappe-framework-logo.svg);
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		width: 32px;
-		height: 50px;
-		border-bottom: none;
-		background-color: transparent;
+		/*#UPDATES --sevval*/
+		// background-image: url(/assets/frappe/images/traquent_logo.png);
+		// background-size: cover;
+		// background-position: center;
+		// background-repeat: no-repeat;
+		// width: 32px;
+		// height: 50px;
+		// border-bottom: none;
+		// background-color: transparent;
+		/**/
+		margin-top: 15px;
 		span {
 			display: none;
 		}
@@ -96,12 +99,17 @@ body[data-path=login] #page-login .page_content .for-forgot{
 			top: 11px;
 		}
 	}
-	.page-card-actions{
-		button{
-			height: 40px;
-			background-color: #F800B5;
+	.page-card-actions {
+		button {
+		  height: 40px;
+		  background-color: #0C0B35;/*#UPDATES --sevval*/
+	  
+		  &:hover {
+			background-color: #1A198A !important;/*#UPDATES --sevval*/
+		  }
 		}
-	}
+	  }
+	  
 	.social-logins .login-with-email-link .btn-login-with-email-link{
 		background: none !important;
 		justify-content: flex-end;

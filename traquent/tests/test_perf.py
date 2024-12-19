@@ -24,7 +24,7 @@ from unittest.mock import patch
 from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_fixed
 
 import traquent
-from traquent.traquentclient import traquentClient
+from traquent.frappeclient import traquentClient
 from traquent.model.base_document import get_controller
 from traquent.query_builder.utils import db_type_is
 from traquent.tests import IntegrationTestCase

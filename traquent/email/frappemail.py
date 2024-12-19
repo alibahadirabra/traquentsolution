@@ -6,7 +6,7 @@ import pytz
 
 import traquent
 from traquent import _
-from traquent.traquentclient import traquentClient, traquentOAuth2Client
+from traquent.frappeclient import traquentClient, traquentOAuth2Client
 from traquent.utils import convert_utc_to_system_timezone, get_datetime, get_datetime_str, get_system_timezone
 
 

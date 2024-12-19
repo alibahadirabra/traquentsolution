@@ -19,7 +19,7 @@ import traquent.utils
 import traquent.utils.data
 from traquent import _
 from traquent.core.utils import html2text
-from traquent.traquentclient import traquentClient
+from traquent.frappeclient import traquentClient
 from traquent.handler import execute_cmd
 from traquent.locale import get_date_format, get_number_format, get_time_format
 from traquent.model.delete_doc import delete_doc

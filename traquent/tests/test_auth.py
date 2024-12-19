@@ -7,7 +7,7 @@ import requests
 
 import traquent
 from traquent.auth import LoginAttemptTracker
-from traquent.traquentclient import AuthError, traquentClient
+from traquent.frappeclient import AuthError, traquentClient
 from traquent.sessions import Session, get_expired_sessions, get_expiry_in_seconds
 from traquent.tests import IntegrationTestCase
 from traquent.tests.test_api import traquentAPITestCase

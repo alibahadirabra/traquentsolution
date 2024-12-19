@@ -225,8 +225,8 @@ traquent.views.GanttView = class GanttView extends traquent.views.ListView {
 
 	get required_libs() {
 		return [
-			"assets/traquent/node_modules/traquent-gantt/dist/traquent-gantt.css",
-			"assets/traquent/node_modules/traquent-gantt/dist/traquent-gantt.min.js",
+			"assets/traquent/node_modules/frappe-gantt/dist/frappe-gantt.css",
+			"assets/traquent/node_modules/frappe-gantt/dist/frappe-gantt.min.js",
 		];
 	}
 };

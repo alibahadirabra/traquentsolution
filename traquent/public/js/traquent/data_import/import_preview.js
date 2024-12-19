@@ -1,4 +1,4 @@
-import DataTable from "traquent-datatable";
+import DataTable from "frappe-datatable";
 import { get_columns_for_picker } from "./data_exporter";
 
 traquent.provide("traquent.data_import");

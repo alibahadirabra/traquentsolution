@@ -1,7 +1,7 @@
 /**
  * traquent.views.ReportView
  */
-import DataTable from "traquent-datatable";
+import DataTable from "frappe-datatable";
 
 window.DataTable = DataTable;
 traquent.provide("traquent.views");

@@ -8,17 +8,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alibahadirabra/traquentsolution.git"
+    "url": "git+https://github.com/frappe/frappe.git"
   },
   "author": "traquent Technologies Pvt. Ltd.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/traquent/traquent/issues"
+    "url": "https://github.com/frappe/frappe/issues"
   },
   "engines": {
     "node": ">=18"
   },
-  "homepage": "https://traquentframework.com",
+  "homepage": "https://frappeframework.com",
   "dependencies": {
     "@editorjs/editorjs": "^2.28.2",
     "@traquent/esbuild-plugin-postcss2": "^0.1.3",

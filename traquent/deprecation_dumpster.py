@@ -1,11 +1,11 @@
 """
 Welcome to the Deprecation Dumpster: Where Old Code Goes to Party! 🎉🗑️
 
-This file is the final resting place (or should we say, "retirement home"?) for all the deprecated functions and methods of the Frappe framework. It's like a code nursing home, but with more monkey-patching and less bingo.
+This file is the final resting place (or should we say, "retirement home"?) for all the deprecated functions and methods of the traquent framework. It's like a code nursing home, but with more monkey-patching and less bingo.
 
 Each function or method that checks in here comes with its own personalized decorator, complete with:
 1. The date it was marked for deprecation (its "over the hill" birthday)
-2. The Frappe version in which it will be removed (its "graduation" to the great codebase in the sky)
+2. The traquent version in which it will be removed (its "graduation" to the great codebase in the sky)
 3. A user-facing note on alternative solutions (its "parting wisdom")
 
 Warning: The global namespace herein is more patched up than a sailor's favorite pair of jeans. Proceed with caution and a sense of humor!
@@ -33,7 +33,7 @@ class Color:
 	CYAN = 96
 
 
-class FrappeDeprecationWarning(Warning):
+class traquentDeprecationWarning(Warning):
 	...
 
 
@@ -48,7 +48,7 @@ except ImportError:
 
 	T = TypeVar("T", bound=Callable)
 
-	def _deprecated(message: str, category=FrappeDeprecationWarning, stacklevel=1) -> Callable[[T], T]:
+	def _deprecated(message: str, category=traquentDeprecationWarning, stacklevel=1) -> Callable[[T], T]:
 		def decorator(func: T) -> T:
 			@functools.wraps(func)
 			def wrapper(*args, **kwargs):
@@ -69,7 +69,7 @@ def deprecated(original: str, marked: str, graduation: str, msg: str, stacklevel
 	"""Decorator to wrap a function/method as deprecated.
 
 	Arguments:
-	        - original: frappe.utils.make_esc  (fully qualified)
+	        - original: traquent.utils.make_esc  (fully qualified)
 	        - marked: 2024-09-13  (the date it has been marked)
 	        - graduation: v17  (generally: current version + 2)
 	"""
@@ -83,9 +83,9 @@ def deprecated(original: str, marked: str, graduation: str, msg: str, stacklevel
 				colorize("The deprecated function ", Color.YELLOW)
 				+ colorize(func.__name__, Color.CYAN)
 				+ colorize(" can only be called from ", Color.YELLOW)
-				+ colorize("frappe/deprecation_dumpster.py\n", Color.CYAN)
+				+ colorize("traquent/deprecation_dumpster.py\n", Color.CYAN)
 				+ colorize("Move the entire function there and import it back via adding\n ", Color.YELLOW)
-				+ colorize(f"from frappe.deprecation_dumpster import {func.__name__}\n", Color.CYAN)
+				+ colorize(f"from traquent.deprecation_dumpster import {func.__name__}\n", Color.CYAN)
 				+ colorize("to file\n ", Color.YELLOW)
 				+ colorize(caller_filepath, Color.CYAN)
 			)
@@ -125,19 +125,19 @@ def deprecation_warning(marked: str, graduation: str, msg: str):
 ### Party starts here
 def _old_deprecated(func):
 	return deprecated(
-		"frappe.deprecations.deprecated",
+		"traquent.deprecations.deprecated",
 		"2024-09-13",
 		"v17",
-		"Make use of the frappe/deprecation_dumpster.py file, instead. 🎉🗑️",
+		"Make use of the traquent/deprecation_dumpster.py file, instead. 🎉🗑️",
 	)(_deprecated("")(func))
 
 
 def _old_deprecation_warning(msg):
 	@deprecated(
-		"frappe.deprecations.deprecation_warning",
+		"traquent.deprecations.deprecation_warning",
 		"2024-09-13",
 		"v17",
-		"Use frappe.deprecation_dumpster.deprecation_warning, instead. 🎉🗑️",
+		"Use traquent.deprecation_dumpster.deprecation_warning, instead. 🎉🗑️",
 	)
 	def deprecation_warning(message, category=DeprecationWarning, stacklevel=1):
 		warnings.warn(message=message, category=category, stacklevel=stacklevel + 2)
@@ -145,7 +145,7 @@ def _old_deprecation_warning(msg):
 	return deprecation_warning(msg)
 
 
-@deprecated("frappe.utils.make_esc", "unknown", "v17", "Not used anymore.")
+@deprecated("traquent.utils.make_esc", "unknown", "v17", "Not used anymore.")
 def make_esc(esc_chars):
 	"""
 	Function generator for Escaping special characters
@@ -154,10 +154,10 @@ def make_esc(esc_chars):
 
 
 @deprecated(
-	"frappe.db.is_column_missing",
+	"traquent.db.is_column_missing",
 	"unknown",
 	"v17",
-	"Renamed to frappe.db.is_missing_column.",
+	"Renamed to traquent.db.is_missing_column.",
 )
 def is_column_missing(e):
 	import traquent
@@ -166,7 +166,7 @@ def is_column_missing(e):
 
 
 @deprecated(
-	"frappe.desk.doctype.bulk_update.bulk_update",
+	"traquent.desk.doctype.bulk_update.bulk_update",
 	"unknown",
 	"v17",
 	"Unknown.",
@@ -179,14 +179,14 @@ def show_progress(docnames, message, i, description):
 
 
 @deprecated(
-	"frappe.client.get_js",
+	"traquent.client.get_js",
 	"unknown",
 	"v17",
 	"Unknown.",
 )
 def get_js(items):
 	"""Load JS code files.  Will also append translations
-	and extend `frappe._messages`
+	and extend `traquent._messages`
 
 	:param items: JSON list of paths of the js files to be loaded."""
 	import json
@@ -212,7 +212,7 @@ def get_js(items):
 
 
 @deprecated(
-	"frappe.utils.print_format.read_multi_pdf",
+	"traquent.utils.print_format.read_multi_pdf",
 	"unknown",
 	"v17",
 	"Unknown.",
@@ -225,7 +225,7 @@ def read_multi_pdf(output) -> bytes:
 		return merged_pdf.getvalue()
 
 
-@deprecated("frappe.gzip_compress", "unknown", "v17", "Use py3 methods directly (this was compat for py2).")
+@deprecated("traquent.gzip_compress", "unknown", "v17", "Use py3 methods directly (this was compat for py2).")
 def gzip_compress(data, compresslevel=9):
 	"""Compress data in one shot and return the compressed string.
 	Optional argument is the compression level, in range of 0-9.
@@ -239,7 +239,7 @@ def gzip_compress(data, compresslevel=9):
 	return buf.getvalue()
 
 
-@deprecated("frappe.gzip_decompress", "unknown", "v17", "Use py3 methods directly (this was compat for py2).")
+@deprecated("traquent.gzip_decompress", "unknown", "v17", "Use py3 methods directly (this was compat for py2).")
 def gzip_decompress(data):
 	"""Decompress a gzip compressed string in one shot.
 	Return the decompressed string.
@@ -252,7 +252,7 @@ def gzip_decompress(data):
 
 
 @deprecated(
-	"frappe.email.doctype.email_queue.email_queue.send_mail",
+	"traquent.email.doctype.email_queue.email_queue.send_mail",
 	"unknown",
 	"v17",
 	"Unknown.",
@@ -269,10 +269,10 @@ def send_mail(email_queue_name, smtp_server_instance=None):
 
 
 @deprecated(
-	"frappe.geo.country_info.get_translated_dict",
+	"traquent.geo.country_info.get_translated_dict",
 	"unknown",
 	"v17",
-	"Use frappe.geo.country_info.get_translated_countries, instead.",
+	"Use traquent.geo.country_info.get_translated_countries, instead.",
 )
 def get_translated_dict():
 	from traquent.geo.country_info import get_translated_countries
@@ -290,7 +290,7 @@ def validate_roles(self):
 	self.populate_role_profile_roles()
 
 
-@deprecated("frappe.tests_runner.get_modules", "2024-20-08", "v17", "use frappe.tests.utils.get_modules")
+@deprecated("traquent.tests_runner.get_modules", "2024-20-08", "v17", "use traquent.tests.utils.get_modules")
 def test_runner_get_modules(doctype):
 	from traquent.tests.utils import get_modules
 
@@ -298,7 +298,7 @@ def test_runner_get_modules(doctype):
 
 
 @deprecated(
-	"frappe.tests_runner.make_test_records", "2024-20-08", "v17", "use frappe.tests.utils.make_test_records"
+	"traquent.tests_runner.make_test_records", "2024-20-08", "v17", "use traquent.tests.utils.make_test_records"
 )
 def test_runner_make_test_records(*args, **kwargs):
 	from traquent.tests.utils import make_test_records
@@ -307,7 +307,7 @@ def test_runner_make_test_records(*args, **kwargs):
 
 
 @deprecated(
-	"frappe.tests_runner.make_test_objects", "2024-20-08", "v17", "use frappe.tests.utils.make_test_objects"
+	"traquent.tests_runner.make_test_objects", "2024-20-08", "v17", "use traquent.tests.utils.make_test_objects"
 )
 def test_runner_make_test_objects(*args, **kwargs):
 	from traquent.tests.utils import make_test_objects
@@ -316,10 +316,10 @@ def test_runner_make_test_objects(*args, **kwargs):
 
 
 @deprecated(
-	"frappe.tests_runner.make_test_records_for_doctype",
+	"traquent.tests_runner.make_test_records_for_doctype",
 	"2024-20-08",
 	"v17",
-	"use frappe.tests.utils.make_test_records_for_doctype",
+	"use traquent.tests.utils.make_test_records_for_doctype",
 )
 def test_runner_make_test_records_for_doctype(*args, **kwargs):
 	from traquent.tests.utils import make_test_records_for_doctype
@@ -328,7 +328,7 @@ def test_runner_make_test_records_for_doctype(*args, **kwargs):
 
 
 @deprecated(
-	"frappe.tests_runner.print_mandatory_fields",
+	"traquent.tests_runner.print_mandatory_fields",
 	"2024-20-08",
 	"v17",
 	"no public api anymore",
@@ -340,7 +340,7 @@ def test_runner_print_mandatory_fields(*args, **kwargs):
 
 
 @deprecated(
-	"frappe.tests_runner.get_test_record_log",
+	"traquent.tests_runner.get_test_record_log",
 	"2024-20-08",
 	"v17",
 	"no public api anymore",
@@ -352,7 +352,7 @@ def test_runner_get_test_record_log(doctype):
 
 
 @deprecated(
-	"frappe.tests_runner.add_to_test_record_log",
+	"traquent.tests_runner.add_to_test_record_log",
 	"2024-20-08",
 	"v17",
 	"no public api anymore",
@@ -364,7 +364,7 @@ def test_runner_add_to_test_record_log(doctype):
 
 
 @deprecated(
-	"frappe.tests_runner.main",
+	"traquent.tests_runner.main",
 	"2024-20-08",
 	"v17",
 	"no public api anymore",
@@ -376,7 +376,7 @@ def test_runner_main(*args, **kwargs):
 
 
 @deprecated(
-	"frappe.tests_runner.xmlrunner_wrapper",
+	"traquent.tests_runner.xmlrunner_wrapper",
 	"2024-20-08",
 	"v17",
 	"no public api anymore",
@@ -398,7 +398,7 @@ def test_xmlrunner_wrapper(output):
 
 
 @deprecated(
-	"frappe.tests.upate_system_settings",
+	"traquent.tests.upate_system_settings",
 	"2024-20-08",
 	"v17",
 	"use with `self.change_settings(...):` context manager",
@@ -416,10 +416,10 @@ def tests_update_system_settings(args, commit=False):
 
 
 @deprecated(
-	"frappe.tests.get_system_setting",
+	"traquent.tests.get_system_setting",
 	"2024-20-08",
 	"v17",
-	"use `frappe.db.get_single_value('System Settings', key)`",
+	"use `traquent.db.get_single_value('System Settings', key)`",
 )
 def tests_get_system_setting(key):
 	import traquent
@@ -428,10 +428,10 @@ def tests_get_system_setting(key):
 
 
 @deprecated(
-	"frappe.tests.utils.change_settings",
+	"traquent.tests.utils.change_settings",
 	"2024-20-08",
 	"v17",
-	"use `frappe.tests.change_settings` or the cls.change_settings",
+	"use `traquent.tests.change_settings` or the cls.change_settings",
 )
 def tests_change_settings(*args, **kwargs):
 	from traquent.tests.classes.context_managers import change_settings
@@ -440,10 +440,10 @@ def tests_change_settings(*args, **kwargs):
 
 
 @deprecated(
-	"frappe.tests.utils.patch_hooks",
+	"traquent.tests.utils.patch_hooks",
 	"2024-20-08",
 	"v17",
-	"use `frappe.tests.patch_hooks` or the cls.patch_hooks",
+	"use `traquent.tests.patch_hooks` or the cls.patch_hooks",
 )
 def tests_patch_hooks(*args, **kwargs):
 	from traquent.tests.classes.context_managers import patch_hooks
@@ -452,10 +452,10 @@ def tests_patch_hooks(*args, **kwargs):
 
 
 @deprecated(
-	"frappe.tests.utils.debug_on",
+	"traquent.tests.utils.debug_on",
 	"2024-20-08",
 	"v17",
-	"use `frappe.tests.debug_on` or the cls.debug_on",
+	"use `traquent.tests.debug_on` or the cls.debug_on",
 )
 def tests_debug_on(*args, **kwargs):
 	from traquent.tests.classes.context_managers import debug_on
@@ -464,10 +464,10 @@ def tests_debug_on(*args, **kwargs):
 
 
 @deprecated(
-	"frappe.tests.utils.timeout",
+	"traquent.tests.utils.timeout",
 	"2024-20-08",
 	"v17",
-	"use `frappe.tests.timeout` or the cls.timeout",
+	"use `traquent.tests.timeout` or the cls.timeout",
 )
 def tests_timeout(*args, **kwargs):
 	from traquent.tests.classes.context_managers import timeout
@@ -475,23 +475,23 @@ def tests_timeout(*args, **kwargs):
 	return timeout(*args, **kwargs)
 
 
-def get_tests_FrappeTestCase():
-	class CompatFrappeTestCase:
+def get_tests_traquentTestCase():
+	class CompattraquentTestCase:
 		def __new__(cls, *args, **kwargs):
 			from traquent.tests import IntegrationTestCase
 
-			class _CompatFrappeTestCase(IntegrationTestCase):
+			class _CompattraquentTestCase(IntegrationTestCase):
 				def __init__(self, *args, **kwargs):
 					deprecation_warning(
 						"2024-20-08",
 						"v17",
-						"Import `frappe.tests.UnitTestCase` or `frappe.tests.IntegrationTestCase` respectively instead of `frappe.tests.utils.FrappeTestCase`",
+						"Import `traquent.tests.UnitTestCase` or `traquent.tests.IntegrationTestCase` respectively instead of `traquent.tests.utils.traquentTestCase`",
 					)
 					super().__init__(*args, **kwargs)
 
-			return _CompatFrappeTestCase(*args, **kwargs)
+			return _CompattraquentTestCase(*args, **kwargs)
 
-	return CompatFrappeTestCase
+	return CompattraquentTestCase
 
 
 def get_tests_IntegrationTestCase():
@@ -504,7 +504,7 @@ def get_tests_IntegrationTestCase():
 					deprecation_warning(
 						"2024-20-08",
 						"v17",
-						"Import `frappe.tests.IntegrationTestCase` instead of `frappe.tests.utils.IntegrationTestCase`",
+						"Import `traquent.tests.IntegrationTestCase` instead of `traquent.tests.utils.IntegrationTestCase`",
 					)
 					super().__init__(*args, **kwargs)
 
@@ -523,7 +523,7 @@ def get_tests_UnitTestCase():
 					deprecation_warning(
 						"2024-20-08",
 						"v17",
-						"Import `frappe.tests.UnitTestCase` instead of `frappe.tests.utils.UnitTestCase`",
+						"Import `traquent.tests.UnitTestCase` instead of `traquent.tests.utils.UnitTestCase`",
 					)
 					super().__init__(*args, **kwargs)
 
@@ -533,7 +533,7 @@ def get_tests_UnitTestCase():
 
 
 @deprecated(
-	"frappe.model.trace.traced_field_context",
+	"traquent.model.trace.traced_field_context",
 	"2024-20-08",
 	"v17",
 	"use `cls.trace_fields`",
@@ -545,10 +545,10 @@ def model_trace_traced_field_context(*args, **kwargs):
 
 
 @deprecated(
-	"frappe.tests.utils.get_dependencies",
+	"traquent.tests.utils.get_dependencies",
 	"2024-20-09",
 	"v17",
-	"refactor to use frappe.tests.utils.get_missing_records_doctypes",
+	"refactor to use traquent.tests.utils.get_missing_records_doctypes",
 )
 def tests_utils_get_dependencies(doctype):
 	"""Get the dependencies for the specified doctype"""
@@ -580,24 +580,24 @@ def tests_utils_get_dependencies(doctype):
 
 
 @deprecated(
-	"frappe.tests_runner.get_dependencies",
+	"traquent.tests_runner.get_dependencies",
 	"2024-20-08",
 	"v17",
-	"refactor to use frappe.tests.utils.get_missing_record_doctypes",
+	"refactor to use traquent.tests.utils.get_missing_record_doctypes",
 )
 def test_runner_get_dependencies(doctype):
 	return tests_utils_get_dependencies(doctype)
 
 
 @deprecated(
-	"frappe.get_test_records",
+	"traquent.get_test_records",
 	"2024-20-09",
 	"v17",
 	"""Please access the global test records pool via cls.globalTestRecords['Some Doc'] -> list.
-If not an IntegrationTestCase, use frappe.tests.utils.load_test_records_for (check return type).
+If not an IntegrationTestCase, use traquent.tests.utils.load_test_records_for (check return type).
 """,
 )
-def frappe_get_test_records(doctype):
+def traquent_get_test_records(doctype):
 	import traquent
 	from traquent.tests.utils.generators import load_test_records_for
 

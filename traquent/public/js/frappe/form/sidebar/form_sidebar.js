@@ -7,16 +7,16 @@ import "./user_image";
 import "./form_sidebar_users";
 import { get_user_link, get_user_message } from "../footer/version_timeline_content_builder";
 
-frappe.ui.form.Sidebar = class {
+traquent.ui.form.Sidebar = class {
 	constructor(opts) {
 		$.extend(this, opts);
 	}
 
 	make() {
-		var sidebar_content = frappe.render_template("form_sidebar", {
+		var sidebar_content = traquent.render_template("form_sidebar", {
 			doctype: this.frm.doctype,
 			frm: this.frm,
-			can_write: frappe.model.can_write(this.frm.doctype, this.frm.docname),
+			can_write: traquent.model.can_write(this.frm.doctype, this.frm.docname),
 		});
 
 		this.sidebar = $('<div class="form-sidebar overlay-sidebar hidden-xs hidden-sm"></div>')
@@ -37,7 +37,7 @@ frappe.ui.form.Sidebar = class {
 		this.show_auto_repeat_status();
 		this.show_error_log_status();
 		this.show_webhook_request_log_status();
-		frappe.ui.form.setup_user_image_event(this.frm);
+		traquent.ui.form.setup_user_image_event(this.frm);
 
 		this.refresh();
 	}
@@ -45,7 +45,7 @@ frappe.ui.form.Sidebar = class {
 	setup_keyboard_shortcuts() {
 		// add assignment shortcut
 		let assignment_link = this.sidebar.find(".add-assignment");
-		frappe.ui.keys.get_shortcut_group(this.page).add(assignment_link);
+		traquent.ui.keys.get_shortcut_group(this.page).add(assignment_link);
 	}
 
 	refresh() {
@@ -63,14 +63,14 @@ frappe.ui.form.Sidebar = class {
 
 			this.refresh_web_view_count();
 			this.refresh_creation_modified();
-			frappe.ui.form.set_user_image(this.frm);
+			traquent.ui.form.set_user_image(this.frm);
 		}
 	}
 
 	refresh_web_view_count() {
-		if (this.frm.doc.route && cint(frappe.boot.website_tracking_enabled)) {
+		if (this.frm.doc.route && cint(traquent.boot.website_tracking_enabled)) {
 			let route = this.frm.doc.route;
-			frappe.utils.get_page_view_count(route).then((res) => {
+			traquent.utils.get_page_view_count(route).then((res) => {
 				this.sidebar
 					.find(".pageview-count")
 					.removeClass("hidden")
@@ -85,7 +85,7 @@ frappe.ui.form.Sidebar = class {
 			user_list = [this.frm.doc.owner];
 		}
 
-		let avatar_group = frappe.avatar_group(user_list, 5, {
+		let avatar_group = traquent.avatar_group(user_list, 5, {
 			align: "left",
 			overlap: true,
 		});
@@ -136,8 +136,8 @@ frappe.ui.form.Sidebar = class {
 	show_auto_repeat_status() {
 		if (this.frm.meta.allow_auto_repeat && this.frm.doc.auto_repeat) {
 			const me = this;
-			frappe.call({
-				method: "frappe.client.get_value",
+			traquent.call({
+				method: "traquent.client.get_value",
 				args: {
 					doctype: "Auto Repeat",
 					filters: {
@@ -151,7 +151,7 @@ frappe.ui.form.Sidebar = class {
 					el.closest(".sidebar-section").removeClass("hidden");
 					el.show();
 					el.on("click", function () {
-						frappe.set_route("Form", "Auto Repeat", me.frm.doc.auto_repeat);
+						traquent.set_route("Form", "Auto Repeat", me.frm.doc.auto_repeat);
 					});
 				},
 			});
@@ -165,7 +165,7 @@ frappe.ui.form.Sidebar = class {
 			el.closest(".sidebar-section").removeClass("hidden");
 			el.show();
 			el.on("click", () => {
-				frappe.set_route("List", "Error Log", {
+				traquent.set_route("List", "Error Log", {
 					reference_doctype: this.frm.doc.doctype,
 					reference_name: this.frm.doc.name,
 				});
@@ -180,7 +180,7 @@ frappe.ui.form.Sidebar = class {
 			el.closest(".sidebar-section").removeClass("hidden");
 			el.show();
 			el.on("click", () => {
-				frappe.set_route("List", "Webhook Request Log", {
+				traquent.set_route("List", "Webhook Request Log", {
 					reference_doctype: this.frm.doc.doctype,
 					reference_document: this.frm.doc.name,
 				});
@@ -196,7 +196,7 @@ frappe.ui.form.Sidebar = class {
 
 		let tags_parent = this.sidebar.find(".form-tags");
 
-		this.frm.tags = new frappe.ui.TagEditor({
+		this.frm.tags = new traquent.ui.TagEditor({
 			parent: tags_parent,
 			add_button: tags_parent.find(".add-tags-btn"),
 			frm: this.frm,
@@ -208,21 +208,21 @@ frappe.ui.form.Sidebar = class {
 
 	make_attachments() {
 		var me = this;
-		this.frm.attachments = new frappe.ui.form.Attachments({
+		this.frm.attachments = new traquent.ui.form.Attachments({
 			parent: me.sidebar.find(".form-attachments"),
 			frm: me.frm,
 		});
 	}
 
 	make_assignments() {
-		this.frm.assign_to = new frappe.ui.form.AssignTo({
+		this.frm.assign_to = new traquent.ui.form.AssignTo({
 			parent: this.sidebar.find(".form-assignments"),
 			frm: this.frm,
 		});
 	}
 
 	make_shared() {
-		this.frm.shared = new frappe.ui.form.Share({
+		this.frm.shared = new traquent.ui.form.Share({
 			frm: this.frm,
 			parent: this.sidebar.find(".form-shared"),
 		});
@@ -248,8 +248,8 @@ frappe.ui.form.Sidebar = class {
 
 	make_review() {
 		const review_wrapper = this.sidebar.find(".form-reviews");
-		if (frappe.boot.energy_points_enabled && !this.frm.is_new()) {
-			this.frm.reviews = new frappe.ui.form.Review({
+		if (traquent.boot.energy_points_enabled && !this.frm.is_new()) {
+			this.frm.reviews = new traquent.ui.form.Review({
 				parent: review_wrapper,
 				frm: this.frm,
 			});
@@ -259,8 +259,8 @@ frappe.ui.form.Sidebar = class {
 	}
 
 	reload_docinfo(callback) {
-		frappe.call({
-			method: "frappe.desk.form.load.get_docinfo",
+		traquent.call({
+			method: "traquent.desk.form.load.get_docinfo",
 			args: {
 				doctype: this.frm.doctype,
 				name: this.frm.docname,

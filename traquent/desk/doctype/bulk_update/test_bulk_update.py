@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Frappe Technologies and Contributors
+# Copyright (c) 2023, traquent Technologies and Contributors
 # See LICENSE
 
 import time

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import json
@@ -12,7 +12,7 @@ import traquent
 from traquent import _, safe_decode
 from traquent.utils import cstr
 from traquent.utils.caching import redis_cache
-from traquent.utils.frappecloud import on_frappecloud
+from traquent.utils.traquentcloud import on_traquentcloud
 
 
 def get_change_log(user=None):
@@ -48,11 +48,11 @@ def get_change_log(user=None):
 				)
 
 	for app, opts in current_versions.items():
-		if app != "frappe":
+		if app != "traquent":
 			set_in_change_log(app, opts, change_log)
 
-	if "frappe" in current_versions:
-		set_in_change_log("frappe", current_versions["frappe"], change_log)
+	if "traquent" in current_versions:
+		set_in_change_log("traquent", current_versions["traquent"], change_log)
 
 	return change_log
 
@@ -104,8 +104,8 @@ def get_versions():
 	Example:
 
 	        {
-	                "frappe": {
-	                        "title": "Frappe Framework",
+	                "traquent": {
+	                        "title": "traquent Framework",
 	                        "version": "5.0.0"
 	                }
 	        }"""
@@ -272,7 +272,7 @@ def security_issues_count(owner: str, repo: str, current_version: Version, targe
 				if (
 					current_version in vulnerable_range
 					and target_version not in vulnerable_range
-					# XXX: this is not 100% correct, but works for frappe
+					# XXX: this is not 100% correct, but works for traquent
 					and current_version.major == patch_version.major
 				):
 					return True
@@ -378,11 +378,11 @@ def show_update_popup():
 				)
 
 	primary_action = None
-	if on_frappecloud():
+	if on_traquentcloud():
 		primary_action = {
-			"label": _("Update from Frappe Cloud"),
+			"label": _("Update from traquent Cloud"),
 			"client_action": "window.open",
-			"args": f"https://frappecloud.com/dashboard/sites/{traquent.local.site}",
+			"args": f"https://traquentcloud.com/dashboard/sites/{traquent.local.site}",
 		}
 
 	if update_message:

@@ -28,13 +28,13 @@ body {
 	}
 }
 
-.frappe-card {
+.traquent-card {
 	@include card();
 	box-shadow: none;
 	border: 1px solid var(--border-color);
 }
 
-.frappe-control[data-fieldtype="Select"].frappe-control[data-fieldname="color"] {
+.traquent-control[data-fieldtype="Select"].traquent-control[data-fieldname="color"] {
 	.color-select {
 		padding-left: 40px;
 	}
@@ -50,8 +50,8 @@ body {
 	}
 }
 
-.frappe-control[data-fieldtype="Select"] .control-input,
-.frappe-control[data-fieldtype="Select"].form-group {
+.traquent-control[data-fieldtype="Select"] .control-input,
+.traquent-control[data-fieldtype="Select"].form-group {
 	position: relative;
 
 	select {

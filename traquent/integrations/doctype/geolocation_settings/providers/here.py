@@ -29,7 +29,7 @@ class Here:
 		for result in results:
 			address = result["address"]
 			py_country = pycountry.countries.get(alpha_3=address.get("countryCode"))
-			frappe_country = traquent.db.get_value("Country", {"code": py_country.alpha_2.lower()})
+			traquent_country = traquent.db.get_value("Country", {"code": py_country.alpha_2.lower()})
 			yield {
 				"label": address["label"],
 				"value": json.dumps(
@@ -38,7 +38,7 @@ class Here:
 						"city": address.get("city", ""),
 						"state": address.get("state", ""),
 						"pincode": address.get("postalCode", ""),
-						"country": frappe_country or "",
+						"country": traquent_country or "",
 					}
 				),
 			}

@@ -1,6 +1,6 @@
 import JsBarcode from "jsbarcode";
 
-frappe.ui.form.ControlBarcode = class ControlBarcode extends frappe.ui.form.ControlData {
+traquent.ui.form.ControlBarcode = class ControlBarcode extends traquent.ui.form.ControlData {
 	make_wrapper() {
 		// Create the elements for barcode area
 		super.make_wrapper();
@@ -63,7 +63,7 @@ frappe.ui.form.ControlBarcode = class ControlBarcode extends frappe.ui.form.Cont
 		options.width = "3";
 		options.height = "50";
 
-		if (frappe.utils.is_json(this.df.options)) {
+		if (traquent.utils.is_json(this.df.options)) {
 			options = JSON.parse(this.df.options);
 			if (options.format && options.format === "EAN") {
 				options.format = value.length == 8 ? "EAN8" : "EAN13";

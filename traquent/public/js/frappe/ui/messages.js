@@ -1,15 +1,15 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.provide("frappe.messages");
+traquent.provide("traquent.messages");
 
 import "./dialog";
 
-frappe.messages.waiting = function (parent, msg) {
-	return $(frappe.messages.get_waiting_message(msg)).appendTo(parent);
+traquent.messages.waiting = function (parent, msg) {
+	return $(traquent.messages.get_waiting_message(msg)).appendTo(parent);
 };
 
-frappe.messages.get_waiting_message = function (msg) {
+traquent.messages.get_waiting_message = function (msg) {
 	return repl(
 		'<div class="msg-box" style="width: 63%; margin: 30px auto;">\
 		<p class="text-center">%(msg)s</p></div>',
@@ -17,17 +17,17 @@ frappe.messages.get_waiting_message = function (msg) {
 	);
 };
 
-frappe.throw = function (msg) {
+traquent.throw = function (msg) {
 	if (typeof msg === "string") {
 		msg = { message: msg, title: __("Error") };
 	}
 	if (!msg.indicator) msg.indicator = "red";
-	frappe.msgprint(msg);
+	traquent.msgprint(msg);
 	throw new Error(msg.message);
 };
 
-frappe.confirm = function (message, confirm_action, reject_action) {
-	var d = new frappe.ui.Dialog({
+traquent.confirm = function (message, confirm_action, reject_action) {
+	var d = new traquent.ui.Dialog({
 		title: __("Confirm", null, "Title of confirmation dialog"),
 		primary_action_label: __("Yes", null, "Approve confirmation dialog"),
 		primary_action: () => {
@@ -38,7 +38,7 @@ frappe.confirm = function (message, confirm_action, reject_action) {
 		secondary_action: () => d.hide(),
 	});
 
-	d.$body.append(`<p class="frappe-confirm-message">${message}</p>`);
+	d.$body.append(`<p class="traquent-confirm-message">${message}</p>`);
 	d.show();
 
 	// flag, used to bind "okay" on enter
@@ -56,8 +56,8 @@ frappe.confirm = function (message, confirm_action, reject_action) {
 	return d;
 };
 
-frappe.warn = function (title, message_html, proceed_action, primary_label, is_minimizable) {
-	const d = new frappe.ui.Dialog({
+traquent.warn = function (title, message_html, proceed_action, primary_label, is_minimizable) {
+	const d = new traquent.ui.Dialog({
 		title: title,
 		indicator: "red",
 		primary_action_label: primary_label,
@@ -70,14 +70,14 @@ frappe.warn = function (title, message_html, proceed_action, primary_label, is_m
 		minimizable: is_minimizable,
 	});
 
-	d.$body.append(`<div class="frappe-confirm-message">${message_html}</div>`);
+	d.$body.append(`<div class="traquent-confirm-message">${message_html}</div>`);
 	d.standard_actions.find(".btn-primary").removeClass("btn-primary").addClass("btn-danger");
 
 	d.show();
 	return d;
 };
 
-frappe.prompt = function (fields, callback, title, primary_label) {
+traquent.prompt = function (fields, callback, title, primary_label) {
 	if (typeof fields === "string") {
 		fields = [
 			{
@@ -89,7 +89,7 @@ frappe.prompt = function (fields, callback, title, primary_label) {
 		];
 	}
 	if (!$.isArray(fields)) fields = [fields];
-	var d = new frappe.ui.Dialog({
+	var d = new traquent.ui.Dialog({
 		fields: fields,
 		title: title || __("Enter Value", null, "Title of prompt dialog"),
 	});
@@ -108,7 +108,7 @@ frappe.prompt = function (fields, callback, title, primary_label) {
 	return d;
 };
 
-frappe.msgprint = function (msg, title, is_minimizable) {
+traquent.msgprint = function (msg, title, is_minimizable) {
 	if (!msg) return;
 
 	let data;
@@ -160,36 +160,36 @@ frappe.msgprint = function (msg, title, is_minimizable) {
 		}
 
 		messages.forEach(function (m) {
-			frappe.msgprint(m);
+			traquent.msgprint(m);
 		});
 		return;
 	}
 
 	if (data.alert || data.toast) {
-		frappe.show_alert(data);
+		traquent.show_alert(data);
 		return;
 	}
 
-	if (!frappe.msg_dialog) {
-		frappe.msg_dialog = new frappe.ui.Dialog({
+	if (!traquent.msg_dialog) {
+		traquent.msg_dialog = new traquent.ui.Dialog({
 			title: __("Message"),
 			onhide: function () {
-				if (frappe.msg_dialog.custom_onhide) {
-					frappe.msg_dialog.custom_onhide();
+				if (traquent.msg_dialog.custom_onhide) {
+					traquent.msg_dialog.custom_onhide();
 				}
-				frappe.msg_dialog.msg_area.empty();
+				traquent.msg_dialog.msg_area.empty();
 			},
 			minimizable: data.is_minimizable || is_minimizable,
 		});
 
 		// class "msgprint" is used in tests
-		frappe.msg_dialog.msg_area = $('<div class="msgprint">').appendTo(frappe.msg_dialog.body);
+		traquent.msg_dialog.msg_area = $('<div class="msgprint">').appendTo(traquent.msg_dialog.body);
 
-		frappe.msg_dialog.clear = function () {
-			frappe.msg_dialog.msg_area.empty();
+		traquent.msg_dialog.clear = function () {
+			traquent.msg_dialog.msg_area.empty();
 		};
 
-		frappe.msg_dialog.indicator = frappe.msg_dialog.header.find(".indicator");
+		traquent.msg_dialog.indicator = traquent.msg_dialog.header.find(".indicator");
 	}
 
 	// setup and bind an action to the primary button
@@ -199,12 +199,12 @@ frappe.msgprint = function (msg, title, is_minimizable) {
 			typeof data.primary_action.server_action === "string"
 		) {
 			data.primary_action.action = () => {
-				frappe.call({
+				traquent.call({
 					method: data.primary_action.server_action,
 					args: data.primary_action.args,
 					callback() {
 						if (data.primary_action.hide_on_success) {
-							frappe.hide_msgprint();
+							traquent.hide_msgprint();
 						}
 					},
 				});
@@ -227,20 +227,20 @@ frappe.msgprint = function (msg, title, is_minimizable) {
 			};
 		}
 
-		frappe.msg_dialog.set_primary_action(
+		traquent.msg_dialog.set_primary_action(
 			__(data.primary_action.label) || __(data.primary_action_label) || __("Done"),
 			data.primary_action.action
 		);
 	} else {
-		if (frappe.msg_dialog.has_primary_action) {
-			frappe.msg_dialog.get_primary_btn().addClass("hide");
-			frappe.msg_dialog.has_primary_action = false;
+		if (traquent.msg_dialog.has_primary_action) {
+			traquent.msg_dialog.get_primary_btn().addClass("hide");
+			traquent.msg_dialog.has_primary_action = false;
 		}
 	}
 
 	if (data.secondary_action) {
-		frappe.msg_dialog.set_secondary_action(data.secondary_action.action);
-		frappe.msg_dialog.set_secondary_action_label(
+		traquent.msg_dialog.set_secondary_action(data.secondary_action.action);
+		traquent.msg_dialog.set_secondary_action_label(
 			__(data.secondary_action.label) || __("Close")
 		);
 	}
@@ -250,85 +250,85 @@ frappe.msgprint = function (msg, title, is_minimizable) {
 	}
 
 	if (data.message.search(/<br>|<p>|<li>/) == -1) {
-		msg = frappe.utils.replace_newlines(data.message);
+		msg = traquent.utils.replace_newlines(data.message);
 	}
 
 	var msg_exists = false;
 	if (data.clear) {
-		frappe.msg_dialog.msg_area.empty();
+		traquent.msg_dialog.msg_area.empty();
 	} else {
-		msg_exists = frappe.msg_dialog.msg_area.html();
+		msg_exists = traquent.msg_dialog.msg_area.html();
 	}
 
 	if (data.title || !msg_exists) {
 		// set title only if it is explicitly given
 		// and no existing title exists
-		frappe.msg_dialog.set_title(
+		traquent.msg_dialog.set_title(
 			data.title || __("Message", null, "Default title of the message dialog")
 		);
 	}
 
 	// show / hide indicator
 	if (data.indicator) {
-		frappe.msg_dialog.indicator.removeClass().addClass("indicator " + data.indicator);
+		traquent.msg_dialog.indicator.removeClass().addClass("indicator " + data.indicator);
 	} else {
-		frappe.msg_dialog.indicator.removeClass().addClass("hidden");
+		traquent.msg_dialog.indicator.removeClass().addClass("hidden");
 	}
 
 	// width
 	if (data.wide) {
 		// msgprint should be narrower than the usual dialog
-		if (frappe.msg_dialog.wrapper.classList.contains("msgprint-dialog")) {
-			frappe.msg_dialog.wrapper.classList.remove("msgprint-dialog");
+		if (traquent.msg_dialog.wrapper.classList.contains("msgprint-dialog")) {
+			traquent.msg_dialog.wrapper.classList.remove("msgprint-dialog");
 		}
 	} else {
 		// msgprint should be narrower than the usual dialog
-		frappe.msg_dialog.wrapper.classList.add("msgprint-dialog");
+		traquent.msg_dialog.wrapper.classList.add("msgprint-dialog");
 	}
 
 	if (msg_exists) {
-		frappe.msg_dialog.msg_area.append("<hr>");
+		traquent.msg_dialog.msg_area.append("<hr>");
 		// append a <hr> if another msg already exists
 	}
 
-	frappe.msg_dialog.msg_area.append(data.message);
+	traquent.msg_dialog.msg_area.append(data.message);
 
 	// make msgprint always appear on top
-	frappe.msg_dialog.$wrapper.css("z-index", 2000);
-	frappe.msg_dialog.show();
+	traquent.msg_dialog.$wrapper.css("z-index", 2000);
+	traquent.msg_dialog.show();
 
-	return frappe.msg_dialog;
+	return traquent.msg_dialog;
 };
 
-window.msgprint = frappe.msgprint;
+window.msgprint = traquent.msgprint;
 
-frappe.hide_msgprint = function (instant) {
+traquent.hide_msgprint = function (instant) {
 	// clear msgprint
-	if (frappe.msg_dialog && frappe.msg_dialog.msg_area) {
-		frappe.msg_dialog.msg_area.empty();
+	if (traquent.msg_dialog && traquent.msg_dialog.msg_area) {
+		traquent.msg_dialog.msg_area.empty();
 	}
-	if (frappe.msg_dialog && frappe.msg_dialog.$wrapper.is(":visible")) {
+	if (traquent.msg_dialog && traquent.msg_dialog.$wrapper.is(":visible")) {
 		if (instant) {
-			frappe.msg_dialog.$wrapper.removeClass("fade");
+			traquent.msg_dialog.$wrapper.removeClass("fade");
 		}
-		frappe.msg_dialog.hide();
+		traquent.msg_dialog.hide();
 		if (instant) {
-			frappe.msg_dialog.$wrapper.addClass("fade");
+			traquent.msg_dialog.$wrapper.addClass("fade");
 		}
 	}
 };
 
 // update html in existing msgprint
-frappe.update_msgprint = function (html) {
-	if (!frappe.msg_dialog || (frappe.msg_dialog && !frappe.msg_dialog.$wrapper.is(":visible"))) {
-		frappe.msgprint(html);
+traquent.update_msgprint = function (html) {
+	if (!traquent.msg_dialog || (traquent.msg_dialog && !traquent.msg_dialog.$wrapper.is(":visible"))) {
+		traquent.msgprint(html);
 	} else {
-		frappe.msg_dialog.msg_area.html(html);
+		traquent.msg_dialog.msg_area.html(html);
 	}
 };
 
-frappe.verify_password = function (callback) {
-	frappe.prompt(
+traquent.verify_password = function (callback) {
+	traquent.prompt(
 		{
 			fieldname: "password",
 			label: __("Enter your password"),
@@ -336,8 +336,8 @@ frappe.verify_password = function (callback) {
 			reqd: 1,
 		},
 		function (data) {
-			frappe.call({
-				method: "frappe.core.doctype.user.user.verify_password",
+			traquent.call({
+				method: "traquent.core.doctype.user.user.verify_password",
 				args: {
 					password: data.password,
 				},
@@ -353,16 +353,16 @@ frappe.verify_password = function (callback) {
 	);
 };
 
-frappe.show_progress = (title, count, total = 100, description, hide_on_completion = false) => {
+traquent.show_progress = (title, count, total = 100, description, hide_on_completion = false) => {
 	let dialog;
 	if (
-		frappe.cur_progress &&
-		frappe.cur_progress.title === title &&
-		frappe.cur_progress.is_visible
+		traquent.cur_progress &&
+		traquent.cur_progress.title === title &&
+		traquent.cur_progress.is_visible
 	) {
-		dialog = frappe.cur_progress;
+		dialog = traquent.cur_progress;
 	} else {
-		dialog = new frappe.ui.Dialog({
+		dialog = new traquent.ui.Dialog({
 			title: title,
 		});
 		dialog.progress = $(`<div>
@@ -374,7 +374,7 @@ frappe.show_progress = (title, count, total = 100, description, hide_on_completi
 		dialog.progress_bar = dialog.progress.css({ "margin-top": "10px" }).find(".progress-bar");
 		dialog.$wrapper.removeClass("fade");
 		dialog.show();
-		frappe.cur_progress = dialog;
+		traquent.cur_progress = dialog;
 	}
 	if (description) {
 		dialog.progress.find(".description").text(description);
@@ -383,21 +383,21 @@ frappe.show_progress = (title, count, total = 100, description, hide_on_completi
 	dialog.progress_bar.css({ width: dialog.percent + "%" });
 	if (hide_on_completion && dialog.percent === 100) {
 		// timeout to avoid abrupt hide
-		setTimeout(frappe.hide_progress, 500);
+		setTimeout(traquent.hide_progress, 500);
 	}
-	frappe.cur_progress.$wrapper.css("z-index", 2000);
+	traquent.cur_progress.$wrapper.css("z-index", 2000);
 	return dialog;
 };
 
-frappe.hide_progress = function () {
-	if (frappe.cur_progress) {
-		frappe.cur_progress.hide();
-		frappe.cur_progress = null;
+traquent.hide_progress = function () {
+	if (traquent.cur_progress) {
+		traquent.cur_progress.hide();
+		traquent.cur_progress = null;
 	}
 };
 
 // Floating Message
-frappe.show_alert = frappe.toast = function (message, seconds = 7, actions = {}) {
+traquent.show_alert = traquent.toast = function (message, seconds = 7, actions = {}) {
 	let indicator_icon_map = {
 		orange: "solid-warning",
 		yellow: "solid-warning",
@@ -429,13 +429,13 @@ frappe.show_alert = frappe.toast = function (message, seconds = 7, actions = {})
 		<div class="alert desk-alert ${indicator}" role="alert">
 			<div class="alert-message-container">
 				<div class="alert-title-container">
-					<div>${frappe.utils.icon(icon, "lg")}</div>
+					<div>${traquent.utils.icon(icon, "lg")}</div>
 					<div class="alert-message">${message.message}</div>
 				</div>
 				<div class="alert-subtitle">${message.subtitle || ""}</div>
 			</div>
 			<div class="alert-body" style="display: none"></div>
-			<a class="close">${frappe.utils.icon("close-alt")}</a>
+			<a class="close">${traquent.utils.icon("close-alt")}</a>
 		</div>
 	`);
 

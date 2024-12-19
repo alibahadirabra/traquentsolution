@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import contextlib
@@ -58,7 +58,7 @@ def _get_user_inputs(app_name):
 			"default": False,
 			"type": bool,
 		},
-		"branch_name": {"prompt": "Branch Name", "default": get_app_branch("frappe")},
+		"branch_name": {"prompt": "Branch Name", "default": get_app_branch("traquent")},
 	}
 
 	for property, config in new_app_config.items():
@@ -126,9 +126,9 @@ def get_license_text(license_name: str) -> str:
 	return license_name
 
 
-def copy_from_frappe(rel_path: str, new_app_path: str):
-	"""Copy files from frappe app to new app."""
-	src = Path(traquent.get_app_path("frappe", "..")) / rel_path
+def copy_from_traquent(rel_path: str, new_app_path: str):
+	"""Copy files from traquent app to new app."""
+	src = Path(traquent.get_app_path("traquent", "..")) / rel_path
 	target = Path(new_app_path) / rel_path
 	Path(target).write_text(Path(src).read_text())
 
@@ -182,8 +182,8 @@ def _create_app_boilerplate(dest, hooks, no_git=False):
 
 	app_directory = os.path.join(dest, hooks.app_name)
 
-	copy_from_frappe(".editorconfig", app_directory)
-	copy_from_frappe(".eslintrc", app_directory)
+	copy_from_traquent(".editorconfig", app_directory)
+	copy_from_traquent(".eslintrc", app_directory)
 
 	if hooks.create_github_workflow:
 		_create_github_workflow_files(dest, hooks)
@@ -221,7 +221,7 @@ def _create_github_workflow_files(dest, hooks):
 
 PATCH_TEMPLATE = textwrap.dedent(
 	'''
-	import frappe
+	import traquent
 
 	def execute():
 		"""{docstring}"""
@@ -339,7 +339,7 @@ requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]
 dependencies = [
-    # "frappe~=15.0.0" # Installed and managed by bench.
+    # "traquent~=15.0.0" # Installed and managed by bench.
 ]
 
 [build-system]
@@ -378,7 +378,7 @@ ignore = [
     "F722", # syntax error in forward type annotation
     "W191", # indentation contains tabs
 ]
-typing-modules = ["frappe.types.DF"]
+typing-modules = ["traquent.types.DF"]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -497,7 +497,7 @@ app_license = "{app_license}"
 
 # Desk Notifications
 # ------------------
-# See frappe.core.notifications.get_notification_config
+# See traquent.core.notifications.get_notification_config
 
 # notification_config = "{app_name}.notifications.get_notification_config"
 
@@ -506,11 +506,11 @@ app_license = "{app_license}"
 # Permissions evaluated in scripted ways
 
 # permission_query_conditions = {{
-# 	"Event": "frappe.desk.doctype.event.event.get_permission_query_conditions",
+# 	"Event": "traquent.desk.doctype.event.event.get_permission_query_conditions",
 # }}
 #
 # has_permission = {{
-# 	"Event": "frappe.desk.doctype.event.event.has_permission",
+# 	"Event": "traquent.desk.doctype.event.event.has_permission",
 # }}
 
 # DocType Class
@@ -563,12 +563,12 @@ app_license = "{app_license}"
 # ------------------------------
 #
 # override_whitelisted_methods = {{
-# 	"frappe.desk.doctype.event.event.get_events": "{app_name}.event.get_events"
+# 	"traquent.desk.doctype.event.event.get_events": "{app_name}.event.get_events"
 # }}
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
-# along with any modifications made in other Frappe apps
+# along with any modifications made in other traquent apps
 # override_doctype_dashboards = {{
 # 	"Task": "{app_name}.task.get_dashboard_data"
 # }}
@@ -725,13 +725,13 @@ jobs:
 
       - name: Setup
         run: |
-          pip install frappe-bench
-          bench init --skip-redis-config-generation --skip-assets --python "$(which python)" ~/frappe-bench
+          pip install traquent-bench
+          bench init --skip-redis-config-generation --skip-assets --python "$(which python)" ~/traquent-bench
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL character_set_server = 'utf8mb4'"
           mariadb --host 127.0.0.1 --port 3306 -u root -proot -e "SET GLOBAL collation_server = 'utf8mb4_unicode_ci'"
 
       - name: Install
-        working-directory: /home/runner/frappe-bench
+        working-directory: /home/runner/traquent-bench
         run: |
           bench get-app {app_name} $GITHUB_WORKSPACE
           bench setup requirements --dev
@@ -742,7 +742,7 @@ jobs:
           CI: 'Yes'
 
       - name: Run Tests
-        working-directory: /home/runner/frappe-bench
+        working-directory: /home/runner/traquent-bench
         run: |
           bench --site test_site set-config allow_tests true
           bench --site test_site run-tests --app {app_name}
@@ -752,7 +752,7 @@ jobs:
 
 patches_template = """[pre_model_sync]
 # Patches added in this section will be executed before doctypes are migrated
-# Read docs to understand patches: https://frappeframework.com/docs/v14/user/en/database-migrations
+# Read docs to understand patches: https://traquentframework.com/docs/v14/user/en/database-migrations
 
 [post_model_sync]
 # Patches added in this section will be executed after doctypes are migrated"""
@@ -843,7 +843,7 @@ concurrency:
 
 jobs:
   linter:
-    name: 'Frappe Linter'
+    name: 'traquent Linter'
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
 
@@ -856,12 +856,12 @@ jobs:
       - uses: pre-commit/action@v3.0.0
 
       - name: Download Semgrep rules
-        run: git clone --depth 1 https://github.com/frappe/semgrep-rules.git frappe-semgrep-rules
+        run: git clone --depth 1 https://github.com/traquent/semgrep-rules.git traquent-semgrep-rules
 
       - name: Run Semgrep rules
         run: |
           pip install semgrep
-          semgrep ci --config ./frappe-semgrep-rules/rules --config r/python.lang.correctness
+          semgrep ci --config ./traquent-semgrep-rules/rules --config r/python.lang.correctness
 
   deps-vulnerable-check:
     name: 'Vulnerable Dependency Check'
@@ -896,7 +896,7 @@ readme_template = """### {app_title}
 
 ### Installation
 
-You can install this app using the [bench](https://github.com/frappe/bench) CLI:
+You can install this app using the [bench](https://github.com/traquent/bench) CLI:
 
 ```bash
 cd $PATH_TO_YOUR_BENCH
@@ -931,6 +931,6 @@ readme_ci_section = """
 This app can use GitHub Actions for CI. The following workflows are configured:
 
 - CI: Installs this app and runs unit tests on every push to `develop` branch.
-- Linters: Runs [Frappe Semgrep Rules](https://github.com/frappe/semgrep-rules) and [pip-audit](https://pypi.org/project/pip-audit/) on every pull request.
+- Linters: Runs [traquent Semgrep Rules](https://github.com/traquent/semgrep-rules) and [pip-audit](https://pypi.org/project/pip-audit/) on every pull request.
 
 """

@@ -1,9 +1,9 @@
-// Copyright (c) 2020, Frappe Technologies and contributors
+// Copyright (c) 2020, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("System Console", {
+traquent.ui.form.on("System Console", {
 	onload: function (frm) {
-		frappe.ui.keys.add_shortcut({
+		traquent.ui.keys.add_shortcut({
 			shortcut: "shift+enter",
 			action: () => frm.page.btn_primary.trigger("click"),
 			page: frm.page,
@@ -89,8 +89,8 @@ frappe.ui.form.on("System Console", {
 
 	refresh_processlist: function (frm) {
 		let timestamp = new Date();
-		frappe
-			.call("frappe.desk.doctype.system_console.system_console.show_processlist")
+		traquent
+			.call("traquent.desk.doctype.system_console.system_console.show_processlist")
 			.then((r) => {
 				let rows = "";
 				for (let row of r.message) {

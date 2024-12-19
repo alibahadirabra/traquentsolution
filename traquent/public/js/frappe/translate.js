@@ -1,8 +1,8 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
 // for translation
-frappe._ = function (txt, replace, context = null) {
+traquent._ = function (txt, replace, context = null) {
 	if (!txt) return txt;
 	if (typeof txt != "string") return txt;
 
@@ -10,11 +10,11 @@ frappe._ = function (txt, replace, context = null) {
 
 	let key = txt; // txt.replace(/\n/g, "");
 	if (context) {
-		translated_text = frappe._messages[`${key}:${context}`];
+		translated_text = traquent._messages[`${key}:${context}`];
 	}
 
 	if (!translated_text) {
-		translated_text = frappe._messages[key] || txt;
+		translated_text = traquent._messages[key] || txt;
 	}
 
 	if (replace && typeof replace === "object") {
@@ -23,17 +23,17 @@ frappe._ = function (txt, replace, context = null) {
 	return translated_text;
 };
 
-window.__ = frappe._;
+window.__ = traquent._;
 
-frappe.get_languages = function () {
-	if (!frappe.languages) {
-		frappe.languages = [];
-		$.each(frappe.boot.lang_dict, function (lang, value) {
-			frappe.languages.push({ label: lang, value: value });
+traquent.get_languages = function () {
+	if (!traquent.languages) {
+		traquent.languages = [];
+		$.each(traquent.boot.lang_dict, function (lang, value) {
+			traquent.languages.push({ label: lang, value: value });
 		});
-		frappe.languages = frappe.languages.sort(function (a, b) {
+		traquent.languages = traquent.languages.sort(function (a, b) {
 			return a.value < b.value ? -1 : 1;
 		});
 	}
-	return frappe.languages;
+	return traquent.languages;
 };

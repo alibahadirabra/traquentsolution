@@ -234,7 +234,7 @@ body.modal-open[style^="padding-right"] {
 		display: flex;
 		align-items: center;
 
-		.frappe-control:first-child {
+		.traquent-control:first-child {
 			&[data-fieldname="sender"] {
 				margin-right: 10px;
 			}
@@ -244,7 +244,7 @@ body.modal-open[style^="padding-right"] {
 				width: 60%;
 			}
 		}
-		.frappe-control:last-child {
+		.traquent-control:last-child {
 			margin-left: 10px;
 			button {
 				// same as form-control input
@@ -259,7 +259,7 @@ body.modal-open[style^="padding-right"] {
 		display: flex;
 		align-items: center;
 
-		.frappe-control:first-child {
+		.traquent-control:first-child {
 			&[data-fieldname="email_template"] {
 				margin-right: 10px;
 			}
@@ -270,7 +270,7 @@ body.modal-open[style^="padding-right"] {
 			}
 		}
 
-		.frappe-control:last-child {
+		.traquent-control:last-child {
 			margin-top: -14px;
 		}
 	}

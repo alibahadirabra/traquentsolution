@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 from cryptography.fernet import Fernet, InvalidToken
@@ -50,7 +50,7 @@ def set_encrypted_password(doctype, name, pwd, fieldname="password"):
 		.insert(doctype, name, fieldname, encrypt(pwd), 1)
 	)
 
-	# TODO: Simplify this via aliasing methods in `frappe.qb`
+	# TODO: Simplify this via aliasing methods in `traquent.qb`
 	if traquent.db.db_type == "mariadb":
 		query = query.on_duplicate_key_update(Auth.password, Values(Auth.password))
 	elif traquent.db.db_type == "postgres":
@@ -70,7 +70,7 @@ def remove_encrypted_password(doctype, name, fieldname="password"):
 
 
 def check_password(user, pwd, doctype="User", fieldname="password", delete_tracker_cache=True):
-	"""Checks if user and password are correct, else raises frappe.AuthenticationError"""
+	"""Checks if user and password are correct, else raises traquent.AuthenticationError"""
 
 	result = (
 		traquent.qb.from_(Auth)
@@ -124,7 +124,7 @@ def update_password(user, pwd, doctype="User", fieldname="password", logout_all_
 		.insert(doctype, user, fieldname, hashPwd, 0)
 	)
 
-	# TODO: Simplify this via aliasing methods in `frappe.qb`
+	# TODO: Simplify this via aliasing methods in `traquent.qb`
 	if traquent.db.db_type == "mariadb":
 		query = query.on_duplicate_key_update(Auth.password, hashPwd).on_duplicate_key_update(
 			Auth.encrypted, 0
@@ -200,7 +200,7 @@ def decrypt(txt, encryption_key=None, key: str | None = None):
 			)
 			+ "<br><br>"
 			+ _(
-				"Please visit https://frappecloud.com/docs/sites/migrate-an-existing-site#encryption-key for more information."
+				"Please visit https://traquentcloud.com/docs/sites/migrate-an-existing-site#encryption-key for more information."
 			),
 		)
 

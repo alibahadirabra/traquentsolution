@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import os
 import textwrap
@@ -65,7 +65,7 @@ class TestTranslate(IntegrationTestCase):
 	def test_extract_message_from_file(self):
 		data = traquent.translate.get_messages_from_file(translation_string_file)
 		bench_path = get_bench_path()
-		file_path = traquent.get_app_path("frappe", "tests", "translation_test_file.txt")
+		file_path = traquent.get_app_path("traquent", "tests", "translation_test_file.txt")
 		exp_filename = os.path.relpath(file_path, bench_path)
 
 		self.assertEqual(
@@ -114,9 +114,9 @@ class TestTranslate(IntegrationTestCase):
 		self.assertEqual(f"{_lazy_translations}", eager_translation)
 
 	def test_request_language_resolution_with_form_dict(self):
-		"""Test for frappe.translate.get_language
+		"""Test for traquent.translate.get_language
 
-		Case 1: frappe.form_dict._lang is set
+		Case 1: traquent.form_dict._lang is set
 		"""
 
 		traquent.form_dict._lang = first_lang
@@ -127,9 +127,9 @@ class TestTranslate(IntegrationTestCase):
 		self.assertIn(return_val, [first_lang, get_parent_language(first_lang)])
 
 	def test_request_language_resolution_with_cookie(self):
-		"""Test for frappe.translate.get_language
+		"""Test for traquent.translate.get_language
 
-		Case 2: frappe.form_dict._lang is not set, but preferred_language cookie is
+		Case 2: traquent.form_dict._lang is not set, but preferred_language cookie is
 		"""
 
 		with patch.object(traquent.translate, "get_preferred_language_cookie", return_value="fr"):
@@ -140,9 +140,9 @@ class TestTranslate(IntegrationTestCase):
 			self.assertNotIn(return_val, [second_lang, get_parent_language(second_lang)])
 
 	def test_guest_request_language_resolution_with_cookie(self):
-		"""Test for frappe.translate.get_language
+		"""Test for traquent.translate.get_language
 
-		Case 3: frappe.form_dict._lang is not set, but preferred_language cookie is [Guest User]
+		Case 3: traquent.form_dict._lang is not set, but preferred_language cookie is [Guest User]
 		"""
 
 		with patch.object(traquent.translate, "get_preferred_language_cookie", return_value=second_lang):
@@ -160,9 +160,9 @@ class TestTranslate(IntegrationTestCase):
 		traquent.connect()
 
 	def test_guest_request_language_resolution_with_request_header(self):
-		"""Test for frappe.translate.get_language
+		"""Test for traquent.translate.get_language
 
-		Case 4: frappe.form_dict._lang & preferred_language cookie is not set, but Accept-Language header is [Guest User]
+		Case 4: traquent.form_dict._lang & preferred_language cookie is not set, but Accept-Language header is [Guest User]
 		"""
 
 		set_request(method="POST", path="/", headers=[("Accept-Language", third_lang)])
@@ -170,9 +170,9 @@ class TestTranslate(IntegrationTestCase):
 		self.assertIn(return_val, [third_lang, get_parent_language(third_lang)])
 
 	def test_request_language_resolution_with_request_header(self):
-		"""Test for frappe.translate.get_language
+		"""Test for traquent.translate.get_language
 
-		Case 5: frappe.form_dict._lang & preferred_language cookie is not set, but Accept-Language header is
+		Case 5: traquent.form_dict._lang & preferred_language cookie is not set, but Accept-Language header is
 		"""
 
 		set_request(method="POST", path="/", headers=[("Accept-Language", third_lang)])
@@ -181,14 +181,14 @@ class TestTranslate(IntegrationTestCase):
 
 	def test_load_all_translate_files(self):
 		"""Load all CSV files to ensure they have correct format"""
-		verify_translation_files("frappe")
+		verify_translation_files("traquent")
 
 	def test_python_extractor(self):
 		code = textwrap.dedent(
 			"""
-			frappe._("attr")
+			traquent._("attr")
 			_("name")
-			frappe._("attr with", context="attr context")
+			traquent._("attr with", context="attr context")
 			_("name with", context="name context")
 			_("broken on",
 				context="new line")

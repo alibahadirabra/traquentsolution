@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # MIT License. See LICENSE
 
 from traquent.exceptions import ValidationError

@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies and Contributors
+# Copyright (c) 2021, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import traquent
 from traquent.installer import update_site_config

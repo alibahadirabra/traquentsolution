@@ -128,7 +128,7 @@ def generate_pot(target_app: str | None = None):
 		return not (subdir.startswith(".") or subdir.startswith("_"))
 
 	apps = [target_app] if target_app else traquent.get_all_apps(True)
-	default_method_map = get_method_map("frappe")
+	default_method_map = get_method_map("traquent")
 
 	keywords = DEFAULT_KEYWORDS.copy()
 	keywords["_lt"] = None
@@ -139,7 +139,7 @@ def generate_pot(target_app: str | None = None):
 
 		# Each file will only be processed by the first method that matches,
 		# so more specific methods should come first.
-		method_map = [] if app == "frappe" else get_method_map(app)
+		method_map = [] if app == "traquent" else get_method_map(app)
 		method_map.extend(default_method_map)
 
 		for filename, lineno, message, comments, context in extract_from_dir(
@@ -190,7 +190,7 @@ def new_po(locale, target_app: str | None = None):
 
 		print(f"PO file created_at {po_path}")
 		print(
-			"You will need to add the language in frappe/geo/languages.csv, if you haven't done it already."
+			"You will need to add the language in traquent/geo/languages.csv, if you haven't done it already."
 		)
 
 
@@ -306,7 +306,7 @@ def get_translations_from_mo(lang, app):
 		return {}
 
 	translations = {}
-	lang = lang.replace("-", "_")  # Frappe uses dash, babel uses underscore.
+	lang = lang.replace("-", "_")  # traquent uses dash, babel uses underscore.
 
 	locale_dir = get_locale_dir()
 	mo_file = gettext.find(app, locale_dir, (lang,))

@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies and contributors
+# Copyright (c) 2021, traquent Technologies and contributors
 # For license information, please see license.txt
 
 import traquent
@@ -36,7 +36,7 @@ class DiscussionReply(Document):
 		)
 
 		template = traquent.render_template(
-			"frappe/templates/discussions/reply_card.html",
+			"traquent/templates/discussions/reply_card.html",
 			{
 				"reply": self,
 				"topic": {"name": self.topic},
@@ -46,11 +46,11 @@ class DiscussionReply(Document):
 		)
 
 		sidebar = traquent.render_template(
-			"frappe/templates/discussions/sidebar.html", {"topic": topic_info[0]}
+			"traquent/templates/discussions/sidebar.html", {"topic": topic_info[0]}
 		)
 
 		new_topic_template = traquent.render_template(
-			"frappe/templates/discussions/reply_section.html", {"topic": topic_info[0]}
+			"traquent/templates/discussions/reply_section.html", {"topic": topic_info[0]}
 		)
 
 		traquent.publish_realtime(

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies and Contributors
+# Copyright (c) 2015, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import textwrap
 
@@ -65,7 +65,7 @@ class TestEmailQueue(IntegrationTestCase):
 		To: <!--recipient-->
 		Date: {traquent.utils.now_datetime().strftime('%a, %d %b %Y %H:%M:%S %z')}
 		Reply-To: test@example.com
-		X-Frappe-Site: {traquent.local.site}
+		X-traquent-Site: {traquent.local.site}
 		"""
 		)
 		email_record.status = "Error"

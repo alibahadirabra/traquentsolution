@@ -19,7 +19,7 @@ class TestSafeExec(IntegrationTestCase):
 
 	def test_utils(self):
 		_locals = dict(out=None)
-		safe_exec("""out = frappe.utils.cint("1")""", None, _locals)
+		safe_exec("""out = traquent.utils.cint("1")""", None, _locals)
 		self.assertEqual(_locals["out"], 1)
 
 	def test_safe_eval(self):
@@ -36,7 +36,7 @@ class TestSafeExec(IntegrationTestCase):
 		for code, result in TEST_CASES.items():
 			self.assertEqual(traquent.safe_eval(code), result)
 
-		self.assertRaises(AttributeError, traquent.safe_eval, "frappe.utils.os.path", get_safe_globals())
+		self.assertRaises(AttributeError, traquent.safe_eval, "traquent.utils.os.path", get_safe_globals())
 
 		# Doc/dict objects
 		user = traquent.new_doc("User")
@@ -54,41 +54,41 @@ class TestSafeExec(IntegrationTestCase):
 	def test_sql(self):
 		_locals = dict(out=None)
 		safe_exec(
-			"""out = frappe.db.sql("select name from tabDocType where name='DocType'")""", None, _locals
+			"""out = traquent.db.sql("select name from tabDocType where name='DocType'")""", None, _locals
 		)
 		self.assertEqual(_locals["out"][0][0], "DocType")
 
 		self.assertRaises(
-			traquent.PermissionError, safe_exec, 'frappe.db.sql("update tabToDo set description=NULL")'
+			traquent.PermissionError, safe_exec, 'traquent.db.sql("update tabToDo set description=NULL")'
 		)
 
 	def test_query_builder(self):
 		_locals = dict(out=None)
 		safe_exec(
-			script="""out = frappe.qb.from_("User").select(frappe.qb.terms.PseudoColumn("Max(name)")).run()""",
+			script="""out = traquent.qb.from_("User").select(traquent.qb.terms.PseudoColumn("Max(name)")).run()""",
 			_globals=None,
 			_locals=_locals,
 		)
 		self.assertEqual(traquent.db.sql("SELECT Max(name) FROM tabUser"), _locals["out"])
 
 	def test_safe_query_builder(self):
-		self.assertRaises(traquent.PermissionError, safe_exec, """frappe.qb.from_("User").delete().run()""")
+		self.assertRaises(traquent.PermissionError, safe_exec, """traquent.qb.from_("User").delete().run()""")
 
 	def test_call(self):
 		# call non whitelisted method
-		self.assertRaises(traquent.PermissionError, safe_exec, """frappe.call("frappe.get_user")""")
+		self.assertRaises(traquent.PermissionError, safe_exec, """traquent.call("traquent.get_user")""")
 
 		# call whitelisted method
-		safe_exec("""frappe.call("ping")""")
+		safe_exec("""traquent.call("ping")""")
 
 	def test_enqueue(self):
 		# enqueue non whitelisted method
 		self.assertRaises(
-			traquent.PermissionError, safe_exec, """frappe.enqueue("frappe.get_user", now=True)"""
+			traquent.PermissionError, safe_exec, """traquent.enqueue("traquent.get_user", now=True)"""
 		)
 
 		# enqueue whitelisted method
-		safe_exec("""frappe.enqueue("ping", now=True)""")
+		safe_exec("""traquent.enqueue("ping", now=True)""")
 
 	def test_ensure_getattrable_globals(self):
 		def check_safe(objects):
@@ -101,8 +101,8 @@ class TestSafeExec(IntegrationTestCase):
 		check_safe(get_safe_globals().values())
 
 	def test_unsafe_objects(self):
-		unsafe_global = {"frappe": traquent}
-		self.assertRaises(SyntaxError, safe_exec, """frappe.msgprint("Hello")""", unsafe_global)
+		unsafe_global = {"traquent": traquent}
+		self.assertRaises(SyntaxError, safe_exec, """traquent.msgprint("Hello")""", unsafe_global)
 
 	def test_attrdict(self):
 		# jinja

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 from typing import TYPE_CHECKING
@@ -30,7 +30,7 @@ def test_password_strength(password: str, user_inputs: "Iterable[object] | None"
 	return result
 
 
-# NOTE: code modified for frappe translations
+# NOTE: code modified for traquent translations
 # -------------------------------------------
 # feedback functionality code from https://github.com/sans-serif/python-zxcvbn/blob/master/zxcvbn/feedback.py
 # see license for feedback code at https://github.com/sans-serif/python-zxcvbn/blob/master/LICENSE.txt

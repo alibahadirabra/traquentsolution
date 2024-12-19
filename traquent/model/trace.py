@@ -1,17 +1,17 @@
 """
-Traced Fields for Frappe
+Traced Fields for traquent
 
-This module provides utilities for creating traced fields in Frappe documents,
+This module provides utilities for creating traced fields in traquent documents,
 which is particularly useful for enforcing strict value lifetime validation rules.
 
 Key features:
 - Create fields that can be monitored for specific value changes
 - Enforce forbidden values on fields
 - Apply custom validation logic to fields
-- Seamlessly integrate with Frappe's document model
+- Seamlessly integrate with traquent's document model
 
 Example of standard usage:
-		from frappe.model.trace import TracedDocument, traced_field
+		from traquent.model.trace import TracedDocument, traced_field
 
 		class CustomSalesInvoice(SalesInvoice, TracedDocument):
 			...
@@ -23,7 +23,7 @@ Example of standard usage:
 			amount = traced_field("Amount", custom_validation = validate_amount)
 			...
 
-See frappe.tests.classes.context_managers for a context manager built into test classes.
+See traquent.tests.classes.context_managers for a context manager built into test classes.
 """
 
 import traquent
@@ -32,10 +32,10 @@ from traquent.model.document import Document
 
 class TracedValue:
 	"""
-	A descriptor class for creating traced fields in Frappe documents.
+	A descriptor class for creating traced fields in traquent documents.
 
 	This class allows for monitoring and validating changes to specific fields
-	in a Frappe document. It can enforce forbidden values and apply custom
+	in a traquent document. It can enforce forbidden values and apply custom
 	validation logic.
 
 	Attributes:
@@ -109,13 +109,13 @@ class TracedValue:
 
 class TracedDocument(Document):
 	"""
-	A base class for Frappe documents with traced fields.
+	A base class for traquent documents with traced fields.
 
-	This class extends Frappe's Document class to provide support for
+	This class extends traquent's Document class to provide support for
 	traced fields created with TracedValue.
 
 	Attributes:
-	        Inherits all attributes from frappe.model.document.Document
+	        Inherits all attributes from traquent.model.document.Document
 	"""
 
 	def __init__(self, *args, **kwargs):
@@ -157,7 +157,7 @@ def traced_field(*args, **kwargs):
 	"""
 	A convenience function for creating TracedValue instances.
 
-	This function simplifies the creation of traced fields in Frappe documents.
+	This function simplifies the creation of traced fields in traquent documents.
 
 	Args:
 	        *args: Positional arguments to pass to TracedValue constructor.

@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import base64
@@ -281,7 +281,7 @@ def update_oauth_user(user: str, data: dict, provider: str):
 				user.set_social_login_userid(provider, userid=data["id"])
 			case "github":
 				user.set_social_login_userid(provider, userid=data["id"], username=data.get("login"))
-			case "frappe" | "office_365":
+			case "traquent" | "office_365":
 				user.set_social_login_userid(provider, userid=data["sub"])
 			case "salesforce":
 				user.set_social_login_userid(provider, userid="/".join(data["sub"].split("/")[-2:]))

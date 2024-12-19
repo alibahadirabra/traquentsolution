@@ -74,9 +74,9 @@ def document_list(doctype: str):
 	if traquent.form_dict.get("fields"):
 		traquent.form_dict["fields"] = json.loads(traquent.form_dict["fields"])
 
-	# set limit of records for frappe.get_list
+	# set limit of records for traquent.get_list
 	traquent.form_dict.limit_page_length = traquent.form_dict.limit or 20
-	# evaluate frappe.get_list
+	# evaluate traquent.get_list
 	return traquent.call(traquent.client.get_list, doctype, **traquent.form_dict)
 
 

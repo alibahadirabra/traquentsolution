@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2020, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import datetime
@@ -74,7 +74,7 @@ class Monitor:
 			}
 		)
 
-		if request_id := traquent.request.headers.get("X-Frappe-Request-Id"):
+		if request_id := traquent.request.headers.get("X-traquent-Request-Id"):
 			self.data.uuid = request_id
 
 	def collect_job_meta(self, method, kwargs):

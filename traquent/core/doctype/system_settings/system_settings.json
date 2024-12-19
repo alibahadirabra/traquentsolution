@@ -355,7 +355,7 @@
    "label": "Expiry time of QR Code Image Page"
   },
   {
-   "default": "Frappe Framework",
+   "default": "traquent Framework",
    "depends_on": "enable_two_factor_auth",
    "fieldname": "otp_issuer_name",
    "fieldtype": "Data",
@@ -436,7 +436,7 @@
    "label": "Reports"
   },
   {
-   "default": "Frappe",
+   "default": "traquent",
    "description": "The application name will be used in the Login page.",
    "fieldname": "app_name",
    "fieldtype": "Data",

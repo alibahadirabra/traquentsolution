@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and contributors
 # License: MIT. See LICENSE
 
 import json
@@ -127,7 +127,7 @@ class WebForm(WebsiteGenerator):
 			if not os.path.exists(path + ".js"):
 				with open(path + ".js", "w") as f:
 					f.write(
-						"""frappe.ready(function() {
+						"""traquent.ready(function() {
 	// bind events here
 })"""
 					)
@@ -136,7 +136,7 @@ class WebForm(WebsiteGenerator):
 			if not os.path.exists(path + ".py"):
 				with open(path + ".py", "w") as f:
 					f.write(
-						"""import frappe
+						"""import traquent
 
 def get_context(context):
 	# do your magic here

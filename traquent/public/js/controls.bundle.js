@@ -1,4 +1,4 @@
 import "air-datepicker/dist/js/datepicker.min.js";
-import "./frappe/form/controls/datepicker_i18n.js";
-import "./frappe/ui/capture.js";
-import "./frappe/form/controls/control.js";
+import "./traquent/form/controls/datepicker_i18n.js";
+import "./traquent/ui/capture.js";
+import "./traquent/form/controls/control.js";

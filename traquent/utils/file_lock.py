@@ -1,11 +1,11 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 """Utils for inter-process synchronization using file-locks.
 
 This file implements a "weak" form lock which is not suitable for synchroniztion. This is only used
 for document locking for queue_action.
-Use `frappe.utils.synchroniztion.filelock` for process synchroniztion.
+Use `traquent.utils.synchroniztion.filelock` for process synchroniztion.
 """
 
 import os

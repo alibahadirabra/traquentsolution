@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and contributors
+# Copyright (c) 2019, traquent Technologies and contributors
 # License: MIT. See LICENSE
 from urllib.parse import urljoin
 
@@ -27,7 +27,7 @@ def get_user(usr, pwd):
 def get_connected_app():
 	doctype = "Connected App"
 	connected_app = traquent.new_doc(doctype)
-	connected_app.provider_name = "frappe"
+	connected_app.provider_name = "traquent"
 	connected_app.scopes = []
 	connected_app.append("scopes", {"scope": "all"})
 	connected_app.insert()
@@ -61,12 +61,12 @@ class TestConnectedApp(IntegrationTestCase):
 	def setUp(self):
 		"""Set up a Connected App that connects to our own oAuth provider.
 
-		Frappe comes with it's own oAuth2 provider that we can test against. The
+		traquent comes with it's own oAuth2 provider that we can test against. The
 		client credentials can be obtained from an "OAuth Client". All depends
 		on "Social Login Key" so we create one as well.
 
 		The redirect URIs from "Connected App" and "OAuth Client" have to match.
-		Frappe's "Authorization URL" and "Access Token URL" (actually they're
+		traquent's "Authorization URL" and "Access Token URL" (actually they're
 		just endpoints) are stored in "Social Login Key" so we get them from
 		there.
 		"""
@@ -128,7 +128,7 @@ class TestConnectedApp(IntegrationTestCase):
 		self.assertNotEqual(token, None)
 
 		oauth2_session = self.connected_app.get_oauth2_session(self.user_name)
-		resp = oauth2_session.get(urljoin(self.base_url, "/api/method/frappe.auth.get_logged_user"))
+		resp = oauth2_session.get(urljoin(self.base_url, "/api/method/traquent.auth.get_logged_user"))
 		self.assertEqual(resp.json().get("message"), self.user_name)
 
 	def tearDown(self):

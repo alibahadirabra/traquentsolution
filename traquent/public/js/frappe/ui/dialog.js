@@ -1,13 +1,13 @@
 import "./field_group";
 import "../dom";
 
-frappe.provide("frappe.ui");
+traquent.provide("traquent.ui");
 
 window.cur_dialog = null;
 
-frappe.ui.open_dialogs = [];
+traquent.ui.open_dialogs = [];
 
-frappe.ui.Dialog = class Dialog extends frappe.ui.FieldGroup {
+traquent.ui.Dialog = class Dialog extends traquent.ui.FieldGroup {
 	constructor(opts) {
 		super();
 		this.display = false;
@@ -20,7 +20,7 @@ frappe.ui.Dialog = class Dialog extends frappe.ui.FieldGroup {
 	}
 
 	make() {
-		this.$wrapper = frappe.get_modal("", "");
+		this.$wrapper = traquent.get_modal("", "");
 
 		if (this.static) {
 			this.$wrapper.modal({
@@ -93,13 +93,13 @@ frappe.ui.Dialog = class Dialog extends frappe.ui.FieldGroup {
 				me.is_minimized = false;
 				me.hide_scrollbar(false);
 				// hide any grid row form if open
-				frappe.ui.form.get_open_grid_form?.()?.hide_form();
+				traquent.ui.form.get_open_grid_form?.()?.hide_form();
 
-				if (frappe.ui.open_dialogs[frappe.ui.open_dialogs.length - 1] === me) {
-					frappe.ui.open_dialogs.pop();
-					if (frappe.ui.open_dialogs.length) {
+				if (traquent.ui.open_dialogs[traquent.ui.open_dialogs.length - 1] === me) {
+					traquent.ui.open_dialogs.pop();
+					if (traquent.ui.open_dialogs.length) {
 						window.cur_dialog =
-							frappe.ui.open_dialogs[frappe.ui.open_dialogs.length - 1];
+							traquent.ui.open_dialogs[traquent.ui.open_dialogs.length - 1];
 					} else {
 						window.cur_dialog = null;
 					}
@@ -111,11 +111,11 @@ frappe.ui.Dialog = class Dialog extends frappe.ui.FieldGroup {
 				// focus on first input
 				me.display = true;
 				window.cur_dialog = me;
-				frappe.ui.open_dialogs.push(me);
+				traquent.ui.open_dialogs.push(me);
 				me.focus_on_first_input();
 				me.hide_scrollbar(true);
 				me.on_page_show && me.on_page_show();
-				$(document).trigger("frappe.ui.Dialog:shown");
+				$(document).trigger("traquent.ui.Dialog:shown");
 				$(document).off("focusin.modal");
 			})
 			.on("scroll", function () {
@@ -296,7 +296,7 @@ frappe.ui.Dialog = class Dialog extends frappe.ui.FieldGroup {
 		modal.attr("tabindex") ? modal.removeAttr("tabindex") : modal.attr("tabindex", -1);
 		this.is_minimized = !this.is_minimized;
 		const icon = this.is_minimized ? "expand" : "collapse";
-		this.get_minimize_btn().html(frappe.utils.icon(icon));
+		this.get_minimize_btn().html(traquent.utils.icon(icon));
 		this.on_minimize_toggle && this.on_minimize_toggle(this.is_minimized);
 		this.header.find(".modal-title").toggleClass("cursor-pointer");
 		this.hide_scrollbar(!this.is_minimized);
@@ -321,7 +321,7 @@ frappe.ui.Dialog = class Dialog extends frappe.ui.FieldGroup {
 	add_custom_button() {}
 };
 
-frappe.ui.hide_open_dialog = () => {
+traquent.ui.hide_open_dialog = () => {
 	// hide open dialog
 	if (window.cur_dialog) {
 		if (!cur_dialog.minimizable) {

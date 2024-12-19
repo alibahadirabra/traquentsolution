@@ -1,7 +1,7 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.db = {
+traquent.db = {
 	get_list: function (doctype, args) {
 		if (!args) {
 			args = {};
@@ -14,8 +14,8 @@ frappe.db = {
 			args.limit = 20;
 		}
 		return new Promise((resolve) => {
-			frappe.call({
-				method: "frappe.desk.reportview.get_list",
+			traquent.call({
+				method: "traquent.desk.reportview.get_list",
 				args: args,
 				type: "GET",
 				callback: function (r) {
@@ -29,19 +29,19 @@ frappe.db = {
 			let filters;
 			if (typeof nameOrFilters === "string") {
 				// may be cached and more effecient
-				frappe.db.get_value(doctype, { name: nameOrFilters }, "name").then((r) => {
+				traquent.db.get_value(doctype, { name: nameOrFilters }, "name").then((r) => {
 					r.message && r.message.name ? resolve(true) : resolve(false);
 				});
 			} else if (typeof nameOrFilters === "object") {
-				frappe.db.count(doctype, { filters: nameOrFilters, limit: 1 }).then((count) => {
+				traquent.db.count(doctype, { filters: nameOrFilters, limit: 1 }).then((count) => {
 					resolve(count > 0);
 				});
 			}
 		});
 	},
 	get_value: function (doctype, filters, fieldname, callback, parent_doc) {
-		return frappe.call({
-			method: "frappe.client.get_value",
+		return traquent.call({
+			method: "traquent.client.get_value",
 			type: "GET",
 			args: {
 				doctype: doctype,
@@ -56,9 +56,9 @@ frappe.db = {
 	},
 	get_single_value: (doctype, field) => {
 		return new Promise((resolve) => {
-			frappe
+			traquent
 				.call({
-					method: "frappe.client.get_single_value",
+					method: "traquent.client.get_single_value",
 					args: { doctype, field },
 					type: "GET",
 				})
@@ -66,8 +66,8 @@ frappe.db = {
 		});
 	},
 	set_value: function (doctype, docname, fieldname, value, callback) {
-		return frappe.call({
-			method: "frappe.client.set_value",
+		return traquent.call({
+			method: "traquent.client.set_value",
 			args: {
 				doctype: doctype,
 				name: docname,
@@ -81,13 +81,13 @@ frappe.db = {
 	},
 	get_doc: function (doctype, name, filters) {
 		return new Promise((resolve, reject) => {
-			frappe
+			traquent
 				.call({
-					method: "frappe.client.get",
+					method: "traquent.client.get",
 					type: "GET",
 					args: { doctype, name, filters },
 					callback: (r) => {
-						frappe.model.sync(r.message);
+						traquent.model.sync(r.message);
 						resolve(r.message);
 					},
 				})
@@ -95,11 +95,11 @@ frappe.db = {
 		});
 	},
 	insert: function (doc) {
-		return frappe.xcall("frappe.client.insert", { doc });
+		return traquent.xcall("traquent.client.insert", { doc });
 	},
 	delete_doc: function (doctype, name) {
 		return new Promise((resolve) => {
-			frappe.call("frappe.client.delete", { doctype, name }, (r) => resolve(r.message));
+			traquent.call("traquent.client.delete", { doctype, name }, (r) => resolve(r.message));
 		});
 	},
 	count: function (doctype, args = {}) {
@@ -115,7 +115,7 @@ frappe.db = {
 
 		const fields = [];
 
-		return frappe.xcall("frappe.desk.reportview.get_count", {
+		return traquent.xcall("traquent.desk.reportview.get_count", {
 			doctype,
 			filters,
 			fields,
@@ -125,9 +125,9 @@ frappe.db = {
 	},
 	get_link_options(doctype, txt = "", filters = {}) {
 		return new Promise((resolve) => {
-			frappe.call({
+			traquent.call({
 				type: "GET",
-				method: "frappe.desk.search.search_link",
+				method: "traquent.desk.search.search_link",
 				args: {
 					doctype,
 					txt,

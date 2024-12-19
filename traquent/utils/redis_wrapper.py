@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import pickle
 import re
@@ -36,7 +36,7 @@ class RedisWrapper(redis.Redis):
 			return False
 
 	def __call__(self):
-		"""WARNING: Added for backward compatibility to support frappe.cache().method(...)"""
+		"""WARNING: Added for backward compatibility to support traquent.cache().method(...)"""
 		return self
 
 	def make_key(self, key, user=None, shared=False):
@@ -72,7 +72,7 @@ class RedisWrapper(redis.Redis):
 
 		:param key: Cache key.
 		:param generator: Function to be called to generate a value if `None` is returned.
-		:param expires: If the key is supposed to be with an expiry, don't store it in frappe.local
+		:param expires: If the key is supposed to be with an expiry, don't store it in traquent.local
 		"""
 		original_key = key
 		key = self.make_key(key, user, shared)
@@ -245,7 +245,7 @@ class RedisWrapper(redis.Redis):
 
 		:param name: The hash name
 		:param keys: the keys to delete
-		:param shared: shared frappe key or not
+		:param shared: shared traquent key or not
 		:param pipeline: A redis.client.Pipeline object, if this transaction is to be run in a pipeline
 		"""
 		_name = self.make_key(name, shared=shared)

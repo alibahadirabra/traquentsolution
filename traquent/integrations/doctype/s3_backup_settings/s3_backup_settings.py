@@ -1,4 +1,4 @@
-# Copyright (c) 2017, Frappe Technologies and contributors
+# Copyright (c) 2017, traquent Technologies and contributors
 # License: MIT. See LICENSE
 import os
 import os.path
@@ -75,7 +75,7 @@ class S3BackupSettings(Document):
 def take_backup():
 	"""Enqueue longjob for taking backup to s3"""
 	enqueue(
-		"frappe.integrations.doctype.s3_backup_settings.s3_backup_settings.take_backups_s3",
+		"traquent.integrations.doctype.s3_backup_settings.s3_backup_settings.take_backups_s3",
 		queue="long",
 		timeout=1500,
 	)
@@ -110,7 +110,7 @@ def take_backups_s3(retry_count=0):
 		if retry_count < 2:
 			args = {"retry_count": retry_count + 1}
 			enqueue(
-				"frappe.integrations.doctype.s3_backup_settings.s3_backup_settings.take_backups_s3",
+				"traquent.integrations.doctype.s3_backup_settings.s3_backup_settings.take_backups_s3",
 				queue="long",
 				timeout=1500,
 				**args,

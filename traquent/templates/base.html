@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<!-- Built on Frappe. https://frappeframework.com/ -->
+<!-- Built on traquent. https://traquentframework.com/ -->
 <html lang="{{boot.lang}}">
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta name="generator" content="frappe">
+	<meta name="generator" content="traquent">
 
 	{% block meta_block %}
 		{% include "templates/includes/meta_block.html" %}
@@ -16,7 +16,7 @@
 	<!--#UPDATES --sevval link>href-->
 	<link
 		rel="shortcut icon"
-		href="{{ (favicon or "/assets/frappe/images/traquent_mini.svg") | abs_url }}"
+		href="{{ (favicon or "/assets/traquent/images/traquent_mini.svg") | abs_url }}"
 		type="image/x-icon"
 	>
 	{% endblock %}
@@ -38,24 +38,24 @@
 	{% if boot.lang == "eo" %}
 	<script type="text/javascript">
 		var _jipt = [];
-		_jipt.push(['project', 'frappe']);
+		_jipt.push(['project', 'traquent']);
 	</script>
 	<script type="text/javascript" src="https://cdn.crowdin.com/jipt/jipt.js"></script>
 	{% endif %}
 
 	<script>
-		window.frappe = {};
+		window.traquent = {};
 		window._version_number = "{{ build_version }}";
-		frappe.ready_events = [];
-		frappe.ready = function(fn) {
-			frappe.ready_events.push(fn);
+		traquent.ready_events = [];
+		traquent.ready = function(fn) {
+			traquent.ready_events.push(fn);
 		}
 		window.dev_server = {{ dev_server }};
-		window.socketio_port = {{ (frappe.socketio_port or 9000) }};
+		window.socketio_port = {{ (traquent.socketio_port or 9000) }};
 		window.show_language_picker = {{ show_language_picker or 'false' }};
 	</script>
 </head>
-<body frappe-session-status="{{ 'logged-in' if frappe.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} frappe-content-type="markdown" {%- endif %} class="{{ body_class or ''}}">
+<body traquent-session-status="{{ 'logged-in' if traquent.session.user != 'Guest' else 'logged-out'}}" data-path="{{ path | e }}" {%- if template and template.endswith('.md') %} traquent-content-type="markdown" {%- endif %} class="{{ body_class or ''}}">
 	{%- block banner -%}
 		{% include "templates/includes/banner_extension.html" ignore missing %}
 
@@ -96,11 +96,11 @@
 	{% block base_scripts %}
 	<!-- js should be loaded in body! -->
 	<script>
-		frappe.boot = {{ boot }}
+		traquent.boot = {{ boot }}
 		// for backward compatibility of some libs
-		frappe.sys_defaults = frappe.boot.sysdefaults;
+		traquent.sys_defaults = traquent.boot.sysdefaults;
 	</script>
-	{{ include_script('frappe-web.bundle.js') }}
+	{{ include_script('traquent-web.bundle.js') }}
 	{% endblock %}
 
 	{%- for link in web_include_js %}

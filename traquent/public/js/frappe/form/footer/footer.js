@@ -1,7 +1,7 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 import FormTimeline from "./form_timeline";
-frappe.ui.form.Footer = class FormFooter {
+traquent.ui.form.Footer = class FormFooter {
 	constructor(opts) {
 		$.extend(this, opts);
 		this.make();
@@ -14,13 +14,13 @@ frappe.ui.form.Footer = class FormFooter {
 		});
 	}
 	make() {
-		this.wrapper = $(frappe.render_template("form_footer", {})).appendTo(this.parent);
+		this.wrapper = $(traquent.render_template("form_footer", {})).appendTo(this.parent);
 		this.wrapper.find(".btn-save").click(() => {
 			this.frm.save("Save", null, this);
 		});
 	}
 	make_comment_box() {
-		this.frm.comment_box = frappe.ui.form.make_control({
+		this.frm.comment_box = traquent.ui.form.make_control({
 			parent: this.wrapper.find(".comment-box"),
 			render_input: true,
 			only_input: true,
@@ -32,19 +32,19 @@ frappe.ui.form.Footer = class FormFooter {
 			on_submit: (comment) => {
 				if (strip_html(comment).trim() != "" || comment.includes("img")) {
 					this.frm.comment_box.disable();
-					frappe
-						.xcall("frappe.desk.form.utils.add_comment", {
+					traquent
+						.xcall("traquent.desk.form.utils.add_comment", {
 							reference_doctype: this.frm.doctype,
 							reference_name: this.frm.docname,
 							content: comment,
-							comment_email: frappe.session.user,
-							comment_by: frappe.session.user_fullname,
+							comment_email: traquent.session.user,
+							comment_by: traquent.session.user_fullname,
 						})
 						.then((comment) => {
 							let comment_item =
 								this.frm.timeline.get_comment_timeline_item(comment);
 							this.frm.comment_box.set_value("");
-							frappe.utils.play_sound("click");
+							traquent.utils.play_sound("click");
 							this.frm.timeline.add_timeline_item(comment_item);
 							this.frm.get_docinfo().comments.push(comment);
 							this.refresh_comments_count();
@@ -82,10 +82,10 @@ frappe.ui.form.Footer = class FormFooter {
 		this.like_wrapper = this.wrapper.find(".liked-by");
 		this.like_icon = this.wrapper.find(".liked-by .like-icon");
 		this.like_count = this.wrapper.find(".liked-by .like-count");
-		frappe.ui.setup_like_popover(this.wrapper.find(".form-stats-likes"), ".like-icon");
+		traquent.ui.setup_like_popover(this.wrapper.find(".form-stats-likes"), ".like-icon");
 
 		this.like_icon.on("click", () => {
-			frappe.ui.toggle_like(this.like_wrapper, this.frm.doctype, this.frm.doc.name, () => {
+			traquent.ui.toggle_like(this.like_wrapper, this.frm.doctype, this.frm.doc.name, () => {
 				this.refresh_like();
 			});
 		});
@@ -97,7 +97,7 @@ frappe.ui.form.Footer = class FormFooter {
 		}
 
 		this.like_wrapper.attr("data-liked-by", this.frm.doc._liked_by);
-		const liked = frappe.ui.is_liked(this.frm.doc);
+		const liked = traquent.ui.is_liked(this.frm.doc);
 		this.like_wrapper
 			.toggleClass("not-liked", !liked)
 			.toggleClass("liked", liked)

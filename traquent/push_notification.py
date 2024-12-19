@@ -5,7 +5,7 @@ import traquent
 from traquent import sbool
 from traquent.utils.response import Response
 
-from .frappeclient import FrappeClient
+from .traquentclient import traquentClient
 
 
 class PushNotification:
@@ -209,7 +209,7 @@ class PushNotification:
 			"protocol": self._site_protocol,
 			"port": self._site_port,
 			"token": token,
-			"webhook_route": "/api/method/frappe.push_notification.auth_webhook",
+			"webhook_route": "/api/method/traquent.push_notification.auth_webhook",
 		}
 		response = self._send_post_request("notification_relay.api.auth.get_credential", body, False)
 		success = response["success"]
@@ -240,9 +240,9 @@ class PushNotification:
 		relay_server_endpoint = traquent.conf.get("push_relay_server_url")
 		if use_authentication:
 			api_key, api_secret = self._get_credential()
-			client = FrappeClient(relay_server_endpoint, api_key=api_key, api_secret=api_secret)
+			client = traquentClient(relay_server_endpoint, api_key=api_key, api_secret=api_secret)
 		else:
-			client = FrappeClient(relay_server_endpoint)
+			client = traquentClient(relay_server_endpoint)
 		params["project_name"] = self.project_name
 		params["site_name"] = self._site_name
 		return client.post_api(method, params)

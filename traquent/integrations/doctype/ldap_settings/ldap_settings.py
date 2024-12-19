@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies and contributors
+# Copyright (c) 2022, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import ssl
@@ -173,7 +173,7 @@ class LDAPSettings(Document):
 		ldap = traquent.get_cached_doc("LDAP Settings")
 		if ldap.enabled:
 			result["enabled"] = True
-			result["method"] = "frappe.integrations.doctype.ldap_settings.ldap_settings.login"
+			result["method"] = "traquent.integrations.doctype.ldap_settings.ldap_settings.login"
 		return result
 
 	@classmethod

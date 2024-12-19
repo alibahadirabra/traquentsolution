@@ -4,10 +4,10 @@ class TelemetryManager {
 	constructor() {
 		this.enabled = false;
 
-		this.project_id = frappe.boot.posthog_project_id;
-		this.telemetry_host = frappe.boot.posthog_host;
-		this.site_age = frappe.boot.telemetry_site_age;
-		if (cint(frappe.boot.enable_telemetry) && this.project_id && this.telemetry_host) {
+		this.project_id = traquent.boot.posthog_project_id;
+		this.telemetry_host = traquent.boot.posthog_host;
+		this.site_age = traquent.boot.telemetry_site_age;
+		if (cint(traquent.boot.enable_telemetry) && this.project_id && this.telemetry_host) {
 			this.enabled = true;
 		}
 	}
@@ -23,7 +23,7 @@ class TelemetryManager {
 				capture_pageleave: false,
 				advanced_disable_decide: disable_decide,
 			});
-			posthog.identify(frappe.boot.sitename);
+			posthog.identify(traquent.boot.sitename);
 			this.send_heartbeat();
 			this.register_pageview_handler();
 		} catch (e) {
@@ -46,18 +46,18 @@ class TelemetryManager {
 			return false;
 		}
 		let posthog_available = Boolean(this.telemetry_host && this.project_id);
-		let sentry_available = Boolean(frappe.boot.sentry_dsn);
+		let sentry_available = Boolean(traquent.boot.sentry_dsn);
 		return posthog_available || sentry_available;
 	}
 
 	send_heartbeat() {
 		const KEY = "ph_last_heartbeat";
-		const now = frappe.datetime.system_datetime(true);
+		const now = traquent.datetime.system_datetime(true);
 		const last = localStorage.getItem(KEY);
 
 		if (!last || moment(now).diff(moment(last), "hours") > 12) {
 			localStorage.setItem(KEY, now.toISOString());
-			this.capture("heartbeat", "frappe", { frappe_version: frappe.boot?.versions?.frappe });
+			this.capture("heartbeat", "traquent", { traquent_version: traquent.boot?.versions?.traquent });
 		}
 	}
 
@@ -66,21 +66,21 @@ class TelemetryManager {
 			return;
 		}
 
-		frappe.router.on("change", () => {
+		traquent.router.on("change", () => {
 			posthog.capture("$pageview");
 		});
 	}
 
 	should_record_session() {
-		let start = frappe.boot.sysdefaults.session_recording_start;
+		let start = traquent.boot.sysdefaults.session_recording_start;
 		if (!start) return;
 
-		let start_datetime = frappe.datetime.str_to_obj(start);
-		let now = frappe.datetime.now_datetime();
+		let start_datetime = traquent.datetime.str_to_obj(start);
+		let now = traquent.datetime.now_datetime();
 		// if user allowed recording only record for first 2 hours, never again.
-		return frappe.datetime.get_minute_diff(now, start_datetime) < 120;
+		return traquent.datetime.get_minute_diff(now, start_datetime) < 120;
 	}
 }
 
-frappe.telemetry = new TelemetryManager();
-frappe.telemetry.initialize();
+traquent.telemetry = new TelemetryManager();
+traquent.telemetry.initialize();

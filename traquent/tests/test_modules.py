@@ -47,7 +47,7 @@ class TestUtils(IntegrationTestCase):
 		self.assertIsNone(export_module_json(doc=doc, is_standard=True, module=doc.module))
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	def test_export_module_json(self):
 		doc = traquent.get_last_doc("DocType", {"issingle": 0, "custom": 0})
@@ -75,7 +75,7 @@ class TestUtils(IntegrationTestCase):
 		self.assertTrue(last_modified_after > last_modified_before)
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	def test_export_customizations(self):
 		with note_customizations():
@@ -85,7 +85,7 @@ class TestUtils(IntegrationTestCase):
 			self.assertTrue(os.path.exists(file_path))
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	def test_sync_customizations(self):
 		with note_customizations() as (custom_field, property_setter):
@@ -102,7 +102,7 @@ class TestUtils(IntegrationTestCase):
 			self.assertTrue(os.path.exists(file_path))
 			last_modified_before = custom_field.modified
 
-			sync_customizations(app="frappe")
+			sync_customizations(app="traquent")
 			self.assertTrue(property_setter.doctype, property_setter.name)
 			self.assertTrue(custom_prop_setter.doctype, custom_prop_setter.name)
 
@@ -136,7 +136,7 @@ class TestUtils(IntegrationTestCase):
 		self.assertTrue(traquent.db.get_value("DocType", "Note", "migration_hash"))
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	def test_export_doc(self):
 		note = traquent.new_doc("Note")
@@ -144,18 +144,18 @@ class TestUtils(IntegrationTestCase):
 		note.save()
 		export_doc(doctype="Note", name=note.name)
 		exported_doc_path = Path(
-			traquent.get_app_path("frappe", "desk", "note", note.name, f"{note.name}.json")
+			traquent.get_app_path("traquent", "desk", "note", note.name, f"{note.name}.json")
 		)
 		self.assertTrue(os.path.exists(exported_doc_path))
 		self.addCleanup(delete_path, path=exported_doc_path.parent.parent)
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	def test_make_boilerplate(self):
 		with temp_doctype() as doctype:
 			scrubbed = traquent.scrub(doctype.name)
-			path = traquent.get_app_path("frappe", "core", "doctype", scrubbed, f"{scrubbed}.json")
+			path = traquent.get_app_path("traquent", "core", "doctype", scrubbed, f"{scrubbed}.json")
 			self.assertFalse(os.path.exists(path))
 			doctype.custom = False
 			doctype.save()

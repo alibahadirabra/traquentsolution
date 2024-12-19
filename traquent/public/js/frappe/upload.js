@@ -1,10 +1,10 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-if (frappe.require) {
-	frappe.require("file_uploader.bundle.js");
+if (traquent.require) {
+	traquent.require("file_uploader.bundle.js");
 } else {
-	frappe.ready(function () {
-		frappe.require("file_uploader.bundle.js");
+	traquent.ready(function () {
+		traquent.require("file_uploader.bundle.js");
 	});
 }

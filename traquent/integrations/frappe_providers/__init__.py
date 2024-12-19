@@ -1,8 +1,8 @@
 # imports - standard imports
 # imports - module imports
 
-from traquent.integrations.frappe_providers.frappecloud import frappecloud_migrator
+from traquent.integrations.traquent_providers.traquentcloud import traquentcloud_migrator
 
 
 def migrate_to():
-	return frappecloud_migrator()
+	return traquentcloud_migrator()

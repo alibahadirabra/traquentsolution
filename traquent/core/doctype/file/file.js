@@ -1,4 +1,4 @@
-frappe.ui.form.on("File", {
+traquent.ui.form.on("File", {
 	refresh: function (frm) {
 		if (!frm.doc.is_folder) {
 			// add download button
@@ -36,18 +36,18 @@ frappe.ui.form.on("File", {
 		let $preview = "";
 		let file_extension = frm.doc.file_type.toLowerCase();
 
-		if (frappe.utils.is_image_file(frm.doc.file_url)) {
+		if (traquent.utils.is_image_file(frm.doc.file_url)) {
 			$preview = $(`<div class="img_preview">
 				<img
 					class="img-responsive"
-					src="${frappe.utils.escape_html(frm.doc.file_url)}"
+					src="${traquent.utils.escape_html(frm.doc.file_url)}"
 					onerror="${frm.toggle_display("preview", false)}"
 				/>
 			</div>`);
-		} else if (frappe.utils.is_video_file(frm.doc.file_url)) {
+		} else if (traquent.utils.is_video_file(frm.doc.file_url)) {
 			$preview = $(`<div class="img_preview">
 				<video width="480" height="320" controls>
-					<source src="${frappe.utils.escape_html(frm.doc.file_url)}">
+					<source src="${traquent.utils.escape_html(frm.doc.file_url)}">
 					${__("Your browser does not support the video element.")}
 				</video>
 			</div>`);
@@ -58,14 +58,14 @@ frappe.ui.form.on("File", {
 						style="background:#323639;"
 						width="100%"
 						height="1190"
-						src="${frappe.utils.escape_html(frm.doc.file_url)}" type="application/pdf"
+						src="${traquent.utils.escape_html(frm.doc.file_url)}" type="application/pdf"
 					>
 				</object>
 			</div>`);
 		} else if (file_extension === "mp3") {
 			$preview = $(`<div class="img_preview">
 				<audio width="480" height="60" controls>
-					<source src="${frappe.utils.escape_html(frm.doc.file_url)}" type="audio/mpeg">
+					<source src="${traquent.utils.escape_html(frm.doc.file_url)}" type="audio/mpeg">
 					${__("Your browser does not support the audio element.")}
 				</audio >
 			</div>`);
@@ -95,20 +95,20 @@ frappe.ui.form.on("File", {
 	},
 
 	optimize: function (frm) {
-		frappe.show_alert(__("Optimizing image..."));
+		traquent.show_alert(__("Optimizing image..."));
 		frm.call("optimize_file").then(() => {
-			frappe.show_alert(__("Image optimized"));
+			traquent.show_alert(__("Image optimized"));
 		});
 	},
 
 	unzip: function (frm) {
-		frappe.call({
-			method: "frappe.core.api.file.unzip_file",
+		traquent.call({
+			method: "traquent.core.api.file.unzip_file",
 			args: {
 				name: frm.doc.name,
 			},
 			callback: function () {
-				frappe.set_route("List", "File");
+				traquent.set_route("List", "File");
 			},
 		});
 	},

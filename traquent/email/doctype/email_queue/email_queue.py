@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies and contributors
+# Copyright (c) 2015, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import json
@@ -14,7 +14,7 @@ from traquent.core.utils import html2text
 from traquent.database.database import savepoint
 from traquent.email.doctype.email_account.email_account import EmailAccount
 from traquent.email.email_body import add_attachment, get_email, get_formatted_html
-from traquent.email.frappemail import FrappeMail
+from traquent.email.traquentmail import traquentMail
 from traquent.email.queue import get_unsubcribed_url, get_unsubscribe_message
 from traquent.email.smtp import SMTPServer
 from traquent.model.document import Document
@@ -153,12 +153,12 @@ class EmailQueue(Document):
 
 		return True
 
-	def send(self, smtp_server_instance: SMTPServer = None, frappe_mail_client: FrappeMail = None):
+	def send(self, smtp_server_instance: SMTPServer = None, traquent_mail_client: traquentMail = None):
 		"""Send emails to recipients."""
 		if not self.can_send_now():
 			return
 
-		with SendMailContext(self, smtp_server_instance, frappe_mail_client) as ctx:
+		with SendMailContext(self, smtp_server_instance, traquent_mail_client) as ctx:
 			ctx.fetch_outgoing_server()
 			message = None
 			for recipient in self.recipients:
@@ -169,15 +169,15 @@ class EmailQueue(Document):
 				if method := get_hook_method("override_email_send"):
 					method(self, self.sender, recipient.recipient, message)
 				elif not traquent.flags.in_test or traquent.flags.testing_email:
-					if ctx.email_account_doc.service == "Frappe Mail":
+					if ctx.email_account_doc.service == "traquent Mail":
 						if self.reference_doctype == "Newsletter":
-							ctx.frappe_mail_client.send_newsletter(
+							ctx.traquent_mail_client.send_newsletter(
 								sender=self.sender,
 								recipients=recipient.recipient,
 								message=message.decode("utf-8"),
 							)
 						else:
-							ctx.frappe_mail_client.send_raw(
+							ctx.traquent_mail_client.send_raw(
 								sender=self.sender,
 								recipients=recipient.recipient,
 								message=message.decode("utf-8"),
@@ -232,11 +232,11 @@ class SendMailContext:
 		self,
 		queue_doc: Document,
 		smtp_server_instance: SMTPServer = None,
-		frappe_mail_client: FrappeMail = None,
+		traquent_mail_client: traquentMail = None,
 	):
 		self.queue_doc: EmailQueue = queue_doc
 		self.smtp_server: SMTPServer = smtp_server_instance
-		self.frappe_mail_client: FrappeMail = frappe_mail_client
+		self.traquent_mail_client: traquentMail = traquent_mail_client
 		self.sent_to_atleast_one_recipient = any(
 			rec.recipient for rec in self.queue_doc.recipients if rec.is_mail_sent()
 		)
@@ -245,9 +245,9 @@ class SendMailContext:
 	def fetch_outgoing_server(self):
 		self.email_account_doc = self.queue_doc.get_email_account(raise_error=True)
 
-		if self.email_account_doc.service == "Frappe Mail":
-			if not self.frappe_mail_client:
-				self.frappe_mail_client = self.email_account_doc.get_frappe_mail_client()
+		if self.email_account_doc.service == "traquent Mail":
+			if not self.traquent_mail_client:
+				self.traquent_mail_client = self.email_account_doc.get_traquent_mail_client()
 		elif not self.smtp_server:
 			self.smtp_server = self.email_account_doc.get_smtp_server()
 
@@ -339,7 +339,7 @@ class SendMailContext:
 			and self.email_account_doc.track_email_status
 			and self.queue_doc.communication
 		):
-			tracker_url = f"{get_url()}/api/method/frappe.core.doctype.communication.email.mark_email_as_seen?name={self.queue_doc.communication}"
+			tracker_url = f"{get_url()}/api/method/traquent.core.doctype.communication.email.mark_email_as_seen?name={self.queue_doc.communication}"
 
 		if tracker_url:
 			tracker_url_html = f'<img src="{tracker_url}"/>'
@@ -515,7 +515,7 @@ class QueueBuilder:
 		:param reference_doctype: Reference DocType of caller document.
 		:param reference_name: Reference name of caller document.
 		:param send_priority: Priority for Email Queue, default 1.
-		:param unsubscribe_method: URL method for unsubscribe. Default is `/api/method/frappe.email.queue.unsubscribe`.
+		:param unsubscribe_method: URL method for unsubscribe. Default is `/api/method/traquent.email.queue.unsubscribe`.
 		:param unsubscribe_params: additional params for unsubscribed links. default are name, doctype, email
 		:param attachments: Attachments to be sent.
 		:param reply_to: Reply to be captured here (default inbox)
@@ -567,7 +567,7 @@ class QueueBuilder:
 
 	@property
 	def unsubscribe_method(self):
-		return self._unsubscribe_method or "/api/method/frappe.email.queue.unsubscribe"
+		return self._unsubscribe_method or "/api/method/traquent.email.queue.unsubscribe"
 
 	def _get_emails_list(self, emails=None):
 		emails = split_emails(emails) if isinstance(emails, str) else (emails or [])
@@ -756,21 +756,21 @@ class QueueBuilder:
 	def send_emails(self, queue_data, final_recipients):
 		# This is used to bulk send emails from same sender to multiple recipients separately
 		# This re-uses smtp server instance to minimize the cost of new session creation
-		frappe_mail_client = None
+		traquent_mail_client = None
 		smtp_server_instance = None
 		for r in final_recipients:
 			recipients = list(set([r, *self.final_cc(), *self.bcc]))
 			q = EmailQueue.new({**queue_data, **{"recipients": recipients}}, ignore_permissions=True)
-			if not frappe_mail_client and not smtp_server_instance:
+			if not traquent_mail_client and not smtp_server_instance:
 				email_account = q.get_email_account(raise_error=True)
 
-				if email_account.service == "Frappe Mail":
-					frappe_mail_client = email_account.get_frappe_mail_client()
+				if email_account.service == "traquent Mail":
+					traquent_mail_client = email_account.get_traquent_mail_client()
 				else:
 					smtp_server_instance = email_account.get_smtp_server()
 
 			with suppress(Exception):
-				q.send(smtp_server_instance=smtp_server_instance, frappe_mail_client=frappe_mail_client)
+				q.send(smtp_server_instance=smtp_server_instance, traquent_mail_client=traquent_mail_client)
 
 		if smtp_server_instance:
 			smtp_server_instance.quit()

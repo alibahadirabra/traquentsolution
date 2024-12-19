@@ -1,6 +1,6 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
-frappe.ui.form.Attachments = class Attachments {
+traquent.ui.form.Attachments = class Attachments {
 	constructor(opts) {
 		$.extend(this, opts);
 
@@ -17,8 +17,8 @@ frappe.ui.form.Attachments = class Attachments {
 
 		this.parent.find(".explore-link").click(() => {
 			if (!this.frm.attachments.get_attachments()?.length) return;
-			frappe.open_in_new_tab = true;
-			frappe.set_route("List", "File", {
+			traquent.open_in_new_tab = true;
+			traquent.set_route("List", "File", {
 				attached_to_doctype: this.frm.doctype,
 				attached_to_name: this.frm.docname,
 			});
@@ -32,7 +32,7 @@ frappe.ui.form.Attachments = class Attachments {
 		const attachment_limit = this.frm.meta.max_attachments;
 		if (attachment_limit && attachment_count >= attachment_limit) {
 			if (raise_exception) {
-				frappe.throw({
+				traquent.throw({
 					title: __("Attachment Limit Reached"),
 					message: __("Maximum attachment limit of {0} has been reached.", [
 						cstr(attachment_limit).bold(),
@@ -123,16 +123,16 @@ frappe.ui.form.Attachments = class Attachments {
 		var me = this;
 
 		let file_label = `
-			<a href="${file_url}" target="_blank" title="${frappe.utils.escape_html(file_name)}"
+			<a href="${file_url}" target="_blank" title="${traquent.utils.escape_html(file_name)}"
 				class="ellipsis attachment-file-label"
 			>
 				<span>${file_name}</span>
 			</a>`;
 
 		let remove_action = null;
-		if (frappe.model.can_write(this.frm.doctype, this.frm.name)) {
+		if (traquent.model.can_write(this.frm.doctype, this.frm.name)) {
 			remove_action = function (target_id) {
-				frappe.confirm(__("Are you sure you want to delete the attachment?"), function () {
+				traquent.confirm(__("Are you sure you want to delete the attachment?"), function () {
 					let target_attachment = me
 						.get_attachments()
 						.find((attachment) => attachment.name === target_id);
@@ -148,11 +148,11 @@ frappe.ui.form.Attachments = class Attachments {
 		}
 
 		const icon = `<a href="/app/file/${fileid}">
-				${frappe.utils.icon(attachment.is_private ? "es-line-lock" : "es-line-unlock", "sm ml-0")}
+				${traquent.utils.icon(attachment.is_private ? "es-line-lock" : "es-line-unlock", "sm ml-0")}
 			</a>`;
 
 		$(`<div class="attachment-row"></div>`)
-			.append(frappe.get_data_pill(file_label, fileid, remove_action, icon))
+			.append(traquent.get_data_pill(file_label, fileid, remove_action, icon))
 			.insertAfter(this.add_attachment_wrapper);
 	}
 
@@ -188,8 +188,8 @@ frappe.ui.form.Attachments = class Attachments {
 		}
 
 		var me = this;
-		return frappe.call({
-			method: "frappe.desk.form.utils.remove_attach",
+		return traquent.call({
+			method: "traquent.desk.form.utils.remove_attach",
 			type: "DELETE",
 			args: {
 				fid: fileid,
@@ -198,7 +198,7 @@ frappe.ui.form.Attachments = class Attachments {
 			},
 			callback: function (r, rt) {
 				if (r.exc) {
-					if (!r._server_messages) frappe.msgprint(__("There were errors"));
+					if (!r._server_messages) traquent.msgprint(__("There were errors"));
 					return;
 				}
 				me.remove_fileid(fileid);
@@ -219,7 +219,7 @@ frappe.ui.form.Attachments = class Attachments {
 				this.frm.meta.max_attachments - this.frm.attachments.get_attachments().length;
 		}
 
-		new frappe.ui.FileUploader({
+		new traquent.ui.FileUploader({
 			doctype: this.frm.doctype,
 			docname: this.frm.docname,
 			frm: this.frm,

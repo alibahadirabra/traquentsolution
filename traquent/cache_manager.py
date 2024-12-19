@@ -1,4 +1,4 @@
-# Copyright (c) 2018, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2018, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -111,7 +111,7 @@ def clear_global_cache():
 def clear_defaults_cache(user=None):
 	if user:
 		traquent.cache.hdel("defaults", [user, *common_default_keys])
-	elif traquent.flags.in_install != "frappe":
+	elif traquent.flags.in_install != "traquent":
 		traquent.cache.delete_value("defaults")
 
 

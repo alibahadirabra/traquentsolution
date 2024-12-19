@@ -303,7 +303,7 @@ class OAuthWebRequestValidator(RequestValidator):
 	# OpenID Connect
 
 	def finalize_id_token(self, id_token, token, token_handler, request):
-		# Check whether frappe server URL is set
+		# Check whether traquent server URL is set
 		id_token_header = {"typ": "jwt", "alg": "HS256"}
 
 		user = traquent.get_doc("User", request.user)
@@ -458,7 +458,7 @@ class OAuthWebRequestValidator(RequestValidator):
 				if payload.get("sub") and client_id and client_secret:
 					user = traquent.db.get_value(
 						"User Social Login",
-						{"userid": payload.get("sub"), "provider": "frappe"},
+						{"userid": payload.get("sub"), "provider": "traquent"},
 						"parent",
 					)
 					user = traquent.get_doc("User", user)
@@ -540,20 +540,20 @@ def get_client_scopes(client_id):
 
 def get_userinfo(user):
 	picture = None
-	frappe_server_url = get_server_url()
+	traquent_server_url = get_server_url()
 	valid_url_schemes = ("http", "https", "ftp", "ftps")
 
 	if user.user_image:
 		if traquent.utils.validate_url(user.user_image, valid_schemes=valid_url_schemes):
 			picture = user.user_image
 		else:
-			picture = urljoin(frappe_server_url, user.user_image)
+			picture = urljoin(traquent_server_url, user.user_image)
 
 	return traquent._dict(
 		{
 			"sub": traquent.db.get_value(
 				"User Social Login",
-				{"parent": user.name, "provider": "frappe"},
+				{"parent": user.name, "provider": "traquent"},
 				"userid",
 			),
 			"name": " ".join(filter(None, [user.first_name, user.last_name])),
@@ -562,7 +562,7 @@ def get_userinfo(user):
 			"email": user.email,
 			"picture": picture,
 			"roles": traquent.get_roles(user.name),
-			"iss": frappe_server_url,
+			"iss": traquent_server_url,
 		}
 	)
 
@@ -589,4 +589,4 @@ def generate_json_error_response(e):
 def get_server_url():
 	request_url = urlparse(traquent.request.url)
 	request_url = f"{request_url.scheme}://{request_url.netloc}"
-	return traquent.get_value("Social Login Key", "frappe", "base_url") or request_url
+	return traquent.get_value("Social Login Key", "traquent", "base_url") or request_url

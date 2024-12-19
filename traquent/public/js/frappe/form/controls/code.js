@@ -1,4 +1,4 @@
-frappe.ui.form.ControlCode = class ControlCode extends frappe.ui.form.ControlText {
+traquent.ui.form.ControlCode = class ControlCode extends traquent.ui.form.ControlText {
 	make_input() {
 		if (this.editor) return;
 		this.load_lib().then(() => this.make_ace_editor());
@@ -36,7 +36,7 @@ frappe.ui.form.ControlCode = class ControlCode extends frappe.ui.form.ControlTex
 			</button>`
 		);
 		this.copy_button.on("click", () => {
-			frappe.utils.copy_to_clipboard(this.get_model_value() || this.get_value());
+			traquent.utils.copy_to_clipboard(this.get_model_value() || this.get_value());
 		});
 		this.copy_button.appendTo(this.$wrapper);
 	}
@@ -92,7 +92,7 @@ frappe.ui.form.ControlCode = class ControlCode extends frappe.ui.form.ControlTex
 			change_content();
 		});
 
-		let change_content = frappe.utils.debounce(() => {
+		let change_content = traquent.utils.debounce(() => {
 			const input_value = this.get_input_value();
 			this.parse_validate_and_set_in_model(input_value);
 		}, 300);
@@ -145,7 +145,7 @@ frappe.ui.form.ControlCode = class ControlCode extends frappe.ui.form.ControlTex
 							a = { value: a };
 						}
 						return {
-							name: "frappe",
+							name: "traquent",
 							value: a.value,
 							score: a.score,
 							meta: a.meta,
@@ -215,7 +215,7 @@ frappe.ui.form.ControlCode = class ControlCode extends frappe.ui.form.ControlTex
 		const ace_language_mode = language_map[language] || "";
 		this.editor.session.setMode(ace_language_mode);
 		this.editor.setKeyboardHandler(
-			`ace/keyboard/${frappe.boot.user.code_editor_type || "vscode"}`
+			`ace/keyboard/${traquent.boot.user.code_editor_type || "vscode"}`
 		);
 	}
 
@@ -244,14 +244,14 @@ frappe.ui.form.ControlCode = class ControlCode extends frappe.ui.form.ControlTex
 	load_lib() {
 		if (this.library_loaded) return this.library_loaded;
 
-		if (frappe.boot.developer_mode) {
-			this.root_lib_path = "/assets/frappe/node_modules/ace-builds/src-noconflict/";
+		if (traquent.boot.developer_mode) {
+			this.root_lib_path = "/assets/traquent/node_modules/ace-builds/src-noconflict/";
 		} else {
-			this.root_lib_path = "/assets/frappe/node_modules/ace-builds/src-min-noconflict/";
+			this.root_lib_path = "/assets/traquent/node_modules/ace-builds/src-min-noconflict/";
 		}
 
 		this.library_loaded = new Promise((resolve) => {
-			frappe.require(this.root_lib_path + "ace.js", () => {
+			traquent.require(this.root_lib_path + "ace.js", () => {
 				window.ace.config.set("basePath", this.root_lib_path);
 				resolve();
 			});

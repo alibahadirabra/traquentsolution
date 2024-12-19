@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # MIT License. See LICENSE
 
 
@@ -225,7 +225,7 @@ class Newsletter(WebsiteGenerator):
 			args=args,
 			email_read_tracker_url=None
 			if test_email
-			else "/api/method/frappe.email.doctype.newsletter.newsletter.newsletter_email_read",
+			else "/api/method/traquent.email.doctype.newsletter.newsletter.newsletter_email_read",
 		)
 
 		traquent.db.auto_commit_on_many_writes = is_auto_commit_set
@@ -308,7 +308,7 @@ def subscribe(email, email_group=None):
 
 	# build subscription confirmation URL
 	api_endpoint = traquent.utils.get_url(
-		"/api/method/frappe.email.doctype.newsletter.newsletter.confirm_subscription"
+		"/api/method/traquent.email.doctype.newsletter.newsletter.confirm_subscription"
 	)
 	signed_params = get_signed_params({"email": email, "email_group": email_group})
 	confirm_subscription_url = f"{api_endpoint}?{signed_params}"

@@ -1,7 +1,7 @@
-// Copyright (c) 2022, Frappe Technologies and contributors
+// Copyright (c) 2022, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Permission Log", {
+traquent.ui.form.on("Permission Log", {
 	refresh: function (frm) {
 		frm.events.render_changed_values(frm);
 	},
@@ -28,7 +28,7 @@ frappe.ui.form.on("Permission Log", {
 			} else {
 				changes_table.find("tbody").append(
 					$(`<tr>
-						<td>${frappe.model.unscrub(key)}</td>
+						<td>${traquent.model.unscrub(key)}</td>
 						<td style="word-break: break-word" class="diff-remove">${changes["from"][key]}</td>
 						<td style="word-break: break-word" class="diff-add">${changes["to"][key]}</td>
 					</tr>`)
@@ -41,7 +41,7 @@ frappe.ui.form.on("Permission Log", {
 
 	get_child_changes: function (field_key, from, to) {
 		let child_main = $(`<tr>
-			<td>${frappe.model.unscrub(field_key)}</td>
+			<td>${traquent.model.unscrub(field_key)}</td>
 			<td class="from"></td>
 			<td class="to"></td>
 		</tr>`);
@@ -59,7 +59,7 @@ frappe.ui.form.on("Permission Log", {
 					child_table.find("tbody").append(
 						$(
 							`<tr>
-							<td style="word-break: break-word">${frappe.model.unscrub(key)}</td>
+							<td style="word-break: break-word">${traquent.model.unscrub(key)}</td>
 							<td style="word-break: break-word">${value}</td>
 						</tr>`
 						)

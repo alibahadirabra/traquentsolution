@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies and Contributors
+# Copyright (c) 2022, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import contextlib
 import functools
@@ -33,7 +33,7 @@ class LDAP_TestCase:
 		@functools.wraps(f)
 		def wrapped(self, *args, **kwargs):
 			with mock.patch(
-				"frappe.integrations.doctype.ldap_settings.ldap_settings.LDAPSettings.connect_to_ldap",
+				"traquent.integrations.doctype.ldap_settings.ldap_settings.LDAPSettings.connect_to_ldap",
 				return_value=self.connection,
 			):
 				self.test_class = LDAPSettings(self.doc)
@@ -219,8 +219,8 @@ class LDAP_TestCase:
 		# prevent these parameters for security or lack of the und user from being able to configure
 		prevent_connection_parameters = {
 			"mode": {
-				"IP_V4_ONLY": "Locks the user to IPv4 without frappe providing a way to configure",
-				"IP_V6_ONLY": "Locks the user to IPv6 without frappe providing a way to configure",
+				"IP_V4_ONLY": "Locks the user to IPv4 without traquent providing a way to configure",
+				"IP_V6_ONLY": "Locks the user to IPv6 without traquent providing a way to configure",
 			},
 			"auto_bind": {
 				"NONE": "ldap3.Connection must autobind with base_dn",
@@ -369,17 +369,17 @@ class LDAP_TestCase:
 					"Users",
 					"Administrators",
 					"default_role",
-					"frappe_default_all",
-					"frappe_default_guest",
-					"frappe_default_desk_user",
+					"traquent_default_all",
+					"traquent_default_guest",
+					"traquent_default_desk_user",
 				],
 				"posix.user2": [
 					"Users",
 					"Group3",
 					"default_role",
-					"frappe_default_all",
-					"frappe_default_guest",
-					"frappe_default_desk_user",
+					"traquent_default_all",
+					"traquent_default_guest",
+					"traquent_default_desk_user",
 				],
 			}
 
@@ -389,17 +389,17 @@ class LDAP_TestCase:
 					"Domain Users",
 					"Domain Administrators",
 					"default_role",
-					"frappe_default_all",
-					"frappe_default_guest",
-					"frappe_default_desk_user",
+					"traquent_default_all",
+					"traquent_default_guest",
+					"traquent_default_desk_user",
 				],
 				"posix.user2": [
 					"Domain Users",
 					"Enterprise Administrators",
 					"default_role",
-					"frappe_default_all",
-					"frappe_default_guest",
-					"frappe_default_desk_user",
+					"traquent_default_all",
+					"traquent_default_guest",
+					"traquent_default_desk_user",
 				],
 			}
 
@@ -408,9 +408,9 @@ class LDAP_TestCase:
 			self.doc["ldap_groups"][1]["erpnext_role"]: self.doc["ldap_groups"][1]["ldap_group"],
 			self.doc["ldap_groups"][2]["erpnext_role"]: self.doc["ldap_groups"][2]["ldap_group"],
 			"Newsletter Manager": "default_role",
-			"All": "frappe_default_all",
-			"Guest": "frappe_default_guest",
-			"Desk User": "frappe_default_desk_user",
+			"All": "traquent_default_all",
+			"Guest": "traquent_default_guest",
+			"Desk User": "traquent_default_desk_user",
 		}
 
 		# re-create user1 to ensure clean
@@ -424,7 +424,7 @@ class LDAP_TestCase:
 
 			self.assertTrue(
 				len(test_user_roles) == 2, "User should only be a part of the All and Guest roles"
-			)  # check default frappe roles
+			)  # check default traquent roles
 
 			self.test_class.sync_roles(test_user_doc, test_user_data[test_user])  # update user roles
 
@@ -449,8 +449,8 @@ class LDAP_TestCase:
 				"Users",
 				"Administrators",
 				"default_role",
-				"frappe_default_all",
-				"frappe_default_guest",
+				"traquent_default_all",
+				"traquent_default_guest",
 			],
 		}
 		test_user = "posix.user1"
@@ -463,10 +463,10 @@ class LDAP_TestCase:
 			traquent.get_doc("User", f"{test_user}@unit.testing")
 
 		with mock.patch(
-			"frappe.integrations.doctype.ldap_settings.ldap_settings.LDAPSettings.update_user_fields"
+			"traquent.integrations.doctype.ldap_settings.ldap_settings.LDAPSettings.update_user_fields"
 		) as update_user_fields_method:
 			with mock.patch(
-				"frappe.integrations.doctype.ldap_settings.ldap_settings.LDAPSettings.sync_roles"
+				"traquent.integrations.doctype.ldap_settings.ldap_settings.LDAPSettings.sync_roles"
 			) as sync_roles_method:
 				# New user
 				self.test_class.create_or_update_user(self.user1doc, test_user_data[test_user])
@@ -520,7 +520,7 @@ class LDAP_TestCase:
 	@mock_ldap_connection
 	def test_authenticate(self):
 		with mock.patch(
-			"frappe.integrations.doctype.ldap_settings.ldap_settings.LDAPSettings.fetch_ldap_groups"
+			"traquent.integrations.doctype.ldap_settings.ldap_settings.LDAPSettings.fetch_ldap_groups"
 		) as fetch_ldap_groups_function:
 			self.assertTrue(self.test_class.authenticate("posix.user", "posix_user_password"))
 
@@ -575,7 +575,7 @@ class LDAP_TestCase:
 		traquent.get_doc(localdoc).save()
 
 		with mock.patch(
-			"frappe.integrations.doctype.ldap_settings.ldap_settings.LDAPSettings.connect_to_ldap",
+			"traquent.integrations.doctype.ldap_settings.ldap_settings.LDAPSettings.connect_to_ldap",
 			return_value=self.connection,
 		) as connect_to_ldap:
 			with self.assertRaises(

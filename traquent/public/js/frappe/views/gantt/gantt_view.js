@@ -1,6 +1,6 @@
-frappe.provide("frappe.views");
+traquent.provide("traquent.views");
 
-frappe.views.GanttView = class GanttView extends frappe.views.ListView {
+traquent.views.GanttView = class GanttView extends traquent.views.ListView {
 	get view_name() {
 		return "Gantt";
 	}
@@ -8,7 +8,7 @@ frappe.views.GanttView = class GanttView extends frappe.views.ListView {
 	setup_defaults() {
 		return super.setup_defaults().then(() => {
 			this.page_title = this.page_title + " " + __("Gantt");
-			this.calendar_settings = frappe.views.calendar[this.doctype] || {};
+			this.calendar_settings = traquent.views.calendar[this.doctype] || {};
 
 			if (typeof this.calendar_settings.gantt == "object") {
 				Object.assign(this.calendar_settings, this.calendar_settings.gantt);
@@ -66,7 +66,7 @@ frappe.views.GanttView = class GanttView extends frappe.views.ListView {
 				dependencies: item.depends_on_tasks || "",
 			};
 
-			if (item.color && frappe.ui.color.validate_hex(item.color)) {
+			if (item.color && traquent.ui.color.validate_hex(item.color)) {
 				r["custom_class"] = "color-" + item.color.substr(1);
 			}
 
@@ -105,11 +105,11 @@ frappe.views.GanttView = class GanttView extends frappe.views.ListView {
 			view_mode: gantt_view_mode,
 			date_format: "YYYY-MM-DD",
 			on_click: (task) => {
-				frappe.set_route("Form", task.doctype, task.id);
+				traquent.set_route("Form", task.doctype, task.id);
 			},
 			on_date_change: (task, start, end) => {
 				if (!me.can_write) return;
-				frappe.db.set_value(task.doctype, task.id, {
+				traquent.db.set_value(task.doctype, task.id, {
 					[field_map.start]: moment(start).format(date_format),
 					[field_map.end]: moment(end).format(date_format),
 				});
@@ -125,7 +125,7 @@ frappe.views.GanttView = class GanttView extends frappe.views.ListView {
 				}
 
 				if (progress_fieldname) {
-					frappe.db.set_value(task.doctype, task.id, {
+					traquent.db.set_value(task.doctype, task.id, {
 						[progress_fieldname]: parseInt(progress),
 					});
 				}
@@ -203,7 +203,7 @@ frappe.views.GanttView = class GanttView extends frappe.views.ListView {
 			.map((c) => {
 				const class_name = c.replace("#", "");
 				const bar_color = "#" + c.substr(6);
-				const progress_color = frappe.ui.color.get_contrast_color(bar_color);
+				const progress_color = traquent.ui.color.get_contrast_color(bar_color);
 				return `
 				.gantt .bar-wrapper.${class_name} .bar {
 					fill: ${bar_color};
@@ -225,8 +225,8 @@ frappe.views.GanttView = class GanttView extends frappe.views.ListView {
 
 	get required_libs() {
 		return [
-			"assets/frappe/node_modules/frappe-gantt/dist/frappe-gantt.css",
-			"assets/frappe/node_modules/frappe-gantt/dist/frappe-gantt.min.js",
+			"assets/traquent/node_modules/traquent-gantt/dist/traquent-gantt.css",
+			"assets/traquent/node_modules/traquent-gantt/dist/traquent-gantt.min.js",
 		];
 	}
 };

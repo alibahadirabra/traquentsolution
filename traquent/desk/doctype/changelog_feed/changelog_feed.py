@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Frappe Technologies and contributors
+# Copyright (c) 2023, traquent Technologies and contributors
 # For license information, please see license.txt
 
 
@@ -87,7 +87,7 @@ def _app_title(app_name):
 
 
 def get_feed(since):
-	"""'What's New' feed implementation for Frappe"""
-	r = requests.get(f"https://frappe.io/api/method/changelog_feed?since={since}")
+	"""'What's New' feed implementation for traquent"""
+	r = requests.get(f"https://traquent.io/api/method/changelog_feed?since={since}")
 	r.raise_for_status()
 	return r.json()["message"]

@@ -18,16 +18,16 @@ ga('send', 'pageview');
 
 {% if enable_view_tracking %}
 	if (navigator.doNotTrack != 1 && !window.is_404) {
-		frappe.ready(() => {
-			let browser = frappe.utils.get_browser();
-			let query_params = frappe.utils.get_query_params();
+		traquent.ready(() => {
+			let browser = traquent.utils.get_browser();
+			let query_params = traquent.utils.get_query_params();
 
 			// Get visitor ID based on browser uniqueness
-			import('/assets/frappe/js/lib/fingerprintjs.js')
+			import('/assets/traquent/js/lib/fingerprintjs.js')
 				.then(fingerprint_js => fingerprint_js.load())
 				.then(fp => fp.get())
 				.then(result => {
-					frappe.call("frappe.website.doctype.web_page_view.web_page_view.make_view_log", {
+					traquent.call("traquent.website.doctype.web_page_view.web_page_view.make_view_log", {
 						referrer: document.referrer,
 						browser: browser.name,
 						version: browser.version,

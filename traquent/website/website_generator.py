@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -140,7 +140,7 @@ class WebsiteGenerator(Document):
 		):
 			url = traquent.utils.get_url(self.route)
 			traquent.enqueue(
-				"frappe.website.doctype.website_settings.google_indexing.publish_site",
+				"traquent.website.doctype.website_settings.google_indexing.publish_site",
 				url=url,
 				operation_type=operation_type,
 			)

@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import os
@@ -89,8 +89,8 @@ def run_server_script(server_script):
 	response = traquent.get_doc("Server Script", server_script).execute_method()
 
 	# some server scripts return output using flags (empty dict by default),
-	# while others directly modify frappe.response
-	# return flags if not empty dict (this overwrites frappe.response.message)
+	# while others directly modify traquent.response
+	# return flags if not empty dict (this overwrites traquent.response.message)
 	if response != {}:
 		return response
 
@@ -224,7 +224,7 @@ def download_file(file_url: str):
 	token is required to download private files.
 
 	Method : GET
-	Endpoints : download_file, frappe.core.doctype.file.file.download_file
+	Endpoints : download_file, traquent.core.doctype.file.file.download_file
 	URL Params : file_name = /path/to/file relative to site path
 	"""
 	file: "File" = traquent.get_doc("File", {"file_url": file_url})

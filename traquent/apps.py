@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import re
@@ -12,7 +12,7 @@ def get_apps():
 	apps = traquent.get_installed_apps()
 	app_list = []
 	for app in apps:
-		if app == "frappe":
+		if app == "traquent":
 			continue
 		app_details = traquent.get_hooks("add_to_apps_screen", app_name=app)
 		if not len(app_details):
@@ -50,7 +50,7 @@ def is_desk_apps(apps):
 
 def get_default_path():
 	apps = get_apps()
-	_apps = [app for app in apps if app.get("name") != "frappe"]
+	_apps = [app for app in apps if app.get("name") != "traquent"]
 
 	if len(_apps) == 0:
 		return None

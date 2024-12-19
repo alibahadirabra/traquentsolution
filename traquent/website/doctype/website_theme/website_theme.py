@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and contributors
 # License: MIT. See LICENSE
 
 from os.path import abspath, splitext
@@ -83,7 +83,7 @@ class WebsiteTheme(Document):
 		export_to_files(record_list=[["Website Theme", self.name]], create_init=True)
 
 	def clear_cache_if_current_theme(self):
-		if traquent.flags.in_install == "frappe":
+		if traquent.flags.in_install == "traquent":
 			return
 		website_settings = traquent.get_doc("Website Settings", "Website Settings")
 		if getattr(website_settings, "website_theme", None) == self.name:
@@ -109,7 +109,7 @@ class WebsiteTheme(Document):
 		content = content.replace("\n", "\\n")
 		command = ["node", "generate_bootstrap_theme.js", output_path, content]
 
-		process = Popen(command, cwd=traquent.get_app_source_path("frappe"), stdout=PIPE, stderr=PIPE)
+		process = Popen(command, cwd=traquent.get_app_source_path("traquent"), stdout=PIPE, stderr=PIPE)
 
 		stderr = process.communicate()[1]
 
@@ -172,15 +172,15 @@ def get_scss(website_theme):
 	imports_to_include = [d for d in available_imports if not d.startswith(apps_to_ignore)]
 	context = website_theme.as_dict()
 	context["website_theme_scss"] = imports_to_include
-	return traquent.render_template("frappe/website/doctype/website_theme/website_theme_template.scss", context)
+	return traquent.render_template("traquent/website/doctype/website_theme/website_theme_template.scss", context)
 
 
 def get_scss_paths():
 	"""
 	Return a set of SCSS import paths from all apps that provide `website.scss`.
 
-	If `$BENCH_PATH/apps/frappe/frappe/public/scss/website[.bundle].scss` exists, the
-	returned set will contain 'frappe/public/scss/website[.bundle]'.
+	If `$BENCH_PATH/apps/traquent/traquent/public/scss/website[.bundle].scss` exists, the
+	returned set will contain 'traquent/public/scss/website[.bundle]'.
 	"""
 	import_path_list = []
 

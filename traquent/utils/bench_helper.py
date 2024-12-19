@@ -16,7 +16,7 @@ import traquent.utils
 click.disable_unicode_literals_warning = True
 
 
-def FrappeClickWrapper(cls, handler):
+def traquentClickWrapper(cls, handler):
 	class Cls(cls):
 		# only implemented on groups
 		def get_command(self, ctx, cmd_name):
@@ -102,20 +102,20 @@ def handle_exception(cmd, info_name, exc):
 
 def main():
 	commands = get_app_groups()
-	commands.update({"get-frappe-commands": get_frappe_commands, "get-frappe-help": get_frappe_help})
-	FrappeClickWrapper(click.Group, handle_exception)(commands=commands)(prog_name="bench")
+	commands.update({"get-traquent-commands": get_traquent_commands, "get-traquent-help": get_traquent_help})
+	traquentClickWrapper(click.Group, handle_exception)(commands=commands)(prog_name="bench")
 
 
 def get_app_groups() -> dict[str, click.Group]:
-	"""Get all app groups, put them in main group "frappe" since bench is
+	"""Get all app groups, put them in main group "traquent" since bench is
 	designed to only handle that"""
 	commands = {}
 	for app in get_apps():
 		if app_commands := get_app_commands(app):
 			commands |= app_commands
 	return dict(
-		frappe=click.group(
-			name="frappe", commands=commands, cls=FrappeClickWrapper(click.Group, handle_exception)
+		traquent=click.group(
+			name="traquent", commands=commands, cls=traquentClickWrapper(click.Group, handle_exception)
 		)(app_group)
 	)
 
@@ -123,7 +123,7 @@ def get_app_groups() -> dict[str, click.Group]:
 def get_app_group(app: str) -> click.Group:
 	if app_commands := get_app_commands(app):
 		return click.group(
-			name=app, commands=app_commands, cls=FrappeClickWrapper(click.Group, handle_exception)
+			name=app, commands=app_commands, cls=traquentClickWrapper(click.Group, handle_exception)
 		)(app_group)
 
 
@@ -134,7 +134,7 @@ def get_app_group(app: str) -> click.Group:
 @click.pass_context
 def app_group(ctx, site=False, force=False, verbose=False, profile=False):
 	ctx.obj = CliCtxObj(sites=get_sites(site), force=force, verbose=verbose, profile=profile)
-	if ctx.info_name == "frappe":
+	if ctx.info_name == "traquent":
 		ctx.info_name = ""
 
 
@@ -143,8 +143,8 @@ def get_sites(site_arg: str) -> list[str]:
 		return traquent.utils.get_sites()
 	elif site_arg:
 		return [site_arg]
-	elif os.environ.get("FRAPPE_SITE"):
-		return [os.environ.get("FRAPPE_SITE")]
+	elif os.environ.get("traquent_SITE"):
+		return [os.environ.get("traquent_SITE")]
 	elif default_site := traquent.get_conf().default_site:
 		return [default_site]
 	# This is not supported, just added here for warning.
@@ -178,9 +178,9 @@ def get_app_commands(app: str) -> dict:
 	return ret
 
 
-@click.command("get-frappe-commands")
-def get_frappe_commands():
-	commands = list(get_app_commands("frappe"))
+@click.command("get-traquent-commands")
+def get_traquent_commands():
+	commands = list(get_app_commands("traquent"))
 
 	for app in get_apps():
 		app_commands = get_app_commands(app)
@@ -190,9 +190,9 @@ def get_frappe_commands():
 	print(json.dumps(commands))
 
 
-@click.command("get-frappe-help")
-def get_frappe_help():
-	print(click.Context(get_app_groups()["frappe"]).get_help())
+@click.command("get-traquent-help")
+def get_traquent_help():
+	print(click.Context(get_app_groups()["traquent"]).get_help())
 
 
 def get_apps():

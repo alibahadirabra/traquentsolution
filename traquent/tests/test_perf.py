@@ -24,11 +24,11 @@ from unittest.mock import patch
 from tenacity import retry, retry_if_exception_type, stop_after_attempt, wait_fixed
 
 import traquent
-from traquent.frappeclient import FrappeClient
+from traquent.traquentclient import traquentClient
 from traquent.model.base_document import get_controller
 from traquent.query_builder.utils import db_type_is
 from traquent.tests import IntegrationTestCase
-from traquent.tests.test_api import FrappeAPITestCase
+from traquent.tests.test_api import traquentAPITestCase
 from traquent.tests.test_query_builder import run_only_if
 from traquent.utils import cint
 from traquent.website.path_resolver import PathResolver
@@ -40,7 +40,7 @@ TEST_USER = "test@example.com"
 class TestPerformance(IntegrationTestCase):
 	def reset_request_specific_caches(self):
 		# To simulate close to request level of handling
-		traquent.destroy()  # releases everything on frappe.local
+		traquent.destroy()  # releases everything on traquent.local
 		traquent.init(self.TEST_SITE)
 		traquent.connect()
 		traquent.clear_cache()
@@ -65,7 +65,7 @@ class TestPerformance(IntegrationTestCase):
 		# load permitted fieldnames once
 		doc.permitted_fieldnames
 
-		with patch("frappe.model.base_document.get_permitted_fields") as mocked:
+		with patch("traquent.model.base_document.get_permitted_fields") as mocked:
 			doc.as_dict()
 			# get_permitted_fields should not be called again
 			mocked.assert_not_called()
@@ -133,7 +133,7 @@ class TestPerformance(IntegrationTestCase):
 		FAILURE_THREASHOLD = 0.1
 
 		req_count = 1000
-		client = FrappeClient(self.HOST, "Administrator", self.ADMIN_PASSWORD)
+		client = traquentClient(self.HOST, "Administrator", self.ADMIN_PASSWORD)
 
 		start = time.perf_counter()
 		for _ in range(req_count):
@@ -180,7 +180,7 @@ class TestPerformance(IntegrationTestCase):
 		self.assertNotIn("ifnull", query)
 
 	def test_no_stale_ref_sql(self):
-		"""frappe.db.sql should not hold any internal references to result set.
+		"""traquent.db.sql should not hold any internal references to result set.
 
 		pymysql stores results internally. If your code reads a lot and doesn't make another
 		query, for that entire duration there's copy of result consuming memory in internal
@@ -205,7 +205,7 @@ class TestPerformance(IntegrationTestCase):
 
 
 @run_only_if(db_type_is.MARIADB)
-class TestOverheadCalls(FrappeAPITestCase):
+class TestOverheadCalls(traquentAPITestCase):
 	"""Test that typical redis and db calls remain same overtime.
 
 	If this tests fail on your PR, make sure you're not introducing something in hot-path of these

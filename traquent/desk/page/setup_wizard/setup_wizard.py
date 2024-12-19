@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import json
@@ -15,8 +15,8 @@ from . import install_fixtures
 
 
 def get_setup_stages(args):  # nosemgrep
-	# App setup stage functions should not include frappe.db.commit
-	# That is done by frappe after successful completion of all stages
+	# App setup stage functions should not include traquent.db.commit
+	# That is done by traquent after successful completion of all stages
 	stages = [
 		{
 			"status": _("Updating global settings"),

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -25,7 +25,7 @@ def get(name):
 @traquent.whitelist(allow_guest=True)
 def getpage():
 	"""
-	Load the page from `frappe.form` and send it via `frappe.response`
+	Load the page from `traquent.form` and send it via `traquent.response`
 	"""
 	page = traquent.form_dict.get("name")
 	doc = get(page)

@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 from types import NoneType
 from typing import TYPE_CHECKING
@@ -45,7 +45,7 @@ def update_document_title(
 	updated_title = kwargs.get("new_title") or title
 	updated_name = kwargs.get("new_name") or name
 
-	# TODO: omit this after runtime type checking (ref: https://github.com/frappe/frappe/pull/14927)
+	# TODO: omit this after runtime type checking (ref: https://github.com/traquent/traquent/pull/14927)
 	for obj in [docname, updated_title, updated_name]:
 		if not isinstance(obj, str | NoneType):
 			traquent.throw(f"{obj=} must be of type str or None")
@@ -93,7 +93,7 @@ def update_document_title(
 	if title_updated:
 		if action_enqueued and name_updated:
 			traquent.enqueue(
-				"frappe.client.set_value",
+				"traquent.client.set_value",
 				doctype=doc.doctype,
 				name=updated_name,
 				fieldname=title_field,
@@ -148,7 +148,7 @@ def rename_doc(
 
 	if not (new_usage_style or old_usage_style):
 		raise TypeError(
-			"{doctype, old, new} or {doc, new} are required arguments for frappe.model.rename_doc"
+			"{doctype, old, new} or {doc, new} are required arguments for traquent.model.rename_doc"
 		)
 
 	old = old or doc.name
@@ -220,7 +220,7 @@ def rename_doc(
 	new_doc.clear_cache()
 	traquent.clear_cache()
 	if rebuild_search:
-		traquent.enqueue("frappe.utils.global_search.rebuild_for_doctype", doctype=doctype)
+		traquent.enqueue("traquent.utils.global_search.rebuild_for_doctype", doctype=doctype)
 
 	if show_alert:
 		traquent.msgprint(
@@ -708,7 +708,7 @@ def bulk_rename(doctype: str, rows: list[list] | None = None, via_console: bool 
 				else:
 					rename_log.append(msg)
 
-	traquent.enqueue("frappe.utils.global_search.rebuild_for_doctype", doctype=doctype)
+	traquent.enqueue("traquent.utils.global_search.rebuild_for_doctype", doctype=doctype)
 
 	if not via_console:
 		return rename_log

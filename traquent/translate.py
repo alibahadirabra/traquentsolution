@@ -1,10 +1,10 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 """
-frappe.translate
+traquent.translate
 ~~~~~~~~~~~~~~~~
 
-Translation tools for frappe
+Translation tools for traquent
 """
 
 import functools
@@ -31,7 +31,7 @@ USER_TRANSLATION_KEY = "lang_user_translations"
 
 
 def get_language(lang_list: list | None = None) -> str:
-	"""Set `frappe.local.lang` from HTTP headers at beginning of request
+	"""Set `traquent.local.lang` from HTTP headers at beginning of request
 
 	Order of priority for setting language:
 	1. Form Dict => _lang
@@ -94,10 +94,10 @@ def get_parent_language(lang: str) -> str:
 
 
 def get_user_lang(user: str | None = None) -> str:
-	"""Set frappe.local.lang from user preferences on session beginning or resumption"""
+	"""Set traquent.local.lang from user preferences on session beginning or resumption"""
 	user = user or traquent.session.user
 
-	# User.language => Session Defaults => frappe.local.lang => 'en'
+	# User.language => Session Defaults => traquent.local.lang => 'en'
 	return (
 		traquent.get_cached_value("User", user, "language")
 		or traquent.db.get_default("lang")
@@ -233,7 +233,7 @@ def get_user_translations(lang):
 
 
 def clear_cache():
-	"""Clear all translation assets from :meth:`frappe.cache`"""
+	"""Clear all translation assets from :meth:`traquent.cache`"""
 	traquent.cache.delete_value(
 		keys=["bootinfo", USER_TRANSLATION_KEY, MERGED_TRANSLATION_KEY],
 	)
@@ -457,12 +457,12 @@ def get_messages_from_custom_fields(app_name):
 
 
 def get_messages_from_page(name):
-	"""Return all translatable strings from a :class:`frappe.core.doctype.Page`."""
+	"""Return all translatable strings from a :class:`traquent.core.doctype.Page`."""
 	return _get_messages_from_page_or_report("Page", name)
 
 
 def get_messages_from_report(name):
-	"""Return all translatable strings from a :class:`frappe.core.doctype.Report`."""
+	"""Return all translatable strings from a :class:`traquent.core.doctype.Report`."""
 	from traquent.gettext.extractors.utils import is_translatable
 
 	report = traquent.get_doc("Report", name)
@@ -509,7 +509,7 @@ def _get_messages_from_page_or_report(doctype, name, module=None):
 
 
 def get_server_messages(app):
-	"""Extracts all translatable strings (tagged with :func:`frappe._`) from Python modules
+	"""Extracts all translatable strings (tagged with :func:`traquent._`) from Python modules
 	inside an app"""
 	messages = []
 	file_extensions = (".py", ".html", ".js", ".vue")
@@ -553,7 +553,7 @@ def get_all_messages_from_js_files(app_name=None):
 	for app in [app_name] if app_name else traquent.get_installed_apps(_ensure_on_bench=True):
 		if os.path.exists(traquent.get_app_path(app, "public")):
 			for basepath, folders, files in os.walk(traquent.get_app_path(app, "public")):  # noqa: B007
-				if "frappe/public/js/lib" in basepath:
+				if "traquent/public/js/lib" in basepath:
 					continue
 
 				for fname in files:
@@ -866,7 +866,7 @@ def write_translations_file(app, lang, full_dict=None, app_messages=None):
 
 
 def send_translations(translation_dict):
-	"""Append translated dict in `frappe.local.response`"""
+	"""Append translated dict in `traquent.local.response`"""
 	if "__messages" not in traquent.local.response:
 		traquent.local.response["__messages"] = {}
 
@@ -962,7 +962,7 @@ def print_language(language: str):
 
 	```
 	with print_language("de"):
-	    html = frappe.get_print(...)
+	    html = traquent.get_print(...)
 	```
 	"""
 	if not language or language == traquent.local.lang:

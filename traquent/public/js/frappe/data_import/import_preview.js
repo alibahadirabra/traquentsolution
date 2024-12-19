@@ -1,9 +1,9 @@
-import DataTable from "frappe-datatable";
+import DataTable from "traquent-datatable";
 import { get_columns_for_picker } from "./data_exporter";
 
-frappe.provide("frappe.data_import");
+traquent.provide("traquent.data_import");
 
-frappe.data_import.ImportPreview = class ImportPreview {
+traquent.data_import.ImportPreview = class ImportPreview {
 	constructor({ wrapper, doctype, preview_data, frm, import_log, events = {} }) {
 		this.wrapper = wrapper;
 		this.doctype = doctype;
@@ -12,7 +12,7 @@ frappe.data_import.ImportPreview = class ImportPreview {
 		this.import_log = import_log;
 		this.frm = frm;
 
-		frappe.model.with_doctype(doctype, () => {
+		traquent.model.with_doctype(doctype, () => {
 			this.refresh();
 		});
 	}
@@ -40,7 +40,7 @@ frappe.data_import.ImportPreview = class ImportPreview {
 				</div>
 			</div>
 		`);
-		frappe.utils.bind_actions_with_object(this.wrapper, this);
+		traquent.utils.bind_actions_with_object(this.wrapper, this);
 
 		this.$table_preview = this.wrapper.find(".table-preview");
 	}
@@ -73,7 +73,7 @@ frappe.data_import.ImportPreview = class ImportPreview {
 					${!col.df ? show_warnings_button : ""}
 				</span>`;
 				return {
-					id: frappe.utils.get_random(6),
+					id: traquent.utils.get_random(6),
 					name: col.header_title || (df ? df.label : "Untitled Column"),
 					content: column_title,
 					skip_import: true,
@@ -135,8 +135,8 @@ frappe.data_import.ImportPreview = class ImportPreview {
 			columns: this.columns,
 			layout: this.columns.length < 10 ? "fluid" : "fixed",
 			cellHeight: 35,
-			language: frappe.boot.lang,
-			translations: frappe.utils.datatable.get_translations(),
+			language: traquent.boot.lang,
+			translations: traquent.utils.datatable.get_translations(),
 			serialNoColumn: false,
 			checkboxColumn: false,
 			noDataMessage: __("No Data"),
@@ -168,7 +168,7 @@ frappe.data_import.ImportPreview = class ImportPreview {
 		// import success checkbox
 		this.datatable.style.setStyle(`svg.import-success`, {
 			width: "16px",
-			fill: frappe.ui.color.get_color_shade("green", "dark"),
+			fill: traquent.ui.color.get_color_shade("green", "dark"),
 		});
 		// make successfully imported rows readonly
 		let row_classes = this.datatable
@@ -179,8 +179,8 @@ frappe.data_import.ImportPreview = class ImportPreview {
 			.join(",");
 		this.datatable.style.setStyle(row_classes, {
 			pointerEvents: "none",
-			backgroundColor: frappe.ui.color.get_color_shade("gray", "extra-light"),
-			color: frappe.ui.color.get_color_shade("gray", "dark"),
+			backgroundColor: traquent.ui.color.get_color_shade("gray", "extra-light"),
+			color: traquent.ui.color.get_color_shade("gray", "dark"),
 		});
 	}
 
@@ -227,7 +227,7 @@ frappe.data_import.ImportPreview = class ImportPreview {
 		let $warning = this.frm
 			.get_field("import_warnings")
 			.$wrapper.find(`[data-col=${$target.data("col")}]`);
-		frappe.utils.scroll_to($warning, true, 30);
+		traquent.utils.scroll_to($warning, true, 30);
 	}
 
 	show_column_mapper() {
@@ -298,7 +298,7 @@ frappe.data_import.ImportPreview = class ImportPreview {
 			},
 		].concat(fields);
 
-		let dialog = new frappe.ui.Dialog({
+		let dialog = new traquent.ui.Dialog({
 			title: __("Map Columns"),
 			fields,
 			primary_action: (values) => {
@@ -327,7 +327,7 @@ frappe.data_import.ImportPreview = class ImportPreview {
 
 function get_fields_as_options(doctype, column_map) {
 	let keys = [doctype];
-	frappe.meta.get_table_fields(doctype).forEach((df) => {
+	traquent.meta.get_table_fields(doctype).forEach((df) => {
 		keys.push(df.fieldname);
 	});
 	// flatten array
@@ -337,7 +337,7 @@ function get_fields_as_options(doctype, column_map) {
 				let label = __(df.label, null, df.parent);
 				let value = df.fieldname;
 				if (doctype !== key) {
-					let table_field = frappe.meta.get_docfield(doctype, key);
+					let table_field = traquent.meta.get_docfield(doctype, key);
 					label = `${__(df.label, null, df.parent)} (${__(table_field.label)})`;
 					value = `${table_field.fieldname}.${df.fieldname}`;
 				}

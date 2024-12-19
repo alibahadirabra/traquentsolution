@@ -1,9 +1,9 @@
 /**
- * frappe.views.ImageView
+ * traquent.views.ImageView
  */
-frappe.provide("frappe.views");
+traquent.provide("traquent.views");
 
-frappe.views.ImageView = class ImageView extends frappe.views.ListView {
+traquent.views.ImageView = class ImageView extends traquent.views.ListView {
 	get view_name() {
 		return "Image";
 	}
@@ -89,19 +89,19 @@ frappe.views.ImageView = class ImageView extends frappe.views.ListView {
 		item._name = encodeURI(item.name);
 		const encoded_name = item._name;
 		const title = strip_html(item[this.meta.title_field || "name"]);
-		const escaped_title = frappe.utils.escape_html(title);
+		const escaped_title = traquent.utils.escape_html(title);
 		const _class = !item._image_url ? "no-image" : "";
 		const _html = item._image_url
 			? `<img data-name="${encoded_name}" src="${item._image_url}" alt="${title}">`
 			: `<span class="placeholder-text">
-				${frappe.get_abbr(title)}
+				${traquent.get_abbr(title)}
 			</span>`;
 
 		let details = this.item_details_html(item);
 
 		const expand_button_html = item._image_url
 			? `<div class="zoom-view" data-name="${encoded_name}">
-				${frappe.utils.icon("expand", "xs")}
+				${traquent.utils.icon("expand", "xs")}
 			</div>`
 			: "";
 
@@ -144,9 +144,9 @@ frappe.views.ImageView = class ImageView extends frappe.views.ListView {
 	}
 
 	get_attached_images() {
-		return frappe
+		return traquent
 			.call({
-				method: "frappe.core.api.file.get_attached_images",
+				method: "traquent.core.api.file.get_attached_images",
 				args: {
 					doctype: this.doctype,
 					names: this.items.map((i) => i.name),
@@ -159,7 +159,7 @@ frappe.views.ImageView = class ImageView extends frappe.views.ListView {
 
 	setup_gallery() {
 		var me = this;
-		this.gallery = new frappe.views.GalleryView({
+		this.gallery = new traquent.views.GalleryView({
 			doctype: this.doctype,
 			items: this.items,
 			wrapper: this.$result,
@@ -177,13 +177,13 @@ frappe.views.ImageView = class ImageView extends frappe.views.ListView {
 
 	get required_libs() {
 		return [
-			"assets/frappe/node_modules/photoswipe/src/photoswipe.css",
+			"assets/traquent/node_modules/photoswipe/src/photoswipe.css",
 			"photoswipe.bundle.js",
 		];
 	}
 };
 
-frappe.views.GalleryView = class GalleryView {
+traquent.views.GalleryView = class GalleryView {
 	constructor(opts) {
 		$.extend(this, opts);
 		var me = this;
@@ -193,7 +193,7 @@ frappe.views.GalleryView = class GalleryView {
 		// keep only one pswp dom element
 		this.pswp_root = $("body > .pswp");
 		if (this.pswp_root.length === 0) {
-			var pswp = frappe.render_template("photoswipe_dom");
+			var pswp = traquent.render_template("photoswipe_dom");
 			this.pswp_root = $(pswp).appendTo("body");
 		}
 	}
@@ -251,7 +251,7 @@ frappe.views.GalleryView = class GalleryView {
 		};
 
 		// init
-		this.pswp = new frappe.PhotoSwipe(options);
+		this.pswp = new traquent.PhotoSwipe(options);
 		this.pswp.init();
 	}
 };

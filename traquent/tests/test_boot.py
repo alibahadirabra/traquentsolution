@@ -53,7 +53,7 @@ class TestPermissionQueries(IntegrationTestCase):
 			name="test_report_permission_query",
 			script_type="Permission Query",
 			reference_doctype="Report",
-			script="""conditions = f"(`tabReport`.is_standard = 'Yes' or `tabReport`.owner = '{frappe.session.user}')"
+			script="""conditions = f"(`tabReport`.is_standard = 'Yes' or `tabReport`.owner = '{traquent.session.user}')"
 				""",
 		).insert()
 

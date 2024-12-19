@@ -4,7 +4,7 @@ body[data-path^="update-profile"],
 body[data-path="update-password"],
 body[data-path="third_party_apps"] {
 	@include media-breakpoint-up(sm) {
-	  background-image: url("/assets/frappe/images/pattern.svg");
+	  background-image: url("/assets/traquent/images/pattern.svg");
 	  background-size: cover; /* Resmi sayfa boyutuna göre ayarlar */
 	  background-position: center; /* Resmi ortalar */
 	  background-repeat: no-repeat;
@@ -21,7 +21,7 @@ body[data-path="third_party_apps"] {
 /*#UPDATES --sevval*/
 @font-face {
 	font-family: 'Manrope';
-	src: url('/assets/frappe/css/fonts/manrope/Manrope-VariableFont_wght.ttf') format('tff');
+	src: url('/assets/traquent/css/fonts/manrope/Manrope-VariableFont_wght.ttf') format('tff');
 	font-weight: normal;
 	font-style: normal;
   }

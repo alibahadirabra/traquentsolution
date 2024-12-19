@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies and Contributors
+# Copyright (c) 2022, traquent Technologies and Contributors
 
 # See license.txt
 
@@ -33,7 +33,7 @@ class UnitTestRqJob(UnitTestCase):
 
 
 class TestRQJob(IntegrationTestCase):
-	BG_JOB = "frappe.core.doctype.rq_job.test_rq_job.test_func"
+	BG_JOB = "traquent.core.doctype.rq_job.test_rq_job.test_func"
 
 	def check_status(self, job: Job, status, wait=True):
 		if wait:
@@ -65,7 +65,7 @@ class TestRQJob(IntegrationTestCase):
 	def test_func_obj_serialization(self):
 		job = traquent.enqueue(method=test_func, queue="short")
 		rq_job = traquent.get_doc("RQ Job", job.id)
-		self.assertEqual(rq_job.job_name, "frappe.core.doctype.rq_job.test_rq_job.test_func")
+		self.assertEqual(rq_job.job_name, "traquent.core.doctype.rq_job.test_rq_job.test_func")
 
 	@timeout
 	def test_get_list_filtering(self):
@@ -166,7 +166,7 @@ class TestRQJob(IntegrationTestCase):
 	def test_memory_usage(self):
 		if traquent.db.db_type != "mariadb":
 			return
-		job = traquent.enqueue("frappe.utils.data._get_rss_memory_usage")
+		job = traquent.enqueue("traquent.utils.data._get_rss_memory_usage")
 		self.check_status(job, "finished")
 
 		rss = job.latest_result().return_value
@@ -174,7 +174,7 @@ class TestRQJob(IntegrationTestCase):
 
 		# If this starts failing analyze memory usage using memray or some equivalent tool to find
 		# offending imports/function calls.
-		# Refer this PR: https://github.com/frappe/frappe/pull/21467
+		# Refer this PR: https://github.com/traquent/traquent/pull/21467
 		LAST_MEASURED_USAGE = 41
 		self.assertLessEqual(rss, LAST_MEASURED_USAGE * 1.05, msg)
 

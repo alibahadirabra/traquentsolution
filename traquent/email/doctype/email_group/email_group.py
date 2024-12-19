@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies and contributors
+# Copyright (c) 2015, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import contextlib

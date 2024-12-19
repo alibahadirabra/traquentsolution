@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and contributors
+# Copyright (c) 2019, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import json
@@ -51,7 +51,7 @@ class PersonalDataDownloadRequest(Document):
 		f.save(ignore_permissions=True)
 
 		file_link = (
-			traquent.utils.get_url("/api/method/frappe.utils.file_manager.download_file")
+			traquent.utils.get_url("/api/method/traquent.utils.file_manager.download_file")
 			+ "?"
 			+ get_signed_params({"file_url": f.file_url})
 		)

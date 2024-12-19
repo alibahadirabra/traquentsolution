@@ -27,14 +27,14 @@ class BaseTestCase:
 
 
 class UnitTestCase(unittest.TestCase, BaseTestCase):
-	"""Unit test class for Frappe tests.
+	"""Unit test class for traquent tests.
 
 	This class extends unittest.TestCase and provides additional utilities
-	specific to Frappe framework. It's designed for testing individual
+	specific to traquent framework. It's designed for testing individual
 	components or functions in isolation.
 
 	Key features:
-	- Custom assertions for Frappe-specific comparisons
+	- Custom assertions for traquent-specific comparisons
 	- Utilities for HTML and SQL normalization
 	- Context managers for user switching and time freezing
 
@@ -58,7 +58,7 @@ class UnitTestCase(unittest.TestCase, BaseTestCase):
 		"""Assert that `expected` is a subset of `actual`."""
 		self.assertTrue(set(smaller).issubset(set(larger)), msg=msg)
 
-	# --- Frappe Framework specific assertions
+	# --- traquent Framework specific assertions
 	def assertDocumentEqual(self, expected: dict | BaseDocument, actual: BaseDocument) -> None:
 		"""Compare a (partial) expected document with actual Document."""
 

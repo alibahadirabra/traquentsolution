@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 """
 	Utilities for using modules
@@ -26,7 +26,7 @@ def export_module_json(doc: "Document", is_standard: bool, module: str) -> str |
 
 	Return the absolute file_path without the extension.
 	Eg: For exporting a Print Format "_Test Print Format 1", the return value will be
-	`/home/gavin/frappe-bench/apps/frappe/frappe/core/print_format/_test_print_format_1/_test_print_format_1`
+	`/home/gavin/traquent-bench/apps/traquent/traquent/core/print_format/_test_print_format_1/_test_print_format_1`
 	"""
 	if not traquent.flags.in_import and is_standard and traquent.conf.developer_mode:
 		from traquent.modules.export_file import export_to_files
@@ -300,12 +300,12 @@ def make_boilerplate(
 	opts = opts or traquent._dict()
 	app_publisher = get_app_publisher(doc.module)
 	base_class = "Document"
-	base_class_import = "from frappe.model.document import Document"
+	base_class_import = "from traquent.model.document import Document"
 	controller_body = "pass"
 
 	if doc.get("is_tree"):
 		base_class = "NestedSet"
-		base_class_import = "from frappe.utils.nestedset import NestedSet"
+		base_class_import = "from traquent.utils.nestedset import NestedSet"
 
 	if doc.get("is_virtual"):
 		controller_body = indent(

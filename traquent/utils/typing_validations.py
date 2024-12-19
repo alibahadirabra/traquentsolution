@@ -7,7 +7,7 @@ from unittest import mock
 
 from pydantic import ConfigDict
 
-from traquent.exceptions import FrappeTypeError
+from traquent.exceptions import traquentTypeError
 
 SLACK_DICT = {
 	bool: (int, bool, float),
@@ -15,7 +15,7 @@ SLACK_DICT = {
 T = TypeVar("T")
 
 
-FrappePydanticConfig = ConfigDict(arbitrary_types_allowed=True)
+traquentPydanticConfig = ConfigDict(arbitrary_types_allowed=True)
 
 
 def validate_argument_types(func: Callable, apply_condition: Callable = lambda: True):
@@ -61,7 +61,7 @@ def raise_type_error(
 	and the actual type of the value passed.
 
 	"""
-	raise FrappeTypeError(
+	raise traquentTypeError(
 		f"Argument '{arg_name}' should be of type '{qualified_name(arg_type)}' but got "
 		f"'{qualified_name(arg_value)}' instead."
 	) from current_exception
@@ -71,7 +71,7 @@ def raise_type_error(
 def TypeAdapter(type_):
 	from pydantic import TypeAdapter as PyTypeAdapter
 
-	return PyTypeAdapter(type_, config=FrappePydanticConfig)
+	return PyTypeAdapter(type_, config=traquentPydanticConfig)
 
 
 def transform_parameter_types(func: Callable, args: tuple, kwargs: dict):
@@ -122,7 +122,7 @@ def transform_parameter_types(func: Callable, args: tuple, kwargs: dict):
 		elif isinstance(current_arg_value, mock.Mock):
 			continue
 
-		# allow slack for Frappe types
+		# allow slack for traquent types
 		if current_arg_type in SLACK_DICT:
 			current_arg_type = SLACK_DICT[current_arg_type]
 

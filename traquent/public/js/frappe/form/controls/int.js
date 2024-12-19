@@ -1,4 +1,4 @@
-frappe.ui.form.ControlInt = class ControlInt extends frappe.ui.form.ControlData {
+traquent.ui.form.ControlInt = class ControlInt extends traquent.ui.form.ControlData {
 	static trigger_change_on_input_event = false;
 	static input_mode = "numeric";
 	make() {
@@ -42,4 +42,4 @@ frappe.ui.form.ControlInt = class ControlInt extends frappe.ui.form.ControlData 
 	}
 };
 
-frappe.ui.form.ControlLongInt = frappe.ui.form.ControlInt;
+traquent.ui.form.ControlLongInt = traquent.ui.form.ControlInt;

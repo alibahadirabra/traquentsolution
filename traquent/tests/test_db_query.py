@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import datetime
 from contextlib import contextmanager
@@ -811,7 +811,7 @@ class TestDBQuery(IntegrationTestCase):
 		self.assertEqual(owners, ["Administrator"])
 
 	def test_prepare_select_args(self):
-		# frappe.get_all inserts modified field into order_by clause
+		# traquent.get_all inserts modified field into order_by clause
 		# test to make sure this is inserted into select field when postgres
 		doctypes = traquent.get_all(
 			"DocType",
@@ -1089,7 +1089,7 @@ class TestDBQuery(IntegrationTestCase):
 				self.assertEqual(doctype, "Virtual DocType")
 
 		with patch(
-			"frappe.controllers",
+			"traquent.controllers",
 			new={traquent.local.site: {"Virtual DocType": VirtualDocType}},
 		):
 			traquent.get_all("Virtual DocType", filters={"name": "test"}, fields=["name"], limit=1)
@@ -1208,7 +1208,7 @@ class TestReportView(IntegrationTestCase):
 				"distinct": "false",
 			}
 		)
-		count = execute_cmd("frappe.desk.reportview.get_count")
+		count = execute_cmd("traquent.desk.reportview.get_count")
 		traquent.local.form_dict = traquent._dict(
 			{
 				"doctype": "DocType",
@@ -1216,7 +1216,7 @@ class TestReportView(IntegrationTestCase):
 				"distinct": "true",
 			}
 		)
-		dict_filter_response = execute_cmd("frappe.desk.reportview.get_count")
+		dict_filter_response = execute_cmd("traquent.desk.reportview.get_count")
 		self.assertIsInstance(count, int)
 		self.assertEqual(count, dict_filter_response)
 
@@ -1229,7 +1229,7 @@ class TestReportView(IntegrationTestCase):
 				"distinct": "true",
 			}
 		)
-		child_filter_response = execute_cmd("frappe.desk.reportview.get_count")
+		child_filter_response = execute_cmd("traquent.desk.reportview.get_count")
 		current_value = traquent.db.sql(
 			# the below query is equivalent to the one in reportview.get_count
 			"select distinct count(distinct `tabDocType`.name) as total_count"
@@ -1250,7 +1250,7 @@ class TestReportView(IntegrationTestCase):
 				"limit": limit,
 			}
 		)
-		count = execute_cmd("frappe.desk.reportview.get_count")
+		count = execute_cmd("traquent.desk.reportview.get_count")
 		self.assertIsInstance(count, int)
 		self.assertLessEqual(count, limit)
 
@@ -1264,7 +1264,7 @@ class TestReportView(IntegrationTestCase):
 				"limit": limit,
 			}
 		)
-		count = execute_cmd("frappe.desk.reportview.get_count")
+		count = execute_cmd("traquent.desk.reportview.get_count")
 		self.assertIsInstance(count, int)
 		self.assertLessEqual(count, limit)
 
@@ -1294,7 +1294,7 @@ class TestReportView(IntegrationTestCase):
 		)
 
 		# even if * is passed, fields which are not accessible should be filtered out
-		response = execute_cmd("frappe.desk.reportview.get")
+		response = execute_cmd("traquent.desk.reportview.get")
 		self.assertListEqual(response["keys"], ["title"])
 		traquent.local.form_dict = traquent._dict(
 			{
@@ -1303,7 +1303,7 @@ class TestReportView(IntegrationTestCase):
 			}
 		)
 
-		response = execute_cmd("frappe.desk.reportview.get")
+		response = execute_cmd("traquent.desk.reportview.get")
 		self.assertNotIn("published", response["keys"])
 
 		traquent.set_user("Administrator")
@@ -1320,7 +1320,7 @@ class TestReportView(IntegrationTestCase):
 			}
 		)
 
-		response = execute_cmd("frappe.desk.reportview.get")
+		response = execute_cmd("traquent.desk.reportview.get")
 		self.assertListEqual(response["keys"], ["published", "title", "test_field"])
 
 		# reset user roles
@@ -1348,7 +1348,7 @@ class TestReportView(IntegrationTestCase):
 			}
 		)
 
-		response = execute_cmd("frappe.desk.reportview.get")
+		response = execute_cmd("traquent.desk.reportview.get")
 		self.assertListEqual(response["keys"], ["field_label", "field_name", "_aggregate_column"])
 
 	def test_reportview_get_permlevel_system_users(self):
@@ -1363,7 +1363,7 @@ class TestReportView(IntegrationTestCase):
 			)
 
 			# even if * is passed, fields which are not accessible should be filtered out
-			response = execute_cmd("frappe.desk.reportview.get")
+			response = execute_cmd("traquent.desk.reportview.get")
 			self.assertListEqual(response["keys"], ["title"])
 			traquent.local.form_dict = traquent._dict(
 				{
@@ -1372,7 +1372,7 @@ class TestReportView(IntegrationTestCase):
 				}
 			)
 
-			response = execute_cmd("frappe.desk.reportview.get")
+			response = execute_cmd("traquent.desk.reportview.get")
 			self.assertNotIn("published", response["keys"])
 
 			# If none of the fields are accessible then result should be empty
@@ -1389,7 +1389,7 @@ class TestReportView(IntegrationTestCase):
 					"fields": ["published", "title", "`tabTest Child`.`test_field`"],
 				}
 			)
-			response = execute_cmd("frappe.desk.reportview.get")
+			response = execute_cmd("traquent.desk.reportview.get")
 			self.assertListEqual(response["keys"], ["published", "title", "test_field"])
 
 	def test_db_filter_not_set(self):

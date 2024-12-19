@@ -1,4 +1,4 @@
-# Copyright (c) 2018, Frappe Technologies and contributors
+# Copyright (c) 2018, traquent Technologies and contributors
 # License: MIT. See LICENSE
 from traquent.model.document import Document
 

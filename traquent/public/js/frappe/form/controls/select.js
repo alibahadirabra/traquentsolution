@@ -1,4 +1,4 @@
-frappe.ui.form.ControlSelect = class ControlSelect extends frappe.ui.form.ControlData {
+traquent.ui.form.ControlSelect = class ControlSelect extends traquent.ui.form.ControlData {
 	static html_element = "select";
 	static trigger_change_on_input_event = false;
 	make_input() {
@@ -13,7 +13,7 @@ frappe.ui.form.ControlSelect = class ControlSelect extends frappe.ui.form.Contro
 	}
 	set_icon(is_xs_input) {
 		const select_icon_html = `<div class="select-icon ${is_xs_input ? "xs" : ""}">
-				${frappe.utils.icon("select", is_xs_input ? "xs" : "sm")}
+				${traquent.utils.icon("select", is_xs_input ? "xs" : "sm")}
 			</div>`;
 		if (this.only_input) {
 			this.$wrapper.append(select_icon_html);
@@ -75,7 +75,7 @@ frappe.ui.form.ControlSelect = class ControlSelect extends frappe.ui.form.Contro
 		if (this.$input) {
 			var selected = this.$input.find(":selected").val();
 			this.$input.empty();
-			frappe.ui.form.add_options(
+			traquent.ui.form.add_options(
 				this.$input,
 				options || [],
 				this.df.sort_options,
@@ -89,7 +89,7 @@ frappe.ui.form.ControlSelect = class ControlSelect extends frappe.ui.form.Contro
 	}
 	get_file_attachment_list() {
 		if (!this.frm) return;
-		var fl = frappe.model.docinfo[this.frm.doctype][this.frm.docname];
+		var fl = traquent.model.docinfo[this.frm.doctype][this.frm.docname];
 		if (fl && fl.attachments) {
 			this.set_description("");
 			var options = [""];
@@ -108,7 +108,7 @@ frappe.ui.form.ControlSelect = class ControlSelect extends frappe.ui.form.Contro
 	}
 };
 
-frappe.ui.form.add_options = function (input, options_list, sort, doctype) {
+traquent.ui.form.add_options = function (input, options_list, sort, doctype) {
 	let $select = $(input);
 	if (!Array.isArray(options_list)) {
 		return $select;
@@ -138,7 +138,7 @@ frappe.ui.form.add_options = function (input, options_list, sort, doctype) {
 // add <option> list to <select>
 (function ($) {
 	$.fn.add_options = function (options_list, sort) {
-		return frappe.ui.form.add_options(this.get(0), options_list, sort);
+		return traquent.ui.form.add_options(this.get(0), options_list, sort);
 	};
 	$.fn.set_working = function () {
 		this.prop("disabled", true);

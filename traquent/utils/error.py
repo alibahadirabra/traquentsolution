@@ -142,7 +142,7 @@ def guess_exception_source(exception: str) -> str | None:
 	E.g.
 
 	- For unhandled exception last python file from apps folder is responsible.
-	- For frappe.throws the exception source is possibly present after skipping frappe.throw frames
+	- For traquent.throws the exception source is possibly present after skipping traquent.throw frames
 	- For server script the file name contains SERVER_SCRIPT_FILE_PREFIX
 
 	"""
@@ -163,5 +163,5 @@ def guess_exception_source(exception: str) -> str | None:
 				app_name = matches.group("app_name")
 				apps[app_name] += app_priority.get(app_name, 0)
 
-		if (probably_source := apps.most_common(1)) and probably_source[0][0] != "frappe":
+		if (probably_source := apps.most_common(1)) and probably_source[0][0] != "traquent":
 			return f"{probably_source[0][0]} (app)"

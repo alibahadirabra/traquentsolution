@@ -6,7 +6,7 @@ def get_leaderboards():
 	return {
 		"User": {
 			"fields": ["points"],
-			"method": "frappe.desk.leaderboard.get_energy_point_leaderboard",
+			"method": "traquent.desk.leaderboard.get_energy_point_leaderboard",
 			"company_disabled": 1,
 			"icon": "users",
 		}

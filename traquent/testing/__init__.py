@@ -1,28 +1,28 @@
 """
-Frappe Testing Module
+traquent Testing Module
 
-This module provides a comprehensive framework for running tests in Frappe applications.
+This module provides a comprehensive framework for running tests in traquent applications.
 It includes functionality for test discovery, execution, result reporting, and environment setup.
 
 Key components:
 - TestConfig: Configuration class for customizing test execution
-- TestRunner: Main class for running test suites with additional Frappe-specific functionality
+- TestRunner: Main class for running test suites with additional traquent-specific functionality
 - TestResult: Custom test result class for improved output formatting and logging
-- discover_all_tests: Function to discover all tests in specified Frappe apps
+- discover_all_tests: Function to discover all tests in specified traquent apps
 - discover_doctype_tests: Function to discover tests for specific DocTypes
 - discover_module_tests: Function to discover tests in specific modules
 
 The module also includes:
 - Logging configuration for the testing framework
 - Environment setup and teardown utilities
-- Integration with Frappe's hooks and test record creation system
+- Integration with traquent's hooks and test record creation system
 
 Usage:
-This module is typically used by Frappe's CLI commands for running tests, but can also
+This module is typically used by traquent's CLI commands for running tests, but can also
 be used programmatically for custom test execution scenarios.
 
 Example:
-    from frappe.testing import TestConfig, TestRunner, discover_all_tests
+    from traquent.testing import TestConfig, TestRunner, discover_all_tests
 
     config = TestConfig(failfast=True, verbose=2)
     runner = TestRunner(cfg=config)
@@ -40,7 +40,7 @@ from .runner import TestRunner
 
 logger = logging.getLogger(__name__)
 
-from traquent.utils.logger import create_handler as createFrappeFileHandler
+from traquent.utils.logger import create_handler as createtraquentFileHandler
 
 LOGGING_CONFIG = {
 	"version": 1,
@@ -48,13 +48,13 @@ LOGGING_CONFIG = {
 	"formatters": {},
 	"loggers": {
 		f"{__name__}": {
-			"handlers": [],  # only log to the frappe handler
+			"handlers": [],  # only log to the traquent handler
 			"propagate": False,
 		},
 	},
 }
 
 logging.config.dictConfig(LOGGING_CONFIG)
-handlers = createFrappeFileHandler(__name__)
+handlers = createtraquentFileHandler(__name__)
 for handler in handlers:
 	logger.addHandler(handler)

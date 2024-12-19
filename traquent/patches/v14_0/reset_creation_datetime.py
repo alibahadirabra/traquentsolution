@@ -9,12 +9,12 @@ from traquent.query_builder import DocType as _DocType
 def execute():
 	"""Resetting creation datetimes for DocTypes"""
 	DocType = _DocType("DocType")
-	doctype_jsons = glob.glob(os.path.join("..", "apps", "frappe", "frappe", "**", "doctype", "**", "*.json"))
+	doctype_jsons = glob.glob(os.path.join("..", "apps", "traquent", "traquent", "**", "doctype", "**", "*.json"))
 
-	frappe_modules = traquent.get_all("Module Def", filters={"app_name": "frappe"}, pluck="name")
+	traquent_modules = traquent.get_all("Module Def", filters={"app_name": "traquent"}, pluck="name")
 	site_doctypes = traquent.get_all(
 		"DocType",
-		filters={"module": ("in", frappe_modules), "custom": False},
+		filters={"module": ("in", traquent_modules), "custom": False},
 		fields=["name", "creation"],
 	)
 

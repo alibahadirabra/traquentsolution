@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and contributors
+# Copyright (c) 2019, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 from functools import partial
@@ -10,7 +10,7 @@ from traquent import _
 from traquent.model.document import Document
 from traquent.rate_limiter import rate_limit
 from traquent.utils.safe_exec import (
-	FrappeTransformer,
+	traquentTransformer,
 	NamespaceDict,
 	get_safe_globals,
 	is_safe_exec_enabled,
@@ -151,7 +151,7 @@ class ServerScript(Document):
 		from RestrictedPython import compile_restricted
 
 		try:
-			compile_restricted(self.script, policy=FrappeTransformer)
+			compile_restricted(self.script, policy=traquentTransformer)
 		except Exception as e:
 			traquent.msgprint(str(e), title=_("Compilation warning"))
 
@@ -159,11 +159,11 @@ class ServerScript(Document):
 		"""Specific to API endpoint Server Scripts.
 
 		Raise:
-		        frappe.DoesNotExistError: If self.script_type is not API.
-		        frappe.PermissionError: If self.allow_guest is unset for API accessed by Guest user.
+		        traquent.DoesNotExistError: If self.script_type is not API.
+		        traquent.PermissionError: If self.allow_guest is unset for API accessed by Guest user.
 
 		Return:
-		        dict: Evaluate self.script with frappe.utils.safe_exec.safe_exec and return the flags set in its safe globals.
+		        dict: Evaluate self.script with traquent.utils.safe_exec.safe_exec and return the flags set in its safe globals.
 		"""
 
 		if self.enable_rate_limit:
@@ -194,7 +194,7 @@ class ServerScript(Document):
 		"""Specific to Scheduled Jobs via Server Scripts
 
 		Raises:
-		        frappe.DoesNotExistError: If script type is not a scheduler event
+		        traquent.DoesNotExistError: If script type is not a scheduler event
 		"""
 		if self.script_type != "Scheduler Event":
 			raise traquent.DoesNotExistError
@@ -221,7 +221,7 @@ def get_autocompletion_items():
 	"""Generate a list of autocompletion strings from the context dict
 	that is used while executing a Server Script.
 
-	e.g., ["frappe.utils.cint", "frappe.get_all", ...]
+	e.g., ["traquent.utils.cint", "traquent.get_all", ...]
 	"""
 
 	def get_keys(obj):
@@ -276,7 +276,7 @@ def execute_api_server_script(script: ServerScript, *args, **kwargs):
 	# output can be stored in flags
 	_globals, _locals = safe_exec(script.script, script_filename=script.name)
 
-	return _globals.frappe.flags
+	return _globals.traquent.flags
 
 
 @traquent.whitelist()

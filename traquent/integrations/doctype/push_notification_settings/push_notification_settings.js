@@ -1,7 +1,7 @@
-// Copyright (c) 2024, Frappe Technologies and contributors
+// Copyright (c) 2024, traquent Technologies and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Push Notification Settings", {
+// traquent.ui.form.on("Push Notification Settings", {
 // 	refresh(frm) {
 
 // 	},

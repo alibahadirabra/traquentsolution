@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import email
@@ -193,7 +193,7 @@ class TestEmail(IntegrationTestCase):
 				eol = "\r\n"
 
 				query_string = re.search(
-					r"(?<=/api/method/frappe.email.queue.unsubscribe\?).*(?=" + eol + ")", content.decode()
+					r"(?<=/api/method/traquent.email.queue.unsubscribe\?).*(?=" + eol + ")", content.decode()
 				).group(0)
 
 				set_request(method="GET", query_string=query_string)
@@ -277,7 +277,7 @@ class TestEmail(IntegrationTestCase):
 
 		traquent.db.delete("Communication", {"sender": "sukh@yyy.com"})
 
-		with open(traquent.get_app_path("frappe", "tests", "data", "email_with_image.txt")) as raw:
+		with open(traquent.get_app_path("traquent", "tests", "data", "email_with_image.txt")) as raw:
 			messages = {
 				'"INBOX"': {"latest_messages": [raw.read()], "seen_status": {2: "UNSEEN"}, "uid_list": [2]}
 			}
@@ -332,7 +332,7 @@ class TestEmailIntegrationTest(IntegrationTestCase):
 	SMTP4DEV_WEB = "http://localhost:3000"
 
 	def setUp(self) -> None:
-		# Frappe code is configured to not attempting sending emails during test.
+		# traquent code is configured to not attempting sending emails during test.
 		traquent.flags.testing_email = True
 		requests.delete(f"{self.SMTP4DEV_WEB}/api/Messages/*")
 		return super().setUp()

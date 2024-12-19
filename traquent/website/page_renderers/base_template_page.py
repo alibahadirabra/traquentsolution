@@ -19,7 +19,7 @@ class BaseTemplatePage(BaseRenderer):
 		if traquent.local.session:
 			csrf_token = traquent.local.session.data.csrf_token
 			return html.replace(
-				"<!-- csrf_token -->", f'<script>frappe.csrf_token = "{csrf_token}";</script>'
+				"<!-- csrf_token -->", f'<script>traquent.csrf_token = "{csrf_token}";</script>'
 			)
 
 		return html
@@ -49,7 +49,7 @@ class BaseTemplatePage(BaseRenderer):
 			self.context.title = f"{self.context.title_prefix} - {self.context.title}"
 
 	def set_missing_values(self):
-		# set using frappe.respond_as_web_page
+		# set using traquent.respond_as_web_page
 		if hasattr(traquent.local, "response") and traquent.local.response.get("context"):
 			self.context.update(traquent.local.response.context)
 

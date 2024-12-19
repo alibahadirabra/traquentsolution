@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2020, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 from whoosh.fields import ID, TEXT, Schema
@@ -12,7 +12,7 @@ from traquent.utils import update_progress_bar
 
 
 class FullTextSearch:
-	"""Frappe Wrapper for Whoosh"""
+	"""traquent Wrapper for Whoosh"""
 
 	def __init__(self, index_name):
 		self.index_name = index_name

@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and contributors
+# Copyright (c) 2019, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import json
@@ -70,7 +70,7 @@ class PersonalDataDeletionRequest(Document):
 	def generate_url_for_confirmation(self):
 		params = {"email": self.email, "name": self.name, "host_name": traquent.local.site}
 		api = traquent.utils.get_url(
-			"/api/method/frappe.website.doctype.personal_data_deletion_request"
+			"/api/method/traquent.website.doctype.personal_data_deletion_request"
 			".personal_data_deletion_request.confirm_deletion"
 		)
 		url = f"{api}?{get_signed_params(params)}"

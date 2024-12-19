@@ -1,11 +1,11 @@
-frappe.provide("frappe.ui");
-frappe.provide("frappe.views");
-frappe.provide("frappe.web_form_list");
+traquent.provide("traquent.ui");
+traquent.provide("traquent.views");
+traquent.provide("traquent.web_form_list");
 
 export default class WebFormList {
 	constructor(opts) {
 		Object.assign(this, opts);
-		frappe.web_form_list = this;
+		traquent.web_form_list = this;
 		this.wrapper = $(".web-list-table");
 		this.make_actions();
 		this.make_filters();
@@ -16,7 +16,7 @@ export default class WebFormList {
 		this.web_list_start = 0;
 		this.page_length = 10;
 
-		frappe.run_serially([
+		traquent.run_serially([
 			() => this.get_list_view_fields(),
 			() => this.get_data(),
 			() => this.remove_more(),
@@ -34,8 +34,8 @@ export default class WebFormList {
 		this.filter_input = [];
 		let filter_area = $(".web-list-filters");
 
-		frappe
-			.call("frappe.website.doctype.web_form.web_form.get_web_form_filters", {
+		traquent
+			.call("traquent.website.doctype.web_form.web_form.get_web_form_filters", {
 				web_form_name: this.web_form_name,
 			})
 			.then((response) => {
@@ -50,7 +50,7 @@ export default class WebFormList {
 						return;
 					}
 
-					let input = frappe.ui.form.make_control({
+					let input = traquent.ui.form.make_control({
 						df: {
 							fieldtype: field.fieldtype,
 							fieldname: field.fieldname,
@@ -110,13 +110,13 @@ export default class WebFormList {
 
 	fetch_data() {
 		if (this.condition_json && JSON.parse(this.condition_json)) {
-			let filter = frappe.utils.get_filter_from_json(this.condition_json, this.doctype);
-			filter = frappe.utils.get_filter_as_json(filter);
+			let filter = traquent.utils.get_filter_from_json(this.condition_json, this.doctype);
+			filter = traquent.utils.get_filter_as_json(filter);
 			this.filters = Object.assign(this.filters, JSON.parse(filter));
 		}
 
 		let args = {
-			method: "frappe.www.list.get_list_data",
+			method: "traquent.www.list.get_list_data",
 			args: {
 				doctype: this.doctype,
 				limit_start: this.web_list_start,
@@ -131,7 +131,7 @@ export default class WebFormList {
 			return Promise.resolve();
 		}
 
-		return frappe.call(args);
+		return traquent.call(args);
 	}
 
 	no_change(args) {
@@ -158,7 +158,7 @@ export default class WebFormList {
 		this.web_list_start += this.page_length;
 		this.fetch_data().then((res) => {
 			if (res.message.length === 0) {
-				frappe.msgprint(__("No more items to display"));
+				traquent.msgprint(__("No more items to display"));
 			}
 			this.append_rows(res.message);
 		});
@@ -215,7 +215,7 @@ export default class WebFormList {
 			if (this.wrapper.find(".no-result").length) return;
 
 			this.wrapper.empty();
-			frappe.has_permission(this.doctype, "", "create", () => {
+			traquent.has_permission(this.doctype, "", "create", () => {
 				this.setup_empty_state();
 			});
 		}
@@ -256,7 +256,7 @@ export default class WebFormList {
 		row_data.forEach((data_item) => {
 			let $row_element = $(`<tr id="${data_item.name}"></tr>`);
 
-			let row = new frappe.ui.WebFormListRow({
+			let row = new traquent.ui.WebFormListRow({
 				row: $row_element,
 				doc: data_item,
 				columns: this.columns,
@@ -278,7 +278,7 @@ export default class WebFormList {
 	make_actions() {
 		const actions = $(".web-list-actions");
 
-		frappe.has_permission(this.doctype, "", "delete", () => {
+		traquent.has_permission(this.doctype, "", "delete", () => {
 			this.add_button(actions, "delete-rows", "danger", true, "Delete", () =>
 				this.delete_rows()
 			);
@@ -337,10 +337,10 @@ export default class WebFormList {
 
 	delete_rows() {
 		if (!this.settings.allow_delete) return;
-		frappe
+		traquent
 			.call({
 				type: "POST",
-				method: "frappe.website.doctype.web_form.web_form.delete_multiple",
+				method: "traquent.website.doctype.web_form.web_form.delete_multiple",
 				args: {
 					web_form_name: this.web_form_name,
 					docnames: this.get_selected().map((row) => row.doc.name),
@@ -354,7 +354,7 @@ export default class WebFormList {
 	}
 }
 
-frappe.ui.WebFormListRow = class WebFormListRow {
+traquent.ui.WebFormListRow = class WebFormListRow {
 	constructor({ row, doc, columns, serial_number, events, options }) {
 		Object.assign(this, { row, doc, columns, serial_number, events });
 		this.make_row();
@@ -377,7 +377,7 @@ frappe.ui.WebFormListRow = class WebFormListRow {
 		serialNo.appendTo(this.row);
 
 		this.columns.forEach((field) => {
-			let formatter = frappe.form.get_formatter(field.fieldtype);
+			let formatter = traquent.form.get_formatter(field.fieldtype);
 			let value =
 				(this.doc[field.fieldname] &&
 					__(

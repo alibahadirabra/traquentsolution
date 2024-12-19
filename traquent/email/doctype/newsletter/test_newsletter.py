@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # MIT License. See LICENSE
 
 from random import choice
@@ -218,7 +218,7 @@ class TestNewsletter(TestNewsletterMixin, IntegrationTestCase):
 
 	def test_send_scheduled_email_error_handling(self):
 		newsletter = self.get_newsletter(schedule_send=add_days(getdate(), -1))
-		job_path = "frappe.email.doctype.newsletter.newsletter.Newsletter.queue_all"
+		job_path = "traquent.email.doctype.newsletter.newsletter.Newsletter.queue_all"
 		m = MagicMock(side_effect=traquent.OutgoingEmailError)
 
 		with self.assertRaises(traquent.OutgoingEmailError):

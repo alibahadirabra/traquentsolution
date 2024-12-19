@@ -1,15 +1,15 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.ui.form.States = class FormStates {
+traquent.ui.form.States = class FormStates {
 	constructor(opts) {
 		$.extend(this, opts);
-		this.state_fieldname = frappe.workflow.get_state_fieldname(this.frm.doctype);
+		this.state_fieldname = traquent.workflow.get_state_fieldname(this.frm.doctype);
 
 		// no workflow?
 		if (!this.state_fieldname) return;
 
-		this.update_fields = frappe.workflow.get_update_fields(this.frm.doctype);
+		this.update_fields = traquent.workflow.get_update_fields(this.frm.doctype);
 
 		var me = this;
 		$(this.frm.wrapper).bind("render_complete", function () {
@@ -22,20 +22,20 @@ frappe.ui.form.States = class FormStates {
 		this.frm.page.add_action_item(
 			__("Help"),
 			function () {
-				frappe.workflow.setup(me.frm.doctype);
+				traquent.workflow.setup(me.frm.doctype);
 				var state = me.get_state();
-				var d = new frappe.ui.Dialog({
-					title: "Workflow: " + frappe.workflow.workflows[me.frm.doctype].name,
+				var d = new traquent.ui.Dialog({
+					title: "Workflow: " + traquent.workflow.workflows[me.frm.doctype].name,
 				});
 
-				frappe.workflow.get_transitions(me.frm.doc).then((transitions) => {
+				traquent.workflow.get_transitions(me.frm.doc).then((transitions) => {
 					const next_actions =
 						$.map(
 							transitions,
 							(d) => `${d.action.bold()} ${__("by Role")} ${d.allowed}`
 						).join(", ") || __("None: End of Workflow").bold();
 
-					const document_editable_by = frappe.workflow
+					const document_editable_by = traquent.workflow
 						.get_document_state_roles(me.frm.doctype, state)
 						.map((role) => role.bold())
 						.join(", ");
@@ -85,7 +85,7 @@ frappe.ui.form.States = class FormStates {
 
 		function has_approval_access(transition) {
 			let approval_access = false;
-			const user = frappe.session.user;
+			const user = traquent.session.user;
 			if (
 				user === "Administrator" ||
 				transition.allow_self_approval ||
@@ -96,29 +96,29 @@ frappe.ui.form.States = class FormStates {
 			return approval_access;
 		}
 
-		frappe.workflow.get_transitions(this.frm.doc).then((transitions) => {
+		traquent.workflow.get_transitions(this.frm.doc).then((transitions) => {
 			this.frm.page.clear_actions_menu();
 			transitions.forEach((d) => {
-				if (frappe.user_roles.includes(d.allowed) && has_approval_access(d)) {
+				if (traquent.user_roles.includes(d.allowed) && has_approval_access(d)) {
 					added = true;
 					me.frm.page.add_action_item(__(d.action), function () {
 						// set the workflow_action for use in form scripts
-						frappe.dom.freeze();
+						traquent.dom.freeze();
 						me.frm.selected_workflow_action = d.action;
 						me.frm.script_manager.trigger("before_workflow_action").then(() => {
-							frappe
-								.xcall("frappe.model.workflow.apply_workflow", {
+							traquent
+								.xcall("traquent.model.workflow.apply_workflow", {
 									doc: me.frm.doc,
 									action: d.action,
 								})
 								.then((doc) => {
-									frappe.model.sync(doc);
+									traquent.model.sync(doc);
 									me.frm.refresh();
 									me.frm.selected_workflow_action = null;
 									me.frm.script_manager.trigger("after_workflow_action");
 								})
 								.finally(() => {
-									frappe.dom.unfreeze();
+									traquent.dom.unfreeze();
 								});
 						});
 					});
@@ -139,7 +139,7 @@ frappe.ui.form.States = class FormStates {
 	}
 
 	set_default_state() {
-		var default_state = frappe.workflow.get_default_state(
+		var default_state = traquent.workflow.get_default_state(
 			this.frm.doctype,
 			this.frm.doc.docstatus
 		);

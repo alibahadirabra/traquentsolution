@@ -55,7 +55,7 @@
 </div>
 
 <script>
-	frappe.ready(function() {
+	traquent.ready(function() {
 		let guest_allowed = parseInt("{{ guest_allowed or 0}}");
 		let comment_count = "{{ comment_count }}";
 		let full_name = ""
@@ -89,7 +89,7 @@
 
 		let $comment_count = $(`
 			<div class="feedback-item comments">
-				<span class="comment-icon">${frappe.utils.icon('small-message', 'md')}</span>
+				<span class="comment-icon">${traquent.utils.icon('small-message', 'md')}</span>
 				<span class="comment-count">${comment_count}</span>
 			</div>
 		`);
@@ -100,7 +100,7 @@
 			}
 		})
 
-		if (!frappe.is_user_logged_in()) {
+		if (!traquent.is_user_logged_in()) {
 			$(".user-details").toggle('hide');
 			if (guest_allowed) {
 				$('.start-discussion').removeClass('hidden');
@@ -116,8 +116,8 @@
 			$('input.comment_by').prop("disabled", true);
 			$('input.comment_email').prop("disabled", true);
 
-			full_name = frappe.get_cookie("full_name");
-			user_id = frappe.get_cookie("user_id");
+			full_name = traquent.get_cookie("full_name");
+			user_id = traquent.get_cookie("user_id");
 			if(user_id != "Guest") {
 				$("[name='comment_email']").val(user_id);
 				$("[name='comment_by']").val(full_name);
@@ -155,29 +155,29 @@
 			}
 
 			if(!args.comment_by || !args.comment_email || !args.comment) {
-				frappe.msgprint('{{ _("All fields are necessary to submit the comment.") }}');
+				traquent.msgprint('{{ _("All fields are necessary to submit the comment.") }}');
 				return false;
 			}
 
 			if (args.comment_email!=='Administrator' && !validate_email(args.comment_email)) {
-				frappe.msgprint('{{ _("Please enter a valid email address.") }}');
+				traquent.msgprint('{{ _("Please enter a valid email address.") }}');
 				return false;
 			}
 
 			if(!args.comment || !args.comment.trim()) {
-				frappe.msgprint('{{ _("Please add a valid comment.") }}');
+				traquent.msgprint('{{ _("Please add a valid comment.") }}');
 				return false;
 			}
 
-			frappe.call({
+			traquent.call({
 				btn: this,
 				type: "POST",
-				method: "frappe.templates.includes.comments.comments.add_comment",
+				method: "traquent.templates.includes.comments.comments.add_comment",
 				args: args,
 				callback: function(r) {
 					if(r.exc) {
 						if(r._server_messages)
-							frappe.msgprint(r._server_messages);
+							traquent.msgprint(r._server_messages);
 					} else {
 						if (r.message) {
 							$(r.message).prependTo(".comment-list");

@@ -7,7 +7,7 @@ from requests import get, post
 import traquent
 from traquent.utils import get_request_site_address
 
-CALLBACK_METHOD = "/api/method/frappe.integrations.google_oauth.callback"
+CALLBACK_METHOD = "/api/method/traquent.integrations.google_oauth.callback"
 _SCOPES = {
 	"mail": ("https://mail.google.com/"),
 	"contacts": ("https://www.googleapis.com/auth/contacts"),
@@ -20,10 +20,10 @@ _SERVICES = {
 	"indexing": ("indexing", "v3"),
 }
 _DOMAIN_CALLBACK_METHODS = {
-	"mail": "frappe.email.oauth.authorize_google_access",
-	"contacts": "frappe.integrations.doctype.google_contacts.google_contacts.authorize_access",
-	"drive": "frappe.integrations.doctype.google_drive.google_drive.authorize_access",
-	"indexing": "frappe.website.doctype.website_settings.google_indexing.authorize_access",
+	"mail": "traquent.email.oauth.authorize_google_access",
+	"contacts": "traquent.integrations.doctype.google_contacts.google_contacts.authorize_access",
+	"drive": "traquent.integrations.doctype.google_drive.google_drive.authorize_access",
+	"indexing": "traquent.website.doctype.website_settings.google_indexing.authorize_access",
 }
 
 
@@ -167,8 +167,8 @@ def is_valid_access_token(access_token: str) -> bool:
 @traquent.whitelist(methods=["GET"])
 def callback(state: str, code: str | None = None, error: str | None = None) -> None:
 	"""Common callback for google integrations.
-	Invokes functions using `frappe.get_attr` and also adds required (keyworded) arguments
-	along with committing and redirecting us back to frappe site."""
+	Invokes functions using `traquent.get_attr` and also adds required (keyworded) arguments
+	along with committing and redirecting us back to traquent site."""
 
 	state = json.loads(state)
 	redirect = state.pop("redirect", "/app")

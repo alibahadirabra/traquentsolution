@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import os
 import re
@@ -48,7 +48,7 @@ def build_missing_files():
 	current_asset_files = []
 
 	for type in ["css", "js"]:
-		folder = os.path.join(sites_path, "assets", "frappe", "dist", type)
+		folder = os.path.join(sites_path, "assets", "traquent", "dist", type)
 		current_asset_files.extend(os.listdir(folder))
 
 	development = traquent.local.conf.developer_mode or traquent.local.dev_server
@@ -59,7 +59,7 @@ def build_missing_files():
 		assets_json = traquent.parse_json(assets_json)
 
 		for bundle_file, output_file in assets_json.items():
-			if not output_file.startswith("/assets/frappe"):
+			if not output_file.startswith("/assets/traquent"):
 				continue
 
 			if os.path.basename(output_file) not in current_asset_files:
@@ -67,44 +67,44 @@ def build_missing_files():
 
 		if missing_assets:
 			click.secho("\nBuilding missing assets...\n", fg="yellow")
-			files_to_build = ["frappe/" + name for name in missing_assets]
+			files_to_build = ["traquent/" + name for name in missing_assets]
 			bundle(build_mode, files=files_to_build)
 	else:
 		# no assets.json, run full build
-		bundle(build_mode, apps="frappe")
+		bundle(build_mode, apps="traquent")
 
 
-def get_assets_link(frappe_head) -> str:
+def get_assets_link(traquent_head) -> str:
 	import requests
 
 	tag = getoutput(
-		r"cd ../apps/frappe && git show-ref --tags -d | grep %s | sed -e 's,.*"
-		r" refs/tags/,,' -e 's/\^{}//'" % frappe_head
+		r"cd ../apps/traquent && git show-ref --tags -d | grep %s | sed -e 's,.*"
+		r" refs/tags/,,' -e 's/\^{}//'" % traquent_head
 	)
 
 	if tag:
 		# if tag exists, download assets from github release
-		url = f"https://github.com/frappe/frappe/releases/download/{tag}/assets.tar.gz"
+		url = f"https://github.com/traquent/traquent/releases/download/{tag}/assets.tar.gz"
 	else:
-		url = f"http://assets.frappeframework.com/{frappe_head}.tar.gz"
+		url = f"http://assets.traquentframework.com/{traquent_head}.tar.gz"
 
 	if not requests.head(url):
-		reference = f"Release {tag}" if tag else f"Commit {frappe_head}"
+		reference = f"Release {tag}" if tag else f"Commit {traquent_head}"
 		raise AssetsDontExistError(f"Assets for {reference} don't exist")
 
 	return url
 
 
-def fetch_assets(url, frappe_head):
+def fetch_assets(url, traquent_head):
 	click.secho("Retrieving assets...", fg="yellow")
 
-	prefix = mkdtemp(prefix="frappe-assets-", suffix=frappe_head)
+	prefix = mkdtemp(prefix="traquent-assets-", suffix=traquent_head)
 	assets_archive = download_file(url, prefix)
 
 	if not assets_archive:
 		raise AssetsNotDownloadedError(f"Assets could not be retrived from {url}")
 
-	click.echo(click.style("✔", fg="green") + f" Downloaded Frappe assets from {url}")
+	click.echo(click.style("✔", fg="green") + f" Downloaded traquent assets from {url}")
 
 	return assets_archive
 
@@ -118,7 +118,7 @@ def setup_assets(assets_archive):
 	with tarfile.open(assets_archive) as tar:
 		for file in tar:
 			if not file.isdir():
-				dest = "." + file.name.replace("./frappe-bench/sites", "")
+				dest = "." + file.name.replace("./traquent-bench/sites", "")
 				asset_directory = os.path.dirname(dest)
 				show = dest.replace("./assets/", "")
 
@@ -133,18 +133,18 @@ def setup_assets(assets_archive):
 	return directories_created
 
 
-def download_frappe_assets(verbose=True) -> bool:
-	"""Download and set up Frappe assets if they exist based on the current commit HEAD.
+def download_traquent_assets(verbose=True) -> bool:
+	"""Download and set up traquent assets if they exist based on the current commit HEAD.
 	Return True if correctly setup else return False.
 	"""
-	frappe_head = getoutput("cd ../apps/frappe && git rev-parse HEAD")
+	traquent_head = getoutput("cd ../apps/traquent && git rev-parse HEAD")
 
-	if not frappe_head:
+	if not traquent_head:
 		return False
 
 	try:
-		url = get_assets_link(frappe_head)
-		assets_archive = fetch_assets(url, frappe_head)
+		url = get_assets_link(traquent_head)
+		assets_archive = fetch_assets(url, traquent_head)
 		setup_assets(assets_archive)
 		build_missing_files()
 		return True
@@ -223,7 +223,7 @@ def bundle(
 	apps=None,
 	hard_link=False,
 	verbose=False,
-	skip_frappe=False,
+	skip_traquent=False,
 	files=None,
 	save_metafiles=False,
 	using_cached=False,
@@ -238,8 +238,8 @@ def bundle(
 	if apps:
 		command += f" --apps {apps}"
 
-	if skip_frappe:
-		command += " --skip_frappe"
+	if skip_traquent:
+		command += " --skip_traquent"
 
 	if files:
 		command += " --files {files}".format(files=",".join(files))
@@ -253,8 +253,8 @@ def bundle(
 		command += " --save-metafiles"
 
 	check_node_executable()
-	frappe_app_path = traquent.get_app_source_path("frappe")
-	traquent.commands.popen(command, cwd=frappe_app_path, env=get_node_env(), raise_err=True)
+	traquent_app_path = traquent.get_app_source_path("traquent")
+	traquent.commands.popen(command, cwd=traquent_app_path, env=get_node_env(), raise_err=True)
 
 
 def watch(apps=None):
@@ -271,8 +271,8 @@ def watch(apps=None):
 		command += " --live-reload"
 
 	check_node_executable()
-	frappe_app_path = traquent.get_app_source_path("frappe")
-	traquent.commands.popen(command, cwd=frappe_app_path, env=get_node_env())
+	traquent_app_path = traquent.get_app_source_path("traquent")
+	traquent.commands.popen(command, cwd=traquent_app_path, env=get_node_env())
 
 
 def check_node_executable():
@@ -416,7 +416,7 @@ def scrub_html_template(content):
 
 
 def html_to_js_template(path, content):
-	"""Return HTML template content as Javascript code, by adding it to `frappe.templates`."""
-	return """frappe.templates["{key}"] = '{content}';\n""".format(
+	"""Return HTML template content as Javascript code, by adding it to `traquent.templates`."""
+	return """traquent.templates["{key}"] = '{content}';\n""".format(
 		key=path.rsplit("/", 1)[-1][:-5], content=scrub_html_template(content)
 	)

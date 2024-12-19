@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 
@@ -47,7 +47,7 @@ def get_context(context):
 	context["disable_user_pass_login"] = cint(traquent.get_system_settings("disable_user_pass_login"))
 	context["logo"] = get_app_logo()
 	context["app_name"] = (
-		traquent.get_website_settings("app_name") or traquent.get_system_settings("app_name") or _("Frappe")
+		traquent.get_website_settings("app_name") or traquent.get_system_settings("app_name") or _("traquent")
 	)
 
 	signup_form_template = traquent.get_hooks("signup_form_template")
@@ -56,7 +56,7 @@ def get_context(context):
 		if not guess_is_path(path):
 			path = traquent.get_attr(signup_form_template[-1])()
 	else:
-		path = "frappe/templates/signup.html"
+		path = "traquent/templates/signup.html"
 
 	if path:
 		context["signup_form_template"] = traquent.get_template(path).render()
@@ -158,7 +158,7 @@ def _generate_temporary_login_link(email: str, expiry: int):
 	key = traquent.generate_hash()
 	traquent.cache.set_value(f"one_time_login_key:{key}", email, expires_in_sec=expiry * 60)
 
-	return get_url(f"/api/method/frappe.www.login.login_via_key?key={key}")
+	return get_url(f"/api/method/traquent.www.login.login_via_key?key={key}")
 
 
 def get_login_with_email_link_ratelimit() -> int:
@@ -191,7 +191,7 @@ def sanitize_redirect(redirect: str | None) -> str | None:
 	"""Only allow redirect on same domain.
 
 	Allowed redirects:
-	- Same host e.g. https://frappe.localhost/path
+	- Same host e.g. https://traquent.localhost/path
 	- Just path e.g. /app
 	"""
 	if not redirect:

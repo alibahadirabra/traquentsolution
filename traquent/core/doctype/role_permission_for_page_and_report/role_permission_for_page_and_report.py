@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies and contributors
+# Copyright (c) 2015, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -83,7 +83,7 @@ class RolePermissionforPageandReport(Document):
 
 	def update_disable_prepared_report(self):
 		if self.report:
-			# intentionally written update query in frappe.db.sql instead of frappe.db.set_value
+			# intentionally written update query in traquent.db.sql instead of traquent.db.set_value
 			traquent.db.sql(
 				"""update `tabReport` set prepared_report = %s
 				where name = %s""",

@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies and Contributors
+# Copyright (c) 2022, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 
 from datetime import datetime

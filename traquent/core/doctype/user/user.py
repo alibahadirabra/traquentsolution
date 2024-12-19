@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 from collections.abc import Iterable
@@ -199,8 +199,8 @@ class User(Document):
 		if self.language == "Loading...":
 			self.language = None
 
-		if (self.name not in ["Administrator", "Guest"]) and (not self.get_social_login_userid("frappe")):
-			self.set_social_login_userid("frappe", traquent.generate_hash(length=39))
+		if (self.name not in ["Administrator", "Guest"]) and (not self.get_social_login_userid("traquent")):
+			self.set_social_login_userid("traquent", traquent.generate_hash(length=39))
 
 	def disable_email_fields_if_user_disabled(self):
 		if not self.enabled:
@@ -269,7 +269,7 @@ class User(Document):
 		now = traquent.flags.in_test or traquent.flags.in_install
 		self.send_password_notification(self.__new_password)
 		traquent.enqueue(
-			"frappe.core.doctype.user.user.create_contact",
+			"traquent.core.doctype.user.user.create_contact",
 			user=self,
 			ignore_mandatory=True,
 			now=now,
@@ -278,7 +278,7 @@ class User(Document):
 
 		if self.name not in STANDARD_USERS and not self.user_image:
 			traquent.enqueue(
-				"frappe.core.doctype.user.user.update_gravatar",
+				"traquent.core.doctype.user.user.update_gravatar",
 				name=self.name,
 				now=now,
 				enqueue_after_commit=True,
@@ -382,9 +382,9 @@ class User(Document):
 		# if docshare.user == self.name:
 		# 	if self.user_type=="System User":
 		# 		if docshare.share != 1:
-		# 			frappe.throw(_("Sorry! User should have complete access to their own record."))
+		# 			traquent.throw(_("Sorry! User should have complete access to their own record."))
 		# 	else:
-		# 		frappe.throw(_("Sorry! Sharing with Website User is prohibited."))
+		# 		traquent.throw(_("Sorry! Sharing with Website User is prohibited."))
 
 	def send_password_notification(self, new_password):
 		try:
@@ -811,7 +811,7 @@ class User(Document):
 			indicator="orange",
 			primary_action={
 				"label": _("Add Roles"),
-				"client_action": "frappe.set_route",
+				"client_action": "traquent.set_route",
 				"args": ["Form", self.doctype, self.name],
 			},
 		)

@@ -15,12 +15,12 @@
   "column_break_3",
   "service",
   "domain",
-  "frappe_mail_site",
+  "traquent_mail_site",
   "authentication_column",
   "auth_method",
   "backend_app_flow",
   "authorize_api_access",
-  "validate_frappe_mail_settings",
+  "validate_traquent_mail_settings",
   "password",
   "awaiting_password",
   "ascii_encode_password",
@@ -100,7 +100,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval: doc.service != \"Frappe Mail\" && !doc.backend_app_flow",
+   "depends_on": "eval: doc.service != \"traquent Mail\" && !doc.backend_app_flow",
    "fieldname": "login_id_is_different",
    "fieldtype": "Check",
    "hide_days": 1,
@@ -116,7 +116,7 @@
    "label": "Alternative Email ID"
   },
   {
-   "depends_on": "eval: doc.auth_method === \"Basic\" && doc.service != \"Frappe Mail\"",
+   "depends_on": "eval: doc.auth_method === \"Basic\" && doc.service != \"traquent Mail\"",
    "fieldname": "password",
    "fieldtype": "Password",
    "hide_days": 1,
@@ -125,7 +125,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval: doc.auth_method === \"Basic\" && doc.service != \"Frappe Mail\"",
+   "depends_on": "eval: doc.auth_method === \"Basic\" && doc.service != \"traquent Mail\"",
    "fieldname": "awaiting_password",
    "fieldtype": "Check",
    "hide_days": 1,
@@ -134,7 +134,7 @@
   },
   {
    "default": "0",
-   "depends_on": "eval: doc.auth_method === \"Basic\" && doc.service != \"Frappe Mail\"",
+   "depends_on": "eval: doc.auth_method === \"Basic\" && doc.service != \"traquent Mail\"",
    "fieldname": "ascii_encode_password",
    "fieldtype": "Check",
    "hide_days": 1,
@@ -168,10 +168,10 @@
    "hide_days": 1,
    "hide_seconds": 1,
    "label": "Service",
-   "options": "\nFrappe Mail\nGMail\nSendgrid\nSparkPost\nYahoo Mail\nOutlook.com\nYandex.Mail"
+   "options": "\ntraquent Mail\nGMail\nSendgrid\nSparkPost\nYahoo Mail\nOutlook.com\nYandex.Mail"
   },
   {
-   "depends_on": "eval: doc.service != \"Frappe Mail\"",
+   "depends_on": "eval: doc.service != \"traquent Mail\"",
    "fieldname": "mailbox_settings",
    "fieldtype": "Section Break",
    "hide_days": 1,
@@ -299,7 +299,7 @@
    "mandatory_depends_on": "notify_if_unreplied"
   },
   {
-   "depends_on": "eval: doc.service != \"Frappe Mail\"",
+   "depends_on": "eval: doc.service != \"traquent Mail\"",
    "fieldname": "outgoing_mail_settings",
    "fieldtype": "Section Break",
    "hide_days": 1,
@@ -445,7 +445,7 @@
   },
   {
    "collapsible": 1,
-   "collapsible_depends_on": "eval:frappe.utils.html2text(doc.footer || '')!=''",
+   "collapsible_depends_on": "eval:traquent.utils.html2text(doc.footer || '')!=''",
    "fieldname": "set_footer",
    "fieldtype": "Section Break",
    "hide_days": 1,
@@ -635,12 +635,12 @@
    "label": "Incoming"
   },
   {
-   "default": "https://frappemail.com",
-   "depends_on": "eval: doc.service == \"Frappe Mail\"",
-   "fieldname": "frappe_mail_site",
+   "default": "https://traquentmail.com",
+   "depends_on": "eval: doc.service == \"traquent Mail\"",
+   "fieldname": "traquent_mail_site",
    "fieldtype": "Data",
-   "label": "Frappe Mail Site",
-   "mandatory_depends_on": "eval: doc.service == \"Frappe Mail\""
+   "label": "traquent Mail Site",
+   "mandatory_depends_on": "eval: doc.service == \"traquent Mail\""
   },
   {
    "depends_on": "enable_outgoing",
@@ -661,30 +661,30 @@
    "fieldtype": "Column Break"
   },
   {
-   "depends_on": "eval: doc.service == \"Frappe Mail\"",
+   "depends_on": "eval: doc.service == \"traquent Mail\"",
    "fieldname": "last_synced_at",
    "fieldtype": "Datetime",
    "label": "Last Synced At"
   },
   {
-   "depends_on": "eval: (doc.service == \"Frappe Mail\" && doc.auth_method != \"Basic\" && !doc.__islocal && !doc.__unsaved)",
-   "fieldname": "validate_frappe_mail_settings",
+   "depends_on": "eval: (doc.service == \"traquent Mail\" && doc.auth_method != \"Basic\" && !doc.__islocal && !doc.__unsaved)",
+   "fieldname": "validate_traquent_mail_settings",
    "fieldtype": "Button",
-   "label": "Validate Frappe Mail Settings"
+   "label": "Validate traquent Mail Settings"
   },
   {
-   "depends_on": "eval: doc.service == \"Frappe Mail\" && doc.auth_method == \"Basic\"",
+   "depends_on": "eval: doc.service == \"traquent Mail\" && doc.auth_method == \"Basic\"",
    "fieldname": "api_key",
    "fieldtype": "Data",
    "label": "API Key",
-   "mandatory_depends_on": "eval: doc.service == \"Frappe Mail\" && doc.auth_method == \"Basic\""
+   "mandatory_depends_on": "eval: doc.service == \"traquent Mail\" && doc.auth_method == \"Basic\""
   },
   {
-   "depends_on": "eval: doc.service == \"Frappe Mail\" && doc.auth_method == \"Basic\"",
+   "depends_on": "eval: doc.service == \"traquent Mail\" && doc.auth_method == \"Basic\"",
    "fieldname": "api_secret",
    "fieldtype": "Password",
    "label": "API Secret",
-   "mandatory_depends_on": "eval: doc.service == \"Frappe Mail\" && doc.auth_method == \"Basic\""
+   "mandatory_depends_on": "eval: doc.service == \"traquent Mail\" && doc.auth_method == \"Basic\""
   },
   {
    "default": "0",

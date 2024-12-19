@@ -1,3 +1,3 @@
-import DataTable from "frappe-datatable";
+import DataTable from "traquent-datatable";
 
-frappe.DataTable = DataTable;
+traquent.DataTable = DataTable;

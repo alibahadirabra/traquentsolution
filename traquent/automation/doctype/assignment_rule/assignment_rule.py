@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies and contributors
+# Copyright (c) 2022, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 from collections.abc import Iterable
@@ -204,7 +204,7 @@ def bulk_apply(doctype, docnames):
 	for name in docnames:
 		if background:
 			traquent.enqueue(
-				"frappe.automation.doctype.assignment_rule.assignment_rule.apply",
+				"traquent.automation.doctype.assignment_rule.assignment_rule.apply",
 				doc=None,
 				doctype=doctype,
 				name=name,

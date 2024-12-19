@@ -16,14 +16,14 @@ def create_mock_meta(doctype):
 class TestDocument(Document):
 	def __init__(self, *args, **kwargs):
 		kwargs["doctype"] = "TestDocument"
-		with patch("frappe.get_meta", return_value=create_mock_meta("TestDocument")):
+		with patch("traquent.get_meta", return_value=create_mock_meta("TestDocument")):
 			super().__init__(*args, **kwargs)
 
 
 class TestTracedDocument(TracedDocument):
 	def __init__(self, *args, **kwargs):
 		kwargs["doctype"] = "TestTracedDocument"
-		with patch("frappe.get_meta", return_value=create_mock_meta("TestTracedDocument")):
+		with patch("traquent.get_meta", return_value=create_mock_meta("TestTracedDocument")):
 			super().__init__(*args, **kwargs)
 
 	test_field = traced_field("test_field", forbidden_values=["forbidden"])
@@ -107,7 +107,7 @@ class TestTracedFieldContext(UnitTestCase):
 	def test_traced_field_context_not_in_test_mode(self):
 		doc = TestDocument()
 
-		# Temporarily set frappe.flags.in_test to False
+		# Temporarily set traquent.flags.in_test to False
 		original_in_test = traquent.flags.in_test
 		traquent.flags.in_test = False
 

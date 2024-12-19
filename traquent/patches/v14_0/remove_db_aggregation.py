@@ -5,22 +5,22 @@ from traquent.query_builder import DocType
 
 
 def execute():
-	"""Replace temporarily available Database Aggregate APIs on frappe (develop)
+	"""Replace temporarily available Database Aggregate APIs on traquent (develop)
 
 	APIs changed:
-	        * frappe.db.max => frappe.qb.max
-	        * frappe.db.min => frappe.qb.min
-	        * frappe.db.sum => frappe.qb.sum
-	        * frappe.db.avg => frappe.qb.avg
+	        * traquent.db.max => traquent.qb.max
+	        * traquent.db.min => traquent.qb.min
+	        * traquent.db.sum => traquent.qb.sum
+	        * traquent.db.avg => traquent.qb.avg
 	"""
 	ServerScript = DocType("Server Script")
 	server_scripts = (
 		traquent.qb.from_(ServerScript)
 		.where(
-			ServerScript.script.like("%frappe.db.max(%")
-			| ServerScript.script.like("%frappe.db.min(%")
-			| ServerScript.script.like("%frappe.db.sum(%")
-			| ServerScript.script.like("%frappe.db.avg(%")
+			ServerScript.script.like("%traquent.db.max(%")
+			| ServerScript.script.like("%traquent.db.min(%")
+			| ServerScript.script.like("%traquent.db.sum(%")
+			| ServerScript.script.like("%traquent.db.avg(%")
 		)
 		.select("name", "script")
 		.run(as_dict=True)
@@ -30,6 +30,6 @@ def execute():
 		name, script = server_script["name"], server_script["script"]
 
 		for agg in ["avg", "max", "min", "sum"]:
-			script = re.sub(f"frappe.db.{agg}\\(", f"frappe.qb.{agg}(", script)
+			script = re.sub(f"traquent.db.{agg}\\(", f"traquent.qb.{agg}(", script)
 
 		traquent.db.set_value("Server Script", name, "script", script)

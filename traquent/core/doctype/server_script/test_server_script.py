@@ -1,11 +1,11 @@
-# Copyright (c) 2019, Frappe Technologies and Contributors
+# Copyright (c) 2019, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import requests
 
 import traquent
 from traquent.core.doctype.scheduled_job_type.scheduled_job_type import ScheduledJobType, sync_jobs
 from traquent.core.doctype.server_script.server_script import ServerScript
-from traquent.frappeclient import FrappeClient, FrappeException
+from traquent.traquentclient import traquentClient, traquentException
 from traquent.tests import IntegrationTestCase, UnitTestCase
 from traquent.utils import get_site_url
 
@@ -27,7 +27,7 @@ if "test" in doc.description:
 		reference_doctype="ToDo",
 		script="""
 if "validate" in doc.description:
-	raise frappe.ValidationError
+	raise traquent.ValidationError
 """,
 	),
 	dict(
@@ -36,7 +36,7 @@ if "validate" in doc.description:
 		api_method="test_server_script",
 		allow_guest=1,
 		script="""
-frappe.response['message'] = 'hello'
+traquent.response['message'] = 'hello'
 """,
 	),
 	dict(
@@ -45,7 +45,7 @@ frappe.response['message'] = 'hello'
 		api_method="test_return_value",
 		allow_guest=1,
 		script="""
-frappe.flags = 'hello'
+traquent.flags = 'hello'
 """,
 	),
 	dict(
@@ -62,7 +62,7 @@ conditions = '1 = 1'
 		doctype_event="Before Insert",
 		reference_doctype="Note",
 		script="""
-frappe.method_that_doesnt_exist("do some magic")
+traquent.method_that_doesnt_exist("do some magic")
 """,
 	),
 	dict(
@@ -72,7 +72,7 @@ frappe.method_that_doesnt_exist("do some magic")
 		reference_doctype="ToDo",
 		disabled=1,
 		script="""
-frappe.db.commit()
+traquent.db.commit()
 """,
 	),
 	dict(
@@ -82,7 +82,7 @@ frappe.db.commit()
 		reference_doctype="ToDo",
 		disabled=1,
 		script="""
-frappe.db.add_index("Todo", ["color", "date"])
+traquent.db.add_index("Todo", ["color", "date"])
 """,
 	),
 	dict(
@@ -220,7 +220,7 @@ class TestServerScript(IntegrationTestCase):
 			allow_guest=1,
 			# whitelisted update
 			script=f"""
-frappe.db.set_value("ToDo", "{todo.name}", "description", "safe")
+traquent.db.set_value("ToDo", "{todo.name}", "description", "safe")
 """,
 		)
 		script.insert()
@@ -231,8 +231,8 @@ frappe.db.set_value("ToDo", "{todo.name}", "description", "safe")
 
 		# unsafe update
 		script.script = f"""
-todo = frappe.qb.DocType("ToDo")
-frappe.qb.update(todo).set(todo.description, "unsafe").where(todo.name == "{todo.name}").run()
+todo = traquent.qb.DocType("ToDo")
+traquent.qb.update(todo).set(todo.description, "unsafe").where(todo.name == "{todo.name}").run()
 """
 		script.save()
 		self.assertRaises(traquent.PermissionError, script.execute_method)
@@ -241,8 +241,8 @@ frappe.qb.update(todo).set(todo.description, "unsafe").where(todo.name == "{todo
 
 		# safe select
 		script.script = f"""
-todo = frappe.qb.DocType("ToDo")
-frappe.qb.from_(todo).select(todo.name).where(todo.name == "{todo.name}").run()
+todo = traquent.qb.DocType("ToDo")
+traquent.qb.from_(todo).select(todo.name).where(todo.name == "{todo.name}").run()
 """
 		script.save()
 		script.execute_method()
@@ -264,7 +264,7 @@ frappe.qb.from_(todo).select(todo.name).where(todo.name == "{todo.name}").run()
 			name="test_nested_scripts_2",
 			script_type="API",
 			api_method="test_nested_scripts_2",
-			script="""frappe.call("test_nested_scripts_1")""",
+			script="""traquent.call("test_nested_scripts_1")""",
 		)
 		script.insert()
 		script.execute_method()
@@ -278,7 +278,7 @@ frappe.qb.from_(todo).select(todo.name).where(todo.name == "{todo.name}").run()
 			allow_guest=1,
 			rate_limit_count=5,
 			api_method="rate_limited_endpoint",
-			script="""frappe.flags = {"test": True}""",
+			script="""traquent.flags = {"test": True}""",
 		)
 
 		script1.insert()
@@ -291,7 +291,7 @@ frappe.qb.from_(todo).select(todo.name).where(todo.name == "{todo.name}").run()
 			allow_guest=1,
 			rate_limit_count=5,
 			api_method="rate_limited_endpoint2",
-			script="""frappe.flags = {"test": False}""",
+			script="""traquent.flags = {"test": False}""",
 		)
 
 		script2.insert()
@@ -299,19 +299,19 @@ frappe.qb.from_(todo).select(todo.name).where(todo.name == "{todo.name}").run()
 		traquent.db.commit()
 
 		site = traquent.utils.get_site_url(traquent.local.site)
-		client = FrappeClient(site)
+		client = traquentClient(site)
 
 		# Exhaust rate limit
 		for _ in range(5):
 			client.get_api(script1.api_method)
 
-		self.assertRaises(FrappeException, client.get_api, script1.api_method)
+		self.assertRaises(traquentException, client.get_api, script1.api_method)
 
 		# Exhaust rate limit
 		for _ in range(5):
 			client.get_api(script2.api_method)
 
-		self.assertRaises(FrappeException, client.get_api, script2.api_method)
+		self.assertRaises(traquentException, client.get_api, script2.api_method)
 
 		script1.delete()
 		script2.delete()
@@ -322,7 +322,7 @@ frappe.qb.from_(todo).select(todo.name).where(todo.name == "{todo.name}").run()
 			doctype="Server Script",
 			name="scheduled_script_wo_cron",
 			script_type="Scheduler Event",
-			script="""frappe.flags = {"test": True}""",
+			script="""traquent.flags = {"test": True}""",
 			event_frequency="Hourly",
 		).insert()
 
@@ -330,7 +330,7 @@ frappe.qb.from_(todo).select(todo.name).where(todo.name == "{todo.name}").run()
 			doctype="Server Script",
 			name="scheduled_script_w_cron",
 			script_type="Scheduler Event",
-			script="""frappe.flags = {"test": True}""",
+			script="""traquent.flags = {"test": True}""",
 			event_frequency="Cron",
 			cron_format="0 0 1 1 *",  # 1st january
 		).insert()
@@ -358,7 +358,7 @@ frappe.qb.from_(todo).select(todo.name).where(todo.name == "{todo.name}").run()
 			doctype="Server Script",
 			name="scheduled_script_state_change",
 			script_type="Scheduler Event",
-			script="""frappe.flags = {"test": True}""",
+			script="""traquent.flags = {"test": True}""",
 			event_frequency="Hourly",
 		).insert()
 

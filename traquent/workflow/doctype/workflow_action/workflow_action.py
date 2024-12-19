@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -368,7 +368,7 @@ def deduplicate_actions(action_list):
 
 
 def get_workflow_action_url(action, doc, user):
-	apply_action_method = "/api/method/frappe.workflow.doctype.workflow_action.workflow_action.apply_action"
+	apply_action_method = "/api/method/traquent.workflow.doctype.workflow_action.workflow_action.apply_action"
 
 	params = {
 		"doctype": doc.get("doctype"),
@@ -384,7 +384,7 @@ def get_workflow_action_url(action, doc, user):
 
 def get_confirm_workflow_action_url(doc, action, user):
 	confirm_action_method = (
-		"/api/method/frappe.workflow.doctype.workflow_action.workflow_action.confirm_action"
+		"/api/method/traquent.workflow.doctype.workflow_action.workflow_action.confirm_action"
 	)
 
 	params = {

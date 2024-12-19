@@ -1,27 +1,27 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.provide("frappe.treeview_settings");
-frappe.provide("frappe.views.trees");
+traquent.provide("traquent.treeview_settings");
+traquent.provide("traquent.views.trees");
 window.cur_tree = null;
 
-frappe.views.TreeFactory = class TreeFactory extends frappe.views.Factory {
+traquent.views.TreeFactory = class TreeFactory extends traquent.views.Factory {
 	make(route) {
-		frappe.model.with_doctype(route[1], function () {
+		traquent.model.with_doctype(route[1], function () {
 			var options = {
 				doctype: route[1],
-				meta: frappe.get_meta(route[1]),
+				meta: traquent.get_meta(route[1]),
 			};
 
 			if (
-				!frappe.treeview_settings[route[1]] &&
-				!frappe.meta.get_docfield(route[1], "is_group")
+				!traquent.treeview_settings[route[1]] &&
+				!traquent.meta.get_docfield(route[1], "is_group")
 			) {
-				frappe.msgprint(__("Tree view is not available for {0}", [route[1]]));
+				traquent.msgprint(__("Tree view is not available for {0}", [route[1]]));
 				return false;
 			}
-			$.extend(options, frappe.treeview_settings[route[1]] || {});
-			frappe.views.trees[options.doctype] = new frappe.views.TreeView(options);
+			$.extend(options, traquent.treeview_settings[route[1]] || {});
+			traquent.views.trees[options.doctype] = new traquent.views.TreeView(options);
 		});
 	}
 
@@ -33,8 +33,8 @@ frappe.views.TreeFactory = class TreeFactory extends frappe.views.Factory {
 		 * To deal with this, the tree will be refreshed whenever the
 		 * treeview is visible.
 		 */
-		let route = frappe.get_route();
-		let treeview = frappe.views.trees[route[1]];
+		let route = traquent.get_route();
+		let treeview = traquent.views.trees[route[1]];
 		treeview && treeview.make_tree();
 	}
 
@@ -43,7 +43,7 @@ frappe.views.TreeFactory = class TreeFactory extends frappe.views.Factory {
 	}
 };
 
-frappe.views.TreeView = class TreeView {
+traquent.views.TreeView = class TreeView {
 	constructor(opts) {
 		var me = this;
 
@@ -53,8 +53,8 @@ frappe.views.TreeView = class TreeView {
 		$.extend(this.opts, opts);
 		this.doctype = opts.doctype;
 		this.args = { doctype: me.doctype };
-		this.page_name = frappe.get_route_str();
-		this.get_tree_nodes = me.opts.get_tree_nodes || "frappe.desk.treeview.get_children";
+		this.page_name = traquent.get_route_str();
+		this.get_tree_nodes = me.opts.get_tree_nodes || "traquent.desk.treeview.get_children";
 
 		this.get_permissions();
 
@@ -75,22 +75,22 @@ frappe.views.TreeView = class TreeView {
 		this.set_primary_action();
 	}
 	get_permissions() {
-		this.can_read = frappe.model.can_read(this.doctype);
+		this.can_read = traquent.model.can_read(this.doctype);
 		this.can_create =
-			frappe.boot.user.can_create.indexOf(this.doctype) !== -1 ||
-			frappe.boot.user.in_create.indexOf(this.doctype) !== -1;
-		this.can_write = frappe.model.can_write(this.doctype);
-		this.can_delete = frappe.model.can_delete(this.doctype);
+			traquent.boot.user.can_create.indexOf(this.doctype) !== -1 ||
+			traquent.boot.user.in_create.indexOf(this.doctype) !== -1;
+		this.can_write = traquent.model.can_write(this.doctype);
+		this.can_delete = traquent.model.can_delete(this.doctype);
 	}
 	make_page() {
 		var me = this;
 		if (!this.opts || !this.opts.do_not_make_page) {
-			this.parent = frappe.container.add_page(this.page_name);
+			this.parent = traquent.container.add_page(this.page_name);
 			$(this.parent).addClass("treeview");
-			frappe.ui.make_app_page({ parent: this.parent, single_column: true });
+			traquent.ui.make_app_page({ parent: this.parent, single_column: true });
 			this.page = this.parent.page;
-			frappe.container.change_to(this.page_name);
-			frappe.breadcrumbs.add(
+			traquent.container.change_to(this.page_name);
+			traquent.breadcrumbs.add(
 				me.opts.breadcrumb || locals.DocType[me.doctype].module,
 				me.doctype
 			);
@@ -101,13 +101,13 @@ frappe.views.TreeView = class TreeView {
 				"min-height": "300px",
 			});
 
-			this.page.main.addClass("frappe-card");
+			this.page.main.addClass("traquent-card");
 		} else {
 			this.page = this.opts.page;
-			$(this.page[0]).addClass("frappe-card");
+			$(this.page[0]).addClass("traquent-card");
 		}
 
-		if (frappe.meta.has_field(me.doctype, "disabled")) {
+		if (traquent.meta.has_field(me.doctype, "disabled")) {
 			$(
 				"<div class='checkbox'><label><input type='checkbox'> Include Disabled </label></div>"
 			).appendTo(this.page.inner_toolbar);
@@ -145,10 +145,10 @@ frappe.views.TreeView = class TreeView {
 	}
 	make_filters() {
 		var me = this;
-		frappe.treeview_settings.filters = [];
+		traquent.treeview_settings.filters = [];
 		$.each(this.opts.filters || [], function (i, filter) {
-			if (frappe.route_options && frappe.route_options[filter.fieldname]) {
-				filter.default = frappe.route_options[filter.fieldname];
+			if (traquent.route_options && traquent.route_options[filter.fieldname]) {
+				filter.default = traquent.route_options[filter.fieldname];
 			}
 
 			if (!filter.disable_onchange) {
@@ -176,7 +176,7 @@ frappe.views.TreeView = class TreeView {
 	get_root() {
 		var me = this;
 
-		frappe.call({
+		traquent.call({
 			method: me.get_tree_nodes,
 			args: me.args,
 			callback: function (r) {
@@ -203,7 +203,7 @@ frappe.views.TreeView = class TreeView {
 				.prop("checked");
 		}
 
-		this.tree = new frappe.ui.Tree({
+		this.tree = new traquent.ui.Tree({
 			parent: this.body,
 			label: use_label,
 			root_value: use_value,
@@ -231,8 +231,8 @@ frappe.views.TreeView = class TreeView {
 	rebuild_tree() {
 		let me = this;
 
-		frappe.call({
-			method: "frappe.utils.nestedset.rebuild_tree",
+		traquent.call({
+			method: "traquent.utils.nestedset.rebuild_tree",
 			args: {
 				doctype: me.doctype,
 			},
@@ -257,7 +257,7 @@ frappe.views.TreeView = class TreeView {
 		if (this.opts.view_template) {
 			this.node_view.empty();
 			$(
-				frappe.render_template(me.opts.view_template, {
+				traquent.render_template(me.opts.view_template, {
 					data: node.data,
 					doctype: me.doctype,
 				})
@@ -274,7 +274,7 @@ frappe.views.TreeView = class TreeView {
 					return !node.is_root && me.can_read;
 				},
 				click: function (node) {
-					frappe.set_route("Form", me.doctype, node.label);
+					traquent.set_route("Form", me.doctype, node.label);
 				},
 			},
 			{
@@ -291,13 +291,13 @@ frappe.views.TreeView = class TreeView {
 				label: __("Rename"),
 				condition: function (node) {
 					let allow_rename = true;
-					if (me.doctype && frappe.get_meta(me.doctype)) {
-						if (!frappe.get_meta(me.doctype).allow_rename) allow_rename = false;
+					if (me.doctype && traquent.get_meta(me.doctype)) {
+						if (!traquent.get_meta(me.doctype).allow_rename) allow_rename = false;
 					}
 					return !node.is_root && me.can_write && allow_rename;
 				},
 				click: function (node) {
-					frappe.model.rename_doc(me.doctype, node.label, function (new_name) {
+					traquent.model.rename_doc(me.doctype, node.label, function (new_name) {
 						node.$tree_link.find("a").text(new_name);
 						node.label = new_name;
 						me.tree.refresh();
@@ -311,7 +311,7 @@ frappe.views.TreeView = class TreeView {
 					return !node.is_root && me.can_delete;
 				},
 				click: function (node) {
-					frappe.model.delete_doc(me.doctype, node.label, function () {
+					traquent.model.delete_doc(me.doctype, node.label, function () {
 						node.parent.remove();
 					});
 				},
@@ -335,14 +335,14 @@ frappe.views.TreeView = class TreeView {
 		var node = me.tree.get_selected_node();
 
 		if (!(node && node.expandable)) {
-			frappe.msgprint(__("Select a group node first."));
+			traquent.msgprint(__("Select a group node first."));
 			return;
 		}
 
 		this.prepare_fields();
 
 		// the dialog
-		var d = new frappe.ui.Dialog({
+		var d = new traquent.ui.Dialog({
 			title: __("New {0}", [__(me.doctype)]),
 			fields: me.fields,
 		});
@@ -370,11 +370,11 @@ frappe.views.TreeView = class TreeView {
 			}
 
 			d.hide();
-			frappe.dom.freeze(__("Creating {0}", [me.doctype]));
+			traquent.dom.freeze(__("Creating {0}", [me.doctype]));
 
 			$.extend(args, v);
-			return frappe.call({
-				method: me.opts.add_tree_node || "frappe.desk.treeview.add_node",
+			return traquent.call({
+				method: me.opts.add_tree_node || "traquent.desk.treeview.add_node",
 				args: args,
 				callback: function (r) {
 					if (!r.exc) {
@@ -382,7 +382,7 @@ frappe.views.TreeView = class TreeView {
 					}
 				},
 				always: function () {
-					frappe.dom.unfreeze();
+					traquent.dom.unfreeze();
 				},
 			});
 		});
@@ -424,17 +424,17 @@ frappe.views.TreeView = class TreeView {
 		});
 	}
 	print_tree() {
-		if (!frappe.model.can_print(this.doctype)) {
-			frappe.msgprint(__("You are not allowed to print this report"));
+		if (!traquent.model.can_print(this.doctype)) {
+			traquent.msgprint(__("You are not allowed to print this report"));
 			return false;
 		}
 		var tree = $(".tree:visible").html();
 		var me = this;
-		frappe.ui.get_print_settings(false, function (print_settings) {
+		traquent.ui.get_print_settings(false, function (print_settings) {
 			var title = __(me.docname || me.doctype);
-			frappe.render_tree({ title: title, tree: tree, print_settings: print_settings });
-			frappe.call({
-				method: "frappe.core.doctype.access_log.access_log.make_access_log",
+			traquent.render_tree({ title: title, tree: tree, print_settings: print_settings });
+			traquent.call({
+				method: "traquent.core.doctype.access_log.access_log.make_access_log",
 				args: {
 					doctype: me.doctype,
 					report_name: me.page_name,
@@ -463,7 +463,7 @@ frappe.views.TreeView = class TreeView {
 			{
 				label: __("View List"),
 				action: function () {
-					frappe.set_route("List", me.doctype);
+					traquent.set_route("List", me.doctype);
 				},
 			},
 			{
@@ -481,9 +481,9 @@ frappe.views.TreeView = class TreeView {
 		];
 
 		if (
-			frappe.user.has_role("System Manager") &&
-			frappe.meta.has_field(me.doctype, "lft") &&
-			frappe.meta.has_field(me.doctype, "rgt")
+			traquent.user.has_role("System Manager") &&
+			traquent.meta.has_field(me.doctype, "lft") &&
+			traquent.meta.has_field(me.doctype, "rgt")
 		) {
 			this.menu_items.push({
 				label: __("Rebuild Tree"),

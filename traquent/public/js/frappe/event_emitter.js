@@ -1,4 +1,4 @@
-frappe.provide("frappe.utils");
+traquent.provide("traquent.utils");
 /**
  * Simple EventEmitterMixin which uses jQuery's event system
  */
@@ -28,7 +28,7 @@ const EventEmitterMixin = {
 	},
 };
 
-frappe.utils.make_event_emitter = function (object) {
+traquent.utils.make_event_emitter = function (object) {
 	Object.assign(object, EventEmitterMixin);
 	return object;
 };

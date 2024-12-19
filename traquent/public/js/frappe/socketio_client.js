@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-frappe.provide("frappe.realtime");
+traquent.provide("traquent.realtime");
 
 class RealTimeClient {
 	constructor() {
@@ -34,7 +34,7 @@ class RealTimeClient {
 	}
 
 	init(port = 9000, lazy_connect = false) {
-		if (frappe.boot.disable_async) {
+		if (traquent.boot.disable_async) {
 			return;
 		}
 
@@ -66,7 +66,7 @@ class RealTimeClient {
 		}
 
 		this.socket.on("msgprint", function (message) {
-			frappe.msgprint(message);
+			traquent.msgprint(message);
 		});
 
 		this.socket.on("progress", function (data) {
@@ -74,7 +74,7 @@ class RealTimeClient {
 				data.percent = (flt(data.progress[0]) / data.progress[1]) * 100;
 			}
 			if (data.percent) {
-				frappe.show_progress(
+				traquent.show_progress(
 					data.title || __("Progress"),
 					data.percent,
 					100,
@@ -113,13 +113,13 @@ class RealTimeClient {
 		let host = window.location.origin;
 		if (window.dev_server) {
 			let parts = host.split(":");
-			port = frappe.boot.socketio_port || port.toString() || "9000";
+			port = traquent.boot.socketio_port || port.toString() || "9000";
 			if (parts.length > 2) {
 				host = parts[0] + ":" + parts[1];
 			}
 			host = host + ":" + port;
 		}
-		return host + `/${frappe.boot.sitename}`;
+		return host + `/${traquent.boot.sitename}`;
 	}
 
 	subscribe(task_id, opts) {
@@ -141,7 +141,7 @@ class RealTimeClient {
 		this.emit("doctype_unsubscribe", doctype);
 	}
 	doc_subscribe(doctype, docname) {
-		if (frappe.flags.doc_subscribe) {
+		if (traquent.flags.doc_subscribe) {
 			console.log("throttled");
 			return;
 		}
@@ -149,11 +149,11 @@ class RealTimeClient {
 			return;
 		}
 
-		frappe.flags.doc_subscribe = true;
+		traquent.flags.doc_subscribe = true;
 
 		// throttle to 1 per sec
 		setTimeout(function () {
-			frappe.flags.doc_subscribe = false;
+			traquent.flags.doc_subscribe = false;
 		}, 1000);
 
 		this.emit("doc_subscribe", doctype, docname);
@@ -188,13 +188,13 @@ class RealTimeClient {
 			opts[method](data);
 		}
 
-		// "callback" is std frappe term
+		// "callback" is std traquent term
 		if (method === "success") {
 			if (opts.callback) opts.callback(data);
 		}
 
 		// always
-		frappe.request.cleanup(opts, data);
+		traquent.request.cleanup(opts, data);
 		if (opts.always) {
 			opts.always(data);
 		}
@@ -212,7 +212,7 @@ class RealTimeClient {
 	}
 }
 
-frappe.realtime = new RealTimeClient();
+traquent.realtime = new RealTimeClient();
 
 // backward compatibility
-frappe.socketio = frappe.realtime;
+traquent.socketio = traquent.realtime;

@@ -1,14 +1,14 @@
-// Copyright (c) 2018, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2018, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.ui.form.LinkSelector = class LinkSelector {
+traquent.ui.form.LinkSelector = class LinkSelector {
 	constructor(opts) {
 		/* help: Options: doctype, get_query, target */
 		$.extend(this, opts);
 
 		var me = this;
 		if (this.doctype != "[Select]") {
-			frappe.model.with_doctype(this.doctype, function (r) {
+			traquent.model.with_doctype(this.doctype, function (r) {
 				me.make();
 			});
 		} else {
@@ -20,7 +20,7 @@ frappe.ui.form.LinkSelector = class LinkSelector {
 
 		this.start = 0;
 		this.page_length = 10;
-		this.dialog = new frappe.ui.Dialog({
+		this.dialog = new traquent.ui.Dialog({
 			title: __("Select {0}", [this.doctype == "[Select]" ? __("value") : __(this.doctype)]),
 			fields: [
 				{
@@ -83,7 +83,7 @@ frappe.ui.form.LinkSelector = class LinkSelector {
 			$.extend(args, this.target.fieldinfo[this.fieldname].get_query(cur_frm.doc));
 		}
 
-		frappe.link_search(
+		traquent.link_search(
 			this.doctype,
 			args,
 			function (results) {
@@ -134,7 +134,7 @@ frappe.ui.form.LinkSelector = class LinkSelector {
 						'<p><br><span class="text-muted">' +
 							__("No Results") +
 							"</span>" +
-							(frappe.model.can_create(me.doctype)
+							(traquent.model.can_create(me.doctype)
 								? '<br><br><a class="new-doc btn btn-default btn-sm">' +
 								  __("Create a new {0}", [__(me.doctype)]) +
 								  "</a>"
@@ -144,7 +144,7 @@ frappe.ui.form.LinkSelector = class LinkSelector {
 						.appendTo(parent)
 						.find(".new-doc")
 						.click(function () {
-							frappe.new_doc(me.doctype);
+							traquent.new_doc(me.doctype);
 						});
 				}
 
@@ -161,7 +161,7 @@ frappe.ui.form.LinkSelector = class LinkSelector {
 	set_in_grid(value) {
 		return new Promise((resolve) => {
 			if (this.qty_fieldname) {
-				frappe.prompt(
+				traquent.prompt(
 					{
 						fieldname: "qty",
 						fieldtype: "Float",
@@ -173,10 +173,10 @@ frappe.ui.form.LinkSelector = class LinkSelector {
 						let updated = (this.target.frm.doc[this.target.df.fieldname] || []).some(
 							(d) => {
 								if (d[this.fieldname] === value) {
-									frappe.model
+									traquent.model
 										.set_value(d.doctype, d.name, this.qty_fieldname, data.qty)
 										.then(() => {
-											frappe.show_alert(
+											traquent.show_alert(
 												__("Added {0} ({1})", [
 													value,
 													d[this.qty_fieldname],
@@ -190,16 +190,16 @@ frappe.ui.form.LinkSelector = class LinkSelector {
 						);
 						if (!updated) {
 							let d = null;
-							frappe.run_serially([
+							traquent.run_serially([
 								() => (d = this.target.add_new_row()),
-								() => frappe.timeout(0.1),
+								() => traquent.timeout(0.1),
 								() => {
 									let args = {};
 									args[this.fieldname] = value;
 									args[this.qty_fieldname] = data.qty;
-									return frappe.model.set_value(d.doctype, d.name, args);
+									return traquent.model.set_value(d.doctype, d.name, args);
 								},
-								() => frappe.show_alert(__("Added {0} ({1})", [value, data.qty])),
+								() => traquent.show_alert(__("Added {0} ({1})", [value, data.qty])),
 								() => resolve(),
 							]);
 						}
@@ -209,20 +209,20 @@ frappe.ui.form.LinkSelector = class LinkSelector {
 				);
 			} else if (this.dynamic_link_field) {
 				let d = this.target.add_new_row();
-				frappe.model.set_value(
+				traquent.model.set_value(
 					d.doctype,
 					d.name,
 					this.dynamic_link_field,
 					this.dynamic_link_reference
 				);
-				frappe.model.set_value(d.doctype, d.name, this.fieldname, value).then(() => {
-					frappe.show_alert(__("{0} {1} added", [this.dynamic_link_reference, value]));
+				traquent.model.set_value(d.doctype, d.name, this.fieldname, value).then(() => {
+					traquent.show_alert(__("{0} {1} added", [this.dynamic_link_reference, value]));
 					resolve();
 				});
 			} else {
 				let d = this.target.add_new_row();
-				frappe.model.set_value(d.doctype, d.name, this.fieldname, value).then(() => {
-					frappe.show_alert(__("{0} added", [value]));
+				traquent.model.set_value(d.doctype, d.name, this.fieldname, value).then(() => {
+					traquent.show_alert(__("{0} added", [value]));
 					resolve();
 				});
 			}
@@ -230,7 +230,7 @@ frappe.ui.form.LinkSelector = class LinkSelector {
 	}
 };
 
-frappe.link_search = function (doctype, args, callback, btn) {
+traquent.link_search = function (doctype, args, callback, btn) {
 	if (!args) {
 		args = {
 			txt: "",
@@ -241,8 +241,8 @@ frappe.link_search = function (doctype, args, callback, btn) {
 		args.searchfield = "name";
 	}
 
-	frappe.call({
-		method: "frappe.desk.search.search_widget",
+	traquent.call({
+		method: "traquent.desk.search.search_widget",
 		type: "GET",
 		args: args,
 		callback: function (r) {

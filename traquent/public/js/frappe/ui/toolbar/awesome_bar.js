@@ -1,9 +1,9 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
-frappe.provide("frappe.search");
-frappe.provide("frappe.tags");
+traquent.provide("traquent.search");
+traquent.provide("traquent.tags");
 
-frappe.search.AwesomeBar = class AwesomeBar {
+traquent.search.AwesomeBar = class AwesomeBar {
 	setup(element) {
 		var me = this;
 
@@ -32,9 +32,9 @@ frappe.search.AwesomeBar = class AwesomeBar {
 				const d = this.get_item(item.value);
 				let target = "#";
 				if (d.route) {
-					target = frappe.router.make_url(
-						frappe.router.convert_from_standard_route(
-							frappe.router.get_route_from_arguments(
+					target = traquent.router.make_url(
+						traquent.router.convert_from_standard_route(
+							traquent.router.get_route_from_arguments(
 								typeof d.route === "string" ? [d.route] : d.route
 							)
 						)
@@ -64,7 +64,7 @@ frappe.search.AwesomeBar = class AwesomeBar {
 
 		$input.on(
 			"input",
-			frappe.utils.debounce(function (e) {
+			traquent.utils.debounce(function (e) {
 				var value = e.target.value;
 				var txt = value.trim().replace(/\s\s+/g, " ");
 				var last_space = txt.lastIndexOf(" ");
@@ -81,9 +81,9 @@ frappe.search.AwesomeBar = class AwesomeBar {
 					me.options = me.options.concat(me.global_results);
 				} else {
 					me.options = me.options.concat(
-						me.deduplicate(frappe.search.utils.get_recent_pages(txt || ""))
+						me.deduplicate(traquent.search.utils.get_recent_pages(txt || ""))
 					);
-					me.options = me.options.concat(frappe.search.utils.get_frequent_links());
+					me.options = me.options.concat(traquent.search.utils.get_frequent_links());
 				}
 				me.add_help();
 
@@ -112,7 +112,7 @@ frappe.search.AwesomeBar = class AwesomeBar {
 			var item = awesomplete.get_item(value);
 
 			if (item.route_options) {
-				frappe.route_options = item.route_options;
+				traquent.route_options = item.route_options;
 			}
 
 			if (item.onclick) {
@@ -120,13 +120,13 @@ frappe.search.AwesomeBar = class AwesomeBar {
 			} else {
 				let event = o.originalEvent;
 				if (event.ctrlKey || event.metaKey) {
-					frappe.open_in_new_tab = true;
+					traquent.open_in_new_tab = true;
 				}
 				if (item.route[0].startsWith("https://")) {
 					window.open(item.route[0], "_blank");
 					return;
 				}
-				frappe.set_route(item.route);
+				traquent.set_route(item.route);
 			}
 			$input.val("");
 			$input.trigger("blur");
@@ -141,7 +141,7 @@ frappe.search.AwesomeBar = class AwesomeBar {
 				$input.trigger("blur");
 			}
 		});
-		frappe.search.utils.setup_recent();
+		traquent.search.utils.setup_recent();
 	}
 
 	add_help() {
@@ -183,7 +183,7 @@ frappe.search.AwesomeBar = class AwesomeBar {
 					__("e.g. (55 + 434) / 4 or =Math.sin(Math.PI/2)...") +
 					"</td></tr>\
 				</table>";
-				frappe.msgprint(txt, __("Search Help"));
+				traquent.msgprint(txt, __("Search Help"));
 			},
 		});
 	}
@@ -206,21 +206,21 @@ frappe.search.AwesomeBar = class AwesomeBar {
 	}
 
 	build_options(txt) {
-		var options = frappe.search.utils
+		var options = traquent.search.utils
 			.get_creatables(txt)
 			.concat(
-				frappe.search.utils.get_search_in_list(txt),
-				frappe.search.utils.get_doctypes(txt),
-				frappe.search.utils.get_reports(txt),
-				frappe.search.utils.get_pages(txt),
-				frappe.search.utils.get_workspaces(txt),
-				frappe.search.utils.get_dashboards(txt),
-				frappe.search.utils.get_recent_pages(txt || ""),
-				frappe.search.utils.get_executables(txt),
-				frappe.search.utils.get_marketplace_apps(txt)
+				traquent.search.utils.get_search_in_list(txt),
+				traquent.search.utils.get_doctypes(txt),
+				traquent.search.utils.get_reports(txt),
+				traquent.search.utils.get_pages(txt),
+				traquent.search.utils.get_workspaces(txt),
+				traquent.search.utils.get_dashboards(txt),
+				traquent.search.utils.get_recent_pages(txt || ""),
+				traquent.search.utils.get_executables(txt),
+				traquent.search.utils.get_marketplace_apps(txt)
 			);
 		if (txt.charAt(0) === "#") {
-			options = frappe.tags.utils.get_tags(txt);
+			options = traquent.tags.utils.get_tags(txt);
 		}
 		var out = this.deduplicate(options);
 		return out.sort(function (a, b) {
@@ -282,13 +282,13 @@ frappe.search.AwesomeBar = class AwesomeBar {
 
 		// search_text.html(`
 		// 	<span class="flex justify-between">
-		// 		<span class="ellipsis">Search for ${frappe.utils.xss_sanitise(txt).bold()}</span>
+		// 		<span class="ellipsis">Search for ${traquent.utils.xss_sanitise(txt).bold()}</span>
 		// 		<kbd>↵</kbd>
 		// 	</span>
 		// `);
 
 		// search_text.click(() => {
-		// 	frappe.searchdialog.search.init_search(txt, "global_search");
+		// 	traquent.searchdialog.search.init_search(txt, "global_search");
 		// });
 
 		// REDESIGN TODO: Remove this as a selectable option
@@ -299,7 +299,7 @@ frappe.search.AwesomeBar = class AwesomeBar {
 		this.options.push({
 			label: `
 				<span class="flex justify-between text-medium">
-					<span class="ellipsis">${__("Search for {0}", [frappe.utils.xss_sanitise(txt).bold()])}</span>
+					<span class="ellipsis">${__("Search for {0}", [traquent.utils.xss_sanitise(txt).bold()])}</span>
 					<kbd>↵</kbd>
 				</span>
 			`,
@@ -308,18 +308,18 @@ frappe.search.AwesomeBar = class AwesomeBar {
 			index: 100,
 			default: "Search",
 			onclick: function () {
-				frappe.searchdialog.search.init_search(txt, "global_search");
+				traquent.searchdialog.search.init_search(txt, "global_search");
 			},
 		});
 	}
 
 	make_search_in_current(txt) {
-		var route = frappe.get_route();
+		var route = traquent.get_route();
 		if (route[0] === "List" && txt.indexOf(" in") === -1) {
 			// search in title field
-			const doctype = frappe.container.page?.list_view?.doctype;
+			const doctype = traquent.container.page?.list_view?.doctype;
 			if (!doctype) return;
-			var meta = frappe.get_meta(doctype);
+			var meta = traquent.get_meta(doctype);
 			var search_field = meta.title_field || "name";
 			var options = {};
 			options[search_field] = ["like", "%" + txt + "%"];
@@ -376,7 +376,7 @@ frappe.search.AwesomeBar = class AwesomeBar {
 					index: 80,
 					default: "Calculator",
 					onclick: function () {
-						frappe.msgprint(formatted_value, __("Result"));
+						traquent.msgprint(formatted_value, __("Result"));
 					},
 				});
 			} catch (e) {
@@ -389,9 +389,9 @@ frappe.search.AwesomeBar = class AwesomeBar {
 		if (txt.toLowerCase().includes("random")) {
 			this.options.push({
 				label: __("Generate Random Password"),
-				value: frappe.utils.get_random(16),
+				value: traquent.utils.get_random(16),
 				onclick: function () {
-					frappe.msgprint(frappe.utils.get_random(16), __("Result"));
+					traquent.msgprint(traquent.utils.get_random(16), __("Result"));
 				},
 			});
 		}

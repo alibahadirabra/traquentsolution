@@ -1,19 +1,19 @@
-// Copyright (c) 2016, Frappe Technologies and contributors
+// Copyright (c) 2016, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.query_reports["Website Analytics"] = {
+traquent.query_reports["Website Analytics"] = {
 	filters: [
 		{
 			fieldname: "from_date",
 			label: __("From Date"),
 			fieldtype: "Date",
-			default: frappe.datetime.add_days(frappe.datetime.now_date(true), -100),
+			default: traquent.datetime.add_days(traquent.datetime.now_date(true), -100),
 		},
 		{
 			fieldname: "to_date",
 			label: __("To Date"),
 			fieldtype: "Date",
-			default: frappe.datetime.now_date(true),
+			default: traquent.datetime.now_date(true),
 		},
 		{
 			fieldname: "range",
@@ -45,14 +45,14 @@ frappe.query_reports["Website Analytics"] = {
 	],
 	formatter: function (value, row, column, data, default_formatter) {
 		if (
-			frappe.query_report.get_filter_value("group_by") === "source" &&
+			traquent.query_report.get_filter_value("group_by") === "source" &&
 			column.id === "source"
 		) {
 			if (value) {
 				try {
 					let doctype = value.split(">")[0].trim();
 					let name = value.split(">")[1].trim();
-					return frappe.utils.get_form_link(doctype, name, true, value);
+					return traquent.utils.get_form_link(doctype, name, true, value);
 				} catch (e) {
 					// skip and return with default formatter
 				}

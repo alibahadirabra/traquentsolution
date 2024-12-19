@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import json
@@ -271,7 +271,7 @@ class TestReport(IntegrationTestCase):
 
 		report.report_script = """
 totals = {}
-for user in frappe.get_all('User', fields = ['name', 'user_type', 'creation']):
+for user in traquent.get_all('User', fields = ['name', 'user_type', 'creation']):
     if not user.user_type in totals:
         totals[user.user_type] = 0
     totals[user.user_type] = totals[user.user_type] + 1
@@ -317,7 +317,7 @@ data = [
 
 		report.report_script = """
 totals = {}
-for user in frappe.get_all('User', fields = ['name', 'user_type', 'creation']):
+for user in traquent.get_all('User', fields = ['name', 'user_type', 'creation']):
     if not user.user_type in totals:
         totals[user.user_type] = 0
     totals[user.user_type] = totals[user.user_type] + 1

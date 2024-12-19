@@ -1,6 +1,6 @@
-frappe.provide("frappe.ui");
+traquent.provide("traquent.ui");
 
-frappe.ui.AddressAutocompleteDialog = class AddressAutocompleteDialog {
+traquent.ui.AddressAutocompleteDialog = class AddressAutocompleteDialog {
 	constructor(opts) {
 		this.title = opts?.title || __("New Address");
 		this.link_doctype = opts?.link_doctype;
@@ -11,7 +11,7 @@ frappe.ui.AddressAutocompleteDialog = class AddressAutocompleteDialog {
 
 	_get_dialog() {
 		// sourcery skip: inline-immediately-returned-variable
-		const dialog = new frappe.ui.Dialog({
+		const dialog = new traquent.ui.Dialog({
 			title: this.title,
 			fields: [
 				{
@@ -20,12 +20,12 @@ frappe.ui.AddressAutocompleteDialog = class AddressAutocompleteDialog {
 					label: __("Search"),
 					reqd: 1,
 					get_query:
-						"frappe.integrations.doctype.geolocation_settings.geolocation_settings.autocomplete",
+						"traquent.integrations.doctype.geolocation_settings.geolocation_settings.autocomplete",
 					onchange: () => {
 						// Disable "Create Address" button if mandatory fields are missing
-						frappe.model.with_doctype("Address", () => {
+						traquent.model.with_doctype("Address", () => {
 							const address = this.parse_selected_value();
-							const mandatory_fields = frappe
+							const mandatory_fields = traquent
 								.get_meta("Address")
 								.fields.filter(
 									(field) =>
@@ -59,7 +59,7 @@ frappe.ui.AddressAutocompleteDialog = class AddressAutocompleteDialog {
 						link_name: this.link_name,
 					},
 				];
-				frappe.db.insert(address).then((doc) => {
+				traquent.db.insert(address).then((doc) => {
 					this.after_insert && this.after_insert(doc);
 				});
 			},
@@ -69,7 +69,7 @@ frappe.ui.AddressAutocompleteDialog = class AddressAutocompleteDialog {
 				dialog.hide();
 
 				const address = this.parse_selected_value();
-				frappe.new_doc("Address", address);
+				traquent.new_doc("Address", address);
 			},
 		});
 

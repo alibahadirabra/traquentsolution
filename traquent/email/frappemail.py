@@ -6,12 +6,12 @@ import pytz
 
 import traquent
 from traquent import _
-from traquent.frappeclient import FrappeClient, FrappeOAuth2Client
+from traquent.traquentclient import traquentClient, traquentOAuth2Client
 from traquent.utils import convert_utc_to_system_timezone, get_datetime, get_datetime_str, get_system_timezone
 
 
-class FrappeMail:
-	"""Class to interact with the Frappe Mail API."""
+class traquentMail:
+	"""Class to interact with the traquent Mail API."""
 
 	def __init__(
 		self,
@@ -37,21 +37,21 @@ class FrappeMail:
 		api_key: str | None = None,
 		api_secret: str | None = None,
 		access_token: str | None = None,
-	) -> FrappeClient | FrappeOAuth2Client:
-		"""Returns a FrappeClient or FrappeOAuth2Client instance."""
+	) -> traquentClient | traquentOAuth2Client:
+		"""Returns a traquentClient or traquentOAuth2Client instance."""
 
-		if hasattr(traquent.local, "frappe_mail_clients"):
-			if client := traquent.local.frappe_mail_clients.get(mailbox):
+		if hasattr(traquent.local, "traquent_mail_clients"):
+			if client := traquent.local.traquent_mail_clients.get(mailbox):
 				return client
 		else:
-			traquent.local.frappe_mail_clients = {}
+			traquent.local.traquent_mail_clients = {}
 
 		client = (
-			FrappeOAuth2Client(url=site, access_token=access_token)
+			traquentOAuth2Client(url=site, access_token=access_token)
 			if access_token
-			else FrappeClient(url=site, api_key=api_key, api_secret=api_secret)
+			else traquentClient(url=site, api_key=api_key, api_secret=api_secret)
 		)
-		traquent.local.frappe_mail_clients[mailbox] = client
+		traquent.local.traquent_mail_clients[mailbox] = client
 
 		return client
 
@@ -66,7 +66,7 @@ class FrappeMail:
 		timeout: int | tuple[int, int] = (60, 120),
 		raise_exception: bool = True,
 	) -> Any | None:
-		"""Makes a request to the Frappe Mail API."""
+		"""Makes a request to the traquent Mail API."""
 
 		url = urljoin(self.client.url, endpoint)
 
@@ -87,21 +87,21 @@ class FrappeMail:
 		self.request("POST", endpoint=endpoint, data=data)
 
 	def send_raw(self, sender: str, recipients: str | list, message: str) -> None:
-		"""Sends an email using the Frappe Mail API."""
+		"""Sends an email using the traquent Mail API."""
 
 		endpoint = "/api/method/mail.api.outbound.send_raw"
 		data = {"from_": sender, "to": recipients, "raw_message": message}
 		self.request("POST", endpoint=endpoint, data=data)
 
 	def send_newsletter(self, sender: str, recipients: str | list, message: str) -> None:
-		"""Sends an newsletter using the Frappe Mail API."""
+		"""Sends an newsletter using the traquent Mail API."""
 
 		endpoint = "/api/method/mail.api.outbound.send_newsletter"
 		data = {"from_": sender, "to": recipients, "raw_message": message}
 		self.request("POST", endpoint=endpoint, json=data)
 
 	def pull_raw(self, limit: int = 50, last_synced_at: str | None = None) -> dict[str, list[str] | str]:
-		"""Pulls emails from the mailbox using the Frappe Mail API."""
+		"""Pulls emails from the mailbox using the traquent Mail API."""
 
 		endpoint = "/api/method/mail.api.inbound.pull_raw"
 		if last_synced_at:

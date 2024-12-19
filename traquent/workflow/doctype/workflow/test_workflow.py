@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 from unittest.mock import patch
 
@@ -30,7 +30,7 @@ class TestWorkflow(IntegrationTestCase):
 		make_test_records("User")
 
 	def setUp(self):
-		self.patcher = patch("frappe.attach_print", return_value={})
+		self.patcher = patch("traquent.attach_print", return_value={})
 		self.patcher.start()
 		traquent.db.delete("Workflow Action")
 		self.workflow = create_todo_workflow()

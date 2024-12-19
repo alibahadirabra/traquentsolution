@@ -1,4 +1,4 @@
-frappe.listview_settings["DocType"] = {
+traquent.listview_settings["DocType"] = {
 	primary_action: function () {
 		this.new_doctype_dialog();
 	},
@@ -16,7 +16,7 @@ frappe.listview_settings["DocType"] = {
 			editable_grid = 1,
 		} = args || {};
 
-		let non_developer = frappe.session.user !== "Administrator" || !frappe.boot.developer_mode;
+		let non_developer = traquent.session.user !== "Administrator" || !traquent.boot.developer_mode;
 		let fields = [
 			{
 				label: __("DocType Name"),
@@ -96,13 +96,13 @@ frappe.listview_settings["DocType"] = {
 			});
 		}
 
-		let new_d = new frappe.ui.Dialog({
+		let new_d = new traquent.ui.Dialog({
 			title: __("Create New DocType"),
 			fields: fields,
 			primary_action_label: __("Create & Continue"),
 			primary_action(values) {
 				if (!values.istable) values.editable_grid = 0;
-				frappe.db
+				traquent.db
 					.insert({
 						doctype: "DocType",
 						...values,
@@ -124,14 +124,14 @@ frappe.listview_settings["DocType"] = {
 						fields: [{ fieldtype: "Section Break" }],
 					})
 					.then((doc) => {
-						frappe.set_route("Form", "DocType", doc.name);
+						traquent.set_route("Form", "DocType", doc.name);
 					});
 			},
 			secondary_action_label: __("Cancel"),
 			secondary_action() {
 				new_d.hide();
-				if (frappe.get_route()[0] === "Form") {
-					frappe.set_route("List", "DocType");
+				if (traquent.get_route()[0] === "Form") {
+					traquent.set_route("List", "DocType");
 				}
 			},
 		});

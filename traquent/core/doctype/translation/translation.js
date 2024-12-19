@@ -1,7 +1,7 @@
-// Copyright (c) 2016, Frappe Technologies and contributors
+// Copyright (c) 2016, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Translation", {
+traquent.ui.form.on("Translation", {
 	refresh: function () {
 		//
 	},

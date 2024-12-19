@@ -1,4 +1,4 @@
-# Copyright (c) 2018, Frappe Technologies Pvt. Ltd. and contributors
+# Copyright (c) 2018, traquent Technologies Pvt. Ltd. and contributors
 # License: MIT. See LICENSE
 
 from datetime import timedelta
@@ -471,7 +471,7 @@ def get_next_weekday(current_schedule_day, weekdays):
 
 # called through hooks
 def make_auto_repeat_entry():
-	enqueued_method = "frappe.automation.doctype.auto_repeat.auto_repeat.create_repeated_entries"
+	enqueued_method = "traquent.automation.doctype.auto_repeat.auto_repeat.create_repeated_entries"
 	jobs = get_jobs()
 
 	if not jobs or enqueued_method not in jobs[traquent.local.site]:

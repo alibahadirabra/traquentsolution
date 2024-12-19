@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies Pvt. Ltd. and contributors
+# Copyright (c) 2019, traquent Technologies Pvt. Ltd. and contributors
 # License: MIT. See LICENSE
 
 import imaplib

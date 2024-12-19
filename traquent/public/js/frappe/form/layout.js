@@ -2,7 +2,7 @@ import Section from "./section.js";
 import Tab from "./tab.js";
 import Column from "./column.js";
 
-frappe.ui.form.Layout = class Layout {
+traquent.ui.form.Layout = class Layout {
 	constructor(opts) {
 		this.views = {};
 		this.pages = [];
@@ -58,7 +58,7 @@ frappe.ui.form.Layout = class Layout {
 			fields = fields.concat(this.get_fields_from_layout());
 		} else {
 			fields = fields.concat(
-				frappe.meta.sort_docfields(frappe.meta.docfield_map[this.doctype])
+				traquent.meta.sort_docfields(traquent.meta.docfield_map[this.doctype])
 			);
 		}
 
@@ -90,7 +90,7 @@ frappe.ui.form.Layout = class Layout {
 	get_fields_from_layout() {
 		const fields = [];
 		for (let f of this.doctype_layout.fields) {
-			const docfield = copy_dict(frappe.meta.docfield_map[this.doctype][f.fieldname]);
+			const docfield = copy_dict(traquent.meta.docfield_map[this.doctype][f.fieldname]);
 			docfield.label = f.label;
 			fields.push(docfield);
 		}
@@ -102,7 +102,7 @@ frappe.ui.form.Layout = class Layout {
 			// remove previous color
 			this.message.removeClass(this.message_color);
 		}
-		let close_message = $(`<div class="close-message">${frappe.utils.icon("close")}</div>`);
+		let close_message = $(`<div class="close-message">${traquent.utils.icon("close")}</div>`);
 		this.message_color =
 			color && ["yellow", "blue", "red", "green", "orange"].includes(color) ? color : "blue";
 		if (html) {
@@ -230,7 +230,7 @@ frappe.ui.form.Layout = class Layout {
 	}
 
 	init_field(df, parent, render = false) {
-		const fieldobj = frappe.ui.form.make_control({
+		const fieldobj = traquent.ui.form.make_control({
 			df: df,
 			doctype: this.doctype,
 			parent: parent,
@@ -269,7 +269,7 @@ frappe.ui.form.Layout = class Layout {
 			if (page.hasClass("hide")) {
 				$(this).removeClass("btn-fold").html(__("Hide details"));
 				page.removeClass("hide");
-				frappe.utils.scroll_to($(this), true, 30);
+				traquent.utils.scroll_to($(this), true, 30);
 				me.folded = false;
 			} else {
 				$(this).addClass("btn-fold").html(__("Show more details"));
@@ -366,16 +366,16 @@ frappe.ui.form.Layout = class Layout {
 	}
 
 	is_numeric_field_active() {
-		const control = $(document.activeElement).closest(".frappe-control");
+		const control = $(document.activeElement).closest(".traquent-control");
 		const fieldtype = (control.data() || {}).fieldtype;
-		return frappe.model.numeric_fieldtypes.includes(fieldtype);
+		return traquent.model.numeric_fieldtypes.includes(fieldtype);
 	}
 
 	refresh_sections() {
 		// hide invisible sections
 		this.wrapper.find(".form-section:not(.hide-control)").each(function () {
 			const section = $(this).removeClass("empty-section visible-section");
-			if (section.find(".frappe-control:not(.hide-control)").length) {
+			if (section.find(".traquent-control:not(.hide-control)").length) {
 				section.addClass("visible-section");
 			} else if (
 				section.parent().hasClass("tab-pane") ||
@@ -484,7 +484,7 @@ frappe.ui.form.Layout = class Layout {
 				fieldobj.doctype = me.doc.doctype;
 				fieldobj.docname = me.doc.name;
 				fieldobj.df =
-					frappe.meta.get_docfield(me.doc.doctype, fieldobj.df.fieldname, me.doc.name) ||
+					traquent.meta.get_docfield(me.doc.doctype, fieldobj.df.fieldname, me.doc.name) ||
 					fieldobj.df;
 			}
 			refresh && fieldobj.df && fieldobj.refresh && fieldobj.refresh();
@@ -504,7 +504,7 @@ frappe.ui.form.Layout = class Layout {
 		if (!tabs_list.length) return;
 
 		$(".main-section").scroll(
-			frappe.utils.throttle(() => {
+			traquent.utils.throttle(() => {
 				let current_scroll = document.documentElement.scrollTop;
 				if (current_scroll > 0 && last_scroll <= current_scroll) {
 					tabs_list.removeClass("form-tabs-sticky-down");
@@ -557,7 +557,7 @@ frappe.ui.form.Layout = class Layout {
 			}
 		});
 		this.frm.page &&
-			frappe.ui.keys.add_shortcut({
+			traquent.ui.keys.add_shortcut({
 				shortcut: "alt+hover",
 				page: this.frm.page,
 				description: __("Show Fieldname (click to copy on clipboard)"),
@@ -641,7 +641,7 @@ frappe.ui.form.Layout = class Layout {
 					return true;
 				} else if (
 					field.df.fieldtype === "Table MultiSelect" ||
-					!frappe.model.no_value_type.includes(field.df.fieldtype)
+					!traquent.model.no_value_type.includes(field.df.fieldtype)
 				) {
 					this.set_focus(field);
 					return true;
@@ -787,12 +787,12 @@ frappe.ui.form.Layout = class Layout {
 			out = expression(doc);
 		} else if (expression.substr(0, 5) == "eval:") {
 			try {
-				out = frappe.utils.eval(expression.substr(5), { doc, parent });
+				out = traquent.utils.eval(expression.substr(5), { doc, parent });
 				if (parent && parent.istable && expression.includes("is_submittable")) {
 					out = true;
 				}
 			} catch (e) {
-				frappe.throw(__('Invalid "depends_on" expression'));
+				traquent.throw(__('Invalid "depends_on" expression'));
 			}
 		} else if (expression.substr(0, 3) == "fn:" && this.frm) {
 			out = this.frm.script_manager.trigger(

@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # MIT License. See LICENSE
 import base64
 import binascii
@@ -32,7 +32,7 @@ MAX_PASSWORD_SIZE = 512
 
 class HTTPRequest:
 	def __init__(self):
-		# set frappe.local.request_ip
+		# set traquent.local.request_ip
 		self.set_request_ip()
 
 		# load cookies
@@ -83,7 +83,7 @@ class HTTPRequest:
 			or not traquent.session
 			or not (saved_token := traquent.session.data.csrf_token)
 			or (
-				(traquent.get_request_header("X-Frappe-CSRF-Token") or traquent.form_dict.pop("csrf_token", None))
+				(traquent.get_request_header("X-traquent-CSRF-Token") or traquent.form_dict.pop("csrf_token", None))
 				== saved_token
 			)
 		):
@@ -433,7 +433,7 @@ def validate_ip_address(user):
 	checked for those
 	"""
 	if hasattr(traquent.local, "request") and traquent.local.request.path.startswith(
-		"/api/method/frappe.realtime."
+		"/api/method/traquent.realtime."
 	):
 		return True
 
@@ -663,7 +663,7 @@ def validate_auth_via_api_keys(authorization_header):
 
 	try:
 		auth_type, auth_token = authorization_header
-		authorization_source = traquent.get_request_header("Frappe-Authorization-Source")
+		authorization_source = traquent.get_request_header("traquent-Authorization-Source")
 		if auth_type.lower() == "basic":
 			api_key, api_secret = traquent.safe_decode(base64.b64decode(auth_token)).split(":")
 			validate_api_key_secret(api_key, api_secret, authorization_source)
@@ -679,9 +679,9 @@ def validate_auth_via_api_keys(authorization_header):
 		pass
 
 
-def validate_api_key_secret(api_key, api_secret, frappe_authorization_source=None):
-	"""frappe_authorization_source to provide api key and secret for a doctype apart from User"""
-	doctype = frappe_authorization_source or "User"
+def validate_api_key_secret(api_key, api_secret, traquent_authorization_source=None):
+	"""traquent_authorization_source to provide api key and secret for a doctype apart from User"""
+	doctype = traquent_authorization_source or "User"
 	doc = traquent.db.get_value(doctype=doctype, filters={"api_key": api_key}, fieldname=["name"])
 	if not doc:
 		raise traquent.AuthenticationError

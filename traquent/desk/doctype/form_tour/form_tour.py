@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies and contributors
+# Copyright (c) 2021, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import json
@@ -96,7 +96,7 @@ def update_user_status(value, step):
 
 	capture(
 		traquent.scrub(f"{step.parent}_{step.title}"),
-		app="frappe_ui_tours",
+		app="traquent_ui_tours",
 		properties={"is_completed": tour.is_completed},
 	)
 	traquent.db.set_value("User", traquent.session.user, "onboarding_status", value, update_modified=False)

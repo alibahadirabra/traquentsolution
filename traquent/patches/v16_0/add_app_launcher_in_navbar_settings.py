@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2023, traquent Technologies Pvt. Ltd. and Contributors
 # MIT License. See license.txt
 
 import traquent

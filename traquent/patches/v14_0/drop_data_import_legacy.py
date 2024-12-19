@@ -17,7 +17,7 @@ def execute():
 		f" using\n\n\tbench --site {traquent.local.site} backup -i '{doctype}'\n\nAfter"
 		" this, the table will continue to persist in the database, until you choose"
 		" to remove it yourself. If you want to drop the table, you may run\n\n\tbench"
-		f" --site {traquent.local.site} execute frappe.db.sql --args \"('DROP TABLE IF"
+		f" --site {traquent.local.site} execute traquent.db.sql --args \"('DROP TABLE IF"
 		f" EXISTS `{table}`', )\"\n",
 		fg="yellow",
 	)

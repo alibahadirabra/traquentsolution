@@ -3,7 +3,7 @@ from traquent import _
 from traquent.permissions import AUTOMATIC_ROLES
 from traquent.utils import add_to_date, now
 
-UI_TEST_USER = "frappe@example.com"
+UI_TEST_USER = "traquent@example.com"
 
 
 def whitelist_for_tests(fn):
@@ -434,7 +434,7 @@ def create_test_user(username=None):
 
 	user = traquent.new_doc("User")
 	user.email = name
-	user.first_name = "Frappe"
+	user.first_name = "traquent"
 	user.new_password = traquent.local.conf.admin_password
 	user.send_welcome_email = 0
 	user.time_zone = "Asia/Kolkata"

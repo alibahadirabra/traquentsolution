@@ -1,18 +1,18 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
 // library to mange assets (js, css, models, html) etc in the app.
 // will try and get from localStorage if latest are available
-// depends on frappe.versions to manage versioning
+// depends on traquent.versions to manage versioning
 
-frappe.require = function (items, callback) {
+traquent.require = function (items, callback) {
 	if (typeof items === "string") {
 		items = [items];
 	}
-	items = items.map((item) => frappe.assets.bundled_asset(item));
+	items = items.map((item) => traquent.assets.bundled_asset(item));
 
 	return new Promise((resolve) => {
-		frappe.assets.execute(items, () => {
+		traquent.assets.execute(items, () => {
 			resolve();
 			callback && callback();
 		});
@@ -24,10 +24,10 @@ class AssetManager {
 		this._executed = [];
 		this._handlers = {
 			js: function (txt) {
-				frappe.dom.eval(txt);
+				traquent.dom.eval(txt);
 			},
 			css: function (txt) {
-				frappe.dom.set_style(txt);
+				traquent.dom.set_style(txt);
 			},
 		};
 	}
@@ -56,7 +56,7 @@ class AssetManager {
 	init_local_storage() {
 		localStorage._last_load = new Date();
 		localStorage._version_number = window._version_number;
-		if (frappe.boot) localStorage.metadata_version = frappe.boot.metadata_version;
+		if (traquent.boot) localStorage.metadata_version = traquent.boot.metadata_version;
 	}
 
 	clear_local_storage() {
@@ -89,7 +89,7 @@ class AssetManager {
 		let me = this;
 
 		const version_string =
-			frappe.boot.developer_mode || window.dev_server ? Date.now() : window._version_number;
+			traquent.boot.developer_mode || window.dev_server ? Date.now() : window._version_number;
 
 		let fetched_assets = {};
 		async function fetch_item(path) {
@@ -103,14 +103,14 @@ class AssetManager {
 			fetched_assets[path] = await response.text();
 		}
 
-		frappe.dom.freeze();
+		traquent.dom.freeze();
 		const fetch_promises = items.map(fetch_item);
 		Promise.all(fetch_promises).then(() => {
 			items.forEach((path) => {
 				let body = fetched_assets[path];
 				me.eval_assets(path, body);
 			});
-			frappe.dom.unfreeze();
+			traquent.dom.unfreeze();
 			callback?.();
 		});
 	}
@@ -127,7 +127,7 @@ class AssetManager {
 			if (path.endsWith(".css") && is_rtl) {
 				path = `rtl_${path}`;
 			}
-			path = frappe.boot.assets_json[path] || path;
+			path = traquent.boot.assets_json[path] || path;
 			return path;
 		}
 		return path;
@@ -146,4 +146,4 @@ function is_reload() {
 	}
 }
 
-frappe.assets = new AssetManager();
+traquent.assets = new AssetManager();

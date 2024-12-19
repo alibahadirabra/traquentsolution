@@ -1,10 +1,10 @@
-frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
+traquent.ui.form.MultiSelectDialog = class MultiSelectDialog {
 	constructor(opts) {
 		/* Options: doctype, target, setters, get_query, action, add_filters_group, data_fields, primary_action_label, columns */
 		Object.assign(this, opts);
 		this.for_select = this.doctype == "[Select]";
 		if (!this.for_select) {
-			frappe.model.with_doctype(this.doctype, () => this.init());
+			traquent.model.with_doctype(this.doctype, () => this.init());
 		} else {
 			this.init();
 		}
@@ -80,7 +80,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 		let doctype_plural = __(this.doctype).plural();
 		let title = __("Select {0}", [this.for_select ? __("value") : doctype_plural]);
 
-		this.dialog = new frappe.ui.Dialog({
+		this.dialog = new traquent.ui.Dialog({
 			title: title,
 			fields: this.fields,
 			size: this.size,
@@ -120,21 +120,21 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 		// If user wants to close the modal
 		if (e) {
 			this.set_route_options();
-			frappe.new_doc(this.doctype, true);
+			traquent.new_doc(this.doctype, true);
 		}
 	}
 
 	set_route_options() {
 		// set route options to get pre-filled form fields
-		frappe.route_options = {};
+		traquent.route_options = {};
 		if (Array.isArray(this.setters)) {
 			for (let df of this.setters) {
-				frappe.route_options[df.fieldname] =
+				traquent.route_options[df.fieldname] =
 					this.dialog.fields_dict[df.fieldname].get_value() || undefined;
 			}
 		} else {
 			Object.keys(this.setters).forEach((setter) => {
-				frappe.route_options[setter] =
+				traquent.route_options[setter] =
 					this.dialog.fields_dict[setter].get_value() || undefined;
 			});
 		}
@@ -192,7 +192,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 	get_child_datatable_columns() {
 		const parent = this.doctype;
 		return [parent, ...this.child_columns].map((d) => ({
-			name: frappe.unscrub(d),
+			name: traquent.unscrub(d),
 			editable: false,
 		}));
 	}
@@ -214,7 +214,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 		this.$child_wrapper = this.dialog.fields_dict.child_selection_area.$wrapper;
 		this.$child_wrapper.addClass("my-3");
 
-		this.child_datatable = new frappe.DataTable(this.$child_wrapper.get(0), {
+		this.child_datatable = new traquent.DataTable(this.$child_wrapper.get(0), {
 			columns: header_columns,
 			data: rows,
 			layout: "fluid",
@@ -251,7 +251,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 			});
 		} else {
 			Object.keys(this.setters).forEach((setter, index) => {
-				let df_prop = frappe.meta.docfield_map[this.doctype][setter];
+				let df_prop = traquent.meta.docfield_map[this.doctype][setter];
 
 				// Index + 1 to start filling from index 1
 				// Since Search is a standrd field already pushed
@@ -274,7 +274,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 		}
 
 		if (this.allow_child_item_selection) {
-			this.child_doctype = frappe.meta.get_docfield(
+			this.child_doctype = traquent.meta.get_docfield(
 				this.doctype,
 				this.child_fieldname
 			).options;
@@ -306,7 +306,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 	}
 
 	make_filter_area() {
-		this.filter_group = new frappe.ui.FilterGroup({
+		this.filter_group = new traquent.ui.FilterGroup({
 			parent: this.dialog.get_field("filter_area").$wrapper,
 			doctype: this.doctype,
 			on_change: () => {
@@ -363,7 +363,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 		});
 
 		this.$parent.find(".input-with-feedback").on("change", () => {
-			frappe.flags.auto_scroll = false;
+			traquent.flags.auto_scroll = false;
 			if (this.is_child_selection_enabled()) {
 				this.show_child_results();
 			} else {
@@ -377,7 +377,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 			$this.data(
 				"timeout",
 				setTimeout(function () {
-					frappe.flags.auto_scroll = false;
+					traquent.flags.auto_scroll = false;
 					if (me.is_child_selection_enabled()) {
 						me.show_child_results();
 					} else {
@@ -463,14 +463,14 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 				${
 					head
 						? `<span class="ellipsis text-muted" title="${__(
-								frappe.model.unscrub(column)
-						  )}">${__(frappe.model.unscrub(column))}</span>`
+								traquent.model.unscrub(column)
+						  )}">${__(traquent.model.unscrub(column))}</span>`
 						: column !== "name"
 						? `<span class="ellipsis result-row" title="${__(
 								result[column] || ""
 						  )}">${__(result[column] || "")}</span>`
 						: `<a href="${
-								"/app/" + frappe.router.slug(me.doctype) + "/" + result[column] ||
+								"/app/" + traquent.router.slug(me.doctype) + "/" + result[column] ||
 								""
 						  }" class="list-id ellipsis" title="${__(result[column] || "")}">
 							${__(result[column] || "")}</a>`
@@ -501,7 +501,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 		var more_btn = me.dialog.fields_dict.more_btn.$wrapper;
 
 		// Make empty result set if filter is set
-		if (!frappe.flags.auto_scroll && empty) {
+		if (!traquent.flags.auto_scroll && empty) {
 			this.empty_list();
 		}
 		more_btn.hide();
@@ -520,7 +520,7 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 
 		this.$results.find(".list-item--head").css("z-index", 1);
 
-		if (frappe.flags.auto_scroll) {
+		if (traquent.flags.auto_scroll) {
 			this.$results.animate({ scrollTop: me.$results.prop("scrollHeight") }, 500);
 		}
 	}
@@ -587,9 +587,9 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 	}
 
 	async perform_search(args) {
-		const res = await frappe.call({
+		const res = await traquent.call({
 			type: "GET",
-			method: "frappe.desk.search.search_widget",
+			method: "traquent.desk.search.search_widget",
 			no_spinner: true,
 			args: args,
 		});
@@ -651,8 +651,8 @@ frappe.ui.form.MultiSelectDialog = class MultiSelectDialog {
 		await this.add_parent_filters(filters);
 		this.add_custom_child_filters(filters);
 
-		return frappe.call({
-			method: "frappe.client.get_list",
+		return traquent.call({
+			method: "traquent.client.get_list",
 			args: {
 				doctype: this.child_doctype,
 				filters: filters,

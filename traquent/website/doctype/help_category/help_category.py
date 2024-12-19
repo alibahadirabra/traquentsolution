@@ -1,4 +1,4 @@
-# Copyright (c) 2013, Frappe and contributors
+# Copyright (c) 2013, traquent and contributors
 # License: MIT. See LICENSE
 
 import traquent

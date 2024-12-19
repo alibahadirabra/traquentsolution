@@ -1,6 +1,6 @@
-frappe.provide("frappe.file_manager");
+traquent.provide("traquent.file_manager");
 
-frappe.file_manager = (function () {
+traquent.file_manager = (function () {
 	let files_to_move = [];
 	let old_folder = null;
 	let new_folder = null;
@@ -19,9 +19,9 @@ frappe.file_manager = (function () {
 			}
 			new_folder = new_folder_;
 
-			frappe
+			traquent
 				.call({
-					method: "frappe.core.api.file.move_file",
+					method: "traquent.core.api.file.move_file",
 					args: {
 						file_list: files_to_move,
 						new_parent: new_folder,

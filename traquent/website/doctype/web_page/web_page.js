@@ -1,12 +1,12 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.ui.form.on("Web Page", {
+traquent.ui.form.on("Web Page", {
 	layout: function (frm) {
 		if (frm.is_new()) {
 			if (frm.doc.insert_code) {
 				if (!frm.doc.javascript) {
-					frm.set_value("javascript", `frappe.ready(() => {\n\t\n});`);
+					frm.set_value("javascript", `traquent.ready(() => {\n\t\n});`);
 				}
 			}
 		}
@@ -25,7 +25,7 @@ frappe.ui.form.on("Web Page", {
 	},
 	validate: function (frm) {
 		if (frm.doc.title && !frm.doc.route) {
-			frm.set_value("route", frappe.scrub(frm.doc.title, "-"));
+			frm.set_value("route", traquent.scrub(frm.doc.title, "-"));
 		}
 	},
 	refresh: function (frm) {
@@ -40,7 +40,7 @@ frappe.ui.form.on("Web Page", {
 		// and web page is manually unpublished,
 		// set end date to current date.
 		if (!frm.doc.published && frm.doc.end_date) {
-			var end_date = frappe.datetime.str_to_obj(frappe.datetime.now_datetime());
+			var end_date = traquent.datetime.str_to_obj(traquent.datetime.now_datetime());
 
 			// Set date a few seconds in the future to avoid throwing
 			// start and end date validation error
@@ -50,21 +50,21 @@ frappe.ui.form.on("Web Page", {
 		}
 	},
 	set_meta_tags(frm) {
-		frappe.utils.set_meta_tag(frm.doc.route);
+		traquent.utils.set_meta_tag(frm.doc.route);
 	},
 });
 
-frappe.ui.form.on("Web Page Block", {
+traquent.ui.form.on("Web Page Block", {
 	edit_values(frm, cdt, cdn) {
 		let row = frm.selected_doc;
 		let values = JSON.parse(row.web_template_values || "{}");
 		open_web_template_values_editor(row.web_template, values).then((new_values) => {
-			frappe.model.set_value(cdt, cdn, "web_template_values", JSON.stringify(new_values));
+			traquent.model.set_value(cdt, cdn, "web_template_values", JSON.stringify(new_values));
 		});
 	},
 });
 
-frappe.tour["Web Page"] = [
+traquent.tour["Web Page"] = [
 	{
 		fieldname: "title",
 		title: __("Title of the page"),
@@ -94,7 +94,7 @@ frappe.tour["Web Page"] = [
 						<li><b>${__("Rich Text")}</b>: ${__("Standard rich text editor with controls")}</li>
 						<li><b>${__("Markdown")}</b>: ${__("Github flavoured markdown syntax")}</li>
 						<li><b>${__("HTML")}</b>: ${__("HTML with jinja support")}</li>
-						<li><b>${__("Page Builder")}</b>: ${__("Frappe page builder using components")}</li>
+						<li><b>${__("Page Builder")}</b>: ${__("traquent page builder using components")}</li>
 					</ul>
 					`,
 	},

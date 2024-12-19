@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import os
@@ -22,7 +22,7 @@ def patch_db(endpoints: list[str] | None = None):
 	patched_endpoints = []
 
 	for point in endpoints:
-		x = patch(f"frappe.db.{point}", new=lambda: True)
+		x = patch(f"traquent.db.{point}", new=lambda: True)
 		patched_endpoints.append(x)
 
 	savepoint = "SAVEPOINT_for_test_bulk_rename"
@@ -121,7 +121,7 @@ class TestRenameDoc(IntegrationTestCase):
 		return super().tearDown()
 
 	def test_rename_doc(self):
-		"""Rename an existing document via frappe.rename_doc"""
+		"""Rename an existing document via traquent.rename_doc"""
 		old_name = choice(self.available_documents)
 		new_name = old_name + ".new"
 		self.assertEqual(new_name, traquent.rename_doc(self.test_doctype, old_name, new_name, force=True))
@@ -129,7 +129,7 @@ class TestRenameDoc(IntegrationTestCase):
 		self.available_documents.append(new_name)
 
 	def test_merging_docs(self):
-		"""Merge two documents via frappe.rename_doc"""
+		"""Merge two documents via traquent.rename_doc"""
 		first_todo, second_todo = sample(self.available_documents, 2)
 
 		second_todo_doc = traquent.get_doc(self.test_doctype, second_todo)
@@ -163,7 +163,7 @@ class TestRenameDoc(IntegrationTestCase):
 		self.assertFalse(os.path.exists(old_doctype_path))
 
 	def test_rename_doctype(self):
-		"""Rename DocType via frappe.rename_doc"""
+		"""Rename DocType via traquent.rename_doc"""
 		from traquent.core.doctype.doctype.test_doctype import new_doctype
 
 		if not traquent.db.exists("DocType", "Rename This"):
@@ -236,12 +236,12 @@ class TestRenameDoc(IntegrationTestCase):
 	def test_bulk_rename(self):
 		input_data = [[x, f"{x}-new"] for x in self.available_documents]
 
-		with patch_db(["commit", "rollback"]), patch("frappe.enqueue") as enqueue:
+		with patch_db(["commit", "rollback"]), patch("traquent.enqueue") as enqueue:
 			message_log = bulk_rename(self.test_doctype, input_data, via_console=False)
 			self.assertEqual(len(message_log), len(self.available_documents))
 			self.assertIsInstance(message_log, list)
 			enqueue.assert_called_with(
-				"frappe.utils.global_search.rebuild_for_doctype",
+				"traquent.utils.global_search.rebuild_for_doctype",
 				doctype=self.test_doctype,
 			)
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import json
 import time
@@ -20,10 +20,10 @@ from traquent.core.doctype.user.user import (
 	verify_password,
 )
 from traquent.desk.notifications import extract_mentions
-from traquent.frappeclient import FrappeClient
+from traquent.traquentclient import traquentClient
 from traquent.model.delete_doc import delete_doc
 from traquent.tests import IntegrationTestCase, UnitTestCase
-from traquent.tests.test_api import FrappeAPITestCase
+from traquent.tests.test_api import traquentAPITestCase
 from traquent.utils import get_url
 
 user_module = traquent.core.doctype.user.user
@@ -56,9 +56,9 @@ class TestUser(IntegrationTestCase):
 		new_user = traquent.get_doc(doctype="User", email=user_id, first_name="Tester").insert()
 		self.assertEqual(new_user.user_type, "Website User")
 
-		# social login userid for frappe
+		# social login userid for traquent
 		self.assertTrue(new_user.social_logins[0].userid)
-		self.assertEqual(new_user.social_logins[0].provider, "frappe")
+		self.assertEqual(new_user.social_logins[0].provider, "traquent")
 
 		# role with desk access
 		new_user.add_roles("_Test Role 2")
@@ -288,13 +288,13 @@ class TestUser(IntegrationTestCase):
 	@IntegrationTestCase.change_settings("System Settings", commit=True, password_reset_limit=1)
 	def test_rate_limiting_for_reset_password(self):
 		url = get_url()
-		data = {"cmd": "frappe.core.doctype.user.user.reset_password", "user": "test@test.com"}
+		data = {"cmd": "traquent.core.doctype.user.user.reset_password", "user": "test@test.com"}
 
 		# Clear rate limit tracker to start fresh
 		key = f"rl:{data['cmd']}:{data['user']}"
 		traquent.cache.delete(key)
 
-		c = FrappeClient(url)
+		c = traquentClient(url)
 		res1 = c.session.post(url, data=data, verify=c.verify, headers=c.headers)
 		res2 = c.session.post(url, data=data, verify=c.verify, headers=c.headers)
 		self.assertEqual(res1.status_code, 404)
@@ -354,7 +354,7 @@ class TestUser(IntegrationTestCase):
 		)
 
 		# throttle user creation
-		with patch.object(user_module.frappe.db, "get_creation_count", return_value=301):
+		with patch.object(user_module.traquent.db, "get_creation_count", return_value=301):
 			self.assertRaisesRegex(
 				traquent.exceptions.ValidationError,
 				"Throttled",
@@ -417,7 +417,7 @@ class TestUser(IntegrationTestCase):
 		update_password(old_password, old_password=new_password)
 
 		# test API endpoint
-		with patch.object(user_module.frappe, "sendmail") as sendmail:
+		with patch.object(user_module.traquent, "sendmail") as sendmail:
 			traquent.clear_messages()
 			test_user = traquent.get_doc("User", "test2@example.com")
 			self.assertEqual(reset_password(user="test2@example.com"), None)
@@ -464,14 +464,14 @@ class TestUser(IntegrationTestCase):
 		)
 
 
-class TestImpersonation(FrappeAPITestCase):
+class TestImpersonation(traquentAPITestCase):
 	def test_impersonation(self):
 		with test_user(roles=["System Manager"], commit=True) as user:
 			self.post(
-				self.method("frappe.core.doctype.user.user.impersonate"),
+				self.method("traquent.core.doctype.user.user.impersonate"),
 				{"user": user.name, "reason": "test", "sid": self.sid},
 			)
-			resp = self.get(self.method("frappe.auth.get_logged_user"))
+			resp = self.get(self.method("traquent.auth.get_logged_user"))
 			self.assertEqual(resp.json["message"], user.name)
 
 

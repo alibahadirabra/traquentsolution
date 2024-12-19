@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies and contributors
+# Copyright (c) 2015, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import re
@@ -83,10 +83,10 @@ def validate_with_regex(name, label):
 
 
 def sync_languages():
-	"""Create Language records from frappe/geo/languages.csv"""
+	"""Create Language records from traquent/geo/languages.csv"""
 	from csv import DictReader
 
-	with open(traquent.get_app_path("frappe", "geo", "languages.csv")) as f:
+	with open(traquent.get_app_path("traquent", "geo", "languages.csv")) as f:
 		reader = DictReader(f)
 		for row in reader:
 			if not traquent.db.exists("Language", row["language_code"]):

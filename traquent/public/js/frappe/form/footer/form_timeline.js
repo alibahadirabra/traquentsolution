@@ -1,4 +1,4 @@
-// Copyright (c) 2020, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2020, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 import BaseTimeline from "./base_timeline";
 import {
@@ -22,7 +22,7 @@ class FormTimeline extends BaseTimeline {
 	}
 
 	setup_timeline_actions() {
-		if (frappe.model.can_email(null, this.frm)) {
+		if (traquent.model.can_email(null, this.frm)) {
 			this.add_action_button(
 				__("New Email"),
 				() => this.compose_mail(),
@@ -40,9 +40,9 @@ class FormTimeline extends BaseTimeline {
 					doc: this.frm.doc,
 					frm: this.frm,
 					recipients: this.get_recipient(),
-					txt: frappe.markdown(this.frm.comment_box.get_value()),
+					txt: traquent.markdown(this.frm.comment_box.get_value()),
 				};
-				return new frappe.views.InteractionComposer(args);
+				return new traquent.views.InteractionComposer(args);
 			};
 			this.add_action_button(__("New Event"), create_event, "calendar");
 		}
@@ -110,7 +110,7 @@ class FormTimeline extends BaseTimeline {
 
 			this.document_email_link_wrapper.find(".document-email-link").on("click", (e) => {
 				let text = $(e.target).text();
-				frappe.utils.copy_to_clipboard(text);
+				traquent.utils.copy_to_clipboard(text);
 			});
 		}
 	}
@@ -118,12 +118,12 @@ class FormTimeline extends BaseTimeline {
 	render_timeline_items() {
 		super.render_timeline_items();
 		this.add_web_page_view_count();
-		frappe.utils.bind_actions_with_object(this.timeline_items_wrapper, this);
+		traquent.utils.bind_actions_with_object(this.timeline_items_wrapper, this);
 	}
 
 	add_web_page_view_count() {
-		if (this.frm.doc.route && cint(frappe.boot.website_tracking_enabled)) {
-			frappe.utils.get_page_view_count(this.frm.doc.route).then((res) => {
+		if (this.frm.doc.route && cint(traquent.boot.website_tracking_enabled)) {
+			traquent.utils.get_page_view_count(this.frm.doc.route).then((res) => {
 				this.add_timeline_item({
 					content: __("{0} Web page views", [res.message]),
 					hide_timestamp: true,
@@ -252,8 +252,8 @@ class FormTimeline extends BaseTimeline {
 		let more_items = [];
 		let start =
 			this.doc_info.communications.length + this.doc_info.automated_messages.length - 1;
-		let response = await frappe.call({
-			method: "frappe.desk.form.load.get_communications",
+		let response = await traquent.call({
+			method: "traquent.desk.form.load.get_communications",
 			args: {
 				doctype: this.doc_info.doctype,
 				name: this.doc_info.name,
@@ -280,15 +280,15 @@ class FormTimeline extends BaseTimeline {
 	}
 
 	get_communication_timeline_content(doc, allow_reply = true) {
-		doc._url = frappe.utils.get_form_link("Communication", doc.name);
+		doc._url = traquent.utils.get_form_link("Communication", doc.name);
 		this.set_communication_doc_status(doc);
 		if (doc.attachments && typeof doc.attachments === "string") {
 			doc.attachments = JSON.parse(doc.attachments);
 		}
 		doc.owner = doc.sender;
 		doc.user_full_name = doc.sender_full_name;
-		doc.content = frappe.dom.remove_script_and_style(doc.content);
-		let communication_content = $(frappe.render_template("timeline_message_box", { doc }));
+		doc.content = traquent.dom.remove_script_and_style(doc.content);
+		let communication_content = $(traquent.render_template("timeline_message_box", { doc }));
 		if (allow_reply) {
 			this.setup_reply(communication_content, doc);
 		}
@@ -349,8 +349,8 @@ class FormTimeline extends BaseTimeline {
 	}
 
 	get_comment_timeline_content(doc) {
-		doc.content = frappe.dom.remove_script_and_style(doc.content);
-		const comment_content = $(frappe.render_template("timeline_message_box", { doc }));
+		doc.content = traquent.dom.remove_script_and_style(doc.content);
+		const comment_content = $(traquent.render_template("timeline_message_box", { doc }));
 		this.setup_comment_actions(comment_content, doc);
 		return comment_content;
 	}
@@ -436,7 +436,7 @@ class FormTimeline extends BaseTimeline {
 		let milestone_timeline_contents = [];
 
 		(this.doc_info.milestones || []).forEach((milestone_log) => {
-			const field = frappe.meta.get_label(this.frm.doctype, milestone_log.track_field);
+			const field = traquent.meta.get_label(this.frm.doctype, milestone_log.track_field);
 			const value = milestone_log.value.bold();
 			const user_link = get_user_link(milestone_log.owner);
 			const timeline_content = get_user_message(
@@ -501,7 +501,7 @@ class FormTimeline extends BaseTimeline {
 				creation: custom_item.creation,
 				content:
 					custom_item.content ||
-					frappe.render_template(custom_item.template, custom_item.template_data),
+					traquent.render_template(custom_item.template, custom_item.template_data),
 			});
 		});
 		return custom_timeline_contents;
@@ -518,7 +518,7 @@ class FormTimeline extends BaseTimeline {
 			energy_point_timeline_contents.push({
 				timeline_badge: timeline_badge,
 				creation: log.creation,
-				content: frappe.energy_points.format_form_log(log),
+				content: traquent.energy_points.format_form_log(log),
 			});
 		});
 		return energy_point_timeline_contents;
@@ -526,13 +526,13 @@ class FormTimeline extends BaseTimeline {
 
 	setup_reply(communication_box, communication_doc) {
 		let actions = communication_box.find(".custom-actions");
-		let reply = $(`<a class="action-btn reply">${frappe.utils.icon("reply", "md")}</a>`).click(
+		let reply = $(`<a class="action-btn reply">${traquent.utils.icon("reply", "md")}</a>`).click(
 			() => {
 				this.compose_mail(communication_doc);
 			}
 		);
 		let reply_all = $(
-			`<a class="action-btn reply-all">${frappe.utils.icon("reply-all", "md")}</a>`
+			`<a class="action-btn reply-all">${traquent.utils.icon("reply-all", "md")}</a>`
 		).click(() => {
 			this.compose_mail(communication_doc, true);
 		});
@@ -545,7 +545,7 @@ class FormTimeline extends BaseTimeline {
 			doc: this.frm.doc,
 			frm: this.frm,
 			recipients:
-				communication_doc && communication_doc.sender != frappe.session.user_email
+				communication_doc && communication_doc.sender != traquent.session.user_email
 					? communication_doc.sender
 					: this.get_recipient(),
 			is_a_reply: Boolean(communication_doc),
@@ -555,7 +555,7 @@ class FormTimeline extends BaseTimeline {
 			reply_all: reply_all,
 		};
 
-		const email_accounts = frappe.boot.email_accounts
+		const email_accounts = traquent.boot.email_accounts
 			.filter((account) => {
 				return (
 					!["All Accounts", "Sent", "Spam", "Trash"].includes(account.email_account) &&
@@ -567,13 +567,13 @@ class FormTimeline extends BaseTimeline {
 		if (communication_doc && args.is_a_reply) {
 			args.cc = "";
 			if (
-				email_accounts.includes(frappe.session.user_email) &&
-				communication_doc.sender != frappe.session.user_email
+				email_accounts.includes(traquent.session.user_email) &&
+				communication_doc.sender != traquent.session.user_email
 			) {
 				// add recipients to cc if replying sender is different from last email
 				const recipients = communication_doc.recipients.split(",").map((r) => r.trim());
 				args.cc =
-					recipients.filter((r) => r != frappe.session.user_email).join(", ") + ", ";
+					recipients.filter((r) => r != traquent.session.user_email).join(", ") + ", ";
 			}
 			if (reply_all) {
 				// if reply_all then add cc and bcc as well.
@@ -588,11 +588,11 @@ class FormTimeline extends BaseTimeline {
 			args.recipients = this.frm.doc.sender;
 			args.subject = __("Re: {0}", [this.frm.doc.subject]);
 		} else {
-			const comment_value = frappe.markdown(this.frm.comment_box.get_value());
+			const comment_value = traquent.markdown(this.frm.comment_box.get_value());
 			args.message = strip_html(comment_value) ? comment_value : "";
 		}
 
-		new frappe.views.CommunicationComposer(args);
+		new traquent.views.CommunicationComposer(args);
 	}
 
 	get_recipient() {
@@ -609,8 +609,8 @@ class FormTimeline extends BaseTimeline {
 		let content_wrapper = comment_wrapper.find(".content");
 		let more_actions_wrapper = comment_wrapper.find(".more-actions");
 		if (
-			frappe.model.can_delete("Comment") &&
-			(frappe.session.user == doc.owner || frappe.user.has_role("System Manager"))
+			traquent.model.can_delete("Comment") &&
+			(traquent.session.user == doc.owner || traquent.user.has_role("System Manager"))
 		) {
 			const delete_option = $(`
 				<li>
@@ -649,7 +649,7 @@ class FormTimeline extends BaseTimeline {
 		content_wrapper.after(edit_wrapper);
 
 		let edit_button = $();
-		let current_user = frappe.session.user;
+		let current_user = traquent.session.user;
 		if (["Administrator", doc.owner].includes(current_user)) {
 			edit_button = $(`<button class="btn btn-link action-btn">${__("Edit")}</a>`).click(
 				() => {
@@ -672,7 +672,7 @@ class FormTimeline extends BaseTimeline {
 	}
 
 	make_editable(container) {
-		return frappe.ui.form.make_control({
+		return traquent.ui.form.make_control({
 			parent: container,
 			df: {
 				fieldtype: "Comment",
@@ -687,10 +687,10 @@ class FormTimeline extends BaseTimeline {
 	}
 
 	update_comment(name, content) {
-		return frappe
-			.xcall("frappe.desk.form.utils.update_comment", { name, content })
+		return traquent
+			.xcall("traquent.desk.form.utils.update_comment", { name, content })
 			.then(() => {
-				frappe.utils.play_sound("click");
+				traquent.utils.play_sound("click");
 			});
 	}
 
@@ -718,24 +718,24 @@ class FormTimeline extends BaseTimeline {
 	}
 
 	delete_comment(comment_name) {
-		frappe.confirm(__("Delete comment?"), () => {
-			return frappe
-				.xcall("frappe.client.delete", {
+		traquent.confirm(__("Delete comment?"), () => {
+			return traquent
+				.xcall("traquent.client.delete", {
 					doctype: "Comment",
 					name: comment_name,
 				})
 				.then(() => {
-					frappe.utils.play_sound("delete");
+					traquent.utils.play_sound("delete");
 				});
 		});
 	}
 
 	copy_link(ev) {
-		let doc_link = frappe.urllib.get_full_url(
-			frappe.utils.get_form_link(this.frm.doctype, this.frm.docname)
+		let doc_link = traquent.urllib.get_full_url(
+			traquent.utils.get_form_link(this.frm.doctype, this.frm.docname)
 		);
 		let element_id = $(ev.currentTarget).closest(".timeline-content").attr("id");
-		frappe.utils.copy_to_clipboard(`${doc_link}#${element_id}`);
+		traquent.utils.copy_to_clipboard(`${doc_link}#${element_id}`);
 	}
 }
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 """Use blog post test to test user permissions logic"""
 
@@ -655,14 +655,14 @@ class TestPermissions(IntegrationTestCase):
 		traquent.set_user("test3@example.com")
 		self.assertIsInstance(traquent.get_list("DefaultValue", parent_doctype="User", limit=1), list)
 
-		# frappe.get_list
+		# traquent.get_list
 		self.assertRaises(traquent.PermissionError, traquent.get_list, "DefaultValue")
 		self.assertRaises(traquent.PermissionError, traquent.get_list, "DefaultValue", parent_doctype="ToDo")
 		self.assertRaises(
 			traquent.PermissionError, traquent.get_list, "DefaultValue", parent_doctype="DefaultValue"
 		)
 
-		# frappe.get_doc
+		# traquent.get_doc
 		user = traquent.get_doc("User", traquent.session.user)
 		doc = user.append("defaults")
 		doc.check_permission()

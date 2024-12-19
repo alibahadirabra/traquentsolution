@@ -39,7 +39,7 @@ class WorkflowBuilder {
 		});
 
 		this.go_to_doctype_btn = this.page.add_menu_item(__("Go to Workflow"), () =>
-			frappe.set_route("Form", "Workflow", this.workflow)
+			traquent.set_route("Form", "Workflow", this.workflow)
 		);
 	}
 
@@ -64,6 +64,6 @@ class WorkflowBuilder {
 	}
 }
 
-frappe.provide("frappe.ui");
-frappe.ui.WorkflowBuilder = WorkflowBuilder;
+traquent.provide("traquent.ui");
+traquent.ui.WorkflowBuilder = WorkflowBuilder;
 export default WorkflowBuilder;

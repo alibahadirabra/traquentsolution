@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import functools
@@ -156,7 +156,7 @@ def validate_name(name, throw=False):
 	* valid names may have unicode and ascii characters, dash, quotes, numbers
 	* anything else is considered invalid
 
-	Note: "Name" here is name of a person, not the primary key in Frappe doctypes.
+	Note: "Name" here is name of a person, not the primary key in traquent doctypes.
 	"""
 	if not name:
 		return False
@@ -513,7 +513,7 @@ def get_files_path(*path, **kwargs):
 
 
 def get_bench_path():
-	return os.environ.get("FRAPPE_BENCH_ROOT") or os.path.realpath(
+	return os.environ.get("traquent_BENCH_ROOT") or os.path.realpath(
 		os.path.join(os.path.dirname(traquent.__file__), "..", "..", "..")
 	)
 
@@ -577,7 +577,7 @@ def touch_file(path):
 
 
 def get_test_client(use_cookies=True) -> Client:
-	"""Return an test instance of the Frappe WSGI."""
+	"""Return an test instance of the traquent WSGI."""
 	from traquent.app import application
 
 	return Client(application, use_cookies=use_cookies)
@@ -856,7 +856,7 @@ def get_db_count(*args):
 
 	Example:
 	        via terminal:
-	                bench --site erpnext.local execute frappe.utils.get_db_count --args "['DocType', 'Communication']"
+	                bench --site erpnext.local execute traquent.utils.get_db_count --args "['DocType', 'Communication']"
 	"""
 	db_count = {}
 	for doctype in args:
@@ -869,14 +869,14 @@ def call(fn, *args, **kwargs):
 	"""
 	Pass a doctype or a series of doctypes to get the count of docs in them
 	Parameters:
-	        fn: frappe function to be called
+	        fn: traquent function to be called
 
 	Return:
 	        based on the function you call: output of the function you call
 
 	Example:
 	        via terminal:
-	                bench --site erpnext.local execute frappe.utils.call --args '''["frappe.get_all", "Activity Log"]''' --kwargs '''{"fields": ["user", "creation", "full_name"], "filters":{"Operation": "Login", "Status": "Success"}, "limit": "10"}'''
+	                bench --site erpnext.local execute traquent.utils.call --args '''["traquent.get_all", "Activity Log"]''' --kwargs '''{"fields": ["user", "creation", "full_name"], "filters":{"Operation": "Login", "Status": "Success"}, "limit": "10"}'''
 	"""
 	return json.loads(traquent.as_json(traquent.call(fn, *args, **kwargs)))
 
@@ -1123,7 +1123,7 @@ class CallbackManager:
 	callbacks.reset()
 	```
 
-	Example usage: frappe.db.after_commit
+	Example usage: traquent.db.after_commit
 	"""
 
 	__slots__ = ("_functions",)

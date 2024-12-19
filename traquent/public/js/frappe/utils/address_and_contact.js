@@ -1,6 +1,6 @@
-frappe.provide("frappe.contacts");
+traquent.provide("traquent.contacts");
 
-$.extend(frappe.contacts, {
+$.extend(traquent.contacts, {
 	clear_address_and_contact: function (frm) {
 		$(frm.fields_dict["address_html"].wrapper).html("");
 		frm.fields_dict["contact_html"] && $(frm.fields_dict["contact_html"].wrapper).html("");
@@ -10,7 +10,7 @@ $.extend(frappe.contacts, {
 		// render address
 		if (frm.fields_dict["address_html"] && "addr_list" in frm.doc.__onload) {
 			$(frm.fields_dict["address_html"].wrapper)
-				.html(frappe.render_template("address_list", frm.doc.__onload))
+				.html(traquent.render_template("address_list", frm.doc.__onload))
 				.find(".btn-address")
 				.on("click", () => new_record("Address", frm));
 		}
@@ -18,13 +18,13 @@ $.extend(frappe.contacts, {
 		// render contact
 		if (frm.fields_dict["contact_html"] && "contact_list" in frm.doc.__onload) {
 			$(frm.fields_dict["contact_html"].wrapper)
-				.html(frappe.render_template("contact_list", frm.doc.__onload))
+				.html(traquent.render_template("contact_list", frm.doc.__onload))
 				.find(".btn-contact")
 				.on("click", () => new_record("Contact", frm));
 		}
 	},
 	get_last_doc: function (frm) {
-		const reverse_routes = frappe.route_history.slice().reverse();
+		const reverse_routes = traquent.route_history.slice().reverse();
 		const last_route = reverse_routes.find((route) => {
 			return route[0] === "Form" && route[1] !== frm.doctype;
 		});
@@ -51,8 +51,8 @@ $.extend(frappe.contacts, {
 			return;
 		}
 
-		frappe
-			.xcall("frappe.contacts.doctype.address.address.get_address_display", {
+		traquent
+			.xcall("traquent.contacts.doctype.address.address.get_address_display", {
 				address_dict: frm.doc[_address_field],
 			})
 			.then((address_display) => frm.set_value(_display_field, address_display));
@@ -60,14 +60,14 @@ $.extend(frappe.contacts, {
 });
 
 function new_record(doctype, frm) {
-	frappe.dynamic_link = {
+	traquent.dynamic_link = {
 		doctype: frm.doc.doctype,
 		doc: frm.doc,
 		fieldname: "name",
 	};
 
-	if (frappe.boot.enable_address_autocompletion === 1 && doctype === "Address") {
-		new frappe.ui.AddressAutocompleteDialog({
+	if (traquent.boot.enable_address_autocompletion === 1 && doctype === "Address") {
+		new traquent.ui.AddressAutocompleteDialog({
 			title: __("New Address"),
 			link_doctype: frm.doc.doctype,
 			link_name: frm.doc.name,
@@ -76,6 +76,6 @@ function new_record(doctype, frm) {
 			},
 		}).show();
 	} else {
-		frappe.new_doc(doctype);
+		traquent.new_doc(doctype);
 	}
 }

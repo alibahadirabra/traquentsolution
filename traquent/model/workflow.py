@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import json
 from collections import defaultdict
@@ -73,9 +73,9 @@ def get_transitions(
 
 
 def get_workflow_safe_globals():
-	# access to frappe.db.get_value, frappe.db.get_list, and date time utils.
+	# access to traquent.db.get_value, traquent.db.get_list, and date time utils.
 	return dict(
-		frappe=traquent._dict(
+		traquent=traquent._dict(
 			db=traquent._dict(get_value=traquent.db.get_value, get_list=traquent.db.get_list),
 			session=traquent.session,
 			utils=traquent._dict(

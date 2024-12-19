@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import configparser
 import gzip
@@ -56,7 +56,7 @@ def _new_site(
 	rollback_callback=None,
 	mariadb_user_host_login_scope=None,
 ):
-	"""Install a new Frappe site"""
+	"""Install a new traquent site"""
 
 	from traquent.utils import scheduler
 
@@ -99,7 +99,7 @@ def _new_site(
 			mariadb_user_host_login_scope=mariadb_user_host_login_scope,
 		)
 
-		apps_to_install = ["frappe"] + (traquent.conf.get("install_apps") or []) + (list(install_apps or []))
+		apps_to_install = ["traquent"] + (traquent.conf.get("install_apps") or []) + (list(install_apps or []))
 
 		for app in apps_to_install:
 			# NOTE: not using force here for 2 reasons:
@@ -187,7 +187,7 @@ def find_org(org_repo: str) -> tuple[str, str]:
 	"""find the org a repo is in
 
 	find_org()
-	ref -> https://github.com/frappe/bench/blob/develop/bench/utils/__init__.py#L390
+	ref -> https://github.com/traquent/bench/blob/develop/bench/utils/__init__.py#L390
 
 	:param org_repo:
 	:type org_repo: str
@@ -201,7 +201,7 @@ def find_org(org_repo: str) -> tuple[str, str]:
 
 	from traquent.exceptions import InvalidRemoteException
 
-	for org in ["frappe", "erpnext"]:
+	for org in ["traquent", "erpnext"]:
 		response = requests.head(f"https://api.github.com/repos/{org}/{org_repo}")
 		if response.status_code == 400:
 			response = requests.head(f"https://github.com/{org}/{org_repo}")
@@ -215,7 +215,7 @@ def fetch_details_from_tag(_tag: str) -> tuple[str, str, str]:
 	"""parse org, repo, tag from string
 
 	fetch_details_from_tag()
-	ref -> https://github.com/frappe/bench/blob/develop/bench/utils/__init__.py#L403
+	ref -> https://github.com/traquent/bench/blob/develop/bench/utils/__init__.py#L403
 
 	:param _tag: input string
 	:type _tag: str
@@ -243,7 +243,7 @@ def parse_app_name(name: str) -> str:
 	"""parse repo name from name
 
 	__setup_details_from_git()
-	ref -> https://github.com/frappe/bench/blob/develop/bench/app.py#L114
+	ref -> https://github.com/traquent/bench/blob/develop/bench/app.py#L114
 
 
 	:param name: git tag
@@ -297,7 +297,7 @@ def install_app(name, verbose=False, set_as_patched=True, force=False):
 
 	print(f"\nInstalling {name}...")
 
-	if name != "frappe":
+	if name != "traquent":
 		traquent.only_for("System Manager")
 
 	for before_install in app_hooks.before_install or []:
@@ -308,7 +308,7 @@ def install_app(name, verbose=False, set_as_patched=True, force=False):
 	for fn in traquent.get_hooks("before_app_install"):
 		traquent.get_attr(fn)(name)
 
-	if name != "frappe":
+	if name != "traquent":
 		add_module_defs(name, ignore_if_duplicate=force)
 
 	sync_for(name, force=force, reset_permissions=True)
@@ -685,7 +685,7 @@ def add_module_defs(app, ignore_if_duplicate=False):
 def remove_missing_apps():
 	import importlib
 
-	apps = ("frappe_subscription", "shopping_cart")
+	apps = ("traquent_subscription", "shopping_cart")
 	installed_apps = json.loads(traquent.db.get_global("installed_apps") or "[]")
 	for app in apps:
 		if app in installed_apps:
@@ -752,7 +752,7 @@ def extract_files(site_name, file_path):
 
 	file_path = get_bench_relative_path(file_path)
 
-	# Need to do frappe.init to maintain the site locals
+	# Need to do traquent.init to maintain the site locals
 	traquent.init(site_name)
 	abs_site_path = os.path.abspath(traquent.get_site_path())
 
@@ -795,34 +795,34 @@ def is_downgrade(sql_file_path, verbose=False):
 	is_downgrade = backup_version > current_version
 
 	if verbose and is_downgrade:
-		print(f"Your site is currently on Frappe {current_version} and your backup is {backup_version}.")
+		print(f"Your site is currently on traquent {current_version} and your backup is {backup_version}.")
 
 	return is_downgrade
 
 
 def get_old_backup_version(sql_file_path: str) -> Version | None:
-	"""Return the frappe version used to create the specified database dump.
+	"""Return the traquent version used to create the specified database dump.
 
-	This methods supports older versions of Frappe wich used a different format.
+	This methods supports older versions of traquent wich used a different format.
 	"""
 	header = get_db_dump_header(sql_file_path).split("\n")
-	if match := re.search(r"Frappe (\d+\.\d+\.\d+)", header[0]):
+	if match := re.search(r"traquent (\d+\.\d+\.\d+)", header[0]):
 		return Version(match[1])
 	return None
 
 
 def get_backup_version(sql_file_path: str) -> Version | None:
-	"""Return the frappe version used to create the specified database dump."""
+	"""Return the traquent version used to create the specified database dump."""
 	header = get_db_dump_header(sql_file_path).split("\n")
 	metadata = ""
-	if "begin frappe metadata" in header[0]:
+	if "begin traquent metadata" in header[0]:
 		for line in header[1:]:
-			if "end frappe metadata" in line:
+			if "end traquent metadata" in line:
 				break
 			metadata += line.replace("--", "").strip() + "\n"
 		parser = configparser.ConfigParser()
 		parser.read_string(metadata)
-		return Version(parser["frappe"]["version"])
+		return Version(parser["traquent"]["version"])
 
 	return None
 

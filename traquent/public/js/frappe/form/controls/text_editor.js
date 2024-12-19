@@ -105,7 +105,7 @@ CustomColor.tagName = "font";
 
 Quill.register(CustomColor, true);
 
-frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.form.ControlCode {
+traquent.ui.form.ControlTextEditor = class ControlTextEditor extends traquent.ui.form.ControlCode {
 	make_wrapper() {
 		super.make_wrapper();
 	}
@@ -128,7 +128,7 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
 	bind_events() {
 		this.quill.on(
 			"text-change",
-			frappe.utils.debounce((delta, oldDelta, source) => {
+			traquent.utils.debounce((delta, oldDelta, source) => {
 				if (!this.is_quill_dirty(source)) return;
 
 				const input_value = this.get_input_value();
@@ -137,7 +137,7 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
 		);
 
 		$(this.quill.root).on("keydown", (e) => {
-			const key = frappe.ui.keys && frappe.ui.keys.get_key(e);
+			const key = traquent.ui.keys && traquent.ui.keys.get_key(e);
 			if (["ctrl+b", "meta+b"].includes(key)) {
 				e.stopPropagation();
 			}
@@ -230,10 +230,10 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
 			allowedChars: /^[A-Za-z0-9_]*$/,
 			mentionDenotationChars: ["@"],
 			isolateCharacter: true,
-			source: frappe.utils.debounce(async function (search_term, renderList) {
+			source: traquent.utils.debounce(async function (search_term, renderList) {
 				let method =
-					me.mention_search_method || "frappe.desk.search.get_names_for_mentions";
-				let values = await frappe.xcall(method, {
+					me.mention_search_method || "traquent.desk.search.get_names_for_mentions";
+				let values = await traquent.xcall(method, {
 					search_term,
 				});
 
@@ -242,7 +242,7 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
 			}, 300),
 			renderItem(item) {
 				let value = item.value;
-				return `${value} ${item.is_group ? frappe.utils.icon("users") : ""}`;
+				return `${value} ${item.is_group ? traquent.utils.icon("users") : ""}`;
 			},
 		};
 	}
@@ -292,7 +292,7 @@ frappe.ui.form.ControlTextEditor = class ControlTextEditor extends frappe.ui.for
 		if (value == null) {
 			value = "";
 		}
-		return frappe.dom.remove_script_and_style(value);
+		return traquent.dom.remove_script_and_style(value);
 	}
 
 	set_formatted_input(value) {

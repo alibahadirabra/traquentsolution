@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import json
 
@@ -82,6 +82,6 @@ class TestWebForm(IntegrationTestCase):
 			content,
 		)
 		self.assertIn(
-			self.normalize_html('<meta property="og:image" content="https://frappe.io/files/frappe.png">'),
+			self.normalize_html('<meta property="og:image" content="https://traquent.io/files/traquent.png">'),
 			content,
 		)

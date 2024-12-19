@@ -34,7 +34,7 @@ function toggle_edit() {
 
 	editing.value = true;
 	if (!control.value) {
-		control.value = frappe.ui.form.make_control({
+		control.value = traquent.ui.form.make_control({
 			parent: editor.value,
 			df: {
 				fieldname: "editor",
@@ -51,7 +51,7 @@ function toggle_edit() {
 	control.value.set_value(props.value);
 }
 function get_value() {
-	return frappe.dom.remove_script_and_style(control.value.get_value());
+	return traquent.dom.remove_script_and_style(control.value.get_value());
 }
 </script>
 

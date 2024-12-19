@@ -1,6 +1,6 @@
-// Copyright (c) 2017, Frappe Technologies and contributors
+// Copyright (c) 2017, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Salutation", {
+traquent.ui.form.on("Salutation", {
 	refresh: function () {},
 });

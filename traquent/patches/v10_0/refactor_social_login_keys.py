@@ -23,16 +23,16 @@ def execute():
 			facebook_login_key.enable_social_login = 0
 		facebook_login_key.save()
 
-	if social_login_keys.get("frappe_server_url"):
-		frappe_login_key = traquent.new_doc("Social Login Key")
-		frappe_login_key.get_social_login_provider("Frappe", initialize=True)
-		frappe_login_key.social_login_provider = "Frappe"
-		frappe_login_key.base_url = social_login_keys.get("frappe_server_url")
-		frappe_login_key.client_id = social_login_keys.get("frappe_client_id")
-		frappe_login_key.client_secret = social_login_keys.get("frappe_client_secret")
-		if not (frappe_login_key.client_secret and frappe_login_key.client_id and frappe_login_key.base_url):
-			frappe_login_key.enable_social_login = 0
-		frappe_login_key.save()
+	if social_login_keys.get("traquent_server_url"):
+		traquent_login_key = traquent.new_doc("Social Login Key")
+		traquent_login_key.get_social_login_provider("traquent", initialize=True)
+		traquent_login_key.social_login_provider = "traquent"
+		traquent_login_key.base_url = social_login_keys.get("traquent_server_url")
+		traquent_login_key.client_id = social_login_keys.get("traquent_client_id")
+		traquent_login_key.client_secret = social_login_keys.get("traquent_client_secret")
+		if not (traquent_login_key.client_secret and traquent_login_key.client_id and traquent_login_key.base_url):
+			traquent_login_key.enable_social_login = 0
+		traquent_login_key.save()
 
 	if social_login_keys.get("github_client_id") or social_login_keys.get("github_client_secret"):
 		github_login_key = traquent.new_doc("Social Login Key")
@@ -65,8 +65,8 @@ def run_patch():
 
 	for user in users:
 		idx = 0
-		if user.frappe_userid:
-			insert_user_social_login(user.name, user.modified_by, "frappe", idx, userid=user.frappe_userid)
+		if user.traquent_userid:
+			insert_user_social_login(user.name, user.modified_by, "traquent", idx, userid=user.traquent_userid)
 			idx += 1
 
 		if user.fb_userid or user.fb_username:
@@ -126,7 +126,7 @@ def insert_user_social_login(user, modified_by, provider, idx, userid=None, user
 def get_provider_field_map():
 	return traquent._dict(
 		{
-			"frappe": ["frappe_userid"],
+			"traquent": ["traquent_userid"],
 			"facebook": ["fb_userid", "fb_username"],
 			"github": ["github_userid", "github_username"],
 			"google": ["google_userid"],

@@ -1,4 +1,4 @@
-frappe.ui.form.ControlDate = class ControlDate extends frappe.ui.form.ControlData {
+traquent.ui.form.ControlDate = class ControlDate extends traquent.ui.form.ControlData {
 	static trigger_change_on_input_event = false;
 	make_input() {
 		super.make_input();
@@ -39,15 +39,15 @@ frappe.ui.form.ControlDate = class ControlDate extends frappe.ui.form.ControlDat
 		}
 
 		if (should_refresh) {
-			this.datepicker.selectDate(frappe.datetime.str_to_obj(value));
+			this.datepicker.selectDate(traquent.datetime.str_to_obj(value));
 		}
 	}
 	set_date_options() {
 		// webformTODO:
-		let sysdefaults = frappe.boot.sysdefaults;
+		let sysdefaults = traquent.boot.sysdefaults;
 
 		let lang = "en";
-		frappe.boot.user && (lang = frappe.boot.user.language);
+		traquent.boot.user && (lang = traquent.boot.user.language);
 		if (!$.fn.datepicker.language[lang]) {
 			lang = "en";
 		}
@@ -56,7 +56,7 @@ frappe.ui.form.ControlDate = class ControlDate extends frappe.ui.form.ControlDat
 			sysdefaults && sysdefaults.date_format ? sysdefaults.date_format : "yyyy-mm-dd";
 
 		this.today_text = __("Today");
-		this.date_format = frappe.defaultDateFormat;
+		this.date_format = traquent.defaultDateFormat;
 		this.datepicker_options = {
 			language: lang,
 			autoClose: true,
@@ -66,7 +66,7 @@ frappe.ui.form.ControlDate = class ControlDate extends frappe.ui.form.ControlDat
 			keyboardNav: false,
 			minDate: this.df.min_date,
 			maxDate: this.df.max_date,
-			firstDay: frappe.datetime.get_first_day_of_the_week_index(),
+			firstDay: traquent.datetime.get_first_day_of_the_week_index(),
 			onSelect: () => {
 				this.$input.trigger("change");
 			},
@@ -120,8 +120,8 @@ frappe.ui.form.ControlDate = class ControlDate extends frappe.ui.form.ControlDat
 		this.datepicker.update("position", position);
 	}
 	get_now_date() {
-		return frappe.datetime
-			.convert_to_system_tz(frappe.datetime.now_date(true), false)
+		return traquent.datetime
+			.convert_to_system_tz(traquent.datetime.now_date(true), false)
 			.toDate();
 	}
 	set_t_for_today() {
@@ -130,13 +130,13 @@ frappe.ui.form.ControlDate = class ControlDate extends frappe.ui.form.ControlDat
 			if (e.which === 84) {
 				// 84 === t
 				if (me.df.fieldtype == "Date") {
-					me.set_value(frappe.datetime.nowdate());
+					me.set_value(traquent.datetime.nowdate());
 				}
 				if (me.df.fieldtype == "Datetime") {
-					me.set_value(frappe.datetime.now_datetime());
+					me.set_value(traquent.datetime.now_datetime());
 				}
 				if (me.df.fieldtype == "Time") {
-					me.set_value(frappe.datetime.now_time());
+					me.set_value(traquent.datetime.now_time());
 				}
 				return false;
 			}
@@ -153,17 +153,17 @@ frappe.ui.form.ControlDate = class ControlDate extends frappe.ui.form.ControlDat
 		switch (type) {
 			case "date":
 				system_fmt = "YYYY-MM-DD";
-				value = frappe.datetime.user_to_str(value, false);
+				value = traquent.datetime.user_to_str(value, false);
 				break;
 
 			case "time":
 				system_fmt = "HH:mm:ss";
-				value = frappe.datetime.user_to_str(value, true);
+				value = traquent.datetime.user_to_str(value, true);
 				break;
 
 			case "datetime":
 				system_fmt = "YYYY-MM-DD HH:mm:ss";
-				value = frappe.datetime.user_to_str(value, false);
+				value = traquent.datetime.user_to_str(value, false);
 				break;
 		}
 
@@ -224,16 +224,16 @@ frappe.ui.form.ControlDate = class ControlDate extends frappe.ui.form.ControlDat
 	}
 	format_for_input(value) {
 		if (value) {
-			return frappe.datetime.str_to_user(value, false, true);
+			return traquent.datetime.str_to_user(value, false, true);
 		}
 		return "";
 	}
 	validate(value) {
-		if (value && !frappe.datetime.validate(value)) {
-			let sysdefaults = frappe.sys_defaults;
+		if (value && !traquent.datetime.validate(value)) {
+			let sysdefaults = traquent.sys_defaults;
 			let date_format =
 				sysdefaults && sysdefaults.date_format ? sysdefaults.date_format : "yyyy-mm-dd";
-			frappe.msgprint(__("Date {0} must be in format: {1}", [value, date_format]));
+			traquent.msgprint(__("Date {0} must be in format: {1}", [value, date_format]));
 			return "";
 		}
 		return value;

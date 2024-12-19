@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import io
@@ -265,9 +265,9 @@ class TestDataManipulation(IntegrationTestCase):
 				<a href="http://test.com">Test link 1</a>
 				<a href="/about">Test link 2</a>
 				<a href="login">Test link 3</a>
-				<img src="/assets/frappe/test.jpg">
+				<img src="/assets/traquent/test.jpg">
 			</div>
-			<div style="background-image: url('/assets/frappe/bg.jpg')">
+			<div style="background-image: url('/assets/traquent/bg.jpg')">
 				Please mail us at <a href="mailto:test@example.com">email</a>
 			</div>
 		"""
@@ -278,8 +278,8 @@ class TestDataManipulation(IntegrationTestCase):
 		self.assertTrue('<a href="http://test.com">Test link 1</a>' in html)
 		self.assertTrue(f'<a href="{url}/about">Test link 2</a>' in html)
 		self.assertTrue(f'<a href="{url}/login">Test link 3</a>' in html)
-		self.assertTrue(f'<img src="{url}/assets/frappe/test.jpg">' in html)
-		self.assertTrue(f"style=\"background-image: url('{url}/assets/frappe/bg.jpg') !important\"" in html)
+		self.assertTrue(f'<img src="{url}/assets/traquent/test.jpg">' in html)
+		self.assertTrue(f"style=\"background-image: url('{url}/assets/traquent/bg.jpg') !important\"" in html)
 		self.assertTrue('<a href="mailto:test@example.com">email</a>' in html)
 
 
@@ -387,23 +387,23 @@ class TestValidationUtils(IntegrationTestCase):
 
 		# Valid URLs
 		self.assertTrue(validate_url("https://google.com"))
-		self.assertTrue(validate_url("http://frappe.io", throw=True))
+		self.assertTrue(validate_url("http://traquent.io", throw=True))
 
 		# Invalid URLs without throw
 		self.assertFalse(validate_url("google.io"))
 		self.assertFalse(validate_url("google.io"))
 
 		# Invalid URL with throw
-		self.assertRaises(traquent.ValidationError, validate_url, "frappe", throw=True)
+		self.assertRaises(traquent.ValidationError, validate_url, "traquent", throw=True)
 
 		# Scheme validation
 		self.assertFalse(validate_url("https://google.com", valid_schemes="http"))
-		self.assertTrue(validate_url("ftp://frappe.cloud", valid_schemes=["https", "ftp"]))
-		self.assertFalse(validate_url("bolo://frappe.io", valid_schemes=("http", "https", "ftp", "ftps")))
+		self.assertTrue(validate_url("ftp://traquent.cloud", valid_schemes=["https", "ftp"]))
+		self.assertFalse(validate_url("bolo://traquent.io", valid_schemes=("http", "https", "ftp", "ftps")))
 		self.assertRaises(
 			traquent.ValidationError,
 			validate_url,
-			"gopher://frappe.io",
+			"gopher://traquent.io",
 			valid_schemes="https",
 			throw=True,
 		)
@@ -414,14 +414,14 @@ class TestValidationUtils(IntegrationTestCase):
 		self.assertFalse(validate_email_address(None))
 
 		# Valid addresses
-		self.assertTrue(validate_email_address("someone@frappe.com"))
-		self.assertTrue(validate_email_address("someone@frappe.com, anyone@frappe.io"))
-		self.assertTrue(validate_email_address("test%201@frappe.com"))
+		self.assertTrue(validate_email_address("someone@traquent.com"))
+		self.assertTrue(validate_email_address("someone@traquent.com, anyone@traquent.io"))
+		self.assertTrue(validate_email_address("test%201@traquent.com"))
 
 		# Invalid address
 		self.assertFalse(validate_email_address("someone"))
 		self.assertFalse(validate_email_address("someone@----.com"))
-		self.assertFalse(validate_email_address("test 1@frappe.com"))
+		self.assertFalse(validate_email_address("test 1@traquent.com"))
 		self.assertFalse(validate_email_address("test@example.com test2@example.com,undisclosed-recipient"))
 
 		# Invalid with throw
@@ -432,10 +432,10 @@ class TestValidationUtils(IntegrationTestCase):
 			throw=True,
 		)
 
-		self.assertEqual(validate_email_address("Some%20One@frappe.com"), "Some%20One@frappe.com")
+		self.assertEqual(validate_email_address("Some%20One@traquent.com"), "Some%20One@traquent.com")
 		self.assertEqual(
-			validate_email_address("erp+Job%20Applicant=JA00004@frappe.com"),
-			"erp+Job%20Applicant=JA00004@frappe.com",
+			validate_email_address("erp+Job%20Applicant=JA00004@traquent.com"),
+			"erp+Job%20Applicant=JA00004@traquent.com",
 		)
 
 	def test_valid_phone(self):
@@ -462,9 +462,9 @@ class TestValidationUtils(IntegrationTestCase):
 
 class TestImage(IntegrationTestCase):
 	def test_strip_exif_data(self):
-		original_image = Image.open(traquent.get_app_path("frappe", "tests", "data", "exif_sample_image.jpg"))
+		original_image = Image.open(traquent.get_app_path("traquent", "tests", "data", "exif_sample_image.jpg"))
 		original_image_content = open(
-			traquent.get_app_path("frappe", "tests", "data", "exif_sample_image.jpg"),
+			traquent.get_app_path("traquent", "tests", "data", "exif_sample_image.jpg"),
 			mode="rb",
 		).read()
 
@@ -475,7 +475,7 @@ class TestImage(IntegrationTestCase):
 		self.assertNotEqual(original_image._getexif(), new_image._getexif())
 
 	def test_optimize_image(self):
-		image_file_path = traquent.get_app_path("frappe", "tests", "data", "sample_image_for_optimization.jpg")
+		image_file_path = traquent.get_app_path("traquent", "tests", "data", "sample_image_for_optimization.jpg")
 		content_type = guess_type(image_file_path)[0]
 		original_content = open(image_file_path, mode="rb").read()
 
@@ -892,17 +892,17 @@ class TestAppParser(MockedRequestTestCase):
 	def test_app_name_parser(self):
 		self.responses.add(
 			"HEAD",
-			"https://api.github.com/repos/frappe/healthcare",
+			"https://api.github.com/repos/traquent/healthcare",
 			status=200,
 			json={},
 		)
 		bench_path = get_bench_path()
-		frappe_app = os.path.join(bench_path, "apps", "frappe")
-		self.assertEqual("frappe", parse_app_name(frappe_app))
+		traquent_app = os.path.join(bench_path, "apps", "traquent")
+		self.assertEqual("traquent", parse_app_name(traquent_app))
 		self.assertEqual("healthcare", parse_app_name("healthcare"))
-		self.assertEqual("healthcare", parse_app_name("https://github.com/frappe/healthcare.git"))
-		self.assertEqual("healthcare", parse_app_name("git@github.com:frappe/healthcare.git"))
-		self.assertEqual("healthcare", parse_app_name("frappe/healthcare@develop"))
+		self.assertEqual("healthcare", parse_app_name("https://github.com/traquent/healthcare.git"))
+		self.assertEqual("healthcare", parse_app_name("git@github.com:traquent/healthcare.git"))
+		self.assertEqual("healthcare", parse_app_name("traquent/healthcare@develop"))
 
 
 class TestIntrospectionMagic(IntegrationTestCase):
@@ -948,25 +948,25 @@ class TestLazyLoader(IntegrationTestCase):
 		from traquent.utils.lazy_loader import lazy_import
 
 		with Capturing() as output:
-			ls = lazy_import("frappe.tests.data.load_sleep")
+			ls = lazy_import("traquent.tests.data.load_sleep")
 		self.assertEqual(output, [])
 
 		with Capturing() as output:
 			ls.time
-		self.assertEqual(["Module `frappe.tests.data.load_sleep` loaded"], output)
+		self.assertEqual(["Module `traquent.tests.data.load_sleep` loaded"], output)
 
 
 class TestIdenticon(IntegrationTestCase):
 	def test_get_gravatar(self):
-		# developers@frappe.io has a gravatar linked so str URL will be returned
+		# developers@traquent.io has a gravatar linked so str URL will be returned
 		traquent.flags.in_test = False
-		gravatar_url = get_gravatar("developers@frappe.io")
+		gravatar_url = get_gravatar("developers@traquent.io")
 		traquent.flags.in_test = True
 		self.assertIsInstance(gravatar_url, str)
 		self.assertTrue(gravatar_url.startswith("http"))
 
 		# random email will require Identicon to be generated, which will be a base64 string
-		gravatar_url = get_gravatar(f"developers{random_string(6)}@frappe.io")
+		gravatar_url = get_gravatar(f"developers{random_string(6)}@traquent.io")
 		self.assertIsInstance(gravatar_url, str)
 		self.assertTrue(gravatar_url.startswith("data:image/png;base64,"))
 
@@ -1023,7 +1023,7 @@ class TestMiscUtils(IntegrationTestCase):
 		info = get_site_info()
 
 		installed_apps = [app["app_name"] for app in info["installed_apps"]]
-		self.assertIn("frappe", installed_apps)
+		self.assertIn("traquent", installed_apps)
 		self.assertGreaterEqual(len(info["users"]), 1)
 
 	def test_get_url_to_form(self):
@@ -1069,13 +1069,13 @@ class TestTypingValidations(IntegrationTestCase):
 		]
 
 		for fn, args, kwargs in test_cases:
-			with self.assertRaisesRegex(traquent.FrappeTypeError, self.ERR_REGEX):
+			with self.assertRaisesRegex(traquent.traquentTypeError, self.ERR_REGEX):
 				fn(*args, **kwargs)
 
 	def test_validate_whitelisted_doc_method(self):
 		report = traquent.get_last_doc("Report")
 
-		with self.assertRaisesRegex(traquent.FrappeTypeError, self.ERR_REGEX):
+		with self.assertRaisesRegex(traquent.traquentTypeError, self.ERR_REGEX):
 			report.toggle_disable(["disable"])
 
 		current_value = report.disabled
@@ -1273,7 +1273,7 @@ class TestArgumentTypingValidations(IntegrationTestCase):
 
 		from traquent.core.doctype.doctype.doctype import DocType
 		from traquent.utils.typing_validations import (
-			FrappeTypeError,
+			traquentTypeError,
 			validate_argument_types,
 		)
 
@@ -1297,9 +1297,9 @@ class TestArgumentTypingValidations(IntegrationTestCase):
 		self.assertEqual(test_simple_types(1, 2, 1), (1, 2.0, True))
 		self.assertEqual(test_simple_types(1.0, 2, 1), (1, 2.0, True))
 		self.assertEqual(test_simple_types(1, 2, "1"), (1, 2.0, True))
-		with self.assertRaises(FrappeTypeError):
+		with self.assertRaises(traquentTypeError):
 			test_simple_types(1, 2, "a")
-		with self.assertRaises(FrappeTypeError):
+		with self.assertRaises(traquentTypeError):
 			test_simple_types(1, 2, None)
 
 		self.assertEqual(test_sequence("a", [{"a": 1}], {"a": 1}), ("a", [{"a": 1}], {"a": 1}))
@@ -1307,39 +1307,39 @@ class TestArgumentTypingValidations(IntegrationTestCase):
 		self.assertEqual(test_sequence("a", [{"a": 1}], None), ("a", [{"a": 1}], None))
 		self.assertEqual(test_sequence("a", None, {"a": 1}), ("a", None, {"a": 1}))
 		self.assertEqual(test_sequence("a", [{"a": 1}], {"a": "1.0"}), ("a", [{"a": 1}], {"a": 1}))
-		with self.assertRaises(FrappeTypeError):
+		with self.assertRaises(traquentTypeError):
 			test_sequence("a", [{"a": 1}], True)
 
 		doctype = traquent.get_last_doc("DocType")
 		self.assertEqual(test_doctypes(doctype), doctype)
 		self.assertEqual(test_doctypes(doctype.as_dict()), doctype.as_dict())
-		with self.assertRaises(FrappeTypeError):
+		with self.assertRaises(traquentTypeError):
 			test_doctypes("a")
 
 		self.assertEqual(test_mocks("Hello World"), "Hello World")
 		for obj in (AsyncMock, MagicMock, Mock):
 			obj_instance = obj()
 			self.assertEqual(test_mocks(obj_instance), obj_instance)
-		with self.assertRaises(FrappeTypeError):
+		with self.assertRaises(traquentTypeError):
 			test_mocks(1)
 
 
 class TestChangeLog(IntegrationTestCase):
 	def test_get_remote_url(self):
-		self.assertIsInstance(get_source_url("frappe"), str)
+		self.assertIsInstance(get_source_url("traquent"), str)
 
 	def test_parse_github_url(self):
 		# using erpnext as repo in order to be different from the owner
-		owner, repo = parse_github_url("https://github.com/frappe/erpnext.git")
-		self.assertEqual(owner, "frappe")
+		owner, repo = parse_github_url("https://github.com/traquent/erpnext.git")
+		self.assertEqual(owner, "traquent")
 		self.assertEqual(repo, "erpnext")
 
-		owner, repo = parse_github_url("https://github.com/frappe/erpnext")
-		self.assertEqual(owner, "frappe")
+		owner, repo = parse_github_url("https://github.com/traquent/erpnext")
+		self.assertEqual(owner, "traquent")
 		self.assertEqual(repo, "erpnext")
 
-		owner, repo = parse_github_url("git@github.com:frappe/erpnext.git")
-		self.assertEqual(owner, "frappe")
+		owner, repo = parse_github_url("git@github.com:traquent/erpnext.git")
+		self.assertEqual(owner, "traquent")
 		self.assertEqual(repo, "erpnext")
 
 		owner, repo = parse_github_url("https://gitlab.com/gitlab-org/gitlab")
@@ -1366,7 +1366,7 @@ class TestURLTrackers(IntegrationTestCase):
 		medium = "test_medium"
 		content = "test_content"
 
-		with patch("frappe.db.get_value") as mock_get_value:
+		with patch("traquent.db.get_value") as mock_get_value:
 			mock_get_value.side_effect = lambda *args: args[1]  # Return unslugged input value
 			result = add_trackers_to_url(url, source, campaign, medium, content)
 
@@ -1376,7 +1376,7 @@ class TestURLTrackers(IntegrationTestCase):
 	def test_parse_and_map_trackers_from_url(self):
 		url = "https://example.com?utm_source=test_source&utm_medium=test_medium&utm_campaign=test_campaign&utm_content=test_content"
 
-		with patch("frappe.db.get_value") as mock_get_value:
+		with patch("traquent.db.get_value") as mock_get_value:
 			mock_get_value.return_value = None  # Simulate no existing records
 			result = parse_and_map_trackers_from_url(url)
 

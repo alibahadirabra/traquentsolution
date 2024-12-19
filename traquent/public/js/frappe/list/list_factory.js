@@ -1,33 +1,33 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.provide("frappe.views.list_view");
+traquent.provide("traquent.views.list_view");
 
 window.cur_list = null;
-frappe.views.ListFactory = class ListFactory extends frappe.views.Factory {
+traquent.views.ListFactory = class ListFactory extends traquent.views.Factory {
 	make(route) {
 		const me = this;
 		const doctype = route[1];
 
 		// List / Gantt / Kanban / etc
-		let view_name = frappe.utils.to_title_case(route[2] || "List");
+		let view_name = traquent.utils.to_title_case(route[2] || "List");
 
 		// File is a special view
 		if (doctype == "File" && !["Report", "Dashboard"].includes(view_name)) {
 			view_name = "File";
 		}
 
-		let view_class = frappe.views[view_name + "View"];
-		if (!view_class) view_class = frappe.views.ListView;
+		let view_class = traquent.views[view_name + "View"];
+		if (!view_class) view_class = traquent.views.ListView;
 
 		if (view_class && view_class.load_last_view && view_class.load_last_view()) {
 			// view can have custom routing logic
 			return;
 		}
 
-		frappe.provide("frappe.views.list_view." + doctype);
+		traquent.provide("traquent.views.list_view." + doctype);
 
-		frappe.views.list_view[me.page_name] = new view_class({
+		traquent.views.list_view[me.page_name] = new view_class({
 			doctype: doctype,
 			parent: me.make_page(true, me.page_name, "Right"),
 		});
@@ -50,11 +50,11 @@ frappe.views.ListFactory = class ListFactory extends frappe.views.Factory {
 
 	re_route_to_view() {
 		const doctype = this.route[1];
-		const last_route = frappe.route_history.slice(-2)[0];
+		const last_route = traquent.route_history.slice(-2)[0];
 		if (
 			this.route[0] === "List" &&
 			this.route.length === 2 &&
-			frappe.views.list_view[doctype] &&
+			traquent.views.list_view[doctype] &&
 			last_route &&
 			last_route[0] === "List" &&
 			last_route[1] === doctype
@@ -74,21 +74,21 @@ frappe.views.ListFactory = class ListFactory extends frappe.views.Factory {
 	}
 
 	set_module_breadcrumb() {
-		if (frappe.route_history.length > 1) {
-			const prev_route = frappe.route_history[frappe.route_history.length - 2];
+		if (traquent.route_history.length > 1) {
+			const prev_route = traquent.route_history[traquent.route_history.length - 2];
 			if (prev_route[0] === "modules") {
 				const doctype = this.route[1],
 					module = prev_route[1];
-				if (frappe.module_links[module] && frappe.module_links[module].includes(doctype)) {
+				if (traquent.module_links[module] && traquent.module_links[module].includes(doctype)) {
 					// save the last page from the breadcrumb was accessed
-					frappe.breadcrumbs.set_doctype_module(doctype, module);
+					traquent.breadcrumbs.set_doctype_module(doctype, module);
 				}
 			}
 		}
 	}
 
 	set_cur_list() {
-		cur_list = frappe.views.list_view[this.page_name];
+		cur_list = traquent.views.list_view[this.page_name];
 		if (cur_list && cur_list.doctype !== this.route[1]) {
 			// changing...
 			window.cur_list = null;

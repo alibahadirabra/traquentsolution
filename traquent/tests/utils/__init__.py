@@ -27,7 +27,7 @@ def check_orpahned_doctypes():
 
 
 from traquent.deprecation_dumpster import (
-	get_tests_FrappeTestCase,
+	get_tests_traquentTestCase,
 	get_tests_IntegrationTestCase,
 	get_tests_UnitTestCase,
 )
@@ -38,7 +38,7 @@ from traquent.deprecation_dumpster import (
 	tests_debug_on as debug_on,
 )
 
-FrappeTestCase = get_tests_FrappeTestCase()
+traquentTestCase = get_tests_traquentTestCase()
 IntegrationTestCase = get_tests_IntegrationTestCase()
 UnitTestCase = get_tests_UnitTestCase()
 

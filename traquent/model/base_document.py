@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import datetime
 import json
@@ -58,7 +58,7 @@ DOCTYPES_FOR_DOCTYPE = {"DocType", *TABLE_DOCTYPES_FOR_DOCTYPE.values()}
 def get_controller(doctype):
 	"""Return the locally cached **class** object of the given DocType.
 
-	For `custom` type, return `frappe.model.document.Document`.
+	For `custom` type, return `traquent.model.document.Document`.
 
 	:param doctype: DocType name as string.
 	"""
@@ -936,7 +936,7 @@ class BaseDocument:
 			phone = self.get(phone_field.fieldname)
 			validate_phone_number_with_country_code(phone, phone_field.fieldname)
 
-		# data_field options defined in frappe.model.data_field_options
+		# data_field options defined in traquent.model.data_field_options
 		for data_field in self.meta.get_data_fields():
 			data = self.get(data_field.fieldname)
 			if not data:

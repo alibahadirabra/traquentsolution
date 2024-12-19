@@ -28,7 +28,7 @@ if typing.TYPE_CHECKING:
 	is_flag=True,
 	default=False,
 	help="Copy the files instead of symlinking",
-	envvar="FRAPPE_HARD_LINK_ASSETS",
+	envvar="traquent_HARD_LINK_ASSETS",
 )
 @click.option("--production", is_flag=True, default=False, help="Build assets in production mode")
 @click.option("--verbose", is_flag=True, default=False, help="Verbose")
@@ -59,7 +59,7 @@ def build(
 	using_cached=False,
 ):
 	"Compile JS and CSS source files"
-	from traquent.build import bundle, download_frappe_assets
+	from traquent.build import bundle, download_traquent_assets
 	from traquent.gettext.translate import compile_translations
 	from traquent.utils.synchronization import filelock
 
@@ -71,10 +71,10 @@ def build(
 	with filelock("bench_build", is_global=True, timeout=10):
 		# dont try downloading assets if force used, app specified or running via CI
 		if not (force or apps or os.environ.get("CI")):
-			# skip building frappe if assets exist remotely
-			skip_frappe = download_frappe_assets(verbose=verbose)
+			# skip building traquent if assets exist remotely
+			skip_traquent = download_traquent_assets(verbose=verbose)
 		else:
-			skip_frappe = False
+			skip_traquent = False
 
 		# don't minify in developer_mode for faster builds
 		development = traquent.local.conf.developer_mode or traquent.local.dev_server
@@ -90,7 +90,7 @@ def build(
 			apps=apps,
 			hard_link=hard_link,
 			verbose=verbose,
-			skip_frappe=skip_frappe,
+			skip_traquent=skip_traquent,
 			save_metafiles=save_metafiles,
 			using_cached=using_cached,
 		)
@@ -577,13 +577,13 @@ def jupyter(context: CliCtxObj):
 	print(
 		f"""
 Starting Jupyter notebook
-Run the following in your first cell to connect notebook to frappe
+Run the following in your first cell to connect notebook to traquent
 ```
-import frappe
-frappe.init('{site}', sites_path='{sites_path}')
-frappe.connect()
-frappe.local.lang = frappe.db.get_default('lang')
-frappe.db.connect()
+import traquent
+traquent.init('{site}', sites_path='{sites_path}')
+traquent.connect()
+traquent.local.lang = traquent.db.get_default('lang')
+traquent.db.connect()
 ```
 	"""
 	)
@@ -780,7 +780,7 @@ def serve(
 		site = None
 	else:
 		site = context.sites[0]
-	with CodeCoverage(with_coverage, "frappe"):
+	with CodeCoverage(with_coverage, "traquent"):
 		if with_coverage:
 			# unable to track coverage with threading enabled
 			no_threading = True

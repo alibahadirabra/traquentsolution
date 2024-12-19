@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import base64
@@ -295,7 +295,7 @@ def _get_timestamp_prefix():
 
 
 def _generate_random_string(length=10):
-	"""Better version of frappe.generate_hash for naming.
+	"""Better version of traquent.generate_hash for naming.
 
 	This uses entire base32 instead of base16 used by generate_hash. So it has twice as many
 	characters and hence more likely to have shorter common prefixes. i.e. slighly faster comparisons and less conflicts.
@@ -392,7 +392,7 @@ def determine_consecutive_week_number(datetime):
 
 def getseries(key, digits):
 	# series created ?
-	# Using frappe.qb as frappe.get_values does not allow order_by=None
+	# Using traquent.qb as traquent.get_values does not allow order_by=None
 	series = DocType("Series")
 	current = (traquent.qb.from_(series).where(series.name == key).for_update().select("current")).run()
 

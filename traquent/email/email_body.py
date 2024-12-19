@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import email.utils
 import os
@@ -312,7 +312,7 @@ class EMail:
 			"Date": email.utils.formatdate(),
 			"Reply-To": self.reply_to if self.reply_to else None,
 			"CC": ", ".join(self.cc) if self.cc and self.expose_recipients == "header" else None,
-			"X-Frappe-Site": get_url(),
+			"X-traquent-Site": get_url(),
 		}
 
 		# reset headers as values may be changed.
@@ -488,7 +488,7 @@ def get_footer(email_account, footer=None):
 
 
 def replace_filename_with_cid(message):
-	"""Replaces <img embed="assets/frappe/images/filename.jpg" ...> with
+	"""Replaces <img embed="assets/traquent/images/filename.jpg" ...> with
 	<img src="cid:content_id" ...> and return the modified message and
 	a list of inline_images with {filename, filecontent, content_id}
 	"""

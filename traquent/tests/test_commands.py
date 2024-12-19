@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 # imports - standard imports
@@ -113,7 +113,7 @@ def cli(cmd: Command, args: list | None = None):
 	with maintain_locals():
 		global _result
 
-		patch_ctx = patch("frappe.commands.pass_context", pass_test_context)
+		patch_ctx = patch("traquent.commands.pass_context", pass_test_context)
 		_module = cmd.callback.__module__
 		_cmd = cmd.callback.__qualname__
 
@@ -220,23 +220,23 @@ class BaseTestCommands(IntegrationTestCase):
 class TestCommands(BaseTestCommands):
 	def test_execute(self):
 		# test 1: execute a command expecting a numeric output
-		self.execute("bench --site {site} execute frappe.db.get_database_size")
+		self.execute("bench --site {site} execute traquent.db.get_database_size")
 		self.assertEqual(self.returncode, 0)
 		self.assertIsInstance(float(self.stdout), float)
 
 		# test 2: execute a command accessing a normal attribute
-		self.execute("bench --site {site} execute frappe.local.site")
+		self.execute("bench --site {site} execute traquent.local.site")
 		self.assertEqual(self.returncode, 0)
 		self.assertIsNotNone(self.stderr)
 
 		# test 3: execute a command expecting an errored output as lacol won't exist
-		self.execute("bench --site {site} execute frappe.lacol.site")
+		self.execute("bench --site {site} execute traquent.lacol.site")
 		self.assertEqual(self.returncode, 1)
 		self.assertIsNotNone(self.stderr)
 
 		# test 4: execute a command with kwargs
 		self.execute(
-			"bench --site {site} execute frappe.bold --kwargs '{put_here}'",
+			"bench --site {site} execute traquent.bold --kwargs '{put_here}'",
 			{"put_here": '{"text": "DocType"}'},  # avoid escaping errors
 		)
 		self.assertEqual(self.returncode, 0)
@@ -267,7 +267,7 @@ class TestCommands(BaseTestCommands):
 		# test 1: bench restore from full backup
 		self.execute("bench --site {test_site} backup --ignore-backup-conf --with-files", site_data)
 		self.execute(
-			"bench --site {test_site} execute frappe.utils.backups.fetch_latest_backups",
+			"bench --site {test_site} execute traquent.utils.backups.fetch_latest_backups",
 			site_data,
 		)
 		# Destroy some data and files to verify that they are indeed being restored.
@@ -295,7 +295,7 @@ class TestCommands(BaseTestCommands):
 		self.execute("bench --site {test_site} backup --exclude 'ToDo'", site_data)
 		site_data.update({"kw": "\"{'partial':True}\""})
 		self.execute(
-			"bench --site {test_site} execute" " frappe.utils.backups.fetch_latest_backups --kwargs {kw}",
+			"bench --site {test_site} execute" " traquent.utils.backups.fetch_latest_backups --kwargs {kw}",
 			site_data,
 		)
 		site_data.update({"database": json.loads(self.stdout)["database"]})
@@ -424,9 +424,9 @@ class TestCommands(BaseTestCommands):
 		os.remove(test1_path)
 		os.remove(test2_path)
 
-	def test_frappe_site_env(self):
-		os.putenv("FRAPPE_SITE", traquent.local.site)
-		self.execute("bench execute frappe.ping")
+	def test_traquent_site_env(self):
+		os.putenv("traquent_SITE", traquent.local.site)
+		self.execute("bench execute traquent.ping")
 		self.assertEqual(self.returncode, 0)
 		self.assertIn("pong", self.stdout)
 
@@ -502,17 +502,17 @@ class TestCommands(BaseTestCommands):
 				f"--db-type {traquent.conf.db_type} "
 			)
 
-		app_name = "frappe"
+		app_name = "traquent"
 
-		# set admin password in site_config as when frappe force installs, we don't have the conf
+		# set admin password in site_config as when traquent force installs, we don't have the conf
 		self.execute(f"bench --site {TEST_SITE} set-config admin_password {traquent.conf.admin_password}")
 
-		# try installing the frappe_docs app again on test site
+		# try installing the traquent_docs app again on test site
 		self.execute(f"bench --site {TEST_SITE} install-app {app_name}")
 		self.assertIn(f"{app_name} already installed", self.stdout)
 		self.assertEqual(self.returncode, 0)
 
-		# force install frappe_docs app on the test site
+		# force install traquent_docs app on the test site
 		self.execute(f"bench --site {TEST_SITE} install-app {app_name} --force")
 		self.assertIn(f"Installing {app_name}", self.stdout)
 		self.assertEqual(self.returncode, 0)
@@ -775,7 +775,7 @@ class TestBackups(BaseTestCommands):
 		self.assertEqual(self.returncode, 0)
 
 	def test_backup_only_specific_doctypes(self):
-		"""Take a backup with (include) backup options set in the site config `frappe.conf.backup.includes`"""
+		"""Take a backup with (include) backup options set in the site config `traquent.conf.backup.includes`"""
 		self.execute(
 			"bench --site {site} set-config backup '{includes}' --parse",
 			{"includes": json.dumps(self.backup_map["includes"])},
@@ -786,8 +786,8 @@ class TestBackups(BaseTestCommands):
 		self.assertEqual([], missing_in_backup(self.backup_map["includes"]["includes"], database))
 
 	def test_backup_excluding_specific_doctypes(self):
-		"""Take a backup with (exclude) backup options set (`frappe.conf.backup.excludes`, `--exclude`)"""
-		# test 1: take a backup with frappe.conf.backup.excludes
+		"""Take a backup with (exclude) backup options set (`traquent.conf.backup.excludes`, `--exclude`)"""
+		# test 1: take a backup with traquent.conf.backup.excludes
 		self.execute(
 			"bench --site {site} set-config backup '{excludes}' --parse",
 			{"excludes": json.dumps(self.backup_map["excludes"])},
@@ -808,7 +808,7 @@ class TestBackups(BaseTestCommands):
 		self.assertFalse(exists_in_backup(self.backup_map["excludes"]["excludes"], database))
 
 	def test_selective_backup_priority_resolution(self):
-		"""Take a backup with conflicting backup options set (`frappe.conf.excludes`, `--include`)"""
+		"""Take a backup with conflicting backup options set (`traquent.conf.excludes`, `--include`)"""
 		self.execute(
 			"bench --site {site} backup --include '{include}'",
 			{"include": ",".join(self.backup_map["includes"]["includes"])},
@@ -818,7 +818,7 @@ class TestBackups(BaseTestCommands):
 		self.assertEqual([], missing_in_backup(self.backup_map["includes"]["includes"], database))
 
 	def test_dont_backup_conf(self):
-		"""Take a backup ignoring frappe.conf.backup settings (with --ignore-backup-conf option)"""
+		"""Take a backup ignoring traquent.conf.backup settings (with --ignore-backup-conf option)"""
 		self.execute("bench --site {site} backup --ignore-backup-conf")
 		self.assertEqual(self.returncode, 0)
 		database = fetch_latest_backups()["database"]
@@ -835,7 +835,7 @@ class TestRemoveApp(IntegrationTestCase):
 
 		test_module = traquent.new_doc("Module Def")
 
-		test_module.update({"module_name": "RemoveThis", "app_name": "frappe"})
+		test_module.update({"module_name": "RemoveThis", "app_name": "traquent"})
 		test_module.save()
 
 		module_def_linked_doctype = traquent.get_doc(
@@ -873,7 +873,7 @@ class TestRemoveApp(IntegrationTestCase):
 		"""Check if dry run in not destructive."""
 
 		# nothing to assert, if this fails rest of the test suite will crumble.
-		remove_app("frappe", dry_run=True, yes=True, no_backup=True)
+		remove_app("traquent", dry_run=True, yes=True, no_backup=True)
 
 
 class TestSiteMigration(BaseTestCommands):
@@ -897,7 +897,7 @@ class TestAddNewUser(BaseTestCommands):
 
 class TestBenchBuild(BaseTestCommands):
 	def test_build_assets_size_check(self):
-		with cli(traquent.commands.utils.build, "--force --production --app frappe") as result:
+		with cli(traquent.commands.utils.build, "--force --production --app traquent") as result:
 			self.assertEqual(result.exit_code, 0)
 			self.assertEqual(result.exception, None)
 
@@ -949,8 +949,8 @@ class TestCommandUtils(IntegrationTestCase):
 		from traquent.utils.bench_helper import get_app_groups
 
 		app_groups = get_app_groups()
-		self.assertIn("frappe", app_groups)
-		self.assertIsInstance(app_groups["frappe"], click.Group)
+		self.assertIn("traquent", app_groups)
+		self.assertIsInstance(app_groups["traquent"], click.Group)
 
 
 class TestDBCli(BaseTestCommands):

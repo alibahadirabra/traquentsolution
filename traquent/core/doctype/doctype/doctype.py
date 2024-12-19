@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import copy
@@ -596,7 +596,7 @@ class DocType(Document):
 
 		if set(global_search_fields_before_update) != set(global_search_fields_after_update):
 			now = (not traquent.request) or traquent.flags.in_test or traquent.flags.in_install
-			traquent.enqueue("frappe.utils.global_search.rebuild_for_doctype", now=now, doctype=self.name)
+			traquent.enqueue("traquent.utils.global_search.rebuild_for_doctype", now=now, doctype=self.name)
 
 	def set_base_class_for_controller(self):
 		"""If DocType.has_web_view has been changed, updates the controller class and import
@@ -613,9 +613,9 @@ class DocType(Document):
 		)
 
 		document_cls_tag = f"class {despaced_name}(Document)"
-		document_import_tag = "from frappe.model.document import Document"
+		document_import_tag = "from traquent.model.document import Document"
 		website_generator_cls_tag = f"class {despaced_name}(WebsiteGenerator)"
-		website_generator_import_tag = "from frappe.website.website_generator import WebsiteGenerator"
+		website_generator_import_tag = "from traquent.website.website_generator import WebsiteGenerator"
 
 		with open(controller_path) as f:
 			code = f.read()
@@ -1260,7 +1260,7 @@ def validate_fields(meta: Meta):
 	13. `unique` check is only valid for Data, Link and Read Only fieldtypes.
 	14. `unique` cannot be checked if there exist non-unique values.
 
-	:param meta: `frappe.model.meta.Meta` object to check."""
+	:param meta: `traquent.model.meta.Meta` object to check."""
 
 	def check_illegal_characters(fieldname):
 		validate_column_name(fieldname)
@@ -1876,7 +1876,7 @@ def make_module_and_roles(doc, perm_fieldname="permissions"):
 			if traquent.scrub(doc.module) in traquent.local.module_app:
 				m.app_name = traquent.local.module_app[traquent.scrub(doc.module)]
 			else:
-				m.app_name = "frappe"
+				m.app_name = "traquent"
 			m.flags.ignore_mandatory = m.flags.ignore_permissions = True
 			if traquent.flags.package:
 				m.package = traquent.flags.package.name

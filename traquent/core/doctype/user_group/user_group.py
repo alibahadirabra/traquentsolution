@@ -1,9 +1,9 @@
-# Copyright (c) 2021, Frappe Technologies and contributors
+# Copyright (c) 2021, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import traquent
 
-# import frappe
+# import traquent
 from traquent.model.document import Document
 
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Frappe Technologies and Contributors
+# Copyright (c) 2020, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -20,6 +20,6 @@ class UnitTestInstalledApplications(UnitTestCase):
 
 class TestInstalledApplications(IntegrationTestCase):
 	def test_order_change(self):
-		update_installed_apps_order(["frappe"])
+		update_installed_apps_order(["traquent"])
 		self.assertRaises(InvalidAppOrder, update_installed_apps_order, [])
-		self.assertRaises(InvalidAppOrder, update_installed_apps_order, ["frappe", "deepmind"])
+		self.assertRaises(InvalidAppOrder, update_installed_apps_order, ["traquent", "deepmind"])

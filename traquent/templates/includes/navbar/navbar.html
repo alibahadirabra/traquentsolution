@@ -6,8 +6,8 @@
 			{%- elif banner_image -%}
 				<img src='{{ banner_image }}'>
 			{%- else -%}
-				<img src="/assets/frappe/images/traquent_logo.png"><!--#UPDATES --sevval img>src-->
-				<span>{{ (frappe.get_hooks("brand_html") or [_("Home")])[0] }}</span>
+				<img src="/assets/traquent/images/traquent_logo.png"><!--#UPDATES --sevval img>src-->
+				<span>{{ (traquent.get_hooks("brand_html") or [_("Home")])[0] }}</span>
 			{%- endif -%}
 		</a>
 		<button class="navbar-toggler" type="button"

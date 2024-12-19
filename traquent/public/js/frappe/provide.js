@@ -1,10 +1,10 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
 // provide a namespace
-if (!window.frappe) window.frappe = {};
+if (!window.traquent) window.traquent = {};
 
-frappe.provide = function (namespace) {
+traquent.provide = function (namespace) {
 	// docs: create a namespace //
 	var nsl = namespace.split(".");
 	var parent = window;
@@ -18,25 +18,25 @@ frappe.provide = function (namespace) {
 	return parent;
 };
 
-frappe.provide("locals");
-frappe.provide("frappe.flags");
-frappe.provide("frappe.settings");
-frappe.provide("frappe.utils");
-frappe.provide("frappe.ui.form");
-frappe.provide("frappe.modules");
-frappe.provide("frappe.templates");
-frappe.provide("frappe.test_data");
-frappe.provide("frappe.utils");
-frappe.provide("frappe.model");
-frappe.provide("frappe.user");
-frappe.provide("frappe.session");
-frappe.provide("frappe._messages");
-frappe.provide("locals.DocType");
+traquent.provide("locals");
+traquent.provide("traquent.flags");
+traquent.provide("traquent.settings");
+traquent.provide("traquent.utils");
+traquent.provide("traquent.ui.form");
+traquent.provide("traquent.modules");
+traquent.provide("traquent.templates");
+traquent.provide("traquent.test_data");
+traquent.provide("traquent.utils");
+traquent.provide("traquent.model");
+traquent.provide("traquent.user");
+traquent.provide("traquent.session");
+traquent.provide("traquent._messages");
+traquent.provide("locals.DocType");
 
 // for listviews
-frappe.provide("frappe.listview_settings");
-frappe.provide("frappe.tour");
-frappe.provide("frappe.listview_parent_route");
+traquent.provide("traquent.listview_settings");
+traquent.provide("traquent.tour");
+traquent.provide("traquent.listview_parent_route");
 
 // constants
 window.NEWLINE = "\n";

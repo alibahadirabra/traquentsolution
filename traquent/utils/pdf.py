@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import base64
 import contextlib
@@ -324,11 +324,11 @@ def prepare_header_footer(soup: BeautifulSoup):
 			)
 
 			# create temp file
-			fname = os.path.join("/tmp", f"frappe-pdf-{traquent.generate_hash()}.html")
+			fname = os.path.join("/tmp", f"traquent-pdf-{traquent.generate_hash()}.html")
 			with open(fname, "wb") as f:
 				f.write(html.encode("utf-8"))
 
-			# {"header-html": "/tmp/frappe-pdf-random.html"}
+			# {"header-html": "/tmp/traquent-pdf-random.html"}
 			options[html_id] = fname
 		else:
 			if html_id == "header-html":

@@ -25,7 +25,7 @@ BRACKETS_PATTERN = re.compile(r"\(.*?\)|$")
 SQL_FUNCTIONS = [sql_function.value for sql_function in SqlFunctions]
 COMMA_PATTERN = re.compile(r",\s*(?![^()]*\))")
 
-# less restrictive version of frappe.core.doctype.doctype.doctype.START_WITH_LETTERS_PATTERN
+# less restrictive version of traquent.core.doctype.doctype.doctype.START_WITH_LETTERS_PATTERN
 # to allow table names like __Auth
 TABLE_NAME_PATTERN = re.compile(r"^[\w -]*$", flags=re.ASCII)
 

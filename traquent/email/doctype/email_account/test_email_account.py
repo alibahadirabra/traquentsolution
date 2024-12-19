@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import email
@@ -428,8 +428,8 @@ class TestEmailAccount(IntegrationTestCase):
 		self.assertEqual(inbox_mails, 2)
 		self.assertEqual(test_folder_mails, 1)
 
-	@patch("frappe.email.receive.EmailServer.select_imap_folder", return_value=True)
-	@patch("frappe.email.receive.EmailServer.logout", side_effect=lambda: None)
+	@patch("traquent.email.receive.EmailServer.select_imap_folder", return_value=True)
+	@patch("traquent.email.receive.EmailServer.logout", side_effect=lambda: None)
 	def mocked_get_inbound_mails(
 		email_account, messages=None, mocked_logout=None, mocked_select_imap_folder=None
 	):
@@ -446,8 +446,8 @@ class TestEmailAccount(IntegrationTestCase):
 
 		return mails
 
-	@patch("frappe.email.receive.EmailServer.select_imap_folder", return_value=True)
-	@patch("frappe.email.receive.EmailServer.logout", side_effect=lambda: None)
+	@patch("traquent.email.receive.EmailServer.select_imap_folder", return_value=True)
+	@patch("traquent.email.receive.EmailServer.logout", side_effect=lambda: None)
 	def mocked_email_receive(
 		email_account, messages=None, mocked_logout=None, mocked_select_imap_folder=None
 	):

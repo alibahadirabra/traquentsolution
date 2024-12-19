@@ -1,10 +1,10 @@
-frappe.provide("frappe.ui");
+traquent.provide("traquent.ui");
 
-frappe.ui.Sidebar = class Sidebar {
+traquent.ui.Sidebar = class Sidebar {
 	constructor() {
 		this.items = {};
 
-		if (!frappe.boot.setup_complete) {
+		if (!traquent.boot.setup_complete) {
 			// no sidebar if setup is not complete
 			return;
 		}
@@ -36,9 +36,9 @@ frappe.ui.Sidebar = class Sidebar {
 	make_dom() {
 		this.set_default_app();
 		this.wrapper = $(
-			frappe.render_template("sidebar", {
-				app_logo_url: frappe.boot.app_data[0].app_logo_url,
-				app_title: __(frappe.boot.app_data[0].app_title),
+			traquent.render_template("sidebar", {
+				app_logo_url: traquent.boot.app_data[0].app_logo_url,
+				app_title: __(traquent.boot.app_data[0].app_title),
 			})
 		).prependTo("body");
 
@@ -63,14 +63,14 @@ frappe.ui.Sidebar = class Sidebar {
 			// 	.find(".edit-sidebar-link")
 			// 	.removeClass("hidden")
 			// 	.on("click", () => {
-			// 		frappe.quick_edit("Workspace Settings");
+			// 		traquent.quick_edit("Workspace Settings");
 			// 	});
 			$(".navbar-nav")
 			.find(".nav-item")
 			.find(".edit-sidebar-link")
 			.removeClass("hidden")
 			.on("click", () => {
-				frappe.quick_edit("Workspace Settings");
+				traquent.quick_edit("Workspace Settings");
 			});
 		}
 
@@ -78,7 +78,7 @@ frappe.ui.Sidebar = class Sidebar {
 	}
 
 	set_all_pages() {
-		this.sidebar_pages = frappe.boot.sidebar_pages;
+		this.sidebar_pages = traquent.boot.sidebar_pages;
 		this.all_pages = this.sidebar_pages.pages;
 		this.has_access = this.sidebar_pages.has_access;
 		this.has_create_access = this.sidebar_pages.has_create_access;
@@ -86,8 +86,8 @@ frappe.ui.Sidebar = class Sidebar {
 
 	set_default_app() {
 		// sort apps based on # of workspaces
-		frappe.boot.app_data.sort((a, b) => (a.workspaces.length < b.workspaces.length ? 1 : -1));
-		frappe.current_app = frappe.boot.app_data[0].app_name;
+		traquent.boot.app_data.sort((a, b) => (a.workspaces.length < b.workspaces.length ? 1 : -1));
+		traquent.current_app = traquent.boot.app_data[0].app_name;
 	}
 
 	setup_app_switcher() {
@@ -105,11 +105,11 @@ frappe.ui.Sidebar = class Sidebar {
 			this.wrapper.find(".drop-icon[data-state='opened'").click();
 		});
 
-		frappe.boot.app_data_map = {};
+		traquent.boot.app_data_map = {};
 		this.add_private_app(app_switcher_menu);
 
-		for (var app of frappe.boot.app_data) {
-			frappe.boot.app_data_map[app.app_name] = app;
+		for (var app of traquent.boot.app_data) {
+			traquent.boot.app_data_map[app.app_name] = app;
 			if (app.workspaces?.length) {
 				this.add_app_item(app, app_switcher_menu);
 			}
@@ -125,7 +125,7 @@ frappe.ui.Sidebar = class Sidebar {
 				<div class="sidebar-item-icon">
 					<img
 						class="app-logo"
-						src="/assets/frappe/images/traquent_mini.svg" 
+						src="/assets/traquent/images/traquent_mini.svg" 
 						alt="${__("App Logo")}"
 					>
 				</div>
@@ -142,11 +142,11 @@ frappe.ui.Sidebar = class Sidebar {
 			app_name: "private",
 			app_title: __("My Workspaces"),
 			app_route: "/app/private",
-			app_logo_url: "/assets/frappe/images/traquent_mini.svg",//#UPDATES --sevval img>src>rul
+			app_logo_url: "/assets/traquent/images/traquent_mini.svg",//#UPDATES --sevval img>src>rul
 			workspaces: private_pages,
 		};
 
-		frappe.boot.app_data_map["private"] = app;
+		traquent.boot.app_data_map["private"] = app;
 		$(`<div class="divider"></div>`).prependTo(app_switcher_menu);
 		$(`<div class="app-item" data-app-name="${app.app_name}"
 			data-app-route="${app.app_route}">
@@ -171,11 +171,11 @@ frappe.ui.Sidebar = class Sidebar {
 
 			if (route.startsWith("/app/private")) {
 				this.set_current_app("private");
-				let ws = Object.values(frappe.workspace_map).find((ws) => ws.public === 0);
-				route += "/" + frappe.router.slug(ws.title);
-				frappe.set_route(route);
+				let ws = Object.values(traquent.workspace_map).find((ws) => ws.public === 0);
+				route += "/" + traquent.router.slug(ws.title);
+				traquent.set_route(route);
 			} else if (route.startsWith("/app")) {
-				frappe.set_route(route);
+				traquent.set_route(route);
 				this.set_current_app(item.attr("data-app-name"));
 			} else {
 				// new page
@@ -189,7 +189,7 @@ frappe.ui.Sidebar = class Sidebar {
 			console.warn("set_current_app: app not defined");
 			return;
 		}
-		let app_data = frappe.boot.app_data_map[app] || frappe.boot.app_data_map["frappe"];
+		let app_data = traquent.boot.app_data_map[app] || traquent.boot.app_data_map["traquent"];
 
 		this.wrapper
 			.find(".app-switcher-dropdown .sidebar-item-icon img")
@@ -198,8 +198,8 @@ frappe.ui.Sidebar = class Sidebar {
 
 		$(".navbar-brand .app-logo").attr("src", app_data.app_logo_url);
 
-		if (frappe.current_app === app) return;
-		frappe.current_app = app;
+		if (traquent.current_app === app) return;
+		traquent.current_app = app;
 
 		// re-render the sidebar
 		this.make_sidebar();
@@ -212,7 +212,7 @@ frappe.ui.Sidebar = class Sidebar {
 				app_name: "website",
 				app_title: __("Website"),
 				app_route: "/",
-				app_logo_url: "/assets/frappe/images/web.svg",
+				app_logo_url: "/assets/traquent/images/web.svg",
 			},
 			app_switcher_menu
 		);
@@ -229,19 +229,19 @@ frappe.ui.Sidebar = class Sidebar {
 		});
 
 		if (this.all_pages) {
-			frappe.workspaces = {};
-			frappe.workspace_list = [];
-			frappe.workspace_map = {};
+			traquent.workspaces = {};
+			traquent.workspace_list = [];
+			traquent.workspace_map = {};
 			for (let page of this.all_pages) {
-				frappe.workspaces[frappe.router.slug(page.name)] = {
+				traquent.workspaces[traquent.router.slug(page.name)] = {
 					name: page.name,
 					public: page.public,
 				};
 				if (!page.app && page.module) {
-					page.app = frappe.boot.module_app[frappe.slug(page.module)];
+					page.app = traquent.boot.module_app[traquent.slug(page.module)];
 				}
-				frappe.workspace_map[page.name] = page;
-				frappe.workspace_list.push(page);
+				traquent.workspace_map[page.name] = page;
+				traquent.workspace_list.push(page);
 			}
 			this.make_sidebar();
 		}
@@ -252,10 +252,10 @@ frappe.ui.Sidebar = class Sidebar {
 			this.wrapper.find(".standard-sidebar-section").remove();
 		}
 
-		let app_workspaces = frappe.boot.app_data_map[frappe.current_app || "frappe"].workspaces;
+		let app_workspaces = traquent.boot.app_data_map[traquent.current_app || "traquent"].workspaces;
 
 		let parent_pages = this.all_pages.filter((p) => !p.parent_page).uniqBy((p) => p.name);
-		if (frappe.current_app === "private") {
+		if (traquent.current_app === "private") {
 			parent_pages = parent_pages.filter((p) => !p.public);
 		} else {
 			parent_pages = parent_pages.filter((p) => p.public && app_workspaces.includes(p.name));
@@ -265,7 +265,7 @@ frappe.ui.Sidebar = class Sidebar {
 
 		// Scroll sidebar to selected page if it is not in viewport.
 		this.wrapper.find(".selected").length &&
-			!frappe.dom.is_element_in_viewport(this.wrapper.find(".selected")) &&
+			!traquent.dom.is_element_in_viewport(this.wrapper.find(".selected")) &&
 			this.wrapper.find(".selected")[0].scrollIntoView();
 
 		this.setup_sorting();
@@ -358,22 +358,22 @@ frappe.ui.Sidebar = class Sidebar {
 		let path;
 		if (item.type === "Link") {
 			if (item.link_type === "Report") {
-				path = frappe.utils.generate_route({
+				path = traquent.utils.generate_route({
 					type: item.link_type,
 					name: item.link_to,
 					is_query_report: item.report.report_type === "Query Report",
 					report_ref_doctype: item.report.ref_doctype,
 				});
 			} else {
-				path = frappe.utils.generate_route({ type: item.link_type, name: item.link_to });
+				path = traquent.utils.generate_route({ type: item.link_type, name: item.link_to });
 			}
 		} else if (item.type === "URL") {
 			path = item.external_link;
 		} else {
 			if (item.public) {
-				path = "/app/" + frappe.router.slug(item.name);
+				path = "/app/" + traquent.router.slug(item.name);
 			} else {
-				path = "/app/private/" + frappe.router.slug(item.name.split("-")[0]);
+				path = "/app/private/" + traquent.router.slug(item.name.split("-")[0]);
 			}
 		}
 
@@ -395,7 +395,7 @@ frappe.ui.Sidebar = class Sidebar {
 						<span class="sidebar-item-icon" item-icon=${item.icon || "folder-normal"}>
 							${
 								item.public || item.icon
-									? frappe.utils.icon(item.icon || "folder-normal", "md")
+									? traquent.utils.icon(item.icon || "folder-normal", "md")
 									: `<span class="indicator ${item.indicator_color}"></span>`
 							}
 						</span>
@@ -419,7 +419,7 @@ frappe.ui.Sidebar = class Sidebar {
 
 		let $child_item_section = item_container.find(".sidebar-child-item");
 		let $drop_icon = $(`<button class="btn-reset drop-icon hidden">`)
-			.html(frappe.utils.icon(drop_icon, "sm"))
+			.html(traquent.utils.icon(drop_icon, "sm"))
 			.appendTo(sidebar_control);
 
 		if (
@@ -469,8 +469,8 @@ frappe.ui.Sidebar = class Sidebar {
 							});
 						}
 					}
-					frappe.xcall(
-						"frappe.desk.doctype.workspace_settings.workspace_settings.set_sequence",
+					traquent.xcall(
+						"traquent.desk.doctype.workspace_settings.workspace_settings.set_sequence",
 						{
 							sidebar_items: sidebar_items,
 						}
@@ -481,8 +481,8 @@ frappe.ui.Sidebar = class Sidebar {
 	}
 
 	reload() {
-		return frappe.workspace.get_pages().then((r) => {
-			frappe.boot.sidebar_pages = r;
+		return traquent.workspace.get_pages().then((r) => {
+			traquent.boot.sidebar_pages = r;
 			this.setup_pages();
 		});
 	}

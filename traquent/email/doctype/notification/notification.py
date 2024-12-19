@@ -1,4 +1,4 @@
-# Copyright (c) 2018, Frappe Technologies and contributors
+# Copyright (c) 2018, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import json
@@ -175,7 +175,7 @@ class Notification(Document):
 			if not os.path.exists(path + ".py"):
 				with open(path + ".py", "w") as f:
 					f.write(
-						"""import frappe
+						"""import traquent
 
 def get_context(context):
 	# do your magic here
@@ -307,7 +307,7 @@ def get_context(context):
 		              To queue a notification from a server script:
 
 		              ```python
-		              notification = frappe.get_doc("Notification", "My Notification", ignore_permissions=True)
+		              notification = traquent.get_doc("Notification", "My Notification", ignore_permissions=True)
 		              notification.queue_send(customer)
 		              ```
 
@@ -316,7 +316,7 @@ def get_context(context):
 		from traquent.utils.background_jobs import enqueue
 
 		return enqueue(
-			"frappe.email.doctype.notification.notification.evaluate_alert",
+			"traquent.email.doctype.notification.notification.evaluate_alert",
 			doc=doc,
 			alert=self,
 			now=traquent.flags.in_test,
@@ -734,11 +734,11 @@ def evaluate_alert(doc: Document, alert, event=None):
 
 
 def get_context(doc):
-	Frappe = namedtuple("frappe", ["utils"])
+	traquent = namedtuple("traquent", ["utils"])
 	return {
 		"doc": doc,
 		"nowdate": nowdate,
-		"frappe": Frappe(utils=get_safe_globals().get("frappe").get("utils")),
+		"traquent": traquent(utils=get_safe_globals().get("traquent").get("utils")),
 	}
 
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies and contributors
+# Copyright (c) 2021, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import contextlib
@@ -69,7 +69,7 @@ class ScheduledJobType(Document):
 		if self.is_event_due() or force:
 			if not self.is_job_in_queue():
 				enqueue(
-					"frappe.core.doctype.scheduled_job_type.scheduled_job_type.run_scheduled_job",
+					"traquent.core.doctype.scheduled_job_type.scheduled_job_type.run_scheduled_job",
 					queue=self.get_queue_name(),
 					job_type=self.method,  # Not actually used, kept for logging
 					job_id=self.rq_job_id,

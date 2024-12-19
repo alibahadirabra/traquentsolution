@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import base64
@@ -104,7 +104,7 @@ def save_uploaded(dt, dn, folder, is_private, df=None):
 
 def save_url(file_url, filename, dt, dn, folder, is_private, df=None):
 	# if not (file_url.startswith("http://") or file_url.startswith("https://")):
-	# 	frappe.msgprint("URL must start with 'http://' or 'https://'")
+	# 	traquent.msgprint("URL must start with 'http://' or 'https://'")
 	# 	return None, None
 
 	file_url = unquote(file_url)
@@ -132,7 +132,7 @@ def save_url(file_url, filename, dt, dn, folder, is_private, df=None):
 
 
 def get_uploaded_content():
-	# should not be unicode when reading a file, hence using frappe.form
+	# should not be unicode when reading a file, hence using traquent.form
 	if "filedata" in traquent.form_dict:
 		if "," in traquent.form_dict.filedata:
 			traquent.form_dict.filedata = traquent.form_dict.filedata.rsplit(",", 1)[1]

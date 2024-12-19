@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2020, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 from traquent.search.full_text_search import FullTextSearch
 from traquent.tests import IntegrationTestCase
@@ -58,10 +58,10 @@ class TestFullTextSearch(IntegrationTestCase):
 		self.assertEqual(res[0], "sw/erpnext")
 
 		# Update new doc
-		self.index.update_index({"name": "sw/frappebooks", "content": """DesktopAccounting"""})
+		self.index.update_index({"name": "sw/traquentbooks", "content": """DesktopAccounting"""})
 
 		res = self.index.search("DesktopAccounting")
-		self.assertEqual(res[0], "sw/frappebooks")
+		self.assertEqual(res[0], "sw/traquentbooks")
 
 
 class TestWrapper(FullTextSearch):
@@ -79,7 +79,7 @@ class TestWrapper(FullTextSearch):
 
 
 def get_index():
-	return TestWrapper("test_frappe_index")
+	return TestWrapper("test_traquent_index")
 
 
 def get_documents():
@@ -116,15 +116,15 @@ def get_documents():
 		{
 			"name": "sw/erpnext",
 			"content": """ERPNext is a free and open-source integrated Enterprise Resource Planning software developed by
-			Frappe Technologies Pvt. Ltd. and is built on MariaDB database system using a Python based server-side framework.
+			traquent Technologies Pvt. Ltd. and is built on MariaDB database system using a Python based server-side framework.
 			ERPNext is a generic ERP software used by manufacturers, distributors and services companies. CommonSearchTerm""",
 		}
 	)
 
 	docs.append(
 		{
-			"name": "sw/frappe",
-			"content": """Frappe Framework is a full-stack web framework, that includes everything you need to build and
+			"name": "sw/traquent",
+			"content": """traquent Framework is a full-stack web framework, that includes everything you need to build and
 			deploy business applications with Rich Admin Interface. CommonSearchTerm""",
 		}
 	)

@@ -1,3 +1,3 @@
-frappe.ready(function () {
+traquent.ready(function () {
 	// bind events here
 });

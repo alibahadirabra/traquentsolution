@@ -1,6 +1,6 @@
 """
 This module contains the TestResult class, which extends unittest.TextTestResult
-to provide custom formatting and logging for test results in the Frappe framework.
+to provide custom formatting and logging for test results in the traquent framework.
 
 Key components:
 - TestResult: The main class for handling test results
@@ -14,7 +14,7 @@ The TestResult class provides:
 
 Usage:
 This TestResult class is typically used by the TestRunner to collect and display
-test results during test execution in the Frappe framework.
+test results during test execution in the traquent framework.
 """
 
 import io
@@ -38,10 +38,10 @@ class TestResult(unittest.TextTestResult):
 		if not sys.warnoptions:
 			import warnings
 
-			from traquent.deprecation_dumpster import FrappeDeprecationWarning
+			from traquent.deprecation_dumpster import traquentDeprecationWarning
 
 			warnings.simplefilter("ignore")
-			warnings.filterwarnings("module", category=FrappeDeprecationWarning)
+			warnings.filterwarnings("module", category=traquentDeprecationWarning)
 
 		# capture class & module setup & teardown in order to show it above the first test of the class
 		self._old_stderr.append(sys.stderr)

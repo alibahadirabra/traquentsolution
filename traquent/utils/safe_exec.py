@@ -19,7 +19,7 @@ import traquent.utils
 import traquent.utils.data
 from traquent import _
 from traquent.core.utils import html2text
-from traquent.frappeclient import FrappeClient
+from traquent.traquentclient import traquentClient
 from traquent.handler import execute_cmd
 from traquent.locale import get_date_format, get_number_format, get_time_format
 from traquent.model.delete_doc import delete_doc
@@ -56,7 +56,7 @@ class NamespaceDict(traquent._dict):
 		return ret
 
 
-class FrappeTransformer(RestrictingNodeTransformer):
+class traquentTransformer(RestrictingNodeTransformer):
 	def check_name(self, node, name, *args, **kwargs):
 		if name == "_dict":
 			return
@@ -64,7 +64,7 @@ class FrappeTransformer(RestrictingNodeTransformer):
 		return super().check_name(node, name, *args, **kwargs)
 
 
-class FrappePrintCollector(PrintCollector):
+class traquentPrintCollector(PrintCollector):
 	"""Collect written text, and return it when called."""
 
 	def _call_print(self, *objects, **kwargs):
@@ -90,7 +90,7 @@ def safe_exec(
 	if not is_safe_exec_enabled():
 		msg = _("Server Scripts are disabled. Please enable server scripts from bench configuration.")
 		docs_cta = _("Read the documentation to know more")
-		msg += f"<br><a href='https://frappeframework.com/docs/user/en/desk/scripting/server-script'>{docs_cta}</a>"
+		msg += f"<br><a href='https://traquentframework.com/docs/user/en/desk/scripting/server-script'>{docs_cta}</a>"
 		traquent.throw(msg, ServerScriptNotEnabled, title="Server Scripts Disabled")
 
 	# build globals
@@ -100,9 +100,9 @@ def safe_exec(
 
 	if restrict_commit_rollback:
 		# prevent user from using these in docevents
-		exec_globals.frappe.db.pop("commit", None)
-		exec_globals.frappe.db.pop("rollback", None)
-		exec_globals.frappe.db.pop("add_index", None)
+		exec_globals.traquent.db.pop("commit", None)
+		exec_globals.traquent.db.pop("rollback", None)
+		exec_globals.traquent.db.pop("add_index", None)
 
 	filename = SERVER_SCRIPT_FILE_PREFIX
 	if script_filename:
@@ -111,7 +111,7 @@ def safe_exec(
 	with safe_exec_flags(), patched_qb():
 		# execute script compiled by RestrictedPython
 		exec(
-			compile_restricted(script, filename=filename, policy=FrappeTransformer),
+			compile_restricted(script, filename=filename, policy=traquentTransformer),
 			exec_globals,
 			_locals,
 		)
@@ -133,7 +133,7 @@ def safe_eval(code, eval_globals=None, eval_locals=None):
 	eval_globals.update(WHITELISTED_SAFE_EVAL_GLOBALS)
 
 	return eval(
-		compile_restricted(code, filename="<safe_eval>", policy=FrappeTransformer, mode="eval"),
+		compile_restricted(code, filename="<safe_eval>", policy=traquentTransformer, mode="eval"),
 		eval_globals,
 		eval_locals,
 	)
@@ -184,14 +184,14 @@ def get_safe_globals():
 	user = getattr(traquent.local, "session", None) and traquent.local.session.user or "Guest"
 
 	out = NamespaceDict(
-		# make available limited methods of frappe
+		# make available limited methods of traquent
 		json=NamespaceDict(loads=json.loads, dumps=json.dumps),
 		as_json=traquent.as_json,
 		dict=dict,
 		log=traquent.log,
 		_dict=traquent._dict,
 		args=form_dict,
-		frappe=NamespaceDict(
+		traquent=NamespaceDict(
 			call=call_whitelisted_function,
 			flags=traquent._dict(),
 			format=traquent.format_value,
@@ -276,7 +276,7 @@ def get_safe_globals():
 			),
 			lang=getattr(traquent.local, "lang", "en"),
 		),
-		FrappeClient=FrappeClient,
+		traquentClient=traquentClient,
 		style=traquent._dict(border_color="#d1d8dd"),
 		get_toc=get_toc,
 		get_next_link=get_next_link,
@@ -291,11 +291,11 @@ def get_safe_globals():
 	)
 
 	add_module_properties(
-		traquent.exceptions, out.frappe, lambda obj: inspect.isclass(obj) and issubclass(obj, Exception)
+		traquent.exceptions, out.traquent, lambda obj: inspect.isclass(obj) and issubclass(obj, Exception)
 	)
 
 	if traquent.response:
-		out.frappe.response = traquent.response
+		out.traquent.response = traquent.response
 
 	out.update(safe_globals)
 
@@ -305,7 +305,7 @@ def get_safe_globals():
 	out._getattr_ = _getattr_for_safe_exec
 
 	# Allow using `print()` calls with `safe_exec()`
-	out._print_ = FrappePrintCollector
+	out._print_ = traquentPrintCollector
 
 	# allow iterators and list comprehension
 	out._getiter_ = iter
@@ -331,13 +331,13 @@ def is_job_queued(job_name, queue="default"):
 def safe_enqueue(function, **kwargs):
 	"""
 	Enqueue function to be executed using a background worker
-	Accepts frappe.enqueue params like job_name, queue, timeout, etc.
+	Accepts traquent.enqueue params like job_name, queue, timeout, etc.
 	in addition to params to be passed to function
 
 	:param function: whitelisted function or API Method set in Server Script
 	"""
 
-	return enqueue("frappe.utils.safe_exec.call_whitelisted_function", function=function, **kwargs)
+	return enqueue("traquent.utils.safe_exec.call_whitelisted_function", function=function, **kwargs)
 
 
 def call_whitelisted_function(function, **kwargs):
@@ -419,7 +419,7 @@ def get_hooks(hook: str | None = None, default=None, app_name: str | None = None
 
 
 def read_sql(query, *args, **kwargs):
-	"""a wrapper for frappe.db.sql to allow reads"""
+	"""a wrapper for traquent.db.sql to allow reads"""
 	query = str(query)
 	check_safe_sql_query(query)
 	return traquent.db.sql(query, *args, **kwargs)

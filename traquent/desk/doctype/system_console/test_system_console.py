@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Frappe Technologies and Contributors
+# Copyright (c) 2020, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import traquent
 from traquent.tests import IntegrationTestCase, UnitTestCase
@@ -26,7 +26,7 @@ class TestSystemConsole(IntegrationTestCase):
 
 		self.assertEqual(system_console.output, "hello")
 
-		system_console.console = 'log(frappe.db.get_value("DocType", "DocType", "module"))'
+		system_console.console = 'log(traquent.db.get_value("DocType", "DocType", "module"))'
 		system_console.run()
 
 		self.assertEqual(system_console.output, "Core")

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -97,7 +97,7 @@ def get_user_permissions(user=None):
 		get_user_permissions as _get_user_permissions,
 	)
 
-	"""Return frappe.core.doctype.user_permissions.user_permissions._get_user_permissions (kept for backward compatibility)"""
+	"""Return traquent.core.doctype.user_permissions.user_permissions._get_user_permissions (kept for backward compatibility)"""
 	return _get_user_permissions(user)
 
 

@@ -1,6 +1,6 @@
-# Copyright (c) 2020, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2020, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
-# Author - Shivam Mishra <shivam@frappe.io>
+# Author - Shivam Mishra <shivam@traquent.io>
 
 from functools import wraps
 from json import JSONDecodeError, dumps, loads
@@ -704,4 +704,4 @@ def update_onboarding_step(name, field, value):
 
 	traquent.db.set_value("Onboarding Step", name, field, value)
 
-	capture(traquent.scrub(name), app="frappe_onboarding", properties={field: value})
+	capture(traquent.scrub(name), app="traquent_onboarding", properties={field: value})

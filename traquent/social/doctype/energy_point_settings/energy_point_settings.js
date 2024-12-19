@@ -1,7 +1,7 @@
-// Copyright (c) 2019, Frappe Technologies and contributors
+// Copyright (c) 2019, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Energy Point Settings", {
+traquent.ui.form.on("Energy Point Settings", {
 	refresh: function (frm) {
 		if (frm.doc.enabled) {
 			frm.add_custom_button(__("Give Review Points"), show_review_points_dialog);
@@ -10,7 +10,7 @@ frappe.ui.form.on("Energy Point Settings", {
 });
 
 function show_review_points_dialog() {
-	const dialog = new frappe.ui.Dialog({
+	const dialog = new traquent.ui.Dialog({
 		title: __("Give Review Points"),
 		fields: [
 			{
@@ -28,16 +28,16 @@ function show_review_points_dialog() {
 			},
 		],
 		primary_action: function (values) {
-			frappe
+			traquent
 				.xcall(
-					"frappe.social.doctype.energy_point_log.energy_point_log.add_review_points",
+					"traquent.social.doctype.energy_point_log.energy_point_log.add_review_points",
 					{
 						user: values.user,
 						points: values.points,
 					}
 				)
 				.then(() => {
-					frappe.show_alert({
+					traquent.show_alert({
 						message: __("Successfully Done"),
 						indicator: "green",
 					});

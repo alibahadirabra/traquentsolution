@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and Contributors
+# Copyright (c) 2019, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import traquent
 from traquent.core.doctype.user.user import get_system_users

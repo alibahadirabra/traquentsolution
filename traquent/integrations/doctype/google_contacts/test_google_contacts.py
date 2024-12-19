@@ -1,7 +1,7 @@
-# Copyright (c) 2023, Frappe Technologies and Contributors
+# Copyright (c) 2023, traquent Technologies and Contributors
 # See license.txt
 
-# import frappe
+# import traquent
 from traquent.tests import IntegrationTestCase, UnitTestCase
 
 

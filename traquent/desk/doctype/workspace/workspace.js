@@ -1,9 +1,9 @@
-// Copyright (c) 2020, Frappe Technologies and contributors
+// Copyright (c) 2020, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Workspace", {
+traquent.ui.form.on("Workspace", {
 	setup: function () {
-		frappe.meta.get_field("Workspace Link", "only_for").no_default = true;
+		traquent.meta.get_field("Workspace Link", "only_for").no_default = true;
 	},
 
 	refresh: function (frm) {
@@ -11,8 +11,8 @@ frappe.ui.form.on("Workspace", {
 
 		let url = `/app/${
 			frm.doc.public
-				? frappe.router.slug(frm.doc.title)
-				: "private/" + frappe.router.slug(frm.doc.title)
+				? traquent.router.slug(frm.doc.title)
+				: "private/" + traquent.router.slug(frm.doc.title)
 		}`;
 		frm.sidebar
 			.add_user_action(__("Go to Workspace"))
@@ -23,8 +23,8 @@ frappe.ui.form.on("Workspace", {
 		let message = __("Please click Edit on the Workspace for best results");
 
 		if (
-			(frm.doc.for_user && frm.doc.for_user !== frappe.session.user) ||
-			(frm.doc.public && !frappe.user.has_role("Workspace Manager"))
+			(frm.doc.for_user && frm.doc.for_user !== traquent.session.user) ||
+			(frm.doc.public && !traquent.user.has_role("Workspace Manager"))
 		) {
 			frm.trigger("disable_form");
 
@@ -37,7 +37,7 @@ frappe.ui.form.on("Workspace", {
 			}
 		}
 
-		if (frappe.boot.developer_mode) {
+		if (traquent.boot.developer_mode) {
 			frm.set_df_property("module", "read_only", 0);
 		}
 

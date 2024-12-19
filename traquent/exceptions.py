@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 # BEWARE don't put anything in this file except exceptions
@@ -25,7 +25,7 @@ class ValidationError(Exception):
 	http_status_code = 417
 
 
-class FrappeTypeError(TypeError):
+class traquentTypeError(TypeError):
 	http_status_code = 417
 
 
@@ -84,7 +84,7 @@ class TooManyRequestsError(Exception):
 
 class ImproperDBConfigurationError(Exception):
 	"""
-	Used when frappe detects that database or tables are not properly
+	Used when traquent detects that database or tables are not properly
 	configured
 	"""
 

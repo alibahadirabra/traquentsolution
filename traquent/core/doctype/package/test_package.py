@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies and Contributors
+# Copyright (c) 2021, traquent Technologies and Contributors
 # See license.txt
 
 import json
@@ -72,7 +72,7 @@ def make_test_module():
 			doctype="Module Def",
 			module_name="Test Module for Package",
 			custom=1,
-			app_name="frappe",
+			app_name="traquent",
 			package="Test Package",
 		).insert()
 
@@ -98,7 +98,7 @@ def make_test_server_script():
 			script_type="DocType Event",
 			reference_doctype="Test DocType for Package",
 			doctype_event="Before Save",
-			script='frappe.msgprint("Test")',
+			script='traquent.msgprint("Test")',
 		).insert()
 
 

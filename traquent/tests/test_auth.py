@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import datetime
 import time
@@ -7,10 +7,10 @@ import requests
 
 import traquent
 from traquent.auth import LoginAttemptTracker
-from traquent.frappeclient import AuthError, FrappeClient
+from traquent.traquentclient import AuthError, traquentClient
 from traquent.sessions import Session, get_expired_sessions, get_expiry_in_seconds
 from traquent.tests import IntegrationTestCase
-from traquent.tests.test_api import FrappeAPITestCase
+from traquent.tests.test_api import traquentAPITestCase
 from traquent.utils import get_datetime, get_site_url, now
 from traquent.utils.data import add_to_date
 from traquent.www.login import _generate_temporary_login_link
@@ -62,12 +62,12 @@ class TestAuth(IntegrationTestCase):
 		self.set_system_settings("allow_login_using_user_name", 0)
 
 		# Login by both email and mobile should work
-		FrappeClient(self.HOST_NAME, self.test_user_mobile, self.test_user_password)
-		FrappeClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
+		traquentClient(self.HOST_NAME, self.test_user_mobile, self.test_user_password)
+		traquentClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
 
 		# login by username should fail
 		with self.assertRaises(AuthError):
-			FrappeClient(self.HOST_NAME, self.test_user_name, self.test_user_password)
+			traquentClient(self.HOST_NAME, self.test_user_name, self.test_user_password)
 
 	def test_allow_login_using_only_email(self):
 		self.set_system_settings("allow_login_using_mobile_number", 0)
@@ -75,14 +75,14 @@ class TestAuth(IntegrationTestCase):
 
 		# Login by mobile number should fail
 		with self.assertRaises(AuthError):
-			FrappeClient(self.HOST_NAME, self.test_user_mobile, self.test_user_password)
+			traquentClient(self.HOST_NAME, self.test_user_mobile, self.test_user_password)
 
 		# login by username should fail
 		with self.assertRaises(AuthError):
-			FrappeClient(self.HOST_NAME, self.test_user_name, self.test_user_password)
+			traquentClient(self.HOST_NAME, self.test_user_name, self.test_user_password)
 
 		# Login by email should work
-		FrappeClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
+		traquentClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
 
 	def test_allow_login_using_username(self):
 		self.set_system_settings("allow_login_using_mobile_number", 0)
@@ -90,34 +90,34 @@ class TestAuth(IntegrationTestCase):
 
 		# Mobile login should fail
 		with self.assertRaises(AuthError):
-			FrappeClient(self.HOST_NAME, self.test_user_mobile, self.test_user_password)
+			traquentClient(self.HOST_NAME, self.test_user_mobile, self.test_user_password)
 
 		# Both email and username logins should work
-		FrappeClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
-		FrappeClient(self.HOST_NAME, self.test_user_name, self.test_user_password)
+		traquentClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
+		traquentClient(self.HOST_NAME, self.test_user_name, self.test_user_password)
 
 	def test_allow_login_using_username_and_mobile(self):
 		self.set_system_settings("allow_login_using_mobile_number", 1)
 		self.set_system_settings("allow_login_using_user_name", 1)
 
 		# Both email and username and mobile logins should work
-		FrappeClient(self.HOST_NAME, self.test_user_mobile, self.test_user_password)
-		FrappeClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
-		FrappeClient(self.HOST_NAME, self.test_user_name, self.test_user_password)
+		traquentClient(self.HOST_NAME, self.test_user_mobile, self.test_user_password)
+		traquentClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
+		traquentClient(self.HOST_NAME, self.test_user_name, self.test_user_password)
 
 	def test_deny_multiple_login(self):
 		self.set_system_settings("deny_multiple_sessions", 1)
 		self.addCleanup(self.set_system_settings, "deny_multiple_sessions", 0)
 
-		first_login = FrappeClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
+		first_login = traquentClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
 		first_login.get_list("ToDo")
 
-		second_login = FrappeClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
+		second_login = traquentClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
 		second_login.get_list("ToDo")
 		with self.assertRaises(Exception):
 			first_login.get_list("ToDo")
 
-		third_login = FrappeClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
+		third_login = traquentClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
 		with self.assertRaises(Exception):
 			first_login.get_list("ToDo")
 		with self.assertRaises(Exception):
@@ -125,12 +125,12 @@ class TestAuth(IntegrationTestCase):
 		third_login.get_list("ToDo")
 
 	def test_disable_user_pass_login(self):
-		FrappeClient(self.HOST_NAME, self.test_user_email, self.test_user_password).get_list("ToDo")
+		traquentClient(self.HOST_NAME, self.test_user_email, self.test_user_password).get_list("ToDo")
 		self.set_system_settings("disable_user_pass_login", 1)
 		self.addCleanup(self.set_system_settings, "disable_user_pass_login", 0)
 
 		with self.assertRaises(Exception):
-			FrappeClient(self.HOST_NAME, self.test_user_email, self.test_user_password).get_list("ToDo")
+			traquentClient(self.HOST_NAME, self.test_user_email, self.test_user_password).get_list("ToDo")
 
 	def test_login_with_email_link(self):
 		user = self.test_user_email
@@ -158,7 +158,7 @@ class TestAuth(IntegrationTestCase):
 			self.fail("Rate limting not working")
 
 	def test_correct_cookie_expiry_set(self):
-		client = FrappeClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
+		client = traquentClient(self.HOST_NAME, self.test_user_email, self.test_user_password)
 
 		expiry_time = next(x for x in client.session.cookies if x.name == "sid").expires
 		current_time = datetime.datetime.now(tz=datetime.UTC).timestamp()
@@ -204,7 +204,7 @@ class TestLoginAttemptTracker(IntegrationTestCase):
 		self.assertTrue(tracker.is_user_allowed())
 
 
-class TestSessionExpirty(FrappeAPITestCase):
+class TestSessionExpirty(traquentAPITestCase):
 	def test_session_expires(self):
 		sid = self.sid  # triggers login for test case login
 		s: Session = traquent.local.session_obj

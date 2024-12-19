@@ -1,4 +1,4 @@
-# Copyright (c) 2017, Frappe Technologies and contributors
+# Copyright (c) 2017, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -35,9 +35,9 @@ def run_webhooks(doc, method):
 	if method not in supported_events:
 		return
 
-	frappe_flags = traquent.local.flags
+	traquent_flags = traquent.local.flags
 
-	if frappe_flags.in_import or frappe_flags.in_patch or frappe_flags.in_install or frappe_flags.in_migrate:
+	if traquent_flags.in_import or traquent_flags.in_patch or traquent_flags.in_install or traquent_flags.in_migrate:
 		return
 
 	# load all webhooks from cache / DB
@@ -112,7 +112,7 @@ def flush_webhook_execution_queue():
 
 	for instance in unique_last_instances:
 		traquent.enqueue(
-			"frappe.integrations.doctype.webhook.webhook.enqueue_webhook",
+			"traquent.integrations.doctype.webhook.webhook.enqueue_webhook",
 			doc=instance.doc,
 			webhook=instance.webhook,
 			now=traquent.flags.in_test,

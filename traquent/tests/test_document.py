@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 from contextlib import contextmanager
 from datetime import timedelta
@@ -295,10 +295,10 @@ class TestDocument(IntegrationTestCase):
 			self.assertEqual(cint(old_current) - 1, new_current)
 
 	def test_non_negative_check(self):
-		traquent.delete_doc_if_exists("Currency", "Frappe Coin", 1)
+		traquent.delete_doc_if_exists("Currency", "traquent Coin", 1)
 
 		d = traquent.get_doc(
-			{"doctype": "Currency", "currency_name": "Frappe Coin", "smallest_currency_fraction_value": -1}
+			{"doctype": "Currency", "currency_name": "traquent Coin", "smallest_currency_fraction_value": -1}
 		)
 
 		self.assertRaises(traquent.NonNegativeError, d.insert)
@@ -307,7 +307,7 @@ class TestDocument(IntegrationTestCase):
 		d.insert()
 		self.assertEqual(traquent.db.get_value("Currency", d.name), d.name)
 
-		traquent.delete_doc_if_exists("Currency", "Frappe Coin", 1)
+		traquent.delete_doc_if_exists("Currency", "traquent Coin", 1)
 
 	def test_get_formatted(self):
 		traquent.get_doc(
@@ -356,12 +356,12 @@ class TestDocument(IntegrationTestCase):
 		note.insert()
 
 		def patch_note(class_=None):
-			return patch("frappe.controllers", new={traquent.local.site: {"Note": class_ or CustomTestNote}})
+			return patch("traquent.controllers", new={traquent.local.site: {"Note": class_ or CustomTestNote}})
 
 		@contextmanager
 		def customize_note(with_options=False):
 			options = (
-				"frappe.utils.now_datetime() - frappe.utils.get_datetime(doc.creation)"
+				"traquent.utils.now_datetime() - traquent.utils.get_datetime(doc.creation)"
 				if with_options
 				else ""
 			)
@@ -483,7 +483,7 @@ class TestDocument(IntegrationTestCase):
 		doc = traquent.get_doc(
 			{
 				"doctype": "ToDo",
-				"description": "this should raise frappe.DoesNotExistError",
+				"description": "this should raise traquent.DoesNotExistError",
 				"name": "lets-trick-doc-save",
 			}
 		)

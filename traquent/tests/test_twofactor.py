@@ -1,4 +1,4 @@
-# Copyright (c) 2017, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2017, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import time
 
@@ -47,7 +47,7 @@ class TestTwoFactor(IntegrationTestCase):
 		self.assertTrue(all([not user, not pwd]))
 
 	def test_authenticate_for_2factor(self):
-		"""Verification obj and tmp_id should be set in frappe.local."""
+		"""Verification obj and tmp_id should be set in traquent.local."""
 		authenticate_for_2factor(self.user)
 		verification_obj = traquent.local.response["verification"]
 		tmp_id = traquent.local.response["tmp_id"]
@@ -132,10 +132,10 @@ class TestTwoFactor(IntegrationTestCase):
 
 	def test_render_string_template(self):
 		"""String template renders as expected with variables."""
-		args = {"issuer_name": "Frappe Technologies"}
+		args = {"issuer_name": "traquent Technologies"}
 		_str = "Verification Code from {{issuer_name}}"
 		_str = traquent.render_template(_str, args)
-		self.assertEqual(_str, "Verification Code from Frappe Technologies")
+		self.assertEqual(_str, "Verification Code from traquent Technologies")
 
 	def test_bypass_restict_ip(self):
 		"""

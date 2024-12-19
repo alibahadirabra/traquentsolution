@@ -1,13 +1,13 @@
-frappe.preview_email = function (
+traquent.preview_email = function (
 	template,
 	args,
 	header,
 	with_container = false,
 	only_html = false
 ) {
-	return frappe
+	return traquent
 		.call({
-			method: "frappe.email.email_body.get_email_html",
+			method: "traquent.email.email_body.get_email_html",
 			args: {
 				subject: "Test",
 				template,
@@ -22,7 +22,7 @@ frappe.preview_email = function (
 			if (only_html) {
 				return html;
 			}
-			var d = frappe.msgprint({
+			var d = traquent.msgprint({
 				message: '<iframe width="100%" height="600px" style="border: none;"></iframe>',
 				wide: true,
 			});

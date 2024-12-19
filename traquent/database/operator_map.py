@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2023, traquent Technologies Pvt. Ltd. and Contributors
 # MIT License. See license.txt
 
 import operator
@@ -19,7 +19,7 @@ def like(key: Field, value: str) -> traquent.qb:
 	        value (str): criterion
 
 	Return:
-	        frappe.qb: `frappe.qb` object with `LIKE`
+	        traquent.qb: `traquent.qb` object with `LIKE`
 	"""
 	return key.like(value)
 
@@ -32,7 +32,7 @@ def func_in(key: Field, value: list | tuple) -> traquent.qb:
 	        value (Union[int, str]): criterion
 
 	Return:
-	        frappe.qb: `frappe.qb` object with `IN`
+	        traquent.qb: `traquent.qb` object with `IN`
 	"""
 	if isinstance(value, str):
 		value = value.split(",")
@@ -47,7 +47,7 @@ def not_like(key: Field, value: str) -> traquent.qb:
 	        value (str): criterion
 
 	Return:
-	        frappe.qb: `frappe.qb` object with `NOT LIKE`
+	        traquent.qb: `traquent.qb` object with `NOT LIKE`
 	"""
 	return key.not_like(value)
 
@@ -60,7 +60,7 @@ def func_not_in(key: Field, value: list | tuple | str):
 	        value (Union[int, str]): criterion
 
 	Return:
-	        frappe.qb: `frappe.qb` object with `NOT IN`
+	        traquent.qb: `traquent.qb` object with `NOT IN`
 	"""
 	if isinstance(value, str):
 		value = value.split(",")
@@ -75,7 +75,7 @@ def func_regex(key: Field, value: str) -> traquent.qb:
 	        value (str): criterion
 
 	Return:
-	        frappe.qb: `frappe.qb` object with `REGEX`
+	        traquent.qb: `traquent.qb` object with `REGEX`
 	"""
 	return key.regex(value)
 
@@ -88,7 +88,7 @@ def func_between(key: Field, value: list | tuple) -> traquent.qb:
 	        value (Union[int, str]): criterion
 
 	Return:
-	        frappe.qb: `frappe.qb` object with `BETWEEN`
+	        traquent.qb: `traquent.qb` object with `BETWEEN`
 	"""
 	return key[slice(*value)]
 
@@ -106,7 +106,7 @@ def func_timespan(key: Field, value: str) -> traquent.qb:
 	        value (str): criterion
 
 	Return:
-	        frappe.qb: `frappe.qb` object with `TIMESPAN`
+	        traquent.qb: `traquent.qb` object with `TIMESPAN`
 	"""
 
 	return func_between(key, get_timespan_date_range(value))

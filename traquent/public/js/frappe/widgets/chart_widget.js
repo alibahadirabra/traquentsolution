@@ -1,8 +1,8 @@
 import Widget from "./base_widget.js";
 
-frappe.provide("frappe.widget.utils");
-frappe.provide("frappe.dashboards");
-frappe.provide("frappe.dashboards.chart_sources");
+traquent.provide("traquent.widget.utils");
+traquent.provide("traquent.dashboards");
+traquent.provide("traquent.dashboards.chart_sources");
 
 export default class ChartWidget extends Widget {
 	constructor(opts) {
@@ -82,7 +82,7 @@ export default class ChartWidget extends Widget {
 		}
 
 		this.summary.forEach((summary) => {
-			frappe.utils.build_summary_item(summary).appendTo(this.$summary);
+			traquent.utils.build_summary_item(summary).appendTo(this.$summary);
 		});
 		this.summary.length && this.$summary.show();
 	}
@@ -107,7 +107,7 @@ export default class ChartWidget extends Widget {
 					this.render_time_series_filters();
 				}
 			}
-			frappe.run_serially([
+			traquent.run_serially([
 				() => this.prepare_chart_object(),
 				() => this.setup_filter_button(),
 				() => this.fetch_and_update_chart(),
@@ -117,7 +117,7 @@ export default class ChartWidget extends Widget {
 
 	render_time_series_filters() {
 		let filters = this.get_time_series_filters();
-		frappe.dashboard_utils.render_chart_filters(filters, "chart-actions", this.action_area, 0);
+		traquent.dashboard_utils.render_chart_filters(filters, "chart-actions", this.action_area, 0);
 	}
 
 	get_time_series_filters() {
@@ -126,8 +126,8 @@ export default class ChartWidget extends Widget {
 			filters = [
 				{
 					label: __(this.chart_settings.heatmap_year) || __(this.chart_doc.heatmap_year),
-					options: frappe.dashboard_utils.get_years_since_creation(
-						frappe.boot.user.creation
+					options: traquent.dashboard_utils.get_years_since_creation(
+						traquent.boot.user.creation
 					),
 					action: (selected_item) => {
 						this.selected_heatmap_year = selected_item;
@@ -230,7 +230,7 @@ export default class ChartWidget extends Widget {
 				this.head.css("flex-direction", "row-reverse");
 			}
 
-			this.date_range_field = frappe.ui.form.make_control({
+			this.date_range_field = traquent.ui.form.make_control({
 				df: {
 					fieldtype: "DateRange",
 					fieldname: "from_date",
@@ -278,10 +278,10 @@ export default class ChartWidget extends Widget {
 				color: this.chart_doc.color,
 			};
 			let columns = result.columns.map((col) => {
-				return frappe.report_utils.prepare_field_from_column(col);
+				return traquent.report_utils.prepare_field_from_column(col);
 			});
 
-			return frappe.report_utils.make_chart_options(columns, result, chart_fields).data;
+			return traquent.report_utils.make_chart_options(columns, result, chart_fields).data;
 		}
 	}
 
@@ -299,7 +299,7 @@ export default class ChartWidget extends Widget {
 				label: __("Edit"),
 				action: "action-edit",
 				handler: () => {
-					frappe.set_route("Form", "Dashboard Chart", this.chart_doc.name);
+					traquent.set_route("Form", "Dashboard Chart", this.chart_doc.name);
 				},
 			},
 			{
@@ -318,7 +318,7 @@ export default class ChartWidget extends Widget {
 				label: __("{0} List", [__(this.chart_doc.document_type)]),
 				action: "action-list",
 				handler: () => {
-					frappe.set_route("List", this.chart_doc.document_type);
+					traquent.set_route("List", this.chart_doc.document_type);
 				},
 			});
 		} else if (this.chart_doc.chart_type === "Report") {
@@ -326,7 +326,7 @@ export default class ChartWidget extends Widget {
 				label: __("{0} Report", [__(this.chart_doc.report_name)]),
 				action: "action-list",
 				handler: () => {
-					frappe.set_route("query-report", this.chart_doc.report_name, this.filters);
+					traquent.set_route("query-report", this.chart_doc.report_name, this.filters);
 				},
 			});
 		}
@@ -341,7 +341,7 @@ export default class ChartWidget extends Widget {
 
 		this.filter_button = $(
 			`<div class="filter-chart btn btn-xs pull-right">
-				${frappe.utils.icon("filter", "sm")}
+				${traquent.utils.icon("filter", "sm")}
 			</div>`
 		);
 
@@ -356,7 +356,7 @@ export default class ChartWidget extends Widget {
 			this.filter_button.on("click", () => {
 				let fields;
 
-				frappe.dashboard_utils
+				traquent.dashboard_utils
 					.get_filters_for_chart_type(this.chart_doc)
 					.then((filters) => {
 						if (!this.is_document_type) {
@@ -392,7 +392,7 @@ export default class ChartWidget extends Widget {
 
 	setup_filter_dialog(fields) {
 		let me = this;
-		let dialog = new frappe.ui.Dialog({
+		let dialog = new traquent.ui.Dialog({
 			title: __("Set Filters for {0}", [__(this.chart_doc.chart_name)]),
 			fields: fields,
 			primary_action: function () {
@@ -411,9 +411,9 @@ export default class ChartWidget extends Widget {
 
 		if (this.chart_doc.chart_type == "Report") {
 			//Set query report object so that it can be used while fetching filter values in the report
-			frappe.query_report = new frappe.views.QueryReport({ filters: dialog.fields_list });
-			frappe.query_reports[this.chart_doc.report_name].onload &&
-				frappe.query_reports[this.chart_doc.report_name].onload(frappe.query_report);
+			traquent.query_report = new traquent.views.QueryReport({ filters: dialog.fields_list });
+			traquent.query_reports[this.chart_doc.report_name].onload &&
+				traquent.query_reports[this.chart_doc.report_name].onload(traquent.query_report);
 		}
 		dialog.set_values(this.filters);
 	}
@@ -429,8 +429,8 @@ export default class ChartWidget extends Widget {
 
 	save_chart_config_for_user(config, reset = 0) {
 		Object.assign(this.chart_settings, config);
-		frappe.xcall(
-			"frappe.desk.doctype.dashboard_settings.dashboard_settings.save_chart_config",
+		traquent.xcall(
+			"traquent.desk.doctype.dashboard_settings.dashboard_settings.save_chart_config",
 			{
 				reset: reset,
 				config: this.chart_settings,
@@ -440,7 +440,7 @@ export default class ChartWidget extends Widget {
 	}
 
 	create_filter_group_and_add_filters() {
-		this.filter_group = new frappe.ui.FilterGroup({
+		this.filter_group = new traquent.ui.FilterGroup({
 			doctype: this.chart_doc.document_type,
 			parent_doctype: this.chart_doc.parent_document_type,
 			filter_button: this.filter_button,
@@ -454,7 +454,7 @@ export default class ChartWidget extends Widget {
 		});
 
 		this.filters &&
-			frappe.model.with_doctype(this.chart_doc.document_type, () => {
+			traquent.model.with_doctype(this.chart_doc.document_type, () => {
 				this.filter_group.add_filters_to_filter_group(this.filters);
 			});
 	}
@@ -512,7 +512,7 @@ export default class ChartWidget extends Widget {
 				heatmap_year: args && args.heatmap_year ? args.heatmap_year : null,
 			};
 		}
-		return frappe.xcall(method, args);
+		return traquent.xcall(method, args);
 	}
 
 	async get_source_doctype() {
@@ -520,7 +520,7 @@ export default class ChartWidget extends Widget {
 			return this.chart_doc.document_type;
 		}
 		if (this.chart_doc.chart_type == "Report" && this.chart_doc.report_name) {
-			return await frappe.db
+			return await traquent.db
 				.get_value("Report", this.chart_doc.report_name, "ref_doctype")
 				.then((r) => r.message.ref_doctype);
 		}
@@ -531,7 +531,7 @@ export default class ChartWidget extends Widget {
 			const chart_args = this.get_chart_args();
 
 			if (!this.dashboard_chart) {
-				this.dashboard_chart = frappe.utils.make_chart(this.chart_wrapper[0], chart_args);
+				this.dashboard_chart = traquent.utils.make_chart(this.chart_wrapper[0], chart_args);
 			} else {
 				this.dashboard_chart.update(this.data);
 			}
@@ -549,7 +549,7 @@ export default class ChartWidget extends Widget {
 			this.chart_doc.document_type = await this.get_source_doctype();
 
 			if (this.chart_doc.document_type) {
-				frappe.model.with_doctype(this.chart_doc.document_type, setup_dashboard_chart);
+				traquent.model.with_doctype(this.chart_doc.document_type, setup_dashboard_chart);
 			} else {
 				setup_dashboard_chart();
 			}
@@ -586,7 +586,7 @@ export default class ChartWidget extends Widget {
 		};
 
 		if (this.chart_doc.document_type) {
-			let doctype_meta = frappe.get_meta(this.chart_doc.document_type);
+			let doctype_meta = traquent.get_meta(this.chart_doc.document_type);
 			let field = doctype_meta.fields.find(
 				(x) => x.fieldname == this.chart_doc.value_based_on
 			);
@@ -607,7 +607,7 @@ export default class ChartWidget extends Widget {
 
 		chart_args.tooltipOptions = {
 			formatTooltipY: (value) =>
-				frappe.format(
+				traquent.format(
 					value,
 					{ fieldtype, options },
 					{ always_show_decimals: true, inline: true }
@@ -710,7 +710,7 @@ export default class ChartWidget extends Widget {
 	}
 
 	update_chart_object() {
-		frappe.db.get_doc("Dashboard Chart", this.chart_doc.name).then((doc) => {
+		traquent.db.get_doc("Dashboard Chart", this.chart_doc.name).then((doc) => {
 			this.chart_doc = doc;
 			this.update_last_synced();
 		});
@@ -718,8 +718,8 @@ export default class ChartWidget extends Widget {
 
 	prepare_chart_object() {
 		if (this.chart_doc.type == "Heatmap" && !this.chart_doc.heatmap_year) {
-			this.chart_doc.heatmap_year = frappe.dashboard_utils.get_year(
-				frappe.datetime.now_date()
+			this.chart_doc.heatmap_year = traquent.dashboard_utils.get_year(
+				traquent.datetime.now_date()
 			);
 		}
 
@@ -728,10 +728,10 @@ export default class ChartWidget extends Widget {
 
 	set_chart_filters() {
 		let user_saved_filters = this.chart_settings.filters || null;
-		let chart_saved_filters = frappe.dashboard_utils.get_all_filters(this.chart_doc);
+		let chart_saved_filters = traquent.dashboard_utils.get_all_filters(this.chart_doc);
 
 		if (this.chart_doc.chart_type == "Report") {
-			return frappe.dashboard_utils
+			return traquent.dashboard_utils
 				.get_filters_for_chart_type(this.chart_doc)
 				.then((filters) => {
 					chart_saved_filters = this.update_default_date_filters(
@@ -739,15 +739,15 @@ export default class ChartWidget extends Widget {
 						chart_saved_filters
 					);
 					this.filters =
-						frappe.utils.parse_array(user_saved_filters) ||
-						frappe.utils.parse_array(this.filters) ||
-						frappe.utils.parse_array(chart_saved_filters);
+						traquent.utils.parse_array(user_saved_filters) ||
+						traquent.utils.parse_array(this.filters) ||
+						traquent.utils.parse_array(chart_saved_filters);
 				});
 		} else {
 			this.filters =
-				frappe.utils.parse_array(user_saved_filters) ||
-				frappe.utils.parse_array(this.filters) ||
-				frappe.utils.parse_array(chart_saved_filters);
+				traquent.utils.parse_array(user_saved_filters) ||
+				traquent.utils.parse_array(this.filters) ||
+				traquent.utils.parse_array(chart_saved_filters);
 			return Promise.resolve();
 		}
 	}
@@ -766,33 +766,33 @@ export default class ChartWidget extends Widget {
 	}
 
 	get_settings() {
-		return frappe.model.with_doc("Dashboard Chart", this.chart_name).then((chart_doc) => {
+		return traquent.model.with_doc("Dashboard Chart", this.chart_name).then((chart_doc) => {
 			if (chart_doc) {
 				this.chart_doc = chart_doc;
 				if (this.chart_doc.chart_type == "Custom") {
 					// custom source
-					if (frappe.dashboards.chart_sources[this.chart_doc.source]) {
-						this.settings = frappe.dashboards.chart_sources[this.chart_doc.source];
+					if (traquent.dashboards.chart_sources[this.chart_doc.source]) {
+						this.settings = traquent.dashboards.chart_sources[this.chart_doc.source];
 						return Promise.resolve();
 					} else {
 						const method =
-							"frappe.desk.doctype.dashboard_chart_source.dashboard_chart_source.get_config";
-						return frappe
+							"traquent.desk.doctype.dashboard_chart_source.dashboard_chart_source.get_config";
+						return traquent
 							.xcall(method, { name: this.chart_doc.source })
 							.then((config) => {
-								frappe.dom.eval(config);
+								traquent.dom.eval(config);
 								this.settings =
-									frappe.dashboards.chart_sources[this.chart_doc.source];
+									traquent.dashboards.chart_sources[this.chart_doc.source];
 							});
 					}
 				} else if (this.chart_doc.chart_type == "Report") {
 					this.settings = {
-						method: "frappe.desk.query_report.run",
+						method: "traquent.desk.query_report.run",
 					};
 					return Promise.resolve();
 				} else {
 					this.settings = {
-						method: "frappe.desk.doctype.dashboard_chart.dashboard_chart.get",
+						method: "traquent.desk.doctype.dashboard_chart.dashboard_chart.get",
 					};
 					return Promise.resolve();
 				}

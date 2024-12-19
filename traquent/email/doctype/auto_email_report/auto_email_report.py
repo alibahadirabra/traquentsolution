@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies and contributors
+# Copyright (c) 2015, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import calendar
@@ -192,7 +192,7 @@ class AutoEmailReport(Document):
 		report_doctype = traquent.db.get_value("Report", self.report, "ref_doctype")
 
 		return traquent.render_template(
-			"frappe/templates/emails/auto_email_report.html",
+			"traquent/templates/emails/auto_email_report.html",
 			{
 				"title": self.name,
 				"description": self.description,

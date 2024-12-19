@@ -406,7 +406,7 @@ select.input-xs {
 	}
 }
 
-// .frappe-card {
+// .traquent-card {
 // 	@include card();
 // }
 
@@ -443,7 +443,7 @@ kbd {
 	color: var(--criticism-color) !important;
 }
 
-.frappe-timestamp {
+.traquent-timestamp {
 	cursor: default;
 }
 
@@ -538,7 +538,7 @@ kbd {
 
 /*rtl styles*/
 
-.frappe-rtl {
+.traquent-rtl {
 	text-align: right;
 	.modal-actions {
 		right: auto !important;
@@ -646,12 +646,12 @@ details > summary:focus {
 	display: none;
 }
 
-.highlight:not(.frappe-control) {
+.highlight:not(.traquent-control) {
 	transition: 0.5s ease background-color;
 	box-shadow: var(--highlight-shadow) !important;
 }
 
-.frappe-control.highlight {
+.traquent-control.highlight {
 	--wrap-padding: calc(-1 * var(--padding-sm));
 	&::after {
 		content: " ";

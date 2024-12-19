@@ -1,3 +1,3 @@
 import Driver from "driver.js";
 
-frappe.Driver = Driver;
+traquent.Driver = Driver;

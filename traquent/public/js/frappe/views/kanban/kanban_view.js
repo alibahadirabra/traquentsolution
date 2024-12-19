@@ -1,21 +1,21 @@
 import KanbanSettings from "./kanban_settings";
 
-frappe.provide("frappe.views");
+traquent.provide("traquent.views");
 
-frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
+traquent.views.KanbanView = class KanbanView extends traquent.views.ListView {
 	static full_page = true;
 
 	static load_last_view() {
-		const route = frappe.get_route();
+		const route = traquent.get_route();
 		if (route.length === 3) {
 			const doctype = route[1];
-			const user_settings = frappe.get_user_settings(doctype)["Kanban"] || {};
+			const user_settings = traquent.get_user_settings(doctype)["Kanban"] || {};
 			if (!user_settings.last_kanban_board) {
-				return new frappe.views.KanbanView({ doctype: doctype });
+				return new traquent.views.KanbanView({ doctype: doctype });
 			}
 
 			route.push(user_settings.last_kanban_board);
-			frappe.set_route(route);
+			traquent.set_route(route);
 			return true;
 		}
 		return false;
@@ -26,15 +26,15 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 	}
 
 	show() {
-		frappe.views.KanbanView.get_kanbans(this.doctype).then((kanbans) => {
+		traquent.views.KanbanView.get_kanbans(this.doctype).then((kanbans) => {
 			if (!kanbans.length) {
-				return frappe.views.KanbanView.show_kanban_dialog(this.doctype, true);
-			} else if (kanbans.length && frappe.get_route().length !== 4) {
-				return frappe.views.KanbanView.show_kanban_dialog(this.doctype, true);
+				return traquent.views.KanbanView.show_kanban_dialog(this.doctype, true);
+			} else if (kanbans.length && traquent.get_route().length !== 4) {
+				return traquent.views.KanbanView.show_kanban_dialog(this.doctype, true);
 			} else {
 				this.kanbans = kanbans;
 
-				return frappe.run_serially([
+				return traquent.run_serially([
 					() => this.show_skeleton(),
 					() => this.fetch_meta(),
 					() => this.hide_skeleton(),
@@ -63,12 +63,12 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 				return this.kanbans.length && this.kanbans[0].name;
 			};
 
-			this.board_name = frappe.get_route()[3] || get_board_name() || null;
+			this.board_name = traquent.get_route()[3] || get_board_name() || null;
 			this.page_title = __(this.board_name);
 			this.card_meta = this.get_card_meta();
 			this.page_length = 0;
 
-			return frappe.run_serially([
+			return traquent.run_serially([
 				() => this.set_board_perms_and_push_menu_items(),
 				() => this.get_board(),
 			]);
@@ -77,8 +77,8 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 
 	set_board_perms_and_push_menu_items() {
 		// needs server-side call as client-side document instance is absent before kanban render
-		return frappe.call({
-			method: "frappe.client.get_doc_permissions",
+		return traquent.call({
+			method: "traquent.client.get_doc_permissions",
 			args: {
 				doctype: "Kanban Board",
 				docname: this.board_name,
@@ -104,10 +104,10 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 			this.menu_items.push({
 				label: __("Delete Kanban Board"),
 				action: () => {
-					frappe.confirm(__("Are you sure you want to proceed?"), () => {
-						frappe.db.delete_doc("Kanban Board", this.board_name).then(() => {
-							frappe.show_alert(`Kanban Board ${this.board_name} deleted.`);
-							frappe.set_route("List", this.doctype, "List");
+					traquent.confirm(__("Are you sure you want to proceed?"), () => {
+						traquent.db.delete_doc("Kanban Board", this.board_name).then(() => {
+							traquent.show_alert(`Kanban Board ${this.board_name} deleted.`);
+							traquent.set_route("List", this.doctype, "List");
 						});
 					});
 				},
@@ -124,7 +124,7 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 	}
 
 	get_board() {
-		return frappe.db.get_doc("Kanban Board", this.board_name).then((board) => {
+		return traquent.db.get_doc("Kanban Board", this.board_name).then((board) => {
 			this.board = board;
 			this.board.filters_array = JSON.parse(this.board.filters || "[]");
 			this.board.fields = JSON.parse(this.board.fields || "[]");
@@ -157,7 +157,7 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 	}
 
 	before_render() {
-		frappe.model.user_settings.save(this.doctype, "last_view", this.view_name);
+		traquent.model.user_settings.save(this.doctype, "last_view", this.view_name);
 		this.save_view_user_settings({
 			last_kanban_board: this.board_name,
 		});
@@ -178,15 +178,15 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 	save_kanban_board_filters() {
 		const filters = this.filter_area.get();
 
-		frappe.db.set_value("Kanban Board", this.board_name, "filters", filters).then((r) => {
+		traquent.db.set_value("Kanban Board", this.board_name, "filters", filters).then((r) => {
 			if (r.exc) {
-				frappe.show_alert({
+				traquent.show_alert({
 					indicator: "red",
 					message: __("There was an error saving filters"),
 				});
 				return;
 			}
-			frappe.show_alert({
+			traquent.show_alert({
 				indicator: "green",
 				message: __("Filters saved"),
 			});
@@ -204,7 +204,7 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 	render() {
 		const board_name = this.board_name;
 		if (!this.kanban) {
-			this.kanban = new frappe.views.KanbanBoard({
+			this.kanban = new traquent.views.KanbanBoard({
 				doctype: this.doctype,
 				board: this.board,
 				board_name: board_name,
@@ -220,16 +220,16 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 	}
 
 	get_card_meta() {
-		var meta = frappe.get_meta(this.doctype);
+		var meta = traquent.get_meta(this.doctype);
 		// preserve route options erased by new doc
-		let route_options = { ...frappe.route_options };
-		var doc = frappe.model.get_new_doc(this.doctype);
-		frappe.route_options = route_options;
+		let route_options = { ...traquent.route_options };
+		var doc = traquent.model.get_new_doc(this.doctype);
+		traquent.route_options = route_options;
 		var title_field = null;
 		var quick_entry = false;
 
 		if (this.meta.title_field) {
-			title_field = frappe.meta.get_field(this.doctype, this.meta.title_field);
+			title_field = traquent.meta.get_field(this.doctype, this.meta.title_field);
 		}
 
 		this.meta.fields.forEach((df) => {
@@ -246,14 +246,14 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 		var mandatory = meta.fields.filter((df) => df.reqd && !doc[df.fieldname]);
 
 		if (
-			mandatory.some((df) => frappe.model.table_fields.includes(df.fieldtype)) ||
+			mandatory.some((df) => traquent.model.table_fields.includes(df.fieldtype)) ||
 			mandatory.length > 1
 		) {
 			quick_entry = true;
 		}
 
 		if (!title_field) {
-			title_field = frappe.meta.get_field(this.doctype, "name");
+			title_field = traquent.meta.get_field(this.doctype, "name");
 		}
 
 		return {
@@ -271,12 +271,12 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 	}
 
 	show_kanban_settings() {
-		frappe.model.with_doctype(this.doctype, () => {
+		traquent.model.with_doctype(this.doctype, () => {
 			new KanbanSettings({
 				kanbanview: this,
 				doctype: this.doctype,
 				settings: this.board,
-				meta: frappe.get_meta(this.doctype),
+				meta: traquent.get_meta(this.doctype),
 			});
 		});
 	}
@@ -286,13 +286,13 @@ frappe.views.KanbanView = class KanbanView extends frappe.views.ListView {
 	}
 };
 
-frappe.views.KanbanView.get_kanbans = function (doctype) {
+traquent.views.KanbanView.get_kanbans = function (doctype) {
 	let kanbans = [];
 
 	return get_kanban_boards().then((kanban_boards) => {
 		if (kanban_boards) {
 			kanban_boards.forEach((board) => {
-				let route = `/app/${frappe.router.slug(board.reference_doctype)}/view/kanban/${
+				let route = `/app/${traquent.router.slug(board.reference_doctype)}/view/kanban/${
 					board.name
 				}`;
 				kanbans.push({ name: board.name, route: route });
@@ -303,19 +303,19 @@ frappe.views.KanbanView.get_kanbans = function (doctype) {
 	});
 
 	function get_kanban_boards() {
-		return frappe
-			.call("frappe.desk.doctype.kanban_board.kanban_board.get_kanban_boards", { doctype })
+		return traquent
+			.call("traquent.desk.doctype.kanban_board.kanban_board.get_kanban_boards", { doctype })
 			.then((r) => r.message);
 	}
 };
 
-frappe.views.KanbanView.show_kanban_dialog = function (doctype) {
+traquent.views.KanbanView.show_kanban_dialog = function (doctype) {
 	let dialog = new_kanban_dialog();
 	dialog.show();
 
 	function make_kanban_board(board_name, field_name, project) {
-		return frappe.call({
-			method: "frappe.desk.doctype.kanban_board.kanban_board.quick_kanban_board",
+		return traquent.call({
+			method: "traquent.desk.doctype.kanban_board.kanban_board.quick_kanban_board",
 			args: {
 				doctype,
 				board_name,
@@ -325,10 +325,10 @@ frappe.views.KanbanView.show_kanban_dialog = function (doctype) {
 			callback: function (r) {
 				var kb = r.message;
 				if (kb.filters) {
-					frappe.provide("frappe.kanban_filters");
-					frappe.kanban_filters[kb.kanban_board_name] = kb.filters;
+					traquent.provide("traquent.kanban_filters");
+					traquent.kanban_filters[kb.kanban_board_name] = kb.filters;
 				}
-				frappe.set_route("List", doctype, "Kanban", kb.kanban_board_name);
+				traquent.set_route("List", doctype, "Kanban", kb.kanban_board_name);
 			},
 		});
 	}
@@ -337,7 +337,7 @@ frappe.views.KanbanView.show_kanban_dialog = function (doctype) {
 		/* Kanban dialog can show either "Save" or "Customize Form" option depending if any Select fields exist in the DocType for Kanban creation
 		 */
 
-		const select_fields = frappe.get_meta(doctype).fields.filter((df) => {
+		const select_fields = traquent.get_meta(doctype).fields.filter((df) => {
 			return df.fieldtype === "Select" && df.fieldname !== "kanban_column";
 		});
 		const dialog_fields = get_fields_for_dialog(select_fields);
@@ -350,14 +350,14 @@ frappe.views.KanbanView.show_kanban_dialog = function (doctype) {
 				const values = dialog.get_values();
 				make_kanban_board(values.board_name, values.field_name, values.project).then(
 					() => dialog.hide(),
-					(err) => frappe.msgprint(err)
+					(err) => traquent.msgprint(err)
 				);
 			} else {
-				frappe.set_route("Form", "Customize Form", { doc_type: doctype });
+				traquent.set_route("Form", "Customize Form", { doc_type: doctype });
 			}
 		};
 
-		return new frappe.ui.Dialog({
+		return new traquent.ui.Dialog({
 			title: dialog_title,
 			fields: dialog_fields,
 			primary_action_label,

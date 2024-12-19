@@ -1,4 +1,4 @@
-frappe.ui.form.ControlDynamicLink = class ControlDynamicLink extends frappe.ui.form.ControlLink {
+traquent.ui.form.ControlDynamicLink = class ControlDynamicLink extends traquent.ui.form.ControlLink {
 	get_options() {
 		let options = "";
 		if (this.df.get_options) {
@@ -20,11 +20,11 @@ frappe.ui.form.ControlDynamicLink = class ControlDynamicLink extends frappe.ui.f
 				options = input.val();
 			}
 		} else {
-			options = frappe.model.get_value(this.df.parent, this.docname, this.df.options);
+			options = traquent.model.get_value(this.df.parent, this.docname, this.df.options);
 		}
 
-		if (frappe.model.is_single(options)) {
-			frappe.throw(__("{0} is not a valid DocType for Dynamic Link", [options.bold()]));
+		if (traquent.model.is_single(options)) {
+			traquent.throw(__("{0} is not a valid DocType for Dynamic Link", [options.bold()]));
 		}
 
 		return options;

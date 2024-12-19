@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 """build query for doclistview and return results"""
@@ -42,7 +42,7 @@ def get_list():
 		controller = get_controller(args.doctype)
 		data = traquent.call(controller.get_list, args=args, **args)
 	else:
-		# uncompressed (refactored from frappe.model.db_query.get_list)
+		# uncompressed (refactored from traquent.model.db_query.get_list)
 		data = execute(**args)
 
 	return data
@@ -532,7 +532,7 @@ def delete_items():
 	doctype = traquent.form_dict.get("doctype")
 
 	if len(items) > 10:
-		traquent.enqueue("frappe.desk.reportview.delete_bulk", doctype=doctype, items=items)
+		traquent.enqueue("traquent.desk.reportview.delete_bulk", doctype=doctype, items=items)
 	else:
 		delete_bulk(doctype, items)
 

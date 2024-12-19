@@ -1,4 +1,4 @@
-# Copyright (c) 2018, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2018, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import io
 
@@ -25,9 +25,9 @@ class TestPdf(IntegrationTestCase):
 				<a href="http://test.com">Test link 1</a>
 				<a href="/about">Test link 2</a>
 				<a href="login">Test link 3</a>
-				<img src="/assets/frappe/test.jpg">
+				<img src="/assets/traquent/test.jpg">
 			</div>
-			<div style="background-image: url('/assets/frappe/bg.jpg')">
+			<div style="background-image: url('/assets/traquent/bg.jpg')">
 				Please mail us at <a href="mailto:test@example.com">email</a>
 			</div>"""
 

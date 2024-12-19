@@ -257,7 +257,7 @@ def trace_fields(
 	doc_class.__init__ = original_init
 
 
-# NOTE: declare those who should also be made available directly frappe.tests.* namespace
+# NOTE: declare those who should also be made available directly traquent.tests.* namespace
 # these can be general purpose context managers who do NOT depend on a particular
 # test class setup, such as for example the IntegrationTestCase's connection to site
 __all__ = [

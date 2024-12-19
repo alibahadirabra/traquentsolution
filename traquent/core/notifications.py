@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -9,8 +9,8 @@ def get_notification_config():
 		"for_doctype": {
 			"Error Log": {"seen": 0},
 			"Communication": {"status": "Open", "communication_type": "Communication"},
-			"ToDo": "frappe.core.notifications.get_things_todo",
-			"Event": "frappe.core.notifications.get_todays_events",
+			"ToDo": "traquent.core.notifications.get_things_todo",
+			"Event": "traquent.core.notifications.get_todays_events",
 			"Workflow Action": {"status": "Open"},
 		},
 	}

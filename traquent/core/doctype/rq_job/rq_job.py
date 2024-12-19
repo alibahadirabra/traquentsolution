@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies and contributors
+# Copyright (c) 2022, traquent Technologies and contributors
 # For license information, please see license.txt
 
 import functools
@@ -132,7 +132,7 @@ def serialize_job(job: Job) -> traquent._dict:
 	modified = job.last_heartbeat or job.ended_at or job.started_at or job.created_at
 	job_kwargs = job.kwargs.get("kwargs", {})
 	job_name = job_kwargs.get("job_type") or str(job.kwargs.get("job_name"))
-	if job_name == "frappe.utils.background_jobs.run_doc_method":
+	if job_name == "traquent.utils.background_jobs.run_doc_method":
 		doctype = job_kwargs.get("doctype")
 		doc_method = job_kwargs.get("doc_method")
 		if doctype and doc_method:

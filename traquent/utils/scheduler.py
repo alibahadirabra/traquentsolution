@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 """
 Events:
@@ -38,7 +38,7 @@ def cprint(*args, **kwargs):
 
 
 def _proctitle(message):
-	setproctitle.setthreadtitle(f"frappe-scheduler: {message}")
+	setproctitle.setthreadtitle(f"traquent-scheduler: {message}")
 
 
 def start_scheduler() -> NoReturn:
@@ -144,7 +144,7 @@ def is_scheduler_inactive(verbose=True) -> bool:
 
 	if traquent.local.conf.pause_scheduler:
 		if verbose:
-			cprint(f"{traquent.local.site}: frappe.conf.pause_scheduler is SET")
+			cprint(f"{traquent.local.site}: traquent.conf.pause_scheduler is SET")
 		return True
 
 	if is_scheduler_disabled(verbose=verbose):
@@ -156,7 +156,7 @@ def is_scheduler_inactive(verbose=True) -> bool:
 def is_scheduler_disabled(verbose=True) -> bool:
 	if traquent.conf.disable_scheduler:
 		if verbose:
-			cprint(f"{traquent.local.site}: frappe.conf.disable_scheduler is SET")
+			cprint(f"{traquent.local.site}: traquent.conf.disable_scheduler is SET")
 		return True
 
 	scheduler_disabled = not traquent.utils.cint(

@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import re
@@ -93,7 +93,7 @@ class TestSearch(IntegrationTestCase):
 			return search_link(
 				doctype="DocType",
 				txt=txt,
-				query="frappe.core.report.permitted_documents_for_user.permitted_documents_for_user.query_doctypes",
+				query="traquent.core.report.permitted_documents_for_user.permitted_documents_for_user.query_doctypes",
 				filters={"user": "Administrator"},
 				page_length=20,
 				searchfield=None,
@@ -140,10 +140,10 @@ class TestSearch(IntegrationTestCase):
 		# return empty string if passed doctype is invalid
 		self.assertListEqual(get_data("Random DocType", "Random", "email", "2", "10", dict()), [])
 
-		# should not fail if function is called via frappe.call with extra arguments
+		# should not fail if function is called via traquent.call with extra arguments
 		args = ("Random DocType", "Random", "email", "2", "10", dict())
 		kwargs = {"as_dict": False}
-		self.assertListEqual(traquent.call("frappe.tests.test_search.get_data", *args, **kwargs), [])
+		self.assertListEqual(traquent.call("traquent.tests.test_search.get_data", *args, **kwargs), [])
 
 		# should not fail if query has @ symbol in it
 		results = search_link("User", "user@random", searchfield="name")
@@ -157,7 +157,7 @@ class TestSearch(IntegrationTestCase):
 			filters=None,
 			page_length=20,
 			reference_doctype="ToDo",
-			query="frappe.tests.test_search.query_with_reference_doctype",
+			query="traquent.tests.test_search.query_with_reference_doctype",
 		)
 		self.assertListEqual(results, [])
 

@@ -1,14 +1,14 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 """
-Frappe - Low Code Open Source Framework in Python and JS
+traquent - Low Code Open Source Framework in Python and JS
 
-Frappe, pronounced fra-pay, is a full stack, batteries-included, web
+traquent, pronounced fra-pay, is a full stack, batteries-included, web
 framework written in Python and Javascript with MariaDB as the database.
 It is the framework which powers ERPNext. It is pretty generic and can
 be used to build database driven apps.
 
-Read the documentation: https://frappeframework.com/docs
+Read the documentation: https://traquentframework.com/docs
 """
 
 import copy
@@ -52,7 +52,7 @@ from .utils.jinja import (
 )
 
 __version__ = "16.0.0-dev"
-__title__ = "Frappe Framework"
+__title__ = "traquent Framework"
 
 controllers = {}
 local = Local()
@@ -61,7 +61,7 @@ STANDARD_USERS = ("Guest", "Administrator")
 
 _qb_patched = {}
 _dev_server = int(sbool(os.environ.get("DEV_SERVER", False)))
-_tune_gc = bool(sbool(os.environ.get("FRAPPE_TUNE_GC", True)))
+_tune_gc = bool(sbool(os.environ.get("traquent_TUNE_GC", True)))
 
 if _dev_server:
 	warnings.simplefilter("always", DeprecationWarning)
@@ -134,7 +134,7 @@ def _lt(msg: str, lang: str | None = None, context: str | None = None):
 	translation first before casting.
 
 	This is only useful for translating strings in global scope or anything that potentially runs
-	before `frappe.init()`
+	before `traquent.init()`
 
 	Note: Result is not guaranteed to equivalent to pure strings for all operations.
 	"""
@@ -192,7 +192,7 @@ def as_unicode(text, encoding: str = "utf-8") -> str:
 
 
 def set_user_lang(user: str, user_language: str | None = None) -> None:
-	"""Guess and set user language for the session. `frappe.local.lang`"""
+	"""Guess and set user language for the session. `traquent.local.lang`"""
 	from traquent.translate import get_user_lang
 
 	local.lang = get_user_lang(user) or user_language
@@ -247,7 +247,7 @@ if TYPE_CHECKING:  # pragma: no cover
 
 
 def init(site: str, sites_path: str = ".", new_site: bool = False, force=False) -> None:
-	"""Initialize frappe for the current site. Reset thread locals `frappe.local`"""
+	"""Initialize traquent for the current site. Reset thread locals `traquent.local`"""
 	if getattr(local, "initialised", None) and not force:
 		return
 
@@ -319,7 +319,7 @@ def init(site: str, sites_path: str = ".", new_site: bool = False, force=False) 
 def connect(site: str | None = None, db_name: str | None = None, set_admin_as_user: bool = True) -> None:
 	"""Connect to site database instance.
 
-	:param site: (Deprecated) If site is given, calls `frappe.init`.
+	:param site: (Deprecated) If site is given, calls `traquent.init`.
 	:param db_name: (Deprecated) Optional. Will use from `site_config.json`.
 	:param set_admin_as_user: Set Administrator as current user.
 	"""
@@ -331,8 +331,8 @@ def connect(site: str | None = None, db_name: str | None = None, set_admin_as_us
 		deprecation_warning(
 			"unknown",
 			"v17",
-			"Calling frappe.connect with the site argument is deprecated and will be removed in next major version. "
-			"Instead, explicitly invoke frappe.init(site) prior to calling frappe.connect(), if initializing the site is necessary.",
+			"Calling traquent.connect with the site argument is deprecated and will be removed in next major version. "
+			"Instead, explicitly invoke traquent.init(site) prior to calling traquent.connect(), if initializing the site is necessary.",
 		)
 		init(site)
 	if db_name:
@@ -341,8 +341,8 @@ def connect(site: str | None = None, db_name: str | None = None, set_admin_as_us
 		deprecation_warning(
 			"unknown",
 			"v17",
-			"Calling frappe.connect with the db_name argument is deprecated and will be removed in next major version. "
-			"Instead, explicitly invoke frappe.init(site) with the right config prior to calling frappe.connect(), if necessary.",
+			"Calling traquent.connect with the db_name argument is deprecated and will be removed in next major version. "
+			"Instead, explicitly invoke traquent.init(site) with the right config prior to calling traquent.connect(), if necessary.",
 		)
 
 	assert db_name or local.conf.db_user, "site must be fully initialized, db_user missing"
@@ -437,26 +437,26 @@ def get_site_config(sites_path: str | None = None, site_path: str | None = None)
 		raise ValueError(f"Unsupported db_type={db_type}")
 
 	config["redis_queue"] = (
-		os.environ.get("FRAPPE_REDIS_QUEUE") or config.get("redis_queue") or "redis://127.0.0.1:11311"
+		os.environ.get("traquent_REDIS_QUEUE") or config.get("redis_queue") or "redis://127.0.0.1:11311"
 	)
 	config["redis_cache"] = (
-		os.environ.get("FRAPPE_REDIS_CACHE") or config.get("redis_cache") or "redis://127.0.0.1:13311"
+		os.environ.get("traquent_REDIS_CACHE") or config.get("redis_cache") or "redis://127.0.0.1:13311"
 	)
-	config["db_type"] = os.environ.get("FRAPPE_DB_TYPE") or config.get("db_type") or "mariadb"
-	config["db_socket"] = os.environ.get("FRAPPE_DB_SOCKET") or config.get("db_socket")
-	config["db_host"] = os.environ.get("FRAPPE_DB_HOST") or config.get("db_host") or "127.0.0.1"
+	config["db_type"] = os.environ.get("traquent_DB_TYPE") or config.get("db_type") or "mariadb"
+	config["db_socket"] = os.environ.get("traquent_DB_SOCKET") or config.get("db_socket")
+	config["db_host"] = os.environ.get("traquent_DB_HOST") or config.get("db_host") or "127.0.0.1"
 	config["db_port"] = int(
-		os.environ.get("FRAPPE_DB_PORT") or config.get("db_port") or db_default_ports(config["db_type"])
+		os.environ.get("traquent_DB_PORT") or config.get("db_port") or db_default_ports(config["db_type"])
 	)
 
 	# Set the user as database name if not set in config
-	config["db_user"] = os.environ.get("FRAPPE_DB_USER") or config.get("db_user") or config.get("db_name")
+	config["db_user"] = os.environ.get("traquent_DB_USER") or config.get("db_user") or config.get("db_name")
 
 	# vice versa for dbname if not defined
-	config["db_name"] = os.environ.get("FRAPPE_DB_NAME") or config.get("db_name") or config["db_user"]
+	config["db_name"] = os.environ.get("traquent_DB_NAME") or config.get("db_name") or config["db_user"]
 
 	# read password
-	config["db_password"] = os.environ.get("FRAPPE_DB_PASSWORD") or config.get("db_password")
+	config["db_password"] = os.environ.get("traquent_DB_PASSWORD") or config.get("db_password")
 
 	# Allow externally extending the config with hooks
 	if extra_config := config.get("extra_config"):
@@ -523,7 +523,7 @@ def destroy():
 
 
 def setup_redis_cache_connection():
-	"""Defines `frappe.cache` as `RedisWrapper` instance"""
+	"""Defines `traquent.cache` as `RedisWrapper` instance"""
 	global cache
 
 	if not cache:
@@ -608,8 +608,8 @@ def msgprint(
 				exc = raise_exception(msg)
 			else:
 				exc = ValidationError(msg)
-			if out.__frappe_exc_id:
-				exc.__frappe_exc_id = out.__frappe_exc_id
+			if out.__traquent_exc_id:
+				exc.__traquent_exc_id = out.__traquent_exc_id
 			raise exc
 
 	if flags.mute_messages:
@@ -647,7 +647,7 @@ def msgprint(
 
 	if raise_exception:
 		out.raise_exception = 1
-		out.__frappe_exc_id = generate_hash()
+		out.__traquent_exc_id = generate_hash()
 
 	if primary_action:
 		out.primary_action = primary_action
@@ -691,7 +691,7 @@ def throw(
 	"""Throw execption and show message (`msgprint`).
 
 	:param msg: Message.
-	:param exc: Exception class. Default `frappe.ValidationError`
+	:param exc: Exception class. Default `traquent.ValidationError`
 	:param title: [optional] Message title. Default: "Message".
 	:param is_minimizable: [optional] Allow users to minimize the modal
 	:param wide: [optional] Show wide modal
@@ -910,7 +910,7 @@ def whitelist(allow_guest=False, xss_safe=False, methods=None):
 
 	Use as:
 
-	        @frappe.whitelist()
+	        @traquent.whitelist()
 	        def myfunc(param1, param2):
 	                pass
 	"""
@@ -971,7 +971,7 @@ def read_only():
 	def innfn(fn):
 		@functools.wraps(fn)
 		def wrapper_fn(*args, **kwargs):
-			# frappe.read_only could be called from nested functions, in such cases don't swap the
+			# traquent.read_only could be called from nested functions, in such cases don't swap the
 			# connection again.
 			switched_connection = False
 			if conf.read_from_replica:
@@ -1019,7 +1019,7 @@ def write_only():
 
 def only_for(roles: list[str] | tuple[str] | str, message=False):
 	"""
-	Raises `frappe.PermissionError` if the user does not have any of the permitted roles.
+	Raises `traquent.PermissionError` if the user does not have any of the permitted roles.
 
 	:param roles: Permitted role(s)
 	"""
@@ -1122,7 +1122,7 @@ def has_permission(
 	"""
 	Return True if the user has permission `ptype` for given `doctype` or `doc`.
 
-	Raise `frappe.PermissionError` if user isn't permitted and `throw` is truthy
+	Raise `traquent.PermissionError` if user isn't permitted and `throw` is truthy
 
 	:param doctype: DocType for which permission is to be check.
 	:param ptype: Permission type (`read`, `write`, `create`, `submit`, `cancel`, `amend`). Default: `read`.
@@ -1154,7 +1154,7 @@ def has_permission(
 
 
 def has_website_permission(doc=None, ptype="read", user=None, verbose=False, doctype=None):
-	"""Raises `frappe.PermissionError` if not permitted.
+	"""Raises `traquent.PermissionError` if not permitted.
 
 	:param doctype: DocType for which permission is to be check.
 	:param ptype: Permission type (`read`, `write`, `create`, `submit`, `cancel`, `amend`). Default: `read`.
@@ -1258,14 +1258,14 @@ def new_doc(
 
 
 def set_value(doctype, docname, fieldname, value=None):
-	"""Set document value. Calls `frappe.client.set_value`"""
+	"""Set document value. Calls `traquent.client.set_value`"""
 	import traquent.client
 
 	return traquent.client.set_value(doctype, docname, fieldname, value)
 
 
 def get_cached_doc(*args, **kwargs) -> "Document":
-	"""Identical to `frappe.get_doc`, but return from cache if available."""
+	"""Identical to `traquent.get_doc`, but return from cache if available."""
 	if (key := can_cache_doc(args)) and (doc := cache.get_value(key)):
 		return doc
 
@@ -1367,19 +1367,19 @@ def get_doc(doctype: str, name: str, /, *, for_update: bool | None = None) -> "D
 @overload
 def get_doc(**kwargs: dict) -> "_NewDocument":
 	"""Initialize document from kwargs.
-	Not recommended. Use `frappe.new_doc` instead."""
+	Not recommended. Use `traquent.new_doc` instead."""
 	pass
 
 
 @overload
 def get_doc(documentdict: dict) -> "_NewDocument":
 	"""Create document from dict.
-	Not recommended. Use `frappe.new_doc` instead."""
+	Not recommended. Use `traquent.new_doc` instead."""
 	pass
 
 
 def get_doc(*args, **kwargs):
-	"""Return a `frappe.model.document.Document` object of the given type and name.
+	"""Return a `traquent.model.document.Document` object of the given type and name.
 
 	:param arg1: DocType name as string **or** document JSON.
 	:param arg2: [optional] Document name as string.
@@ -1387,11 +1387,11 @@ def get_doc(*args, **kwargs):
 	Examples:
 
 	        # insert a new document
-	        todo = frappe.get_doc({"doctype":"ToDo", "description": "test"})
+	        todo = traquent.get_doc({"doctype":"ToDo", "description": "test"})
 	        todo.insert()
 
 	        # open an existing document
-	        todo = frappe.get_doc("ToDo", "TD0001")
+	        todo = traquent.get_doc("ToDo", "TD0001")
 
 	"""
 	import traquent.model.document
@@ -1415,12 +1415,12 @@ def get_last_doc(doctype, filters=None, order_by="creation desc", *, for_update=
 
 
 def get_single(doctype):
-	"""Return a `frappe.model.document.Document` object of the given Single doctype."""
+	"""Return a `traquent.model.document.Document` object of the given Single doctype."""
 	return get_doc(doctype, doctype)
 
 
 def get_meta(doctype, cached=True):
-	"""Get `frappe.model.meta.Meta` instance of given doctype name."""
+	"""Get `traquent.model.meta.Meta` instance of given doctype name."""
 	import traquent.model.meta
 
 	return traquent.model.meta.get_meta(doctype, cached=cached)
@@ -1444,7 +1444,7 @@ def delete_doc(
 	ignore_missing: bool = True,
 	delete_permanently: bool = False,
 ):
-	"""Delete a document. Calls `frappe.model.delete_doc.delete_doc`.
+	"""Delete a document. Calls `traquent.model.delete_doc.delete_doc`.
 
 	:param doctype: DocType of document to be delete.
 	:param name: Name of document to be delete.
@@ -1520,7 +1520,7 @@ def rename_doc(
 	"""
 	Renames a doc(dt, old) to doc(dt, new) and updates all linked fields of type "Link"
 
-	Calls `frappe.model.rename_doc.rename_doc`
+	Calls `traquent.model.rename_doc.rename_doc`
 	"""
 
 	from traquent.model.rename_doc import rename_doc
@@ -1618,9 +1618,9 @@ def get_all_apps(with_internal_apps=True, sites_path=None):
 			if app not in apps:
 				apps.append(app)
 
-	if "frappe" in apps:
-		apps.remove("frappe")
-	apps.insert(0, "frappe")
+	if "traquent" in apps:
+		apps.remove("traquent")
+	apps.insert(0, "traquent")
 
 	return apps
 
@@ -2051,7 +2051,7 @@ def redirect_to_message(title, html, http_status_code=None, context=None, indica
 	:param http_status_code: HTTP status code.
 
 	Example Usage:
-	        frappe.redirect_to_message(_('Thank you'), "<div><p>You will receive an email at test@example.com</p></div>")
+	        traquent.redirect_to_message(_('Thank you'), "<div><p>You will receive an email at test@example.com</p></div>")
 
 	"""
 
@@ -2081,7 +2081,7 @@ def build_match_conditions(doctype, as_condition=True):
 
 
 def get_list(doctype, *args, **kwargs):
-	"""List database query via `frappe.model.db_query`. Will also check for permissions.
+	"""List database query via `traquent.model.db_query`. Will also check for permissions.
 
 	:param doctype: DocType on which query is to be made.
 	:param fields: List of fields or `*`.
@@ -2093,10 +2093,10 @@ def get_list(doctype, *args, **kwargs):
 	Example usage:
 
 	        # simple dict filter
-	        frappe.get_list("ToDo", fields=["name", "description"], filters = {"owner":"test@example.com"})
+	        traquent.get_list("ToDo", fields=["name", "description"], filters = {"owner":"test@example.com"})
 
 	        # filter as a list of lists
-	        frappe.get_list("ToDo", fields="*", filters = [["modified", ">", "2014-01-01"]])
+	        traquent.get_list("ToDo", fields="*", filters = [["modified", ">", "2014-01-01"]])
 	"""
 	import traquent.model.db_query
 
@@ -2104,8 +2104,8 @@ def get_list(doctype, *args, **kwargs):
 
 
 def get_all(doctype, *args, **kwargs):
-	"""List database query via `frappe.model.db_query`. Will **not** check for permissions.
-	Parameters are same as `frappe.get_list`
+	"""List database query via `traquent.model.db_query`. Will **not** check for permissions.
+	Parameters are same as `traquent.get_list`
 
 	:param doctype: DocType on which query is to be made.
 	:param fields: List of fields or `*`. Default is: `["name"]`.
@@ -2117,10 +2117,10 @@ def get_all(doctype, *args, **kwargs):
 	Example usage:
 
 	        # simple dict filter
-	        frappe.get_all("ToDo", fields=["name", "description"], filters = {"owner":"test@example.com"})
+	        traquent.get_all("ToDo", fields=["name", "description"], filters = {"owner":"test@example.com"})
 
 	        # filter as a list of lists
-	        frappe.get_all("ToDo", fields=["*"], filters = [["modified", ">", "2014-01-01"]])
+	        traquent.get_all("ToDo", fields=["*"], filters = [["modified", ">", "2014-01-01"]])
 	"""
 	kwargs["ignore_permissions"] = True
 	if "limit_page_length" not in kwargs:
@@ -2131,7 +2131,7 @@ def get_all(doctype, *args, **kwargs):
 def get_value(*args, **kwargs):
 	"""Return a document property or list of properties.
 
-	Alias for `frappe.db.get_value`
+	Alias for `traquent.db.get_value`
 
 	:param doctype: DocType name.
 	:param filters: Filters like `{"x":"y"}` or name of the document. `None` if Single DocType.
@@ -2176,7 +2176,7 @@ def are_emails_muted():
 	return flags.mute_emails or cint(conf.get("mute_emails"))
 
 
-from traquent.deprecation_dumpster import frappe_get_test_records as get_test_records
+from traquent.deprecation_dumpster import traquent_get_test_records as get_test_records
 
 
 def format_value(*args, **kwargs):
@@ -2331,8 +2331,8 @@ def publish_realtime(*args, **kwargs):
 def local_cache(namespace, key, generator, regenerate_if_none=False):
 	"""A key value store for caching within a request
 
-	:param namespace: frappe.local.cache[namespace]
-	:param key: frappe.local.cache[namespace][key] used to retrieve value
+	:param namespace: traquent.local.cache[namespace]
+	:param key: traquent.local.cache[namespace][key] used to retrieve value
 	:param generator: method to generate a value if not found in store
 
 	"""
@@ -2473,7 +2473,7 @@ def get_version(doctype, name, limit=None, head=False, raise_err=True):
 	Note: Applicable only if DocType has changes tracked.
 
 	Example
-	>>> frappe.get_version("User", "foobar@gmail.com")
+	>>> traquent.get_version("User", "foobar@gmail.com")
 	>>>
 	[
 	        {
@@ -2603,7 +2603,7 @@ from traquent.utils.error import log_error
 
 if _tune_gc:
 	# generational GC gets triggered after certain allocs (g0) which is 700 by default.
-	# This number is quite small for frappe where a single query can potentially create 700+
+	# This number is quite small for traquent where a single query can potentially create 700+
 	# objects easily.
 	# Bump this number higher, this will make GC less aggressive but that improves performance of
 	# everything else.

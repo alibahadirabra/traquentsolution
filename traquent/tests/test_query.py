@@ -222,9 +222,9 @@ class TestQuery(IntegrationTestCase):
 			traquent.qb.get_query(
 				"DocType",
 				fields=["name"],
-				filters={"module.app_name": "frappe"},
+				filters={"module.app_name": "traquent"},
 			).get_sql(),
-			"SELECT `tabDocType`.`name` FROM `tabDocType` LEFT JOIN `tabModule Def` ON `tabModule Def`.`name`=`tabDocType`.`module` WHERE `tabModule Def`.`app_name`='frappe'".replace(
+			"SELECT `tabDocType`.`name` FROM `tabDocType` LEFT JOIN `tabModule Def` ON `tabModule Def`.`name`=`tabDocType`.`module` WHERE `tabModule Def`.`app_name`='traquent'".replace(
 				"`", '"' if traquent.db.db_type == "postgres" else "`"
 			),
 		)

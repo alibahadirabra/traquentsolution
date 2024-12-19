@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import json
@@ -24,8 +24,8 @@ def login_via_facebook(code: str, state: str):
 
 
 @traquent.whitelist(allow_guest=True)
-def login_via_frappe(code: str, state: str):
-	login_via_oauth2("frappe", code, state, decoder=decoder_compat)
+def login_via_traquent(code: str, state: str):
+	login_via_oauth2("traquent", code, state, decoder=decoder_compat)
 
 
 @traquent.whitelist(allow_guest=True)
@@ -53,7 +53,7 @@ def custom(code: str, state: str):
 	"""
 	Callback for processing code and state for user added providers
 
-	process social login from /api/method/frappe.integrations.oauth2_logins.custom/<provider>
+	process social login from /api/method/traquent.integrations.oauth2_logins.custom/<provider>
 	"""
 	path = traquent.request.path[1:].split("/")
 	if len(path) == 4 and path[3]:

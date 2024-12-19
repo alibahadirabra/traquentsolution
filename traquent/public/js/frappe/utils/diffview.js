@@ -1,6 +1,6 @@
-frappe.provide("frappe.ui");
+traquent.provide("traquent.ui");
 
-frappe.ui.DiffView = class DiffView {
+traquent.ui.DiffView = class DiffView {
 	constructor(doctype, fieldname, docname) {
 		this.dialog = null;
 		this.handler = null;
@@ -15,7 +15,7 @@ frappe.ui.DiffView = class DiffView {
 
 	make_dialog() {
 		const get_query = () => ({
-			query: "frappe.utils.diff.version_query",
+			query: "traquent.utils.diff.version_query",
 			filters: {
 				docname: this.docname,
 				ref_doctype: this.doctype,
@@ -24,7 +24,7 @@ frappe.ui.DiffView = class DiffView {
 			},
 		});
 		const onchange = () => this.compute_diff();
-		return new frappe.ui.Dialog({
+		return new traquent.ui.Dialog({
 			title: __("Compare Versions"),
 			fields: [
 				{
@@ -69,8 +69,8 @@ frappe.ui.DiffView = class DiffView {
 		const fieldname = this.fieldname;
 
 		if (from_version && to_version) {
-			frappe
-				.xcall("frappe.utils.diff.get_version_diff", {
+			traquent
+				.xcall("traquent.utils.diff.get_version_diff", {
 					from_version,
 					to_version,
 					fieldname,

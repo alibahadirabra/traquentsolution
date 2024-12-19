@@ -1,4 +1,4 @@
-# Copyright (c) 2018, Frappe Technologies and Contributors
+# Copyright (c) 2018, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 
 from contextlib import contextmanager
@@ -323,7 +323,7 @@ class TestNotification(IntegrationTestCase):
 		traquent.set_user("Administrator")
 		traquent.get_doc(
 			"Scheduled Job Type",
-			dict(method="frappe.email.doctype.notification.notification.trigger_daily_alerts"),
+			dict(method="traquent.email.doctype.notification.notification.trigger_daily_alerts"),
 		).execute()
 
 		# not today, so no alert
@@ -348,7 +348,7 @@ class TestNotification(IntegrationTestCase):
 
 		traquent.get_doc(
 			"Scheduled Job Type",
-			dict(method="frappe.email.doctype.notification.notification.trigger_daily_alerts"),
+			dict(method="traquent.email.doctype.notification.notification.trigger_daily_alerts"),
 		).execute()
 
 		# today so show alert
@@ -484,10 +484,10 @@ PROOF OF TEST for TestNotificationOffsetRange below.
 
 On CI there are uncontrollable side effects which force the commenting out of this test.
 
-❯ bench run-tests --module frappe.email.doctype.notification.test_notification --case TestNotificationOffsetRange
+❯ bench run-tests --module traquent.email.doctype.notification.test_notification --case TestNotificationOffsetRange
 /nix/store/la0hqc6s2n2rd50b5sn13m33av6jx9zl-python3-3.11.9-env/lib/python3.11/site-packages/passlib/utils/__init__.py:854: DeprecationWarning: 'crypt' is deprecated and slated for removal in Python 3.13
   from crypt import crypt as _crypt
-Updating Dashboard for frappe
+Updating Dashboard for traquent
 /nix/store/la0hqc6s2n2rd50b5sn13m33av6jx9zl-python3-3.11.9-env/lib/python3.11/site-packages/cssutils/_fetchgae.py:6: DeprecationWarning: 'cgi' is deprecated and slated for removal in Python 3.13
   import cgi
 ...
@@ -498,12 +498,12 @@ OK
 """
 
 
-# from frappe.utils import add_to_date, now_datetime
+# from traquent.utils import add_to_date, now_datetime
 # class TestNotificationOffsetRange(IntegrationTestCase):
 # 	def setUp(self):
-# 		frappe.set_user("test@example.com")
+# 		traquent.set_user("test@example.com")
 # 		# Create an event and notification before each test
-# 		self.event = frappe.new_doc("Event")
+# 		self.event = traquent.new_doc("Event")
 # 		self.event.subject = "Test Event for Offset Range"
 # 		self.event.event_type = "Private"
 # 		self.event.starts_on = now_datetime()
@@ -522,11 +522,11 @@ OK
 # 		}
 
 # 	def tearDown(self):
-# 		frappe.set_user("Administrator")
+# 		traquent.set_user("Administrator")
 # 		# Clean up after each test
-# 		frappe.db.delete("Event", {"name": self.event.name})
-# 		frappe.db.delete("Notification", {"name": self.notification["name"]})
-# 		frappe.db.delete("Notification Log", {"subject": self.notification["subject"]})
+# 		traquent.db.delete("Event", {"name": self.event.name})
+# 		traquent.db.delete("Notification", {"name": self.notification["name"]})
+# 		traquent.db.delete("Notification Log", {"subject": self.notification["subject"]})
 
 # 	def test_notification_offset_range(self):
 # 		with get_test_notification(self.notification) as n:
@@ -537,7 +537,7 @@ OK
 
 # 			while current_time <= end_time:
 # 				with self.freeze_time(current_time):
-# 					frappe.db.delete("Notification Log", {"subject": n.subject})
+# 					traquent.db.delete("Notification Log", {"subject": n.subject})
 # 					trigger_notifications(None, "offset")
 
 # 					time_diff = (self.event.starts_on - current_time).total_seconds() / 60
@@ -546,14 +546,14 @@ OK
 # 						# The notification should be triggered within this 5-minute window
 # 						self.assertEqual(
 # 							1,
-# 							frappe.db.count("Notification Log", {"subject": n.subject}),
+# 							traquent.db.count("Notification Log", {"subject": n.subject}),
 # 							f"Notification not triggered at {current_time:%H:%M} (offset -{time_diff:.0f}) and between ]15,10] min prior to {self.event.starts_on:%H:%M}",
 # 						)
 # 					else:
 # 						# The notification should not be triggered at any other time
 # 						self.assertEqual(
 # 							0,
-# 							frappe.db.count("Notification Log", {"subject": n.subject}),
+# 							traquent.db.count("Notification Log", {"subject": n.subject}),
 # 							f"Notification incorrectly triggered at {current_time:%H:%M}",
 # 						)
 
@@ -571,7 +571,7 @@ OK
 
 # 			while current_time <= end_time:
 # 				with self.freeze_time(current_time):
-# 					frappe.db.delete("Notification Log", {"subject": n.subject})
+# 					traquent.db.delete("Notification Log", {"subject": n.subject})
 # 					trigger_notifications(None, "offset")
 
 # 					time_diff = (current_time - self.event.starts_on).total_seconds() / 60
@@ -580,14 +580,14 @@ OK
 # 						# The notification should be triggered within this 5-minute window
 # 						self.assertEqual(
 # 							1,
-# 							frappe.db.count("Notification Log", {"subject": n.subject}),
+# 							traquent.db.count("Notification Log", {"subject": n.subject}),
 # 							f"Notification not triggered at {current_time:%H:%M} (offset +{time_diff:.0f}) and between [15,20[ min after {self.event.starts_on:%H:%M}",
 # 						)
 # 					else:
 # 						# The notification should not be triggered at any other time
 # 						self.assertEqual(
 # 							0,
-# 							frappe.db.count("Notification Log", {"subject": n.subject}),
+# 							traquent.db.count("Notification Log", {"subject": n.subject}),
 # 							f"Notification incorrectly triggered at {current_time:%H:%M}",
 # 						)
 
@@ -609,18 +609,18 @@ OK
 # 						test_time = add_to_date(self.event.starts_on, minutes=minutes)
 
 # 					with self.freeze_time(test_time):
-# 						frappe.db.delete("Notification Log", {"subject": n.subject})
+# 						traquent.db.delete("Notification Log", {"subject": n.subject})
 # 						trigger_notifications(None, "offset")
 
 # 						if minutes != edge_cases[event_type][-1]:
 # 							self.assertEqual(
 # 								1,
-# 								frappe.db.count("Notification Log", {"subject": n.subject}),
+# 								traquent.db.count("Notification Log", {"subject": n.subject}),
 # 								f"Notification not triggered at edge case: {minutes} {event_type}",
 # 							)
 # 						else:
 # 							self.assertEqual(
 # 								0,
-# 								frappe.db.count("Notification Log", {"subject": n.subject}),
+# 								traquent.db.count("Notification Log", {"subject": n.subject}),
 # 								f"Notification incorrectly triggered at edge case: {minutes} {event_type}",
 # 							)

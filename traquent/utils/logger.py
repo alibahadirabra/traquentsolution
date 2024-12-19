@@ -10,11 +10,11 @@ import traquent
 from traquent.utils import get_sites
 
 default_log_level = logging.WARNING if traquent._dev_server else logging.ERROR
-stream_logging = os.environ.get("FRAPPE_STREAM_LOGGING")
+stream_logging = os.environ.get("traquent_STREAM_LOGGING")
 
 
 def create_handler(module, site=None, max_size=100_000, file_count=20, stream_only=False):
-	"""Create and return a Frappe-specific logging handler."""
+	"""Create and return a traquent-specific logging handler."""
 	formatter = logging.Formatter(f"%(asctime)s %(levelname)s {module} %(message)s")
 
 	if stream_only:
@@ -73,7 +73,7 @@ def get_logger(
 		pass
 
 	if not module:
-		module = "frappe"
+		module = "traquent"
 		with_more_info = True
 
 	logger = logging.getLogger(logger_name)

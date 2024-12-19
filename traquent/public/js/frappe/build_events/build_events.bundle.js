@@ -6,7 +6,7 @@ let $container = $("#build-events-overlay");
 let success = null;
 let error = null;
 
-frappe.realtime.on("build_event", (data) => {
+traquent.realtime.on("build_event", (data) => {
 	if (data.success) {
 		// remove executed cache for rebuilt files
 		let changed_files = data.changed_files;
@@ -17,7 +17,7 @@ frappe.realtime.on("build_event", (data) => {
 					if (parts.length === 2) {
 						let filename = parts[0].split("/").slice(-1)[0];
 
-						frappe.assets._executed = frappe.assets._executed.filter(
+						traquent.assets._executed = traquent.assets._executed.filter(
 							(asset) => !asset.includes(`${filename}.bundle`)
 						);
 					}
@@ -25,12 +25,12 @@ frappe.realtime.on("build_event", (data) => {
 			}
 		}
 		// update assets json
-		frappe.call("frappe.sessions.get_boot_assets_json").then((r) => {
+		traquent.call("traquent.sessions.get_boot_assets_json").then((r) => {
 			if (r.message) {
-				frappe.boot.assets_json = r.message;
+				traquent.boot.assets_json = r.message;
 
-				if (frappe.hot_update) {
-					frappe.hot_update.forEach((callback) => {
+				if (traquent.hot_update) {
+					traquent.hot_update.forEach((callback) => {
 						callback();
 					});
 				}

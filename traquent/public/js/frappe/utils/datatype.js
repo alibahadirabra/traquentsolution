@@ -1,4 +1,4 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
 window.cstr = function (s) {
@@ -39,19 +39,19 @@ window.copy_dict = function (d) {
 };
 
 window.validate_email = function (txt) {
-	return frappe.utils.validate_type(txt, "email");
+	return traquent.utils.validate_type(txt, "email");
 };
 
 window.validate_phone = function (txt) {
-	return frappe.utils.validate_type(txt, "phone");
+	return traquent.utils.validate_type(txt, "phone");
 };
 
 window.validate_name = function (txt) {
-	return frappe.utils.validate_type(txt, "name");
+	return traquent.utils.validate_type(txt, "name");
 };
 
 window.validate_url = function (txt) {
-	return frappe.utils.validate_type(txt, "url");
+	return traquent.utils.validate_type(txt, "url");
 };
 
 window.nth = function (number) {

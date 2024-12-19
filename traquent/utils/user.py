@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 from email.utils import formataddr
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 
 class UserPermissions:
 	"""
-	A user permission object can be accessed as `frappe.get_user()`
+	A user permission object can be accessed as `traquent.get_user()`
 	"""
 
 	def __init__(self, name=""):

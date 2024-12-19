@@ -87,7 +87,7 @@ def enqueue(
 	:param is_async: if is_async=False, the method is executed immediately, else via a worker
 	:param job_name: [DEPRECATED] can be used to name an enqueue call, which can be used to prevent
 	duplicate calls
-	:param now: if now=True, the method is executed via frappe.call()
+	:param now: if now=True, the method is executed via traquent.call()
 	:param enqueue_after_commit: if True, the job will be enqueued after the current transaction is
 	committed
 	:param on_success: Success callback
@@ -170,7 +170,7 @@ def enqueue(
 
 	def enqueue_call():
 		return q.enqueue_call(
-			"frappe.utils.background_jobs.execute_job",
+			"traquent.utils.background_jobs.execute_job",
 			on_success=Callback(func=on_success) if on_success else None,
 			on_failure=Callback(func=on_failure) if on_failure else None,
 			timeout=timeout,
@@ -191,7 +191,7 @@ def enqueue(
 def enqueue_doc(doctype, name=None, method=None, queue="default", timeout=300, now=False, **kwargs):
 	"""Enqueue a method to be run on a document"""
 	return enqueue(
-		"frappe.utils.background_jobs.run_doc_method",
+		"traquent.utils.background_jobs.run_doc_method",
 		doctype=doctype,
 		name=name,
 		doc_method=method,
@@ -327,18 +327,18 @@ def start_worker(
 	)
 
 
-class FrappeWorker(Worker):
+class traquentWorker(Worker):
 	def work(self, *args, **kwargs):
-		self.start_frappe_scheduler()
+		self.start_traquent_scheduler()
 		kwargs["with_scheduler"] = False  # Always disable RQ scheduler
 		return super().work(*args, **kwargs)
 
 	def run_maintenance_tasks(self, *args, **kwargs):
 		"""Attempt to start a scheduler in case the worker doing scheduling died."""
-		self.start_frappe_scheduler()
+		self.start_traquent_scheduler()
 		return super().run_maintenance_tasks(*args, **kwargs)
 
-	def start_frappe_scheduler(self):
+	def start_traquent_scheduler(self):
 		from traquent.utils.scheduler import start_scheduler
 
 		Thread(target=start_scheduler, daemon=True).start()
@@ -389,7 +389,7 @@ def start_worker_pool(
 		queues=queues,
 		connection=redis_connection,
 		num_workers=num_workers,
-		worker_class=FrappeWorker,  # Auto starts scheduler with workerpool
+		worker_class=traquentWorker,  # Auto starts scheduler with workerpool
 	)
 	pool.start(logging_level=logging_level, burst=burst)
 
@@ -505,7 +505,7 @@ def validate_queue(queue: str, default_queue_list: list | None = None) -> None:
 )
 def get_redis_conn(username=None, password=None):
 	if not hasattr(traquent.local, "conf"):
-		raise Exception("You need to call frappe.init")
+		raise Exception("You need to call traquent.init")
 
 	elif not traquent.local.conf.redis_queue:
 		raise Exception("redis_queue missing in common_site_config.json")
@@ -576,7 +576,7 @@ def is_queue_accessible(qobj: Queue) -> bool:
 
 
 def enqueue_test_job():
-	enqueue("frappe.utils.background_jobs.test_job", s=100)
+	enqueue("traquent.utils.background_jobs.test_job", s=100)
 
 
 def test_job(s):
@@ -663,7 +663,7 @@ def flush_telemetry():
 
 
 def _start_sentry():
-	sentry_dsn = os.getenv("FRAPPE_SENTRY_DSN")
+	sentry_dsn = os.getenv("traquent_SENTRY_DSN")
 	if not sentry_dsn:
 		return
 
@@ -674,7 +674,7 @@ def _start_sentry():
 	from sentry_sdk.integrations.excepthook import ExcepthookIntegration
 	from sentry_sdk.integrations.modules import ModulesIntegration
 
-	from traquent.utils.sentry import FrappeIntegration, before_send
+	from traquent.utils.sentry import traquentIntegration, before_send
 
 	integrations = [
 		AtexitIntegration(),
@@ -688,7 +688,7 @@ def _start_sentry():
 	kwargs = {}
 
 	if os.getenv("ENABLE_SENTRY_DB_MONITORING"):
-		integrations.append(FrappeIntegration())
+		integrations.append(traquentIntegration())
 		experiments["record_sql_params"] = True
 
 	if tracing_sample_rate := os.getenv("SENTRY_TRACING_SAMPLE_RATE"):

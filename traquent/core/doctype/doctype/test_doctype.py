@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import os
 import random
@@ -188,7 +188,7 @@ class TestDocType(IntegrationTestCase):
 					self.assertFalse(re.match(pattern, condition))
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	def test_sync_field_order(self):
 		import os
@@ -651,7 +651,7 @@ class TestDocType(IntegrationTestCase):
 		self.assertRaises(traquent.ValidationError, traquent.delete_doc, "DocType", "Address")
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	@patch.dict(traquent.conf, {"developer_mode": 1})
 	def test_export_types(self):
@@ -692,7 +692,7 @@ class TestDocType(IntegrationTestCase):
 		traquent.db.commit()
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	@patch.dict(traquent.conf, {"developer_mode": 1})
 	def test_custom_field_deletion(self):
@@ -707,7 +707,7 @@ class TestDocType(IntegrationTestCase):
 		self.assertFalse(traquent.get_meta(doctype).get_field(field))
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	@patch.dict(traquent.conf, {"developer_mode": 1})
 	def test_delete_doctype_with_customization(self):
@@ -747,7 +747,7 @@ class TestDocType(IntegrationTestCase):
 		traquent.delete_doc("DocType", doctype)
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	@patch.dict(traquent.conf, {"developer_mode": 1})
 	def test_delete_orphaned_doctypes(self):

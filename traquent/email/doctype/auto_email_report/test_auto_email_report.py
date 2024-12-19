@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies and Contributors
+# Copyright (c) 2015, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import json
 

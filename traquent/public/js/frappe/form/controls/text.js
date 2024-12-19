@@ -1,4 +1,4 @@
-frappe.ui.form.ControlText = class ControlText extends frappe.ui.form.ControlData {
+traquent.ui.form.ControlText = class ControlText extends traquent.ui.form.ControlData {
 	static html_element = "textarea";
 	static horizontal = false;
 	make_wrapper() {
@@ -20,8 +20,8 @@ frappe.ui.form.ControlText = class ControlText extends frappe.ui.form.ControlDat
 	}
 };
 
-frappe.ui.form.ControlLongText = frappe.ui.form.ControlText;
-frappe.ui.form.ControlSmallText = class ControlSmallText extends frappe.ui.form.ControlText {
+traquent.ui.form.ControlLongText = traquent.ui.form.ControlText;
+traquent.ui.form.ControlSmallText = class ControlSmallText extends traquent.ui.form.ControlText {
 	make_input() {
 		super.make_input();
 		this.$input.css({ height: "150px" });

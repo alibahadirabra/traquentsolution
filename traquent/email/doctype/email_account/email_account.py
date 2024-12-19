@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and contributors
 # License: MIT. See LICENSE
 
 import email.utils
@@ -12,7 +12,7 @@ import traquent
 from traquent import _, are_emails_muted, safe_encode
 from traquent.desk.form import assign_to
 from traquent.email.doctype.email_domain.email_domain import EMAIL_DOMAIN_FIELDS
-from traquent.email.frappemail import FrappeMail
+from traquent.email.traquentmail import traquentMail
 from traquent.email.receive import EmailServer, InboundMail, SentEmailInInboxError
 from traquent.email.smtp import SMTPServer
 from traquent.email.utils import get_port
@@ -88,7 +88,7 @@ class EmailAccount(Document):
 		enable_incoming: DF.Check
 		enable_outgoing: DF.Check
 		footer: DF.TextEditor | None
-		frappe_mail_site: DF.Data | None
+		traquent_mail_site: DF.Data | None
 		imap_folder: DF.Table[IMAPFolder]
 		incoming_port: DF.Data | None
 		initial_sync_count: DF.Literal["100", "250", "500"]
@@ -102,7 +102,7 @@ class EmailAccount(Document):
 		send_notification_to: DF.SmallText | None
 		send_unsubscribe_message: DF.Check
 		service: DF.Literal[
-			"", "Frappe Mail", "GMail", "Sendgrid", "SparkPost", "Yahoo Mail", "Outlook.com", "Yandex.Mail"
+			"", "traquent Mail", "GMail", "Sendgrid", "SparkPost", "Yahoo Mail", "Outlook.com", "Yandex.Mail"
 		]
 		signature: DF.TextEditor | None
 		smtp_port: DF.Data | None
@@ -142,12 +142,12 @@ class EmailAccount(Document):
 		else:
 			self.login_id = None
 
-		if self.service == "Frappe Mail":
+		if self.service == "traquent Mail":
 			self.use_imap = 0
 			self.always_use_account_email_id_as_sender = 1
 
 			if self.auth_method == "Basic" or self.get_oauth_token():
-				self.validate_frappe_mail_settings()
+				self.validate_traquent_mail_settings()
 
 		# validate the imap settings
 		if self.enable_incoming and self.use_imap and len(self.imap_folder) <= 0:
@@ -168,7 +168,7 @@ class EmailAccount(Document):
 		if (
 			not traquent.local.flags.in_install
 			and not self.awaiting_password
-			and not self.service == "Frappe Mail"
+			and not self.service == "traquent Mail"
 		):
 			if validate_oauth or self.password or self.smtp_server in ("127.0.0.1", "localhost"):
 				if self.enable_incoming:
@@ -196,10 +196,10 @@ class EmailAccount(Document):
 						traquent.throw(_("Append To can be one of {0}").format(comma_or(valid_doctypes)))
 
 	@traquent.whitelist()
-	def validate_frappe_mail_settings(self):
-		if self.service == "Frappe Mail":
-			frappe_mail_client = self.get_frappe_mail_client()
-			frappe_mail_client.validate(for_inbound=self.enable_incoming, for_outbound=self.enable_outgoing)
+	def validate_traquent_mail_settings(self):
+		if self.service == "traquent Mail":
+			traquent_mail_client = self.get_traquent_mail_client()
+			traquent_mail_client.validate(for_inbound=self.enable_incoming, for_outbound=self.enable_outgoing)
 
 	def validate_smtp_conn(self):
 		if not self.smtp_server:
@@ -476,7 +476,7 @@ class EmailAccount(Document):
 				"conf_names": ("always_use_account_name_as_sender_name",),
 				"default": 0,
 			},
-			"name": {"conf_names": ("email_sender_name",), "default": "Frappe"},
+			"name": {"conf_names": ("email_sender_name",), "default": "traquent"},
 			"auth_method": {"conf_names": ("auth_method"), "default": "Basic"},
 			"from_site_config": {"default": True},
 			"no_smtp_authentication": {
@@ -523,24 +523,24 @@ class EmailAccount(Document):
 		config = self.sendmail_config()
 		return SMTPServer(**config)
 
-	def get_frappe_mail_client(self):
-		return self._frappe_mail_client
+	def get_traquent_mail_client(self):
+		return self._traquent_mail_client
 
 	@functools.cached_property
-	def _frappe_mail_client(self):
+	def _traquent_mail_client(self):
 		if self.auth_method == "OAuth":
 			if access_token := self.get_access_token():
-				return FrappeMail(self.frappe_mail_site, self.email_id, access_token=access_token)
+				return traquentMail(self.traquent_mail_site, self.email_id, access_token=access_token)
 
 			traquent.throw(
 				_("Please Authorize OAuth for Email Account {0}").format(
 					traquent.bold(self.email_account_name)
 				),
-				title=_("Frappe Mail OAuth Error"),
+				title=_("traquent Mail OAuth Error"),
 			)
 		else:
-			return FrappeMail(
-				self.frappe_mail_site, self.email_id, self.api_key, self.get_password("api_secret")
+			return traquentMail(
+				self.traquent_mail_site, self.email_id, self.api_key, self.get_password("api_secret")
 			)
 
 	def remove_unpicklable_values(self, state):
@@ -639,9 +639,9 @@ class EmailAccount(Document):
 			return []
 
 		try:
-			if self.service == "Frappe Mail":
-				frappe_mail_client = self.get_frappe_mail_client()
-				messages = frappe_mail_client.pull_raw(last_synced_at=self.last_synced_at)
+			if self.service == "traquent Mail":
+				traquent_mail_client = self.get_traquent_mail_client()
+				messages = traquent_mail_client.pull_raw(last_synced_at=self.last_synced_at)
 				process_mail(messages)
 				self.db_set("last_synced_at", messages["last_synced_at"], update_modified=False)
 			else:

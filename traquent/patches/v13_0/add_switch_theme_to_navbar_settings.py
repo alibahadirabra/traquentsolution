@@ -15,7 +15,7 @@ def execute():
 		{
 			"item_label": "Toggle Theme",
 			"item_type": "Action",
-			"action": "new frappe.ui.ThemeSwitcher().show()",
+			"action": "new traquent.ui.ThemeSwitcher().show()",
 			"is_standard": 1,
 			"idx": 7,
 		},

@@ -1,4 +1,4 @@
-# Copyright (c) 2017, Frappe Technologies and contributors
+# Copyright (c) 2017, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import base64
@@ -17,7 +17,7 @@ from traquent.utils.background_jobs import get_queues_timeout
 from traquent.utils.jinja import validate_template
 from traquent.utils.safe_exec import get_safe_globals
 
-WEBHOOK_SECRET_HEADER = "X-Frappe-Webhook-Signature"
+WEBHOOK_SECRET_HEADER = "X-traquent-Webhook-Signature"
 
 
 class Webhook(Document):
@@ -138,7 +138,7 @@ class Webhook(Document):
 
 
 def get_context(doc):
-	return {"doc": doc, "utils": get_safe_globals().get("frappe").get("utils")}
+	return {"doc": doc, "utils": get_safe_globals().get("traquent").get("utils")}
 
 
 def enqueue_webhook(doc, webhook) -> None:

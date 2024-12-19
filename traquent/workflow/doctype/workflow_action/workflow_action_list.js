@@ -1,4 +1,4 @@
-frappe.listview_settings["Workflow Action"] = {
+traquent.listview_settings["Workflow Action"] = {
 	get_form_link: (doc) => {
 		let doctype = "";
 		let docname = "";
@@ -11,6 +11,6 @@ frappe.listview_settings["Workflow Action"] = {
 		}
 		docname = docname.match(/[%'"]/) ? encodeURIComponent(docname) : docname;
 
-		return "/app/" + frappe.router.slug(doctype) + "/" + docname;
+		return "/app/" + traquent.router.slug(doctype) + "/" + docname;
 	},
 };

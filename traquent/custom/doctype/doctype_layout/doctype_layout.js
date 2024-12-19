@@ -1,7 +1,7 @@
-// Copyright (c) 2020, Frappe Technologies and contributors
+// Copyright (c) 2020, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("DocType Layout", {
+traquent.ui.form.on("DocType Layout", {
 	onload_post_render(frm) {
 		// disallow users from manually adding/deleting rows; this doctype should only
 		// be used for managing layout, and docfields and custom fields should be used
@@ -40,7 +40,7 @@ frappe.ui.form.on("DocType Layout", {
 	add_buttons(frm) {
 		if (!frm.is_new()) {
 			frm.add_custom_button(__("Go to {0} List", [frm.doc.name]), () => {
-				window.open(`/app/${frappe.router.slug(frm.doc.name)}`);
+				window.open(`/app/${traquent.router.slug(frm.doc.name)}`);
 			});
 
 			frm.add_custom_button(__("Sync {0} Fields", [frm.doc.name]), async () => {
@@ -50,13 +50,13 @@ frappe.ui.form.on("DocType Layout", {
 	},
 
 	async sync_fields(frm, notify) {
-		frappe.dom.freeze("Fetching fields...");
+		traquent.dom.freeze("Fetching fields...");
 		const response = await frm.call({ doc: frm.doc, method: "sync_fields" });
 		frm.refresh_field("fields");
-		frappe.dom.unfreeze();
+		traquent.dom.unfreeze();
 
 		if (!response.message) {
-			frappe.msgprint(__("No changes to sync"));
+			traquent.msgprint(__("No changes to sync"));
 			return;
 		}
 
@@ -94,7 +94,7 @@ frappe.ui.form.on("DocType Layout", {
 			}
 
 			if (message) {
-				frappe.msgprint({
+				traquent.msgprint({
 					message: __(message),
 					indicator: "green",
 					title: __("Synced Fields"),

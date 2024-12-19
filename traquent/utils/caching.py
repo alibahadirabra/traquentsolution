@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. Check LICENSE
 
 import datetime
@@ -23,12 +23,12 @@ def __generate_request_cache_key(args: tuple, kwargs: dict):
 
 def request_cache(func: Callable) -> Callable:
 	"""Decorator to cache function calls mid-request. Cache is stored in
-	frappe.local.request_cache. The cache only persists for the current request
+	traquent.local.request_cache. The cache only persists for the current request
 	and is cleared when the request is over. The function is called just once
 	per request with the same set of (kw)arguments.
 
 	Usage:
-	        from frappe.utils.caching import request_cache
+	        from traquent.utils.caching import request_cache
 
 	        @request_cache
 	        def calculate_pi(num_terms=0):
@@ -65,15 +65,15 @@ def request_cache(func: Callable) -> Callable:
 
 def site_cache(ttl: int | None = None, maxsize: int | None = None) -> Callable:
 	"""Decorator to cache method calls across requests. The cache is stored in
-	frappe.utils.caching._SITE_CACHE. The cache persists on the parent process.
+	traquent.utils.caching._SITE_CACHE. The cache persists on the parent process.
 	It offers a light-weight cache for the current process without the additional
 	overhead of serializing / deserializing Python objects.
 
 	Note: This cache isn't shared among workers. If you need to share data across
-	workers, use redis (frappe.cache API) instead.
+	workers, use redis (traquent.cache API) instead.
 
 	Usage:
-	        from frappe.utils.caching import site_cache
+	        from traquent.utils.caching import site_cache
 
 	        @site_cache
 	        def calculate_pi():

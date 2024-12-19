@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 from unittest.mock import patch
@@ -254,7 +254,7 @@ class TestNestedSet(IntegrationTestCase):
 		# root deletion with allow_root_deletion
 		# patched as delete_doc create a new instance of Root Node (using get_doc)
 		root_node.allow_root_deletion = False
-		with patch("frappe.get_doc", return_value=root_node):
+		with patch("traquent.get_doc", return_value=root_node):
 			with self.assertRaises(traquent.ValidationError):
 				root_node.delete()
 

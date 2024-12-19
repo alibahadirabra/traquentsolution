@@ -1,6 +1,6 @@
 import Widget from "./base_widget.js";
 
-frappe.provide("frappe.utils");
+traquent.provide("traquent.utils");
 
 export default class ShortcutWidget extends Widget {
 	constructor(opts) {
@@ -29,7 +29,7 @@ export default class ShortcutWidget extends Widget {
 		this.widget.click((e) => {
 			if (this.in_customize_mode) return;
 
-			let route = frappe.utils.generate_route({
+			let route = traquent.utils.generate_route({
 				route: this.route,
 				name: this.link_to,
 				type: this.type,
@@ -39,13 +39,13 @@ export default class ShortcutWidget extends Widget {
 				kanban_board: this.kanban_board,
 			});
 
-			let filters = frappe.utils.get_filter_from_json(this.stats_filter);
+			let filters = traquent.utils.get_filter_from_json(this.stats_filter);
 			if (this.type == "DocType" && filters) {
-				frappe.route_options = filters;
+				traquent.route_options = filters;
 			}
 
 			if (e.ctrlKey || e.metaKey) {
-				frappe.open_in_new_tab = true;
+				traquent.open_in_new_tab = true;
 			}
 
 			if (this.type == "URL") {
@@ -53,14 +53,14 @@ export default class ShortcutWidget extends Widget {
 				return;
 			}
 
-			frappe.set_route(route);
+			traquent.set_route(route);
 		});
 	}
 
 	set_actions() {
 		if (this.in_customize_mode) return;
 
-		$(frappe.utils.icon("es-line-arrow-up-right", "xs", "", "", "ml-2")).appendTo(
+		$(traquent.utils.icon("es-line-arrow-up-right", "xs", "", "", "ml-2")).appendTo(
 			this.action_area
 		);
 
@@ -73,14 +73,14 @@ export default class ShortcutWidget extends Widget {
 			"aria-label": this.label,
 		});
 
-		let filters = frappe.utils.process_filter_expression(this.stats_filter);
+		let filters = traquent.utils.process_filter_expression(this.stats_filter);
 
 		if (
 			this.type == "DocType" &&
 			this.doc_view != "New" &&
-			!frappe.boot.single_types.includes(this.link_to)
+			!traquent.boot.single_types.includes(this.link_to)
 		) {
-			frappe.db
+			traquent.db
 				.count(this.link_to, {
 					filters: filters || [],
 				})
@@ -103,7 +103,7 @@ export default class ShortcutWidget extends Widget {
 			`<div class="indicator-pill no-indicator-dot ellipsis ${color}">${label}</div>`
 		).appendTo(this.action_area);
 
-		$(frappe.utils.icon("es-line-arrow-up-right", "xs", "", "", "ml-2")).appendTo(
+		$(traquent.utils.icon("es-line-arrow-up-right", "xs", "", "", "ml-2")).appendTo(
 			this.action_area
 		);
 	}

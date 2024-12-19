@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # MIT License. See LICENSE
 
 """
@@ -253,7 +253,7 @@ class CustomizeForm(Document):
 
 		if self.flags.rebuild_doctype_for_global_search:
 			traquent.enqueue(
-				"frappe.utils.global_search.rebuild_for_doctype",
+				"traquent.utils.global_search.rebuild_for_doctype",
 				doctype=self.doc_type,
 				enqueue_after_commit=True,
 			)

@@ -1,5 +1,5 @@
 """
-FrappeClient is a library that helps you connect with other frappe systems
+traquentClient is a library that helps you connect with other traquent systems
 """
 import base64
 import json
@@ -20,11 +20,11 @@ class SiteUnreachableError(Exception):
 	pass
 
 
-class FrappeException(Exception):
+class traquentException(Exception):
 	pass
 
 
-class FrappeClient:
+class traquentClient:
 	def __init__(
 		self,
 		url,
@@ -33,7 +33,7 @@ class FrappeClient:
 		verify=True,
 		api_key=None,
 		api_secret=None,
-		frappe_authorization_source=None,
+		traquent_authorization_source=None,
 	):
 		import requests
 
@@ -46,7 +46,7 @@ class FrappeClient:
 		self.url = url
 		self.api_key = api_key
 		self.api_secret = api_secret
-		self.frappe_authorization_source = frappe_authorization_source
+		self.traquent_authorization_source = traquent_authorization_source
 
 		self.setup_key_authentication_headers()
 
@@ -91,8 +91,8 @@ class FrappeClient:
 			}
 			self.headers.update(auth_header)
 
-			if self.frappe_authorization_source:
-				auth_source = {"Frappe-Authorization-Source": self.frappe_authorization_source}
+			if self.traquent_authorization_source:
+				auth_source = {"traquent-Authorization-Source": self.traquent_authorization_source}
 				self.headers.update(auth_source)
 
 	def logout(self):
@@ -139,7 +139,7 @@ class FrappeClient:
 		"""Insert multiple documents to the remote server
 
 		:param docs: List of dict or Document objects to be inserted in one request"""
-		return self.post_request({"cmd": "frappe.client.insert_many", "docs": traquent.as_json(docs)})
+		return self.post_request({"cmd": "traquent.client.insert_many", "docs": traquent.as_json(docs)})
 
 	def update(self, doc):
 		"""Update a remote document
@@ -155,20 +155,20 @@ class FrappeClient:
 		"""Bulk update documents remotely
 
 		:param docs: List of dict or Document objects to be updated remotely (by `name`)"""
-		return self.post_request({"cmd": "frappe.client.bulk_update", "docs": traquent.as_json(docs)})
+		return self.post_request({"cmd": "traquent.client.bulk_update", "docs": traquent.as_json(docs)})
 
 	def delete(self, doctype, name):
 		"""Delete remote document by name
 
 		:param doctype: `doctype` to be deleted
 		:param name: `name` of document to be deleted"""
-		return self.post_request({"cmd": "frappe.client.delete", "doctype": doctype, "name": name})
+		return self.post_request({"cmd": "traquent.client.delete", "doctype": doctype, "name": name})
 
 	def submit(self, doc):
 		"""Submit remote document
 
 		:param doc: dict or Document object to be submitted remotely"""
-		return self.post_request({"cmd": "frappe.client.submit", "doc": traquent.as_json(doc)})
+		return self.post_request({"cmd": "traquent.client.submit", "doc": traquent.as_json(doc)})
 
 	def get_value(self, doctype, fieldname=None, filters=None):
 		"""Return a value from a document.
@@ -178,7 +178,7 @@ class FrappeClient:
 		:param filters: dict or string for identifying the record"""
 		return self.get_request(
 			{
-				"cmd": "frappe.client.get_value",
+				"cmd": "traquent.client.get_value",
 				"doctype": doctype,
 				"fieldname": fieldname or "name",
 				"filters": traquent.as_json(filters),
@@ -194,7 +194,7 @@ class FrappeClient:
 		:param value: value to be updated"""
 		return self.post_request(
 			{
-				"cmd": "frappe.client.set_value",
+				"cmd": "traquent.client.set_value",
 				"doctype": doctype,
 				"name": docname,
 				"fieldname": fieldname,
@@ -207,7 +207,7 @@ class FrappeClient:
 
 		:param doctype: DocType of the document to be cancelled
 		:param name: name of the document to be cancelled"""
-		return self.post_request({"cmd": "frappe.client.cancel", "doctype": doctype, "name": name})
+		return self.post_request({"cmd": "traquent.client.cancel", "doctype": doctype, "name": name})
 
 	def get_doc(self, doctype, name="", filters=None, fields=None):
 		"""Return a single remote document.
@@ -238,7 +238,7 @@ class FrappeClient:
 		:param old_name: Current `name` of the document to be renamed
 		:param new_name: New `name` to be set"""
 		params = {
-			"cmd": "frappe.client.rename_doc",
+			"cmd": "traquent.client.rename_doc",
 			"doctype": doctype,
 			"old_name": old_name,
 			"new_name": new_name,
@@ -371,11 +371,11 @@ class FrappeClient:
 		if rjson and ("exc" in rjson) and rjson["exc"]:
 			try:
 				exc = json.loads(rjson["exc"])[0]
-				exc = "FrappeClient Request Failed\n\n" + exc
+				exc = "traquentClient Request Failed\n\n" + exc
 			except Exception:
 				exc = rjson["exc"]
 
-			raise FrappeException(exc)
+			raise traquentException(exc)
 		if "message" in rjson:
 			return rjson["message"]
 		elif "data" in rjson:
@@ -384,7 +384,7 @@ class FrappeClient:
 			return None
 
 
-class FrappeOAuth2Client(FrappeClient):
+class traquentOAuth2Client(traquentClient):
 	def __init__(self, url, access_token, verify=True):
 		import requests
 

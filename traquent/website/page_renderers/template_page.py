@@ -290,8 +290,8 @@ class TemplatePage(BaseTemplatePage):
 		return html
 
 	def set_standard_path(self, path):
-		self.app = "frappe"
-		self.app_path = traquent.get_app_path("frappe")
+		self.app = "traquent"
+		self.app_path = traquent.get_app_path("traquent")
 		self.path = path
 		self.template_path = f"www/{path}.html"
 

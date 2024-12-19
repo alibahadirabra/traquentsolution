@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import os
@@ -91,8 +91,8 @@ class Page(Document):
 			if not os.path.exists(path + ".js"):
 				with open(path + ".js", "w") as f:
 					f.write(
-						f"""frappe.pages['{self.name}'].on_page_load = function(wrapper) {{
-	var page = frappe.ui.make_app_page({{
+						f"""traquent.pages['{self.name}'].on_page_load = function(wrapper) {{
+	var page = traquent.ui.make_app_page({{
 		parent: wrapper,
 		title: '{self.title}',
 		single_column: true

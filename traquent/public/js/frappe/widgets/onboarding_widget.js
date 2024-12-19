@@ -1,10 +1,10 @@
 import Widget from "./base_widget.js";
 
-frappe.provide("frappe.utils");
+traquent.provide("traquent.utils");
 
 export default class OnboardingWidget extends Widget {
 	async refresh() {
-		frappe.utils.load_video_player();
+		traquent.utils.load_video_player();
 		this.new && (await this.get_onboarding_data());
 		this.set_title();
 		this.set_actions();
@@ -50,21 +50,21 @@ export default class OnboardingWidget extends Widget {
 
 		let $step = $(`<a class="onboarding-step ${status}">
 				<div class="step-title">
-					<div class="step-index step-pending">${frappe.utils.icon(
+					<div class="step-index step-pending">${traquent.utils.icon(
 						"es-line-success",
 						"md",
 						"",
 						"",
 						"step-icon"
 					)}</div>
-					<div class="step-index step-skipped">${frappe.utils.icon(
+					<div class="step-index step-skipped">${traquent.utils.icon(
 						"es-line-close-circle",
 						"md",
 						"",
 						"--icon-stroke: var(--gray-600);",
 						"step-icon"
 					)}</div>
-					<div class="step-index step-complete">${frappe.utils.icon(
+					<div class="step-index step-complete">${traquent.utils.icon(
 						"es-solid-success",
 						"md",
 						"",
@@ -103,7 +103,7 @@ export default class OnboardingWidget extends Widget {
 			"Watch Video": (step) => this.show_video(step),
 			"Create Entry": (step) => {
 				if (step.is_complete) {
-					frappe.set_route(`/app/List/${step.reference_document}`);
+					traquent.set_route(`/app/List/${step.reference_document}`);
 				} else {
 					if (step.show_full_form) {
 						this.create_entry(step);
@@ -140,13 +140,13 @@ export default class OnboardingWidget extends Widget {
 
 		const set_description = () => {
 			let content = __(step.description)
-				? frappe.markdown(__(step.description))
+				? traquent.markdown(__(step.description))
 				: `<h1>${__(step.title)}</h1>`;
 
 			if (step.action === "Create Entry") {
 				// add a secondary action to view list
 				content += `<p>
-					<a href='/app/${frappe.router.slug(step.reference_document)}'>
+					<a href='/app/${traquent.router.slug(step.reference_document)}'>
 						${__("Show {0} List", [__(step.reference_document)])}</a>
 				</p>`;
 			}
@@ -162,7 +162,7 @@ export default class OnboardingWidget extends Widget {
 				`<div class="video-player" data-plyr-provider="youtube" data-plyr-embed-id="${step.intro_video_url}"></div>`
 			);
 			video.appendTo(this.step_body);
-			let plyr = new frappe.Plyr(video[0], {
+			let plyr = new traquent.Plyr(video[0], {
 				hideControls: true,
 				resetOnEnd: true,
 			});
@@ -188,13 +188,13 @@ export default class OnboardingWidget extends Widget {
 
 	go_to_page(step) {
 		this.mark_complete(step);
-		frappe.set_route(step.path).then(() => {
+		traquent.set_route(step.path).then(() => {
 			let message =
 				step.callback_message ||
 				__("You can continue with the onboarding after exploring this page");
 			let title = step.callback_title || __("Awesome Work");
 
-			let msg_dialog = frappe.msgprint({
+			let msg_dialog = traquent.msgprint({
 				message: message,
 				title: title,
 				primary_action: {
@@ -209,22 +209,22 @@ export default class OnboardingWidget extends Widget {
 	}
 
 	open_report(step) {
-		let route = frappe.utils.generate_route({
+		let route = traquent.utils.generate_route({
 			name: step.reference_report,
 			type: "report",
 			is_query_report: step.report_type !== "Report Builder",
 			doctype: step.report_reference_doctype,
 		});
 
-		let current_route = frappe.get_route();
+		let current_route = traquent.get_route();
 
-		frappe.set_route(route).then(() => {
-			let msg_dialog = frappe.msgprint({
+		traquent.set_route(route).then(() => {
+			let msg_dialog = traquent.msgprint({
 				message: __(step.report_description),
 				title: __(step.reference_report),
 				primary_action: {
 					action: () => {
-						frappe.set_route(current_route).then(() => {
+						traquent.set_route(current_route).then(() => {
 							this.mark_complete(step);
 						});
 						msg_dialog.hide();
@@ -234,7 +234,7 @@ export default class OnboardingWidget extends Widget {
 				secondary_action: {
 					action: () => {
 						msg_dialog.hide();
-						frappe.set_route(current_route).then(() => {
+						traquent.set_route(current_route).then(() => {
 							this.mark_complete(step);
 						});
 					},
@@ -242,29 +242,29 @@ export default class OnboardingWidget extends Widget {
 				},
 			});
 
-			frappe.msg_dialog.custom_onhide = () => this.mark_complete(step);
+			traquent.msg_dialog.custom_onhide = () => this.mark_complete(step);
 		});
 	}
 
 	show_form_tour(step) {
 		let route;
 		if (step.is_single) {
-			route = frappe.router.slug(step.reference_document);
+			route = traquent.router.slug(step.reference_document);
 		} else {
-			route = `${frappe.router.slug(step.reference_document)}/new`;
+			route = `${traquent.router.slug(step.reference_document)}/new`;
 		}
 
-		let current_route = frappe.get_route();
+		let current_route = traquent.get_route();
 
-		frappe.route_hooks = {};
-		frappe.route_hooks.after_load = (frm) => {
+		traquent.route_hooks = {};
+		traquent.route_hooks.after_load = (frm) => {
 			const on_finish = () => {
-				let msg_dialog = frappe.msgprint({
+				let msg_dialog = traquent.msgprint({
 					message: __("Let's take you back to onboarding"),
 					title: __("Onboarding complete"),
 					primary_action: {
 						action: () => {
-							frappe.set_route(current_route).then(() => {
+							traquent.set_route(current_route).then(() => {
 								this.mark_complete(step);
 							});
 							msg_dialog.hide();
@@ -277,19 +277,19 @@ export default class OnboardingWidget extends Widget {
 			frm.tour.init({ tour_name, on_finish }).then(() => frm.tour.start());
 		};
 
-		frappe.set_route(route);
+		traquent.set_route(route);
 	}
 
 	update_settings(step) {
-		let current_route = frappe.get_route();
+		let current_route = traquent.get_route();
 
-		frappe.route_hooks = {};
-		frappe.route_hooks.after_load = (frm) => {
+		traquent.route_hooks = {};
+		traquent.route_hooks.after_load = (frm) => {
 			frm.scroll_to_field(step.field);
 			frm.doc.__unsaved = true;
 		};
 
-		frappe.route_hooks.after_save = (frm) => {
+		traquent.route_hooks.after_save = (frm) => {
 			let success = false;
 			let args = {};
 
@@ -305,7 +305,7 @@ export default class OnboardingWidget extends Widget {
 				args.title = __("Action Complete");
 				args.primary_action = {
 					action: () => {
-						frappe.set_route(current_route).then(() => {
+						traquent.set_route(current_route).then(() => {
 							this.mark_complete(step);
 						});
 					},
@@ -317,13 +317,13 @@ export default class OnboardingWidget extends Widget {
 				args.message = __("Looks like you didn't change the value");
 				args.title = __("Try Again");
 				args.secondary_action = {
-					action: () => frappe.set_route(current_route),
+					action: () => traquent.set_route(current_route),
 					label: __("Go Back"),
 				};
 
 				args.primary_action = {
 					action: () => {
-						frappe.set_route(current_route).then(() => {
+						traquent.set_route(current_route).then(() => {
 							setTimeout(() => {
 								this.skip_step(step);
 							}, 300);
@@ -335,26 +335,26 @@ export default class OnboardingWidget extends Widget {
 				custom_onhide = () => args.secondary_action.action();
 			}
 
-			frappe.msgprint(args);
-			frappe.msg_dialog.custom_onhide = () => custom_onhide();
+			traquent.msgprint(args);
+			traquent.msg_dialog.custom_onhide = () => custom_onhide();
 		};
 
-		frappe.set_route("Form", step.reference_document);
+		traquent.set_route("Form", step.reference_document);
 	}
 
 	async create_entry(step) {
-		let current_route = frappe.get_route();
+		let current_route = traquent.get_route();
 		let docname = await this.get_first_document(step.reference_document);
 
-		frappe.route_hooks = {};
-		frappe.route_hooks.after_load = (frm) => {
+		traquent.route_hooks = {};
+		traquent.route_hooks.after_load = (frm) => {
 			const on_finish = () => {
-				frappe.msgprint({
+				traquent.msgprint({
 					message: __("Awesome, now try making an entry yourself"),
 					title: __("Document Saved"),
 					primary_action: {
 						action: () => {
-							frappe.set_route(current_route).then(() => {
+							traquent.set_route(current_route).then(() => {
 								this.mark_complete(step);
 							});
 						},
@@ -362,7 +362,7 @@ export default class OnboardingWidget extends Widget {
 					},
 				});
 
-				frappe.msg_dialog.custom_onhide = () => {
+				traquent.msg_dialog.custom_onhide = () => {
 					this.mark_complete(step);
 				};
 			};
@@ -371,12 +371,12 @@ export default class OnboardingWidget extends Widget {
 		};
 
 		let callback = () => {
-			frappe.msgprint({
+			traquent.msgprint({
 				message: __("Let's take you back to onboarding"),
 				title: __("Action Complete"),
 				primary_action: {
 					action: () => {
-						frappe.set_route(current_route).then(() => {
+						traquent.set_route(current_route).then(() => {
 							this.mark_complete(step);
 						});
 					},
@@ -384,39 +384,39 @@ export default class OnboardingWidget extends Widget {
 				},
 			});
 
-			frappe.msg_dialog.custom_onhide = () => {
+			traquent.msg_dialog.custom_onhide = () => {
 				this.mark_complete(step);
 			};
 		};
 
 		if (step.is_submittable) {
-			frappe.route_hooks.after_save = () => {
-				frappe.msgprint({
+			traquent.route_hooks.after_save = () => {
+				traquent.msgprint({
 					message: __("Submit this document to complete this step."),
 					title: __("Document Saved"),
 				});
 			};
-			frappe.route_hooks.after_submit = callback;
+			traquent.route_hooks.after_submit = callback;
 		} else {
-			frappe.route_hooks.after_save = callback;
+			traquent.route_hooks.after_save = callback;
 		}
 
-		frappe.set_route("Form", step.reference_document, docname);
+		traquent.set_route("Form", step.reference_document, docname);
 	}
 
 	show_quick_entry(step) {
-		let current_route = frappe.get_route_str();
-		frappe.ui.form.make_quick_entry(
+		let current_route = traquent.get_route_str();
+		traquent.ui.form.make_quick_entry(
 			step.reference_document,
 			() => {
-				if (frappe.get_route_str() != current_route) {
-					let success_dialog = frappe.msgprint({
+				if (traquent.get_route_str() != current_route) {
+					let success_dialog = traquent.msgprint({
 						message: __("Let's take you back to onboarding"),
 						title: __("Document Saved"),
 						primary_action: {
 							action: () => {
 								success_dialog.hide();
-								frappe.set_route(current_route).then(() => {
+								traquent.set_route(current_route).then(() => {
 									this.mark_complete(step);
 								});
 							},
@@ -424,13 +424,13 @@ export default class OnboardingWidget extends Widget {
 						},
 					});
 
-					frappe.msg_dialog.custom_onhide = () => {
-						frappe.set_route(current_route).then(() => {
+					traquent.msg_dialog.custom_onhide = () => {
+						traquent.set_route(current_route).then(() => {
 							this.mark_complete(step);
 						});
 					};
 				} else {
-					frappe.show_alert(
+					traquent.show_alert(
 						__("Document Saved") + "<br>" + __("Let us continue with the onboarding")
 					);
 					this.mark_complete(step);
@@ -443,7 +443,7 @@ export default class OnboardingWidget extends Widget {
 	}
 
 	show_video(step) {
-		frappe.help.show_video(step.video_url, step.title);
+		traquent.help.show_video(step.video_url, step.title);
 		this.mark_complete(step);
 	}
 
@@ -489,10 +489,10 @@ export default class OnboardingWidget extends Widget {
 			is_skipped: "skipped",
 		};
 		//  Clear any hooks
-		frappe.route_hooks = {};
+		traquent.route_hooks = {};
 
-		frappe
-			.call("frappe.desk.desktop.update_onboarding_step", {
+		traquent
+			.call("traquent.desk.desktop.update_onboarding_step", {
 				name: step.name,
 				field: status,
 				value: value,
@@ -519,7 +519,7 @@ export default class OnboardingWidget extends Widget {
 	show_success() {
 		let success_message = this.success || __("You seem good to go!");
 		let success_state_image =
-			this.success_state_image || "/assets/frappe/images/ui-states/success-color.png";
+			this.success_state_image || "/assets/traquent/images/ui-states/success-color.png";
 		let documentation = "";
 		if (this.docs_url) {
 			documentation = __(
@@ -558,7 +558,7 @@ export default class OnboardingWidget extends Widget {
 		if (Object.keys(dismissed).includes(this.title)) {
 			let last_hidden = new Date(dismissed[this.title]);
 			let today = new Date();
-			let diff = frappe.datetime.get_hour_diff(today, last_hidden);
+			let diff = traquent.datetime.get_hour_diff(today, last_hidden);
 			return diff < 24;
 		}
 		return false;
@@ -577,18 +577,18 @@ export default class OnboardingWidget extends Widget {
 		);
 		dismiss.on("click", () => {
 			let dismissed = JSON.parse(localStorage.getItem("dismissed-onboarding") || "{}");
-			dismissed[this.title] = frappe.datetime.now_datetime();
+			dismissed[this.title] = traquent.datetime.now_datetime();
 
 			localStorage.setItem("dismissed-onboarding", JSON.stringify(dismissed));
 			this.delete(true, true);
 			this.widget.closest(".ce-block").hide();
-			frappe.telemetry.capture("dismissed_" + frappe.scrub(this.title), "frappe_onboarding");
+			traquent.telemetry.capture("dismissed_" + traquent.scrub(this.title), "traquent_onboarding");
 		});
 		dismiss.appendTo(this.action_area);
 	}
 
 	get_onboarding_data() {
-		return frappe.model
+		return traquent.model
 			.with_doc("Module Onboarding", this.onboarding_name)
 			.then((onboarding_doc) => {
 				if (onboarding_doc) {
@@ -600,8 +600,8 @@ export default class OnboardingWidget extends Widget {
 					this.docs_url = onboarding_doc.docs_url;
 					this.user_can_dismiss = onboarding_doc.user_can_dismiss;
 					const method =
-						"frappe.desk.doctype.onboarding_step.onboarding_step.get_onboarding_steps";
-					return frappe
+						"traquent.desk.doctype.onboarding_step.onboarding_step.get_onboarding_steps";
+					return traquent
 						.xcall(method, { ob_steps: onboarding_doc.steps })
 						.then((steps) => {
 							this.steps = steps;
@@ -611,7 +611,7 @@ export default class OnboardingWidget extends Widget {
 	}
 
 	async get_first_document(doctype) {
-		const { message } = await frappe.db.get_value(
+		const { message } = await traquent.db.get_value(
 			"Form Tour",
 			{ reference_doctype: doctype },
 			["first_document"]
@@ -619,7 +619,7 @@ export default class OnboardingWidget extends Widget {
 		let docname;
 
 		if (message.first_document) {
-			await frappe.db.get_list(doctype, { order_by: "creation" }).then((res) => {
+			await traquent.db.get_list(doctype, { order_by: "creation" }).then((res) => {
 				if (Array.isArray(res) && res.length) docname = res[0].name;
 			});
 		}

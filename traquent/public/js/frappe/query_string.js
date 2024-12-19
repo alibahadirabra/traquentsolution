@@ -1,4 +1,4 @@
-frappe.provide("frappe.utils");
+traquent.provide("traquent.utils");
 
 function get_url_arg(name) {
 	return get_query_params()[name] || "";
@@ -71,7 +71,7 @@ function make_query_string(obj, encode = true) {
 	return "?" + query_params.join("&");
 }
 
-Object.assign(frappe.utils, {
+Object.assign(traquent.utils, {
 	get_url_arg,
 	get_query_string,
 	get_query_params,

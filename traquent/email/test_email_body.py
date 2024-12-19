@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import base64
@@ -23,7 +23,7 @@ class TestEmailBody(IntegrationTestCase):
 <div>
 	<h3>Hey John Doe!</h3>
 	<p>This is embedded image you asked for</p>
-	<img embed="assets/frappe/images/frappe-favicon.svg" />
+	<img embed="assets/traquent/images/traquent-favicon.svg" />
 </div>
 """
 		email_text = """
@@ -31,7 +31,7 @@ Hey John Doe!
 This is the text version of this email
 """
 
-		img_path = os.path.abspath("assets/frappe/images/frappe-favicon.svg")
+		img_path = os.path.abspath("assets/traquent/images/traquent-favicon.svg")
 		with open(img_path, "rb") as f:
 			img_content = f.read()
 			img_base64 = base64.b64encode(img_content).decode()
@@ -86,7 +86,7 @@ This is the text version of this email
 Content-Type: image/svg+xml
 MIME-Version: 1.0
 Content-Transfer-Encoding: base64
-Content-Disposition: inline; filename="frappe-favicon.svg"
+Content-Disposition: inline; filename="traquent-favicon.svg"
 """
 		self.assertTrue(img_signature in self.email_string)
 		self.assertTrue(self.img_base64 in self.email_string)
@@ -122,7 +122,7 @@ w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 	def test_replace_filename_with_cid(self):
 		original_message = """
 			<div>
-				<img embed="assets/frappe/images/frappe-favicon.svg" alt="test" />
+				<img embed="assets/traquent/images/traquent-favicon.svg" alt="test" />
 				<img embed="notexists.jpg" />
 			</div>
 		"""

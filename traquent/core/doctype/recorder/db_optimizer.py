@@ -1,4 +1,4 @@
-"""Basic DB optimizer for Frappe Framework based app.
+"""Basic DB optimizer for traquent Framework based app.
 
 This is largely based on heuristics and known good practices for indexing.
 """
@@ -29,8 +29,8 @@ class DBColumn:
 	data_type: str
 
 	@classmethod
-	def from_frappe_ouput(cls, data) -> "DBColumn":
-		"Parse DBColumn from output of describe-database-table command in Frappe"
+	def from_traquent_ouput(cls, data) -> "DBColumn":
+		"Parse DBColumn from output of describe-database-table command in traquent"
 		return cls(
 			name=data["column"],
 			cardinality=data.get("cardinality"),
@@ -58,8 +58,8 @@ class DBIndex:
 		return f"DBIndex(`{self.table}`.`{self.column}`)"
 
 	@classmethod
-	def from_frappe_ouput(cls, data, table) -> "DBIndex":
-		"Parse DBIndex from output of describe-database-table command in Frappe"
+	def from_traquent_ouput(cls, data, table) -> "DBIndex":
+		"Parse DBIndex from output of describe-database-table command in traquent"
 		return cls(
 			name=data["name"],
 			table=table,
@@ -84,7 +84,7 @@ class ColumnStat:
 			self.histogram = []
 
 	@classmethod
-	def from_frappe_ouput(cls, data) -> "ColumnStat":
+	def from_traquent_ouput(cls, data) -> "ColumnStat":
 		return cls(
 			column_name=data["column_name"],
 			avg_frequency=data["avg_frequency"],
@@ -117,14 +117,14 @@ class DBTable:
 					col.cardinality = self.total_rows / column_stat.avg_frequency
 
 	@classmethod
-	def from_frappe_ouput(cls, data) -> "DBTable":
-		"Parse DBTable from output of describe-database-table command in Frappe"
+	def from_traquent_ouput(cls, data) -> "DBTable":
+		"Parse DBTable from output of describe-database-table command in traquent"
 		table_name = data["table_name"]
 		return cls(
 			name=table_name,
 			total_rows=data["total_rows"],
-			schema=[DBColumn.from_frappe_ouput(c) for c in data["schema"]],
-			indexes=[DBIndex.from_frappe_ouput(i, table_name) for i in data["indexes"]],
+			schema=[DBColumn.from_traquent_ouput(c) for c in data["schema"]],
+			indexes=[DBIndex.from_traquent_ouput(i, table_name) for i in data["indexes"]],
 		)
 
 	def has_column(self, column: str) -> bool:

@@ -1,7 +1,7 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.views.ReportFactory = class ReportFactory extends frappe.views.Factory {
+traquent.views.ReportFactory = class ReportFactory extends traquent.views.Factory {
 	make(route) {
 		const _route = ["List", route[1], "Report"];
 
@@ -10,6 +10,6 @@ frappe.views.ReportFactory = class ReportFactory extends frappe.views.Factory {
 			_route.push(route[2]);
 		}
 
-		frappe.set_route(_route);
+		traquent.set_route(_route);
 	}
 };

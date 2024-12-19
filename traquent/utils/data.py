@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import base64
@@ -984,8 +984,8 @@ def has_common(l1: typing.Hashable, l2: typing.Hashable) -> bool:
 def cast_fieldtype(fieldtype, value, show_warning=True):
 	if show_warning:
 		message = (
-			"Function `frappe.utils.data.cast_fieldtype` has been deprecated in favour"
-			" of `frappe.utils.data.cast`. Use the newer util for safer type casting."
+			"Function `traquent.utils.data.cast_fieldtype` has been deprecated in favour"
+			" of `traquent.utils.data.cast`. Use the newer util for safer type casting."
 		)
 		secho(message, fg="yellow")
 
@@ -1020,11 +1020,11 @@ def cast_fieldtype(fieldtype, value, show_warning=True):
 
 
 def cast(fieldtype, value=None):
-	"""Cast the value to the Python native object of the Frappe fieldtype provided.
+	"""Cast the value to the Python native object of the traquent fieldtype provided.
 	If value is None, the first/lowest value of the `fieldtype` will be returned.
 	If value can't be cast as fieldtype due to an invalid input, None will be returned.
 
-	Mapping of Python types => Frappe types:
+	Mapping of Python types => traquent types:
 	        * str => ("Data", "Text", "Small Text", "Long Text", "Text Editor", "Select", "Link", "Dynamic Link")
 	        * float => ("Currency", "Float", "Percent")
 	        * int => ("Int", "Check")
@@ -1431,7 +1431,7 @@ number_format_info = NUMBER_FORMAT_MAP
 
 @deprecated
 def get_number_format_info(format: str) -> tuple[str, str, int]:
-	"""DEPRECATED: use `NumberFormat.from_string()` from `frappe.utils.number_format` instead.
+	"""DEPRECATED: use `NumberFormat.from_string()` from `traquent.utils.number_format` instead.
 
 	Return the decimal separator, thousands separator and precision for the given number `format` string.
 
@@ -1811,7 +1811,7 @@ def url_contains_port(url: str) -> bool:
 def get_host_name() -> str:
 	"""Return the hostname of the current site.
 
-	e.g. If site is 'https://cloud.frappe.io', returns 'cloud.frappe.io'.
+	e.g. If site is 'https://cloud.traquent.io', returns 'cloud.traquent.io'.
 	"""
 	return get_url().rsplit("//", 1)[-1]
 
@@ -1820,7 +1820,7 @@ def get_link_to_form(doctype: str, name: str | None = None, label: str | None = 
 	"""Return the HTML link to the given document's form view.
 
 	e.g. get_link_to_form("Sales Invoice", "INV-0001", "Link Label") returns:
-	    '<a href="https://frappe.io/app/sales-invoice/INV-0001">Link Label</a>'.
+	    '<a href="https://traquent.io/app/sales-invoice/INV-0001">Link Label</a>'.
 	"""
 	from traquent import _
 
@@ -1840,7 +1840,7 @@ def get_link_to_report(
 	"""Return the HTML link to the given report.
 
 	e.g. get_link_to_report("Revenue Report", "Link Label") returns:
-	        '<a href="https://frappe.io/app/query-report/Revenue%20Report">Link Label</a>'.
+	        '<a href="https://traquent.io/app/query-report/Revenue%20Report">Link Label</a>'.
 	"""
 	if not label:
 		label = name
@@ -1876,8 +1876,8 @@ def get_absolute_url(doctype: str, name: str) -> str:
 def get_url_to_form(doctype: str, name: str | None = None) -> str:
 	"""Return the absolute URL for the form view of the given document in the desk.
 
-	e.g. when doctype="Sales Invoice" and your site URL is "https://frappe.io",
-	         returns 'https://frappe.io/app/sales-invoice/INV-00001'
+	e.g. when doctype="Sales Invoice" and your site URL is "https://traquent.io",
+	         returns 'https://traquent.io/app/sales-invoice/INV-00001'
 	"""
 	if not name:
 		uri = f"/app/{quoted(slug(doctype))}"
@@ -1890,8 +1890,8 @@ def get_url_to_form(doctype: str, name: str | None = None) -> str:
 def get_url_to_list(doctype: str) -> str:
 	"""Return the absolute URL for the list view of the given document in the desk.
 
-	e.g. when doctype="Sales Invoice" and your site URL is "https://frappe.io",
-	         returns 'https://frappe.io/app/sales-invoice'
+	e.g. when doctype="Sales Invoice" and your site URL is "https://traquent.io",
+	         returns 'https://traquent.io/app/sales-invoice'
 	"""
 	return get_url(uri=f"/app/{quoted(slug(doctype))}")
 
@@ -1899,12 +1899,12 @@ def get_url_to_list(doctype: str) -> str:
 def get_url_to_report(name, report_type: str | None = None, doctype: str | None = None) -> str:
 	"""Return the absolute URL for the report in the desk.
 
-	e.g. when name="Sales Register" and your site URL is "https://frappe.io",
-	         returns 'https://frappe.io/app/query-report/Sales%20Register'
+	e.g. when name="Sales Register" and your site URL is "https://traquent.io",
+	         returns 'https://traquent.io/app/query-report/Sales%20Register'
 
 	You can optionally pass `report_type` and `doctype` to get the URL for a Report Builder report.
 
-	get_url_to_report("Revenue", "Report Builder", "Sales Invoice") -> 'https://frappe.io/app/sales-invoice/view/report/Revenue'
+	get_url_to_report("Revenue", "Report Builder", "Sales Invoice") -> 'https://traquent.io/app/sales-invoice/view/report/Revenue'
 	"""
 	if report_type == "Report Builder":
 		return get_url(uri=f"/app/{quoted(slug(doctype))}/view/report/{quoted(name)}")
@@ -2147,8 +2147,8 @@ def sanitize_column(column_name: str) -> None:
 def scrub_urls(html: str) -> str:
 	"""Expand relative urls in the given `html`.
 
-	e.g. If HTML is '<a href="/files/abc.jpeg">View Image</a>' and site URL is 'https://frappe.io',
-	        returns '<a href="https://frappe.io/files/abc.jpeg">View Image</a>'.
+	e.g. If HTML is '<a href="/files/abc.jpeg">View Image</a>' and site URL is 'https://traquent.io',
+	        returns '<a href="https://traquent.io/files/abc.jpeg">View Image</a>'.
 	"""
 	return expand_relative_urls(html)
 
@@ -2156,8 +2156,8 @@ def scrub_urls(html: str) -> str:
 def expand_relative_urls(html: str) -> str:
 	"""Expand relative urls in the given `html`.
 
-	e.g. If HTML is '<a href="/files/abc.jpeg">View Image</a>' and site URL is 'https://frappe.io',
-	        returns '<a href="https://frappe.io/files/abc.jpeg">View Image</a>'.
+	e.g. If HTML is '<a href="/files/abc.jpeg">View Image</a>' and site URL is 'https://traquent.io',
+	        returns '<a href="https://traquent.io/files/abc.jpeg">View Image</a>'.
 	"""
 	# expand relative urls
 	url = get_url()
@@ -2186,7 +2186,7 @@ def expand_relative_urls(html: str) -> str:
 def quoted(url: str) -> str:
 	"""Return the given `url` quoted.
 
-	e.g. 'https://frappe.io/files/my Image file.jpeg' -> 'https://frappe.io/files/my%20Image%20file.jpeg'
+	e.g. 'https://traquent.io/files/my Image file.jpeg' -> 'https://traquent.io/files/my%20Image%20file.jpeg'
 	"""
 	return cstr(quote(encode(cstr(url)), safe=b"~@#$&()*!+=:;,.?/'"))
 
@@ -2391,8 +2391,8 @@ def get_user_info_for_avatar(user_id: str) -> _UserInfo:
 	"""Return user info for the given `user_id` suitable for use in an avatar.
 
 	e.g. {
-	        "email": "faris@frappe.io",
-	        "image": "/assets/frappe/images/ui/avatar.png",
+	        "email": "faris@traquent.io",
+	        "image": "/assets/traquent/images/ui/avatar.png",
 	        "name": "Faris Ansari"
 	}
 	"""
@@ -2444,7 +2444,7 @@ class UnicodeWithAttrs(str):
 
 def format_timedelta(o: datetime.timedelta | str) -> str:
 	# MariaDB allows a wide range - https://mariadb.com/kb/en/time/
-	# but Frappe doesn't - I think via babel : only allows 0..23 range for hour
+	# but traquent doesn't - I think via babel : only allows 0..23 range for hour
 	if isinstance(o, datetime.timedelta):
 		total_seconds = o.total_seconds()
 	else:
@@ -2551,7 +2551,7 @@ def parse_and_map_trackers_from_url(url: str, create: bool = False) -> dict:
 
 
 def map_trackers(url_trackers: dict, create: bool = False):
-	frappe_trackers = {}
+	traquent_trackers = {}
 
 	if url_source := url_trackers.get("utm_source", url_trackers.get("source")):
 		source = traquent.db.get_value("UTM Source", {"slug": slug(url_source)}, "name") or url_source
@@ -2560,7 +2560,7 @@ def map_trackers(url_trackers: dict, create: bool = False):
 			source.name = url_source
 			source.description = f"Autogenerated from {url_trackers}"
 			source.save(ignore_permissions=True)
-		frappe_trackers["utm_source"] = source
+		traquent_trackers["utm_source"] = source
 
 	if url_medium := url_trackers.get("utm_medium", url_trackers.get("medium")):
 		medium = traquent.db.get_value("UTM Medium", {"slug": slug(url_medium)}, "name") or url_medium
@@ -2569,7 +2569,7 @@ def map_trackers(url_trackers: dict, create: bool = False):
 			medium.name = url_medium
 			medium.description = f"Autogenerated from {url_trackers}"
 			medium.save(ignore_permissions=True)
-		frappe_trackers["utm_medium"] = medium
+		traquent_trackers["utm_medium"] = medium
 
 	if url_campaign := url_trackers.get("utm_campaign", url_trackers.get("campaign")):
 		campaign = traquent.db.get_value("UTM Campaign", {"slug": slug(url_campaign)}, "name") or url_campaign
@@ -2578,12 +2578,12 @@ def map_trackers(url_trackers: dict, create: bool = False):
 			campaign.name = url_campaign
 			campaign.campaign_description = f"Autogenerated from {url_trackers}"
 			campaign.save(ignore_permissions=True)
-		frappe_trackers["utm_campaign"] = campaign
+		traquent_trackers["utm_campaign"] = campaign
 
 	if url_content := url_trackers.get("utm_content", url_trackers.get("content")):
-		frappe_trackers["utm_content"] = url_content
+		traquent_trackers["utm_content"] = url_content
 
-	return frappe_trackers
+	return traquent_trackers
 
 
 # This is used in test to count memory overhead of default imports.

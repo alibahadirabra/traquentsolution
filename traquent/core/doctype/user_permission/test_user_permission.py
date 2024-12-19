@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies and Contributors
+# Copyright (c) 2021, traquent Technologies and Contributors
 # See LICENSE
 import traquent
 from traquent.core.doctype.doctype.test_doctype import new_doctype
@@ -210,7 +210,7 @@ class TestUserPermission(IntegrationTestCase):
 		traquent.set_user("Administrator")
 
 	def test_user_perm_on_new_doc_with_field_default(self):
-		"""Test User Perm impact on frappe.new_doc. with *field* default value"""
+		"""Test User Perm impact on traquent.new_doc. with *field* default value"""
 		traquent.set_user("Administrator")
 		user = create_user("new_doc_test@example.com", "Blogger")
 
@@ -245,7 +245,7 @@ class TestUserPermission(IntegrationTestCase):
 		remove_applicable(["Assignment Rule"], "new_doc_test@example.com", "DocType", "ToDo")
 
 	def test_user_perm_on_new_doc_with_user_default(self):
-		"""Test User Perm impact on frappe.new_doc. with *user* default value"""
+		"""Test User Perm impact on traquent.new_doc. with *user* default value"""
 		from traquent.core.doctype.session_default_settings.session_default_settings import (
 			clear_session_defaults,
 			set_session_default_values,

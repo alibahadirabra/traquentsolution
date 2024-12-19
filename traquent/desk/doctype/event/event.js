@@ -1,8 +1,8 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
-frappe.provide("frappe.desk");
+traquent.provide("traquent.desk");
 
-frappe.ui.form.on("Event", {
+traquent.ui.form.on("Event", {
 	onload: function (frm) {
 		frm.set_query("reference_doctype", "event_participants", function () {
 			return {
@@ -14,7 +14,7 @@ frappe.ui.form.on("Event", {
 		frm.set_query("google_calendar", function () {
 			return {
 				filters: {
-					owner: frappe.session.user,
+					owner: traquent.session.user,
 				},
 			};
 		});
@@ -25,7 +25,7 @@ frappe.ui.form.on("Event", {
 				frm.add_custom_button(
 					__(value.reference_docname),
 					function () {
-						frappe.set_route("Form", value.reference_doctype, value.reference_docname);
+						traquent.set_route("Form", value.reference_doctype, value.reference_docname);
 					},
 					__("Participants")
 				);
@@ -37,7 +37,7 @@ frappe.ui.form.on("Event", {
 		frm.add_custom_button(
 			__("Add Contacts"),
 			function () {
-				new frappe.desk.eventParticipants(frm, "Contact");
+				new traquent.desk.eventParticipants(frm, "Contact");
 			},
 			__("Add Participants")
 		);
@@ -49,7 +49,7 @@ frappe.ui.form.on("Event", {
 		if (
 			ends_on_date &&
 			frm.doc.google_meet_link &&
-			frappe.datetime.now_date() <= ends_on_date
+			traquent.datetime.now_date() <= ends_on_date
 		) {
 			frm.dashboard.set_headline(
 				__("Join video conference with {0}", [
@@ -69,12 +69,12 @@ frappe.ui.form.on("Event", {
 	},
 });
 
-frappe.ui.form.on("Event Participants", {
+traquent.ui.form.on("Event Participants", {
 	event_participants_remove: function (frm, cdt, cdn) {
 		if (cdt && !cdn.includes("new-event-participants")) {
-			frappe.call({
+			traquent.call({
 				type: "POST",
-				method: "frappe.desk.doctype.event.event.delete_communication",
+				method: "traquent.desk.doctype.event.event.delete_communication",
 				args: {
 					event: frm.doc,
 					reference_doctype: cdt,
@@ -83,7 +83,7 @@ frappe.ui.form.on("Event Participants", {
 				freeze: true,
 				callback: function (r) {
 					if (r.exc) {
-						frappe.show_alert({
+						traquent.show_alert({
 							message: __("{0}", [r.exc]),
 							indicator: "orange",
 						});
@@ -94,7 +94,7 @@ frappe.ui.form.on("Event Participants", {
 	},
 });
 
-frappe.desk.eventParticipants = class eventParticipants {
+traquent.desk.eventParticipants = class eventParticipants {
 	constructor(frm, doctype) {
 		this.frm = frm;
 		this.doctype = doctype;
@@ -105,7 +105,7 @@ frappe.desk.eventParticipants = class eventParticipants {
 		let me = this;
 
 		let table = me.frm.get_field("event_participants").grid;
-		new frappe.ui.form.LinkSelector({
+		new traquent.ui.form.LinkSelector({
 			doctype: me.doctype,
 			dynamic_link_field: "reference_doctype",
 			dynamic_link_reference: me.doctype,

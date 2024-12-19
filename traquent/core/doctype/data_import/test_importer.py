@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and Contributors
+# Copyright (c) 2019, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import traquent
 from traquent.core.doctype.data_import.importer import Importer
@@ -288,4 +288,4 @@ def get_import_file(csv_file_name, force=False):
 
 
 def get_csv_file_path(file_name):
-	return traquent.get_app_path("frappe", "core", "doctype", "data_import", "fixtures", file_name)
+	return traquent.get_app_path("traquent", "core", "doctype", "data_import", "fixtures", file_name)

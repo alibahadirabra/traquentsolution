@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and contributors
+# Copyright (c) 2019, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 
@@ -155,7 +155,7 @@ def sync_contacts_from_google_contacts(g_contact):
 			"import_google_contacts", dict(progress=idx + 1, total=len(results)), user=traquent.session.user
 		)
 		# Work-around to fix
-		# https://github.com/frappe/frappe/issues/22648
+		# https://github.com/traquent/traquent/issues/22648
 		if not connection.get("names"):
 			continue
 

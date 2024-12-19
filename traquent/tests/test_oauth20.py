@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 from typing import TYPE_CHECKING
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 	from traquent.integrations.doctype.social_login_key.social_login_key import SocialLoginKey
 
 
-class FrappeRequestTestCase(IntegrationTestCase):
+class traquentRequestTestCase(IntegrationTestCase):
 	@property
 	def sid(self) -> str:
 		if not getattr(self, "_sid", None):
@@ -51,7 +51,7 @@ class FrappeRequestTestCase(IntegrationTestCase):
 		return make_request(target=self.TEST_CLIENT.delete, args=(path,), kwargs=kwargs, site=self.site)
 
 
-class TestOAuth20(FrappeRequestTestCase):
+class TestOAuth20(traquentRequestTestCase):
 	site = traquent.local.site
 
 	@classmethod
@@ -63,12 +63,12 @@ class TestOAuth20(FrappeRequestTestCase):
 		cls.scope = "all openid"
 		cls.redirect_uri = "http://localhost"
 
-		# Set Frappe server URL reqired for id_token generation
-		frappe_login_key: "SocialLoginKey" = traquent.new_doc("Social Login Key")
-		frappe_login_key.get_social_login_provider("Frappe", initialize=True)
-		frappe_login_key.base_url = traquent.utils.get_url()
-		frappe_login_key.enable_social_login = 0
-		frappe_login_key.insert(ignore_if_duplicate=True)
+		# Set traquent server URL reqired for id_token generation
+		traquent_login_key: "SocialLoginKey" = traquent.new_doc("Social Login Key")
+		traquent_login_key.get_social_login_provider("traquent", initialize=True)
+		traquent_login_key.base_url = traquent.utils.get_url()
+		traquent_login_key.enable_social_login = 0
+		traquent_login_key.insert(ignore_if_duplicate=True)
 		traquent.db.commit()
 
 	def setUp(self):
@@ -108,7 +108,7 @@ class TestOAuth20(FrappeRequestTestCase):
 		# Go to Authorize url
 		self.TEST_CLIENT.set_cookie(key="sid", value=self.sid)
 		resp = self.get(
-			"/api/method/frappe.integrations.oauth2.authorize",
+			"/api/method/traquent.integrations.oauth2.authorize",
 			{
 				"client_id": self.client_id,
 				"scope": self.scope,
@@ -122,7 +122,7 @@ class TestOAuth20(FrappeRequestTestCase):
 
 		# Request for bearer token
 		token_response = self.post(
-			"/api/method/frappe.integrations.oauth2.get_token",
+			"/api/method/traquent.integrations.oauth2.get_token",
 			headers=self.form_header,
 			data={
 				"grant_type": "authorization_code",
@@ -155,7 +155,7 @@ class TestOAuth20(FrappeRequestTestCase):
 		# Go to Authorize url
 		self.TEST_CLIENT.set_cookie(key="sid", value=self.sid)
 		resp = self.get(
-			"/api/method/frappe.integrations.oauth2.authorize",
+			"/api/method/traquent.integrations.oauth2.authorize",
 			{
 				"client_id": self.client_id,
 				"scope": self.scope,
@@ -173,7 +173,7 @@ class TestOAuth20(FrappeRequestTestCase):
 
 		# Request for bearer token
 		token_response = self.post(
-			"/api/method/frappe.integrations.oauth2.get_token",
+			"/api/method/traquent.integrations.oauth2.get_token",
 			headers=self.form_header,
 			data={
 				"grant_type": "authorization_code",
@@ -204,7 +204,7 @@ class TestOAuth20(FrappeRequestTestCase):
 		# Go to Authorize url
 		self.TEST_CLIENT.set_cookie(key="sid", value=self.sid)
 		resp = self.get(
-			"/api/method/frappe.integrations.oauth2.authorize",
+			"/api/method/traquent.integrations.oauth2.authorize",
 			{
 				"client_id": self.client_id,
 				"scope": self.scope,
@@ -220,7 +220,7 @@ class TestOAuth20(FrappeRequestTestCase):
 
 		# Request for bearer token
 		token_response = self.post(
-			"/api/method/frappe.integrations.oauth2.get_token",
+			"/api/method/traquent.integrations.oauth2.get_token",
 			headers=self.form_header,
 			data={
 				"grant_type": "authorization_code",
@@ -235,7 +235,7 @@ class TestOAuth20(FrappeRequestTestCase):
 
 		# Revoke Token
 		revoke_token_response = self.post(
-			"/api/method/frappe.integrations.oauth2.revoke_token",
+			"/api/method/traquent.integrations.oauth2.revoke_token",
 			headers=self.form_header,
 			data={"token": bearer_token.get("access_token")},
 		)
@@ -256,7 +256,7 @@ class TestOAuth20(FrappeRequestTestCase):
 
 		# Request for bearer token
 		token_response = self.post(
-			"/api/method/frappe.integrations.oauth2.get_token",
+			"/api/method/traquent.integrations.oauth2.get_token",
 			data={
 				"grant_type": "password",
 				"username": "test@example.com",
@@ -291,7 +291,7 @@ class TestOAuth20(FrappeRequestTestCase):
 		# Go to Authorize url
 		try:
 			session.get(
-				get_full_url("/api/method/frappe.integrations.oauth2.authorize"),
+				get_full_url("/api/method/traquent.integrations.oauth2.authorize"),
 				params=encode_params(
 					{
 						"client_id": self.client_id,
@@ -322,7 +322,7 @@ class TestOAuth20(FrappeRequestTestCase):
 		# Go to Authorize url
 		self.TEST_CLIENT.set_cookie(key="sid", value=self.sid)
 		resp = self.get(
-			"/api/method/frappe.integrations.oauth2.authorize",
+			"/api/method/traquent.integrations.oauth2.authorize",
 			{
 				"client_id": self.client_id,
 				"scope": self.scope,
@@ -339,7 +339,7 @@ class TestOAuth20(FrappeRequestTestCase):
 
 		# Request for bearer token
 		token_response = self.post(
-			"/api/method/frappe.integrations.oauth2.get_token",
+			"/api/method/traquent.integrations.oauth2.get_token",
 			headers=self.form_header,
 			data=encode_params(
 				{
@@ -372,11 +372,11 @@ class TestOAuth20(FrappeRequestTestCase):
 		)
 
 
-def check_valid_openid_response(access_token=None, client: "FrappeRequestTestCase" = None):
+def check_valid_openid_response(access_token=None, client: "traquentRequestTestCase" = None):
 	"""Return True for valid response."""
 	# Use token in header
 	headers = {}
-	URL = "/api/method/frappe.integrations.oauth2.openid_profile"
+	URL = "/api/method/traquent.integrations.oauth2.openid_profile"
 
 	if access_token:
 		headers["Authorization"] = f"Bearer {access_token}"

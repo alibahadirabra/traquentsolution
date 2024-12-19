@@ -1,13 +1,13 @@
-// Copyright (c) 2020, Frappe Technologies and contributors
+// Copyright (c) 2020, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Web Template", {
+traquent.ui.form.on("Web Template", {
 	refresh: function (frm) {
-		if (!frappe.boot.developer_mode && frm.doc.standard) {
+		if (!traquent.boot.developer_mode && frm.doc.standard) {
 			frm.disable_form();
 		}
 
-		frm.toggle_display("standard", frappe.boot.developer_mode);
+		frm.toggle_display("standard", traquent.boot.developer_mode);
 		// necessary to show template field again, after it was hidden when
 		// unchecking 'standard'.
 		frm.toggle_display("template", !frm.doc.standard);

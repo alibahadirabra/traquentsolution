@@ -57,7 +57,7 @@ class TestWebPage(IntegrationTestCase):
 			route="/doctype-view/<doctype>",
 			content_type="HTML",
 			dynamic_template=1,
-			main_section_html="<div>{{ frappe.form_dict.doctype }}</div>",
+			main_section_html="<div>{{ traquent.form_dict.doctype }}</div>",
 		).insert()
 		try:
 			from traquent.utils import get_html_for_route

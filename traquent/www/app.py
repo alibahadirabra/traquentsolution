@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import os
 
@@ -50,7 +50,7 @@ def get_context(context):
 	app_include_css = hooks.get("app_include_css", []) + traquent.conf.get("app_include_css", [])
 	app_include_icons = hooks.get("app_include_icons", [])
 
-	if traquent.get_system_settings("enable_telemetry") and os.getenv("FRAPPE_SENTRY_DSN"):
+	if traquent.get_system_settings("enable_telemetry") and os.getenv("traquent_SENTRY_DSN"):
 		app_include_js.append("sentry.bundle.js")
 
 	context.update(
@@ -69,7 +69,7 @@ def get_context(context):
 			"google_analytics_id": traquent.conf.get("google_analytics_id"),
 			"google_analytics_anonymize_ip": traquent.conf.get("google_analytics_anonymize_ip"),
 			"app_name": (
-				traquent.get_website_settings("app_name") or traquent.get_system_settings("app_name") or "Frappe"
+				traquent.get_website_settings("app_name") or traquent.get_system_settings("app_name") or "traquent"
 			),
 		}
 	)

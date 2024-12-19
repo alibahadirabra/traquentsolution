@@ -1,6 +1,6 @@
-frappe.provide("frappe.phone_call");
+traquent.provide("traquent.phone_call");
 
-frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInput {
+traquent.ui.form.ControlData = class ControlData extends traquent.ui.form.ControlInput {
 	static html_element = "input";
 	static input_type = "text";
 	static trigger_change_on_input_event = true;
@@ -17,7 +17,7 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 			.prependTo(this.input_area);
 
 		this.$input.on("paste", (e) => {
-			let pasted_data = frappe.utils.get_clipboard_data(e);
+			let pasted_data = traquent.utils.get_clipboard_data(e);
 			let maxlength = this.$input.attr("maxlength");
 			if (maxlength && pasted_data.length > maxlength) {
 				let warning_message = __(
@@ -26,17 +26,17 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 				);
 
 				// Only show edit link to users who can update the doctype
-				if (this.frm && frappe.model.can_write(this.frm.doctype)) {
+				if (this.frm && traquent.model.can_write(this.frm.doctype)) {
 					let doctype_edit_link = null;
 					if (this.frm.meta.custom) {
-						doctype_edit_link = frappe.utils.get_form_link(
+						doctype_edit_link = traquent.utils.get_form_link(
 							"DocType",
 							this.frm.doctype,
 							true,
 							__("this form")
 						);
 					} else {
-						doctype_edit_link = frappe.utils.get_form_link(
+						doctype_edit_link = traquent.utils.get_form_link(
 							"Customize Form",
 							"Customize Form",
 							true,
@@ -53,7 +53,7 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 					warning_message += `<br><br><span class="text-muted text-small">${edit_note}</span>`;
 				}
 
-				frappe.msgprint({
+				traquent.msgprint({
 					message: warning_message,
 					indicator: "orange",
 					title: __("Data Clipped"),
@@ -80,7 +80,7 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 		this.$wrapper.find(".control-input").append(
 			`<span class="link-btn">
 				<a class="btn-open no-decoration" title="${__("Open Link")}" target="_blank">
-					${frappe.utils.icon("link-url", "sm")}
+					${traquent.utils.icon("link-url", "sm")}
 				</a>
 			</span>`
 		);
@@ -125,12 +125,12 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 				.find(".control-input")
 				.append(
 					`<button class="btn action-btn">
-					${frappe.utils.icon("clipboard", "sm")}
+					${traquent.utils.icon("clipboard", "sm")}
 				</button>`
 				)
 				.find(".action-btn")
 				.click(() => {
-					frappe.utils.copy_to_clipboard(this.value);
+					traquent.utils.copy_to_clipboard(this.value);
 				});
 		}
 	}
@@ -139,7 +139,7 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 		this.$wrapper.find(".control-input").append(
 			`<span class="link-btn">
 				<a class="btn-open no-decoration" title="${__("Scan")}">
-					${frappe.utils.icon("scan", "sm")}
+					${traquent.utils.icon("scan", "sm")}
 				</a>
 			</span>`
 		);
@@ -149,7 +149,7 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 
 		const me = this;
 		this.$scan_btn.on("click", "a", () => {
-			new frappe.ui.Scanner({
+			new traquent.ui.Scanner({
 				dialog: true,
 				multiple: false,
 				on_scan(data) {
@@ -172,12 +172,12 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 		this.$input.on("change", change_handler);
 		if (this.constructor.trigger_change_on_input_event && !this.in_grid()) {
 			// debounce to avoid repeated validations on value change
-			this.$input.on("input", frappe.utils.debounce(change_handler, 500));
+			this.$input.on("input", traquent.utils.debounce(change_handler, 500));
 		}
 	}
 	setup_autoname_check() {
 		if (!this.df.parent) return;
-		this.meta = frappe.get_meta(this.df.parent);
+		this.meta = traquent.get_meta(this.df.parent);
 		if (
 			this.meta &&
 			((this.meta.autoname &&
@@ -194,7 +194,7 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 						if (this.last_check) clearTimeout(this.last_check);
 
 						// check if name exists
-						frappe.db.get_value(
+						traquent.db.get_value(
 							this.doctype,
 							this.$input.val(),
 							"name",
@@ -271,7 +271,7 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 			this.df.invalid = !validate_name(v);
 			return v;
 		} else if (this.df.options == "Email") {
-			var email_list = frappe.utils.split_emails(v);
+			var email_list = traquent.utils.split_emails(v);
 			if (!email_list) {
 				return "";
 			} else {
@@ -300,4 +300,4 @@ frappe.ui.form.ControlData = class ControlData extends frappe.ui.form.ControlInp
 	}
 };
 
-frappe.ui.form.ControlReadOnly = frappe.ui.form.ControlData;
+traquent.ui.form.ControlReadOnly = traquent.ui.form.ControlData;

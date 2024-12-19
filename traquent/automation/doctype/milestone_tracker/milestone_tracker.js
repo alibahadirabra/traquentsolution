@@ -1,7 +1,7 @@
-// Copyright (c) 2019, Frappe Technologies and contributors
+// Copyright (c) 2019, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Milestone Tracker", {
+traquent.ui.form.on("Milestone Tracker", {
 	refresh: function (frm) {
 		frm.trigger("update_options");
 	},
@@ -14,9 +14,9 @@ frappe.ui.form.on("Milestone Tracker", {
 		let track_fields = [];
 
 		if (doctype) {
-			frappe.model.with_doctype(doctype, () => {
+			traquent.model.with_doctype(doctype, () => {
 				// get all date and datetime fields
-				frappe.get_meta(doctype).fields.map((df) => {
+				traquent.get_meta(doctype).fields.map((df) => {
 					if (["Link", "Select"].includes(df.fieldtype)) {
 						track_fields.push({ label: df.label, value: df.fieldname });
 					}

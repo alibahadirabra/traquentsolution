@@ -1,10 +1,10 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.ready(function() {
+traquent.ready(function() {
 
-	if(frappe.utils.get_url_arg('subject')) {
-	  $('[name="subject"]').val(frappe.utils.get_url_arg('subject'));
+	if(traquent.utils.get_url_arg('subject')) {
+	  $('[name="subject"]').val(traquent.utils.get_url_arg('subject'));
 	}
 
 	$('.btn-send').off("click").on("click", function() {
@@ -12,20 +12,20 @@ frappe.ready(function() {
 		var message = $('[name="message"]').val();
 
 		if(!(email && message)) {
-			frappe.msgprint('{{ _("Please enter both your email and message so that we can get back to you. Thanks!") }}');
+			traquent.msgprint('{{ _("Please enter both your email and message so that we can get back to you. Thanks!") }}');
 			return false;
 		}
 
 		if(!validate_email(email)) {
-			frappe.msgprint('{{ _("You seem to have written your name instead of your email. Please enter a valid email address so that we can get back.") }}');
+			traquent.msgprint('{{ _("You seem to have written your name instead of your email. Please enter a valid email address so that we can get back.") }}');
 			$('[name="email"]').focus();
 			return false;
 		}
 
 		$("#contact-alert").toggle(false);
-		frappe.call({
+		traquent.call({
 			type: "POST",
-			method: "frappe.www.contact.send_message",
+			method: "traquent.www.contact.send_message",
 			args: {
 				subject: $('[name="subject"]').val(),
 				sender: email,
@@ -33,7 +33,7 @@ frappe.ready(function() {
 			},
 			callback: function(r) {
 				if (!r.exc) {
-					frappe.msgprint('{{ _("Thank you for your message") }}', '{{ _("Message Sent") }}');
+					traquent.msgprint('{{ _("Thank you for your message") }}', '{{ _("Message Sent") }}');
 				}
 				$(':input').val('');
 			},

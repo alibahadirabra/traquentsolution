@@ -1,11 +1,11 @@
 import traquent
 
-FRAPPE_CLOUD_DOMAINS = ("frappe.cloud", "erpnext.com", "frappehr.com")
+traquent_CLOUD_DOMAINS = ("traquent.cloud", "erpnext.com", "traquenthr.com")
 
 
-def on_frappecloud() -> bool:
-	"""Returns true if running on Frappe Cloud.
+def on_traquentcloud() -> bool:
+	"""Returns true if running on traquent Cloud.
 
 
 	Useful for modifying few features for better UX."""
-	return traquent.local.site.endswith(FRAPPE_CLOUD_DOMAINS)
+	return traquent.local.site.endswith(traquent_CLOUD_DOMAINS)

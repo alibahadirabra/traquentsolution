@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies and Contributors
+# Copyright (c) 2015, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 from unittest.mock import patch
 
@@ -33,10 +33,10 @@ class TestErrorLog(IntegrationTestCase):
 
 
 _RAW_EXC = """
-   File "apps/frappe/frappe/model/document.py", line 1284, in runner
+   File "apps/traquent/traquent/model/document.py", line 1284, in runner
      add_to_return_value(self, fn(self, *args, **kwargs))
                                ^^^^^^^^^^^^^^^^^^^^^^^^^
-   File "apps/frappe/frappe/model/document.py", line 933, in fn
+   File "apps/traquent/traquent/model/document.py", line 933, in fn
      return method_object(*args, **kwargs)
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    File "apps/erpnext/erpnext/selling/doctype/sales_order/sales_order.py", line 58, in onload
@@ -45,18 +45,18 @@ _RAW_EXC = """
 """
 
 _THROW_EXC = """
-   File "apps/frappe/frappe/model/document.py", line 933, in fn
+   File "apps/traquent/traquent/model/document.py", line 933, in fn
      return method_object(*args, **kwargs)
             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    File "apps/erpnext/erpnext/selling/doctype/sales_order/sales_order.py", line 58, in onload
-     frappe.throw("what")
-   File "apps/frappe/frappe/__init__.py", line 550, in throw
+     traquent.throw("what")
+   File "apps/traquent/traquent/__init__.py", line 550, in throw
      msgprint(
-   File "apps/frappe/frappe/__init__.py", line 518, in msgprint
+   File "apps/traquent/traquent/__init__.py", line 518, in msgprint
      _raise_exception()
-   File "apps/frappe/frappe/__init__.py", line 467, in _raise_exception
+   File "apps/traquent/traquent/__init__.py", line 467, in _raise_exception
      raise raise_exception(msg)
- frappe.exceptions.ValidationError: what
+ traquent.exceptions.ValidationError: what
 """
 
 TEST_EXCEPTIONS = (
@@ -72,7 +72,7 @@ TEST_EXCEPTIONS = (
 
 
 class TestExceptionSourceGuessing(IntegrationTestCase):
-	@patch.object(traquent, "get_installed_apps", return_value=["frappe", "erpnext", "3pa"])
+	@patch.object(traquent, "get_installed_apps", return_value=["traquent", "erpnext", "3pa"])
 	def test_exc_source_guessing(self, _installed_apps):
 		for source, exc in TEST_EXCEPTIONS:
 			result = guess_exception_source(exc)

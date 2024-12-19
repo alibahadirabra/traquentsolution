@@ -1,5 +1,5 @@
 """
-This module provides functionality for discovering and organizing tests in the Frappe framework.
+This module provides functionality for discovering and organizing tests in the traquent framework.
 
 Key components:
 - discover_all_tests: Discovers all tests for specified app(s)
@@ -34,7 +34,7 @@ from .utils import debug_timer
 if TYPE_CHECKING:
 	from .runner import TestRunner
 
-logger = logging.getLogger("frappe.testing.discovery")
+logger = logging.getLogger("traquent.testing.discovery")
 
 
 @debug_timer

@@ -1,6 +1,6 @@
 import traquent
 
-# this is a separate file since it is imported in frappe.model.document
+# this is a separate file since it is imported in traquent.model.document
 # to avoid circular imports
 
 EVENT_MAP = {

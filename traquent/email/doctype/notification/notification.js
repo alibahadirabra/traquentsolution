@@ -1,16 +1,16 @@
-// Copyright (c) 2018, Frappe Technologies and contributors
+// Copyright (c) 2018, traquent Technologies and contributors
 // For license information, please see license.txt
 
 const DATE_BASED_EVENTS = ["Days Before", "Days After"];
 
-frappe.notification = {
+traquent.notification = {
 	setup_fieldname_select: function (frm) {
 		// get the doctype to update fields
 		if (!frm.doc.document_type) {
 			return;
 		}
 
-		frappe.model.with_doctype(frm.doc.document_type, function () {
+		traquent.model.with_doctype(frm.doc.document_type, function () {
 			let get_select_options = function (df, parent_field) {
 				// Append parent_field name along with fieldname for child table fields
 				let select_value = parent_field ? df.fieldname + "," + parent_field : df.fieldname;
@@ -51,8 +51,8 @@ frappe.notification = {
 				};
 				let extract_receiver_field = function (df) {
 					// Add recipients from child doctypes into select dropdown
-					if (frappe.model.table_fields.includes(df.fieldtype)) {
-						let child_fields = frappe.get_doc("DocType", df.options).fields;
+					if (traquent.model.table_fields.includes(df.fieldtype)) {
+						let child_fields = traquent.get_doc("DocType", df.options).fields;
 						return $.map(child_fields, function (cdf) {
 							return is_receiver_field(cdf)
 								? get_select_options(cdf, df.fieldname)
@@ -65,9 +65,9 @@ frappe.notification = {
 				return $.map(fields, extract_receiver_field);
 			};
 
-			let fields = frappe.get_doc("DocType", frm.doc.document_type).fields;
+			let fields = traquent.get_doc("DocType", frm.doc.document_type).fields;
 			let options = $.map(fields, function (d) {
-				return frappe.model.no_value_type.includes(d.fieldtype)
+				return traquent.model.no_value_type.includes(d.fieldtype)
 					? null
 					: get_select_options(d);
 			});
@@ -153,7 +153,7 @@ Last comment: {{ comments[-1].comment }} by {{ comments[-1].by }}
 	},
 };
 
-frappe.ui.form.on("Notification", {
+traquent.ui.form.on("Notification", {
 	onload: function (frm) {
 		frm.set_query("document_type", function () {
 			if (DATE_BASED_EVENTS.includes(frm.doc.event)) return;
@@ -173,8 +173,8 @@ frappe.ui.form.on("Notification", {
 		});
 	},
 	refresh: function (frm) {
-		frappe.notification.setup_fieldname_select(frm);
-		frappe.notification.setup_example_message(frm);
+		traquent.notification.setup_fieldname_select(frm);
+		traquent.notification.setup_example_message(frm);
 
 		frm.add_fetch("sender", "email_id", "sender_email");
 		frm.set_query("sender", () => {
@@ -184,7 +184,7 @@ frappe.ui.form.on("Notification", {
 				},
 			};
 		});
-		frm.get_field("is_standard").toggle(frappe.boot.developer_mode);
+		frm.get_field("is_standard").toggle(traquent.boot.developer_mode);
 		frm.trigger("event");
 		if (frm.doc.document_type) {
 			frm.add_custom_button(__("Preview"), () => {
@@ -201,32 +201,32 @@ frappe.ui.form.on("Notification", {
 						{ label: __("Message"), fieldtype: "Code", method: "preview_message" },
 					],
 				};
-				let dialog = new frappe.views.RenderPreviewer(args);
+				let dialog = new traquent.views.RenderPreviewer(args);
 				return dialog;
 			});
 		}
 	},
 	document_type: function (frm) {
-		frappe.notification.setup_fieldname_select(frm);
+		traquent.notification.setup_fieldname_select(frm);
 	},
 	view_properties: function (frm) {
-		frappe.route_options = { doc_type: frm.doc.document_type };
-		frappe.set_route("Form", "Customize Form");
+		traquent.route_options = { doc_type: frm.doc.document_type };
+		traquent.set_route("Form", "Customize Form");
 	},
 	event: function (frm) {
 		if (!DATE_BASED_EVENTS.includes(frm.doc.event) || frm.is_new()) return;
 
 		frm.add_custom_button(__("Get Alerts for Today"), function () {
-			frappe.call({
-				method: "frappe.email.doctype.notification.notification.get_documents_for_today",
+			traquent.call({
+				method: "traquent.email.doctype.notification.notification.get_documents_for_today",
 				args: {
 					notification: frm.doc.name,
 				},
 				callback: function (r) {
 					if (r.message && r.message.length > 0) {
-						frappe.msgprint(r.message.toString());
+						traquent.msgprint(r.message.toString());
 					} else {
-						frappe.msgprint(__("No alerts for today"));
+						traquent.msgprint(__("No alerts for today"));
 					}
 				},
 			});
@@ -234,8 +234,8 @@ frappe.ui.form.on("Notification", {
 	},
 	channel: function (frm) {
 		frm.toggle_reqd("recipients", frm.doc.channel == "Email");
-		frappe.notification.setup_fieldname_select(frm);
-		frappe.notification.setup_example_message(frm);
+		traquent.notification.setup_fieldname_select(frm);
+		traquent.notification.setup_example_message(frm);
 		if (frm.doc.channel === "SMS" && frm.doc.__islocal) {
 			frm.set_df_property(
 				"channel",

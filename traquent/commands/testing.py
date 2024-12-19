@@ -46,7 +46,7 @@ def main(
 	)
 	from traquent.testing.environment import _cleanup_after_tests, _initialize_test_environment
 
-	testing_module_logger = logging.getLogger("frappe.testing")
+	testing_module_logger = logging.getLogger("traquent.testing")
 	testing_module_logger.setLevel(logging.DEBUG if verbose else logging.INFO)
 	start_time = time.time()
 
@@ -335,7 +335,7 @@ def run_tests(
 
 
 @click.command("run-parallel-tests")
-@click.option("--app", help="For App", default="frappe")
+@click.option("--app", help="For App", default="traquent")
 @click.option("--build-number", help="Build number", default=1)
 @click.option("--total-builds", help="Total number of builds", default=1)
 @click.option(
@@ -417,7 +417,7 @@ def run_ui_tests(
 
 	os.chdir(app_base_path)
 
-	node_bin = subprocess.getoutput("(cd ../frappe && yarn bin)")
+	node_bin = subprocess.getoutput("(cd ../traquent && yarn bin)")
 	cypress_path = f"{node_bin}/cypress"
 	drag_drop_plugin_path = f"{node_bin}/../@4tw/cypress-drag-drop"
 	real_events_plugin_path = f"{node_bin}/../cypress-real-events"
@@ -444,7 +444,7 @@ def run_ui_tests(
 				"@cypress/code-coverage@^3",
 			]
 		)
-		traquent.commands.popen(f"(cd ../frappe && yarn add {packages} --no-lockfile)")
+		traquent.commands.popen(f"(cd ../traquent && yarn add {packages} --no-lockfile)")
 
 	# run for headless mode
 	run_or_open = f"run --browser {browser}" if headless else "open"

@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 import traquent
 from traquent.core.doctype.doctype.test_doctype import new_doctype
 from traquent.tests import IntegrationTestCase
-from traquent.tests.test_api import FrappeAPITestCase
+from traquent.tests.test_api import traquentAPITestCase
 from traquent.utils.caching import redis_cache, request_cache, site_cache
 
 CACHE_TTL = 4
@@ -78,7 +78,7 @@ class TestCachingUtils(IntegrationTestCase):
 		self.assertTrue(same_output_received())
 
 
-class TestSiteCache(FrappeAPITestCase):
+class TestSiteCache(traquentAPITestCase):
 	def test_site_cache(self):
 		module = __name__
 		api_with_ttl = f"{module}.ping_with_ttl"
@@ -94,7 +94,7 @@ class TestSiteCache(FrappeAPITestCase):
 		self.assertEqual(register_with_external_service.call_count, 3)
 
 
-class TestRedisCache(FrappeAPITestCase):
+class TestRedisCache(traquentAPITestCase):
 	def test_redis_cache(self):
 		function_call_count = 0
 
@@ -214,7 +214,7 @@ class TestRedisCache(FrappeAPITestCase):
 			self.assertEqual(function_call_count, 2)
 
 
-class TestDocumentCache(FrappeAPITestCase):
+class TestDocumentCache(traquentAPITestCase):
 	TEST_DOCTYPE = "User"
 	TEST_DOCNAME = "Administrator"
 	TEST_FIELD = "middle_name"
@@ -231,7 +231,7 @@ class TestDocumentCache(FrappeAPITestCase):
 		doc.db_set(self.TEST_FIELD, self.test_value)
 		new_doc = traquent.get_cached_doc(self.TEST_DOCTYPE, self.TEST_DOCNAME)
 
-		self.assertIsNot(doc, new_doc)  # Shouldn't be same object from frappe.local
+		self.assertIsNot(doc, new_doc)  # Shouldn't be same object from traquent.local
 		self.assertEqual(new_doc.get(self.TEST_FIELD), self.test_value)  # Cache invalidated and fetched
 		traquent.db.rollback()
 
@@ -261,7 +261,7 @@ class TestDocumentCache(FrappeAPITestCase):
 			traquent.get_cached_doc(self.TEST_DOCTYPE, self.TEST_DOCNAME)
 
 
-class TestRedisWrapper(FrappeAPITestCase):
+class TestRedisWrapper(traquentAPITestCase):
 	def test_delete_keys(self):
 		prefix = "test_del_"
 

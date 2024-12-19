@@ -1,29 +1,29 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.provide("frappe.help");
+traquent.provide("traquent.help");
 
-frappe.help.youtube_id = {};
+traquent.help.youtube_id = {};
 
-frappe.help.has_help = function (doctype) {
-	return frappe.help.youtube_id[doctype];
+traquent.help.has_help = function (doctype) {
+	return traquent.help.youtube_id[doctype];
 };
 
-frappe.help.show = function (doctype) {
-	if (frappe.help.youtube_id[doctype]) {
-		frappe.help.show_video(frappe.help.youtube_id[doctype]);
+traquent.help.show = function (doctype) {
+	if (traquent.help.youtube_id[doctype]) {
+		traquent.help.show_video(traquent.help.youtube_id[doctype]);
 	}
 };
 
-frappe.help.show_video = function (youtube_id, title) {
-	if (frappe.utils.is_url(youtube_id)) {
+traquent.help.show_video = function (youtube_id, title) {
+	if (traquent.utils.is_url(youtube_id)) {
 		const expression =
 			'(?:youtube.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu.be/)([^"&?\\s]{11})';
 		youtube_id = youtube_id.match(expression)[1];
 	}
 
-	// (frappe.help_feedback_link || "")
-	let dialog = new frappe.ui.Dialog({
+	// (traquent.help_feedback_link || "")
+	let dialog = new traquent.ui.Dialog({
 		title: title || __("Help"),
 		size: "large",
 	});
@@ -37,8 +37,8 @@ frappe.help.show_video = function (youtube_id, title) {
 	dialog.$wrapper.addClass("video-modal");
 
 	let plyr;
-	frappe.utils.load_video_player().then(() => {
-		plyr = new frappe.Plyr(video[0], {
+	traquent.utils.load_video_player().then(() => {
+		plyr = new traquent.Plyr(video[0], {
 			hideControls: true,
 			resetOnEnd: true,
 		});
@@ -51,5 +51,5 @@ frappe.help.show_video = function (youtube_id, title) {
 
 $("body").on("click", "a.help-link", function () {
 	var doctype = $(this).attr("data-doctype");
-	doctype && frappe.help.show(doctype);
+	doctype && traquent.help.show(doctype);
 });

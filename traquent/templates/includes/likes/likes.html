@@ -4,7 +4,7 @@
 </div>
 
 <script type="text/javascript">
-	frappe.ready(() => {
+	traquent.ready(() => {
 		let like = parseInt("{{ like or 0 }}");
 		let like_count = parseInt("{{ like_count or 0 }}");
 
@@ -27,8 +27,8 @@
 			toggle_like_icon(like);
 			$('.like-count').text(like_count);
 
-			return frappe.call({
-				method: "frappe.templates.includes.likes.likes.like",
+			return traquent.call({
+				method: "traquent.templates.includes.likes.likes.like",
 				args: {
 					reference_doctype: "{{ reference_doctype or doctype }}",
 					reference_name: "{{ reference_name or name }}",

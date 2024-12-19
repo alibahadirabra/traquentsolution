@@ -1,23 +1,23 @@
 /**
- * frappe.views.InboxView
+ * traquent.views.InboxView
  */
 
-frappe.provide("frappe.views");
+traquent.provide("traquent.views");
 
-frappe.views.InboxView = class InboxView extends frappe.views.ListView {
+traquent.views.InboxView = class InboxView extends traquent.views.ListView {
 	static load_last_view() {
-		const route = frappe.get_route();
-		if (!route[3] && frappe.boot.email_accounts.length) {
+		const route = traquent.get_route();
+		if (!route[3] && traquent.boot.email_accounts.length) {
 			let email_account;
-			if (frappe.boot.email_accounts[0].email_id == "All Accounts") {
+			if (traquent.boot.email_accounts[0].email_id == "All Accounts") {
 				email_account = "All Accounts";
 			} else {
-				email_account = frappe.boot.email_accounts[0].email_account;
+				email_account = traquent.boot.email_accounts[0].email_account;
 			}
-			frappe.set_route("List", "Communication", "Inbox", email_account);
+			traquent.set_route("List", "Communication", "Inbox", email_account);
 			return true;
 		} else if (!route[3] || (route[3] !== "All Accounts" && !is_valid(route[3]))) {
-			frappe.throw(
+			traquent.throw(
 				__(
 					"No email account associated with the User. Please add an account under User > Email Inbox."
 				)
@@ -26,7 +26,7 @@ frappe.views.InboxView = class InboxView extends frappe.views.ListView {
 		return false;
 
 		function is_valid(email_account) {
-			return frappe.boot.email_accounts.find((d) => d.email_account === email_account);
+			return traquent.boot.email_accounts.find((d) => d.email_account === email_account);
 		}
 	}
 
@@ -49,7 +49,7 @@ frappe.views.InboxView = class InboxView extends frappe.views.ListView {
 		this.sort_by = this.view_user_settings.sort_by || "communication_date";
 		this.sort_order = this.view_user_settings.sort_order || "desc";
 
-		this.email_account = frappe.get_route()[3];
+		this.email_account = traquent.get_route()[3];
 		this.page_title = this.email_account;
 		this.filters = this.get_inbox_filters();
 	}
@@ -74,7 +74,7 @@ frappe.views.InboxView = class InboxView extends frappe.views.ListView {
 	}
 
 	get_seen_class(doc) {
-		return Boolean(doc.seen) || JSON.parse(doc._seen || "[]").includes(frappe.session.user)
+		return Boolean(doc.seen) || JSON.parse(doc._seen || "[]").includes(traquent.session.user)
 			? ""
 			: "bold";
 	}
@@ -105,7 +105,7 @@ frappe.views.InboxView = class InboxView extends frappe.views.ListView {
 		let link = "";
 		if (email.reference_doctype && email.reference_doctype !== this.doctype) {
 			link = `<a class="text-muted grey"
-				href="${frappe.utils.get_form_link(email.reference_doctype, email.reference_name)}"
+				href="${traquent.utils.get_form_link(email.reference_doctype, email.reference_name)}"
 				title="${__("Linked with {0}", [email.reference_doctype])}">
 				<i class="fa fa-link fa-large"></i>
 			</a>`;
@@ -144,13 +144,13 @@ frappe.views.InboxView = class InboxView extends frappe.views.ListView {
 		} else if (["Spam", "Trash"].includes(email_account)) {
 			filters = default_filters.concat([
 				["Communication", "email_status", "=", email_account, true],
-				["Communication", "email_account", "in", frappe.boot.all_accounts, true],
+				["Communication", "email_account", "in", traquent.boot.all_accounts, true],
 			]);
 		} else {
 			var op = "=";
 			if (email_account == "All Accounts") {
 				op = "in";
-				email_account = frappe.boot.all_accounts;
+				email_account = traquent.boot.all_accounts;
 			}
 
 			filters = default_filters.concat([
@@ -169,7 +169,7 @@ frappe.views.InboxView = class InboxView extends frappe.views.ListView {
 		var args;
 		if (["Spam", "Trash"].includes(email_account)) {
 			return __("No {0} mail", [email_account]);
-		} else if (!email_account && !frappe.boot.email_accounts.length) {
+		} else if (!email_account && !traquent.boot.email_accounts.length) {
 			// email account is not configured
 			args = {
 				doctype: "Email Account",
@@ -185,7 +185,7 @@ frappe.views.InboxView = class InboxView extends frappe.views.ListView {
 			};
 		}
 
-		const html = frappe.model.can_create(args.doctype)
+		const html = traquent.model.can_create(args.doctype)
 			? `<p>${args.msg}</p>
 			<p>
 				<button class="btn btn-primary btn-sm btn-new-doc">
@@ -203,13 +203,13 @@ frappe.views.InboxView = class InboxView extends frappe.views.ListView {
 	}
 
 	make_new_doc() {
-		if (!this.email_account && !frappe.boot.email_accounts.length) {
-			frappe.route_options = {
-				email_id: frappe.session.user_email,
+		if (!this.email_account && !traquent.boot.email_accounts.length) {
+			traquent.route_options = {
+				email_id: traquent.session.user_email,
 			};
-			frappe.new_doc("Email Account");
+			traquent.new_doc("Email Account");
 		} else {
-			new frappe.views.CommunicationComposer();
+			new traquent.views.CommunicationComposer();
 		}
 	}
 };

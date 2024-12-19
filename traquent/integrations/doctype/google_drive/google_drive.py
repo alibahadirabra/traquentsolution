@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and contributors
+# Copyright (c) 2019, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import os
@@ -146,7 +146,7 @@ def check_for_folder_in_google_drive():
 def take_backup():
 	"""Enqueue longjob for taking backup to Google Drive"""
 	enqueue(
-		"frappe.integrations.doctype.google_drive.google_drive.upload_system_backup_to_google_drive",
+		"traquent.integrations.doctype.google_drive.google_drive.upload_system_backup_to_google_drive",
 		queue="long",
 		timeout=1500,
 	)

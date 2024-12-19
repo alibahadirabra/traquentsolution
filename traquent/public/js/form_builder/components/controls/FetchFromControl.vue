@@ -42,9 +42,9 @@ let field_df = computedAsync(async () => {
 
 	await load_doctype_model(doctype_name);
 
-	let fields = frappe.meta
+	let fields = traquent.meta
 		.get_docfields(doctype_name, null, {
-			fieldtype: ["not in", frappe.model.no_value_type],
+			fieldtype: ["not in", traquent.model.no_value_type],
 		})
 		.sort((a, b) => {
 			if (a.label && b.label) {

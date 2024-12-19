@@ -76,7 +76,7 @@ class TestWebsite(IntegrationTestCase):
 			traquent,
 			"get_hooks",
 			patched_get_hooks(
-				"get_website_user_home_page", ["frappe.www._test._test_home_page.get_website_user_home_page"]
+				"get_website_user_home_page", ["traquent.www._test._test_home_page.get_website_user_home_page"]
 			),
 		):
 			self.assertEqual(get_home_page(), "_test/_test_folder")
@@ -235,7 +235,7 @@ class TestWebsite(IntegrationTestCase):
 		def patched_get_hooks(*args, **kwargs):
 			return_value = get_hooks(*args, **kwargs)
 			if args and args[0] == "page_renderer":
-				return_value = ["frappe.tests.test_website.CustomPageRenderer"]
+				return_value = ["traquent.tests.test_website.CustomPageRenderer"]
 			return return_value
 
 		with patch.object(traquent, "get_hooks", patched_get_hooks):
@@ -340,18 +340,18 @@ class TestWebsite(IntegrationTestCase):
 	def test_safe_render(self):
 		content = get_response_content("/_test/_test_safe_render_on")
 		self.assertNotIn("Safe Render On", content)
-		self.assertIn("frappe.exceptions.ValidationError: Illegal template", content)
+		self.assertIn("traquent.exceptions.ValidationError: Illegal template", content)
 
 		content = get_response_content("/_test/_test_safe_render_off")
 		self.assertIn("Safe Render Off", content)
 		self.assertIn("test.__test", content)
-		self.assertNotIn("frappe.exceptions.ValidationError: Illegal template", content)
+		self.assertNotIn("traquent.exceptions.ValidationError: Illegal template", content)
 
 	def test_never_render(self):
 		from pathlib import Path
 		from random import choices
 
-		WWW = Path(traquent.get_app_path("frappe")) / "www"
+		WWW = Path(traquent.get_app_path("traquent")) / "www"
 		FILES_TO_SKIP = choices(list(WWW.glob("**/*.py*")), k=10)
 
 		for suffix in FILES_TO_SKIP:

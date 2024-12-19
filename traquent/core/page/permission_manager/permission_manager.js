@@ -1,25 +1,25 @@
-frappe.pages["permission-manager"].on_page_load = (wrapper) => {
-	let page = frappe.ui.make_app_page({
+traquent.pages["permission-manager"].on_page_load = (wrapper) => {
+	let page = traquent.ui.make_app_page({
 		parent: wrapper,
 		title: __("Role Permissions Manager"),
 		card_layout: true,
 		single_column: true,
 	});
 
-	frappe.breadcrumbs.add("Setup");
+	traquent.breadcrumbs.add("Setup");
 
 	$("<div class='perm-engine' style='min-height: 200px; padding: 15px;'></div>").appendTo(
 		page.main
 	);
-	$(frappe.render_template("permission_manager_help", {})).appendTo(page.main);
-	wrapper.permission_engine = new frappe.PermissionEngine(wrapper);
+	$(traquent.render_template("permission_manager_help", {})).appendTo(page.main);
+	wrapper.permission_engine = new traquent.PermissionEngine(wrapper);
 };
 
-frappe.pages["permission-manager"].refresh = function (wrapper) {
+traquent.pages["permission-manager"].refresh = function (wrapper) {
 	wrapper.permission_engine.set_from_route();
 };
 
-frappe.PermissionEngine = class PermissionEngine {
+traquent.PermissionEngine = class PermissionEngine {
 	constructor(wrapper) {
 		this.wrapper = wrapper;
 		this.page = wrapper.page;
@@ -31,9 +31,9 @@ frappe.PermissionEngine = class PermissionEngine {
 
 	make() {
 		this.make_reset_button();
-		frappe
+		traquent
 			.call({
-				module: "frappe.core",
+				module: "traquent.core",
 				page: "permission_manager",
 				method: "get_roles_and_doctypes",
 			})
@@ -50,7 +50,7 @@ frappe.PermissionEngine = class PermissionEngine {
 			fieldtype: "Link",
 			options: "DocType",
 			change: function () {
-				frappe.set_route("permission-manager", this.get_value());
+				traquent.set_route("permission-manager", this.get_value());
 			},
 		});
 
@@ -63,7 +63,7 @@ frappe.PermissionEngine = class PermissionEngine {
 		});
 
 		this.page.add_inner_button(__("Set User Permissions"), () => {
-			return frappe.set_route("List", "User Permission");
+			return traquent.set_route("List", "User Permission");
 		});
 		this.set_from_route();
 	}
@@ -76,16 +76,16 @@ frappe.PermissionEngine = class PermissionEngine {
 			}, 500);
 			return;
 		}
-		if (frappe.get_route()[1]) {
-			this.doctype_select.set_value(frappe.get_route()[1]);
-		} else if (frappe.route_options) {
-			if (frappe.route_options.doctype) {
-				this.doctype_select.set_value(frappe.route_options.doctype);
+		if (traquent.get_route()[1]) {
+			this.doctype_select.set_value(traquent.get_route()[1]);
+		} else if (traquent.route_options) {
+			if (traquent.route_options.doctype) {
+				this.doctype_select.set_value(traquent.route_options.doctype);
 			}
-			if (frappe.route_options.role) {
-				this.role_select.set_value(frappe.route_options.role);
+			if (traquent.route_options.role) {
+				this.role_select.set_value(traquent.route_options.role);
 			}
-			frappe.route_options = null;
+			traquent.route_options = null;
 		}
 		this.refresh();
 	}
@@ -93,8 +93,8 @@ frappe.PermissionEngine = class PermissionEngine {
 	get_standard_permissions(callback) {
 		let doctype = this.get_doctype();
 		if (doctype) {
-			return frappe.call({
-				module: "frappe.core",
+			return traquent.call({
+				module: "traquent.core",
 				page: "permission_manager",
 				method: "get_standard_permissions",
 				args: { doctype: doctype },
@@ -106,10 +106,10 @@ frappe.PermissionEngine = class PermissionEngine {
 
 	reset_std_permissions(data) {
 		let doctype = this.get_doctype();
-		let d = frappe.confirm(__("Reset Permissions for {0}?", [__(doctype)]), () => {
-			return frappe
+		let d = traquent.confirm(__("Reset Permissions for {0}?", [__(doctype)]), () => {
+			return traquent
 				.call({
-					module: "frappe.core",
+					module: "traquent.core",
 					page: "permission_manager",
 					method: "reset",
 					args: { doctype },
@@ -121,14 +121,14 @@ frappe.PermissionEngine = class PermissionEngine {
 
 		// show standard permissions
 		let $d = $(d.wrapper)
-			.find(".frappe-confirm-message")
+			.find(".traquent-confirm-message")
 			.append(`<hr><h5>${__("Standard Permissions")}:</h5><br>`);
 		let $wrapper = $("<p></p>").appendTo($d);
 		data.message.forEach((d) => {
 			let rights = this.rights
 				.filter((r) => d[r])
 				.map((r) => {
-					return __(toTitle(frappe.unscrub(r)));
+					return __(toTitle(traquent.unscrub(r)));
 				});
 
 			d.rights = rights.join(", ");
@@ -173,9 +173,9 @@ frappe.PermissionEngine = class PermissionEngine {
 		}
 
 		// get permissions
-		frappe
+		traquent
 			.call({
-				module: "frappe.core",
+				module: "traquent.core",
 				page: "permission_manager",
 				method: "get_permissions",
 				args: { doctype, role },
@@ -333,8 +333,8 @@ frappe.PermissionEngine = class PermissionEngine {
 			.attr("data-role", role)
 			.click(function () {
 				let role = $(this).attr("data-role");
-				frappe.call({
-					module: "frappe.core",
+				traquent.call({
+					module: "traquent.core",
 					page: "permission_manager",
 					method: "get_users_with_role",
 					args: {
@@ -344,7 +344,7 @@ frappe.PermissionEngine = class PermissionEngine {
 						r.message = $.map(r.message, function (p) {
 							return $.format('<a href="/app/user/{0}">{1}</a>', [p, p]);
 						});
-						frappe.msgprint(
+						traquent.msgprint(
 							__("Users with role {0}:", [__(role)]) +
 								"<br>" +
 								r.message.join("<br>")
@@ -357,7 +357,7 @@ frappe.PermissionEngine = class PermissionEngine {
 
 	add_delete_button(row, d) {
 		$(
-			`<button class='btn btn-danger btn-remove-perm btn-xs'>${frappe.utils.icon(
+			`<button class='btn btn-danger btn-remove-perm btn-xs'>${traquent.utils.icon(
 				"delete"
 			)}</button>`
 		)
@@ -366,8 +366,8 @@ frappe.PermissionEngine = class PermissionEngine {
 			.attr("data-role", d.role)
 			.attr("data-permlevel", d.permlevel)
 			.on("click", () => {
-				return frappe.call({
-					module: "frappe.core",
+				return traquent.call({
+					module: "traquent.core",
 					page: "permission_manager",
 					method: "remove",
 					args: {
@@ -378,7 +378,7 @@ frappe.PermissionEngine = class PermissionEngine {
 					},
 					callback: (r) => {
 						if (r.exc) {
-							frappe.msgprint(__("Did not remove"));
+							traquent.msgprint(__("Did not remove"));
 						} else {
 							this.refresh();
 						}
@@ -390,12 +390,12 @@ frappe.PermissionEngine = class PermissionEngine {
 	add_check_events() {
 		let me = this;
 		this.body.on("click", ".show-user-permissions", () => {
-			frappe.route_options = { allow: this.get_doctype() || "" };
-			frappe.set_route("List", "User Permission");
+			traquent.route_options = { allow: this.get_doctype() || "" };
+			traquent.set_route("List", "User Permission");
 		});
 
 		this.body.on("click", "input[type='checkbox']", function () {
-			frappe.dom.freeze();
+			traquent.dom.freeze();
 			let chk = $(this);
 			let args = {
 				role: chk.attr("data-role"),
@@ -405,13 +405,13 @@ frappe.PermissionEngine = class PermissionEngine {
 				value: chk.prop("checked") ? 1 : 0,
 				if_owner: chk.attr("data-if_owner"),
 			};
-			return frappe.call({
-				module: "frappe.core",
+			return traquent.call({
+				module: "traquent.core",
 				page: "permission_manager",
 				method: "update",
 				args: args,
 				callback: (r) => {
-					frappe.dom.unfreeze();
+					traquent.dom.unfreeze();
 					if (r.exc) {
 						// exception: reverse
 						chk.prop("checked", !chk.prop("checked"));
@@ -434,7 +434,7 @@ frappe.PermissionEngine = class PermissionEngine {
 		this.page.set_primary_action(
 			__("Add A New Rule"),
 			() => {
-				let d = new frappe.ui.Dialog({
+				let d = new traquent.ui.Dialog({
 					title: __("Add New Permission Rule"),
 					fields: [
 						{
@@ -477,14 +477,14 @@ frappe.PermissionEngine = class PermissionEngine {
 					if (!args) {
 						return;
 					}
-					frappe.call({
-						module: "frappe.core",
+					traquent.call({
+						module: "traquent.core",
 						page: "permission_manager",
 						method: "add",
 						args: args,
 						callback: (r) => {
 							if (r.exc) {
-								frappe.msgprint(__("Did not add"));
+								traquent.msgprint(__("Did not add"));
 							} else {
 								this.refresh();
 							}
@@ -513,7 +513,7 @@ frappe.PermissionEngine = class PermissionEngine {
 	}
 
 	get_link_fields(doctype) {
-		return frappe.get_children("DocType", doctype, "fields", {
+		return traquent.get_children("DocType", doctype, "fields", {
 			fieldtype: "Link",
 			options: ["not in", ["User", "[Select]"]],
 		});

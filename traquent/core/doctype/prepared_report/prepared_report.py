@@ -1,4 +1,4 @@
-# Copyright (c) 2018, Frappe Technologies and contributors
+# Copyright (c) 2018, traquent Technologies and contributors
 # License: MIT. See LICENSE
 import gzip
 import json
@@ -172,7 +172,7 @@ def process_filters_for_prepared_report(filters: dict[str, Any] | str) -> str:
 	# This looks like an insanity but, without this it'd be very hard to find Prepared Reports matching given condition
 	# We're ensuring that spacing is consistent. e.g. JS seems to put no spaces after ":", Python on the other hand does.
 	# We are also ensuring that order of keys is same so generated JSON string will be identical too.
-	# PS: frappe.as_json sorts keys
+	# PS: traquent.as_json sorts keys
 	return traquent.as_json(filters, indent=None, separators=(",", ":"))
 
 

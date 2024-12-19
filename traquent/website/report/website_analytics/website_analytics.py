@@ -1,4 +1,4 @@
-# Copyright (c) 2013, Frappe Technologies and contributors
+# Copyright (c) 2013, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 from datetime import datetime

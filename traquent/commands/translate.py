@@ -25,7 +25,7 @@ def build_message_files(context: CliCtxObj):
 
 @click.command("new-language")  # , help="Create lang-code.csv for given app")
 @click.argument("lang_code")  # , help="Language code eg. en")
-@click.argument("app")  # , help="App name eg. frappe")
+@click.argument("app")  # , help="App name eg. traquent")
 @pass_context
 def new_language(context: CliCtxObj, lang_code, app):
 	"""Create lang-code.csv for given app"""
@@ -40,7 +40,7 @@ def new_language(context: CliCtxObj, lang_code, app):
 	traquent.translate.write_translations_file(app, lang_code)
 
 	print(f"File created at ./apps/{app}/{app}/translations/{lang_code}.csv")
-	print("You will need to add the language in frappe/geo/languages.csv, if you haven't done it already.")
+	print("You will need to add the language in traquent/geo/languages.csv, if you haven't done it already.")
 
 
 @click.command("get-untranslated")

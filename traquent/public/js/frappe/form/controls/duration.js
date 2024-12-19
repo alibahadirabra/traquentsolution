@@ -1,4 +1,4 @@
-frappe.ui.form.ControlDuration = class ControlDuration extends frappe.ui.form.ControlData {
+traquent.ui.form.ControlDuration = class ControlDuration extends traquent.ui.form.ControlData {
 	make_input() {
 		super.make_input();
 		this.make_picker();
@@ -56,11 +56,11 @@ frappe.ui.form.ControlDuration = class ControlDuration extends frappe.ui.form.Co
 	}
 
 	set_duration_options() {
-		this.duration_options = frappe.utils.get_duration_options(this.df);
+		this.duration_options = traquent.utils.get_duration_options(this.df);
 	}
 
 	set_duration_picker_value(value) {
-		let total_duration = frappe.utils.seconds_to_duration(value || 0, this.duration_options);
+		let total_duration = traquent.utils.seconds_to_duration(value || 0, this.duration_options);
 
 		if (this.$picker) {
 			Object.keys(total_duration).forEach((duration) => {
@@ -82,7 +82,7 @@ frappe.ui.form.ControlDuration = class ControlDuration extends frappe.ui.form.Co
 			// duration changed in individual boxes
 			clicked = false;
 			let duration = this.get_duration();
-			let value = frappe.utils.duration_to_seconds(
+			let value = traquent.utils.duration_to_seconds(
 				duration.days,
 				duration.hours,
 				duration.minutes,
@@ -149,7 +149,7 @@ frappe.ui.form.ControlDuration = class ControlDuration extends frappe.ui.form.Co
 	}
 
 	format_for_input(value) {
-		return frappe.utils.get_formatted_duration(value, this.duration_options);
+		return traquent.utils.get_formatted_duration(value, this.duration_options);
 	}
 
 	get_duration() {

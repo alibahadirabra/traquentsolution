@@ -9,7 +9,7 @@ from traquent.tests import IntegrationTestCase
 
 class TestFixtureImport(IntegrationTestCase):
 	def create_new_doctype(self, DocType: str) -> None:
-		file = traquent.get_app_path("frappe", "custom", "fixtures", f"{DocType}.json")
+		file = traquent.get_app_path("traquent", "custom", "fixtures", f"{DocType}.json")
 
 		file = open(file)
 		doc = file.read()

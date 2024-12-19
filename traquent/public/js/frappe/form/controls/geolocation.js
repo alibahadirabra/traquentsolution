@@ -1,6 +1,6 @@
-frappe.provide("frappe.utils");
+traquent.provide("traquent.utils");
 
-frappe.ui.form.ControlGeolocation = class ControlGeolocation extends frappe.ui.form.ControlData {
+traquent.ui.form.ControlGeolocation = class ControlGeolocation extends traquent.ui.form.ControlData {
 	static horizontal = false;
 
 	async make() {
@@ -14,7 +14,7 @@ frappe.ui.form.ControlGeolocation = class ControlGeolocation extends frappe.ui.f
 			return;
 		}
 		if (!this.map_id) {
-			this.map_id = frappe.dom.get_unique_id();
+			this.map_id = traquent.dom.get_unique_id();
 			this.map_area = $(
 				`<div class="map-wrapper border">
 					<div id="${this.map_id}" style="min-height: 400px; z-index: 1; max-width:100%"></div>
@@ -34,7 +34,7 @@ frappe.ui.form.ControlGeolocation = class ControlGeolocation extends frappe.ui.f
 				this.bind_leaflet_data(value);
 			}
 		} else {
-			$(document).on("frappe.ui.Dialog:shown", () => {
+			$(document).on("traquent.ui.Dialog:shown", () => {
 				this.make_map();
 				if (value) {
 					this.bind_leaflet_data(value);
@@ -149,14 +149,14 @@ frappe.ui.form.ControlGeolocation = class ControlGeolocation extends frappe.ui.f
 			},
 		});
 
-		L.Icon.Default.imagePath = frappe.utils.map_defaults.image_path;
+		L.Icon.Default.imagePath = traquent.utils.map_defaults.image_path;
 	}
 
 	bind_leaflet_map() {
 		this.map = L.map(this.map_id);
-		this.map.setView(frappe.utils.map_defaults.center, frappe.utils.map_defaults.zoom);
+		this.map.setView(traquent.utils.map_defaults.center, traquent.utils.map_defaults.zoom);
 
-		L.tileLayer(frappe.utils.map_defaults.tiles, frappe.utils.map_defaults.options).addTo(
+		L.tileLayer(traquent.utils.map_defaults.tiles, traquent.utils.map_defaults.options).addTo(
 			this.map
 		);
 
@@ -186,18 +186,18 @@ frappe.ui.form.ControlGeolocation = class ControlGeolocation extends frappe.ui.f
 			draw: {
 				polyline: {
 					shapeOptions: {
-						color: frappe.ui.color.get("blue"),
+						color: traquent.ui.color.get("blue"),
 						weight: 10,
 					},
 				},
 				polygon: {
 					allowIntersection: false, // Restricts shapes to simple polygons
 					drawError: {
-						color: frappe.ui.color.get("orange"), // Color the shape will turn when intersects
+						color: traquent.ui.color.get("orange"), // Color the shape will turn when intersects
 						message: "<strong>Oh snap!<strong> you can't draw that!", // Message that will show when intersect
 					},
 					shapeOptions: {
-						color: frappe.ui.color.get("blue"),
+						color: traquent.ui.color.get("blue"),
 					},
 				},
 				circle: true,

@@ -87,6 +87,6 @@ class FormBuilder {
 	}
 }
 
-frappe.provide("frappe.ui");
-frappe.ui.FormBuilder = FormBuilder;
+traquent.provide("traquent.ui");
+traquent.ui.FormBuilder = FormBuilder;
 export default FormBuilder;

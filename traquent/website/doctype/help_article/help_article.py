@@ -1,4 +1,4 @@
-# Copyright (c) 2013, Frappe and contributors
+# Copyright (c) 2013, traquent and contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -90,7 +90,7 @@ def get_list_context(context=None):
 	if traquent.local.form_dict.txt:
 		list_context.blog_subtitle = _('Filtered by "{0}"').format(traquent.local.form_dict.txt)
 	#
-	# list_context.update(frappe.get_doc("Blog Settings", "Blog Settings").as_dict())
+	# list_context.update(traquent.get_doc("Blog Settings", "Blog Settings").as_dict())
 	return list_context
 
 

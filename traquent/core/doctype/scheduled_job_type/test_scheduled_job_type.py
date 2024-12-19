@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and Contributors
+# Copyright (c) 2019, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 from datetime import timedelta
 
@@ -28,7 +28,7 @@ class TestScheduledJobType(IntegrationTestCase):
 	def test_throws_on_duplicate_job(self):
 		job_config = dict(
 			doctype="Scheduled Job Type",
-			method="frappe.desk.notifications.clear_notifications",
+			method="traquent.desk.notifications.clear_notifications",
 			frequency="Weekly",
 		)
 		traquent.get_doc(job_config).insert()
@@ -41,7 +41,7 @@ class TestScheduledJobType(IntegrationTestCase):
 	def test_throws_on_duplicate_job_with_cron_format(self):
 		job_config = dict(
 			doctype="Scheduled Job Type",
-			method="frappe.desk.notifications.clear_notifications",
+			method="traquent.desk.notifications.clear_notifications",
 			frequency="Cron",
 			cron_format="*/1 * * * *",
 		)
@@ -53,28 +53,28 @@ class TestScheduledJobType(IntegrationTestCase):
 		traquent.db.rollback()
 
 	def test_sync_jobs(self):
-		all_job = traquent.get_doc("Scheduled Job Type", dict(method="frappe.email.queue.flush"))
+		all_job = traquent.get_doc("Scheduled Job Type", dict(method="traquent.email.queue.flush"))
 		self.assertEqual(all_job.frequency, "All")
 
 		daily_job = traquent.get_doc(
-			"Scheduled Job Type", dict(method="frappe.desk.notifications.clear_notifications")
+			"Scheduled Job Type", dict(method="traquent.desk.notifications.clear_notifications")
 		)
 		self.assertEqual(daily_job.frequency, "Daily")
 
 		# check if cron jobs are synced
-		cron_job = traquent.get_doc("Scheduled Job Type", dict(method="frappe.oauth.delete_oauth2_data"))
+		cron_job = traquent.get_doc("Scheduled Job Type", dict(method="traquent.oauth.delete_oauth2_data"))
 		self.assertEqual(cron_job.frequency, "Cron")
 		self.assertEqual(cron_job.cron_format, "0/15 * * * *")
 
 		# check if jobs are synced after change in hooks
-		updated_scheduler_events = {"hourly": ["frappe.email.queue.flush"]}
+		updated_scheduler_events = {"hourly": ["traquent.email.queue.flush"]}
 		sync_jobs(updated_scheduler_events)
-		updated_scheduled_job = traquent.get_doc("Scheduled Job Type", {"method": "frappe.email.queue.flush"})
+		updated_scheduled_job = traquent.get_doc("Scheduled Job Type", {"method": "traquent.email.queue.flush"})
 		self.assertEqual(updated_scheduled_job.frequency, "Hourly")
 
 	def test_daily_job(self):
 		job = traquent.get_doc(
-			"Scheduled Job Type", dict(method="frappe.desk.notifications.clear_notifications")
+			"Scheduled Job Type", dict(method="traquent.desk.notifications.clear_notifications")
 		)
 		job.db_set("last_execution", "2019-01-01 00:00:00")
 		self.assertTrue(job.is_event_due(get_datetime("2019-01-02 00:00:06")))
@@ -84,7 +84,7 @@ class TestScheduledJobType(IntegrationTestCase):
 	def test_weekly_job(self):
 		job = traquent.get_doc(
 			"Scheduled Job Type",
-			dict(method="frappe.social.doctype.energy_point_log.energy_point_log.send_weekly_summary"),
+			dict(method="traquent.social.doctype.energy_point_log.energy_point_log.send_weekly_summary"),
 		)
 		job.db_set("last_execution", "2019-01-01 00:00:00")
 		self.assertTrue(job.is_event_due(get_datetime("2019-01-06 00:10:01")))  # +10 min because of jitter
@@ -94,7 +94,7 @@ class TestScheduledJobType(IntegrationTestCase):
 	def test_monthly_job(self):
 		job = traquent.get_doc(
 			"Scheduled Job Type",
-			dict(method="frappe.email.doctype.auto_email_report.auto_email_report.send_monthly"),
+			dict(method="traquent.email.doctype.auto_email_report.auto_email_report.send_monthly"),
 		)
 		job.db_set("last_execution", "2019-01-01 00:00:00")
 		self.assertTrue(job.is_event_due(get_datetime("2019-02-01 00:00:01")))
@@ -103,7 +103,7 @@ class TestScheduledJobType(IntegrationTestCase):
 
 	def test_cron_job(self):
 		# runs every 15 mins
-		job = traquent.get_doc("Scheduled Job Type", dict(method="frappe.oauth.delete_oauth2_data"))
+		job = traquent.get_doc("Scheduled Job Type", dict(method="traquent.oauth.delete_oauth2_data"))
 		job.db_set("last_execution", "2019-01-01 00:00:00")
 		self.assertEqual(job.next_execution, get_datetime("2019-01-01 00:15:00"))
 		self.assertTrue(job.is_event_due(get_datetime("2019-01-01 00:15:01")))

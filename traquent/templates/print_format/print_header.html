@@ -15,10 +15,10 @@
 </style>
 <header>
 	{%- if letterhead -%}
-	{{ frappe.render_template(letterhead.content, {'doc': doc}) }}
+	{{ traquent.render_template(letterhead.content, {'doc': doc}) }}
 	{%- endif -%}
 
 	{%- if layout.header -%}
-	{{ frappe.render_template(layout.header, {'doc': doc}) }}
+	{{ traquent.render_template(layout.header, {'doc': doc}) }}
 	{%- endif -%}
 </header>

@@ -1,8 +1,8 @@
-// Copyright (c) 2018, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2018, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
-frappe.provide("frappe.views");
+traquent.provide("traquent.views");
 
-frappe.views.RenderPreviewer = class RenderPreviewer {
+traquent.views.RenderPreviewer = class RenderPreviewer {
 	constructor(opts) {
 		$.extend(this, opts);
 		this.make();
@@ -15,7 +15,7 @@ frappe.views.RenderPreviewer = class RenderPreviewer {
 		let fields = me.header_fields;
 		fields.push(...me.body_fields);
 
-		me.dialog = new frappe.ui.Dialog({
+		me.dialog = new traquent.ui.Dialog({
 			title: __("Preview on {0}", [__(me.doctype)]),
 			no_submit_on_enter: true,
 			fields: fields,
@@ -79,7 +79,7 @@ frappe.views.RenderPreviewer = class RenderPreviewer {
 			me.preview_fields.forEach((spec) => {
 				let fieldname = spec.method;
 				promises.push(
-					frappe
+					traquent
 						.xcall("run_doc_method", {
 							dt: me.doc.doctype,
 							dn: me.doc.name,

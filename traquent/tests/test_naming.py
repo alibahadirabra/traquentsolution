@@ -1,4 +1,4 @@
-# Copyright (c) 2018, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2018, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import time
@@ -399,7 +399,7 @@ class TestNaming(IntegrationTestCase):
 		with self.patch_hooks(
 			{
 				"naming_series_variables": {
-					"PM": ["frappe.tests.test_naming.parse_naming_series_variable"],
+					"PM": ["traquent.tests.test_naming.parse_naming_series_variable"],
 				},
 			},
 		):

@@ -7,7 +7,7 @@ from traquent.utils import cint
 def execute():
 	"""
 	This patch is needed to fix parent incorrectly set as `__2fa` because of
-	https://github.com/frappe/frappe/commit/a822092211533ff17ff9b92dd86f6f868ed63e2e
+	https://github.com/traquent/traquent/commit/a822092211533ff17ff9b92dd86f6f868ed63e2e
 	"""
 
 	if not traquent.db.get_value(

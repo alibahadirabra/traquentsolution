@@ -13,7 +13,7 @@ logger = logging.Logger(__file__)
 
 
 class IntegrationTestCase(UnitTestCase):
-	"""Integration test class for Frappe tests.
+	"""Integration test class for traquent tests.
 
 	Key features:
 	- Automatic database setup and teardown

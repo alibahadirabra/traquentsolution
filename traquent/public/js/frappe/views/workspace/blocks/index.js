@@ -13,9 +13,9 @@ import CustomBlock from "./custom_block";
 // import tunes
 import HeaderSize from "./header_size";
 
-frappe.provide("frappe.workspace_block");
+traquent.provide("traquent.workspace_block");
 
-frappe.workspace_block.blocks = {
+traquent.workspace_block.blocks = {
 	header: Header,
 	paragraph: Paragraph,
 	card: Card,
@@ -28,6 +28,6 @@ frappe.workspace_block.blocks = {
 	custom_block: CustomBlock,
 };
 
-frappe.workspace_block.tunes = {
+traquent.workspace_block.tunes = {
 	header_size: HeaderSize,
 };

@@ -1,4 +1,4 @@
-# Copyright (c) 2024, Frappe Technologies and contributors
+# Copyright (c) 2024, traquent Technologies and contributors
 # For license information, please see license.txt
 """
 Basic system health check report to see how everything on site is functioning in one single page.
@@ -149,7 +149,7 @@ class SystemHealthReport(Document):
 	def fetch_background_jobs(self):
 		self.background_jobs_check = "failed"
 		# This just checks connection life
-		self.test_job_id = traquent.enqueue("frappe.ping", at_front=True).id
+		self.test_job_id = traquent.enqueue("traquent.ping", at_front=True).id
 		self.background_jobs_check = "queued"
 		self.scheduler_status = get_scheduler_status().get("status")
 		workers = traquent.get_all("RQ Worker")

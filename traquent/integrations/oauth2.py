@@ -73,7 +73,7 @@ def approve(*args, **kwargs):
 
 @traquent.whitelist(allow_guest=True)
 def authorize(**kwargs):
-	success_url = "/api/method/frappe.integrations.oauth2.approve?" + encode_params(sanitize_kwargs(kwargs))
+	success_url = "/api/method/traquent.integrations.oauth2.approve?" + encode_params(sanitize_kwargs(kwargs))
 	failure_url = traquent.form_dict["redirect_uri"] + "?error=access_denied"
 
 	if traquent.session.user == "Guest":
@@ -179,15 +179,15 @@ def openid_profile(*args, **kwargs):
 
 @traquent.whitelist(allow_guest=True)
 def openid_configuration():
-	frappe_server_url = get_server_url()
+	traquent_server_url = get_server_url()
 	traquent.local.response = traquent._dict(
 		{
-			"issuer": frappe_server_url,
-			"authorization_endpoint": f"{frappe_server_url}/api/method/frappe.integrations.oauth2.authorize",
-			"token_endpoint": f"{frappe_server_url}/api/method/frappe.integrations.oauth2.get_token",
-			"userinfo_endpoint": f"{frappe_server_url}/api/method/frappe.integrations.oauth2.openid_profile",
-			"revocation_endpoint": f"{frappe_server_url}/api/method/frappe.integrations.oauth2.revoke_token",
-			"introspection_endpoint": f"{frappe_server_url}/api/method/frappe.integrations.oauth2.introspect_token",
+			"issuer": traquent_server_url,
+			"authorization_endpoint": f"{traquent_server_url}/api/method/traquent.integrations.oauth2.authorize",
+			"token_endpoint": f"{traquent_server_url}/api/method/traquent.integrations.oauth2.get_token",
+			"userinfo_endpoint": f"{traquent_server_url}/api/method/traquent.integrations.oauth2.openid_profile",
+			"revocation_endpoint": f"{traquent_server_url}/api/method/traquent.integrations.oauth2.revoke_token",
+			"introspection_endpoint": f"{traquent_server_url}/api/method/traquent.integrations.oauth2.introspect_token",
 			"response_types_supported": [
 				"code",
 				"token",
@@ -228,7 +228,7 @@ def introspect_token(token=None, token_type_hint=None):
 		if "openid" in bearer_token.scopes:
 			sub = traquent.get_value(
 				"User Social Login",
-				{"provider": "frappe", "parent": bearer_token.user},
+				{"provider": "traquent", "parent": bearer_token.user},
 				"userid",
 			)
 

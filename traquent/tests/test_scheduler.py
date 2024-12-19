@@ -47,10 +47,10 @@ class TestScheduler(IntegrationTestCase):
 
 		enqueued_jobs = enqueue_events()
 
-		self.assertIn("frappe.desk.notifications.clear_notifications", enqueued_jobs)
-		self.assertIn("frappe.utils.change_log.check_for_update", enqueued_jobs)
+		self.assertIn("traquent.desk.notifications.clear_notifications", enqueued_jobs)
+		self.assertIn("traquent.utils.change_log.check_for_update", enqueued_jobs)
 		self.assertIn(
-			"frappe.email.doctype.auto_email_report.auto_email_report.send_monthly",
+			"traquent.email.doctype.auto_email_report.auto_email_report.send_monthly",
 			enqueued_jobs,
 		)
 
@@ -76,7 +76,7 @@ class TestScheduler(IntegrationTestCase):
 		)
 
 		# create a fake job executed 5 days from now
-		job = get_test_job(method="frappe.tests.test_scheduler.test_method", frequency="Daily")
+		job = get_test_job(method="traquent.tests.test_scheduler.test_method", frequency="Daily")
 		job.execute()
 		job_log = traquent.get_doc("Scheduled Job Log", dict(scheduled_job_type=job.name))
 		job_log.db_set(
@@ -114,7 +114,7 @@ class TestScheduler(IntegrationTestCase):
 				self.assertEqual(sleep_duration(DEFAULT_SCHEDULER_TICK), expected_sleep, delta)
 
 
-def get_test_job(method="frappe.tests.test_scheduler.test_timeout_10", frequency="All") -> ScheduledJobType:
+def get_test_job(method="traquent.tests.test_scheduler.test_timeout_10", frequency="All") -> ScheduledJobType:
 	if not traquent.db.exists("Scheduled Job Type", dict(method=method)):
 		job = traquent.get_doc(
 			doctype="Scheduled Job Type",

@@ -1,5 +1,5 @@
-frappe.email_defaults = {
-	"Frappe Mail": {
+traquent.email_defaults = {
+	"traquent Mail": {
 		domain: null,
 		password: null,
 		awaiting_password: 0,
@@ -71,7 +71,7 @@ frappe.email_defaults = {
 	},
 };
 
-frappe.email_defaults_pop = {
+traquent.email_defaults_pop = {
 	GMail: {
 		email_server: "pop.gmail.com",
 	},
@@ -87,9 +87,9 @@ frappe.email_defaults_pop = {
 };
 
 function oauth_access(frm) {
-	frappe.model.with_doc("Connected App", frm.doc.connected_app, () => {
-		const connected_app = frappe.get_doc("Connected App", frm.doc.connected_app);
-		return frappe.call({
+	traquent.model.with_doc("Connected App", frm.doc.connected_app, () => {
+		const connected_app = traquent.get_doc("Connected App", frm.doc.connected_app);
+		return traquent.call({
 			doc: connected_app,
 			method: "initiate_web_application_flow",
 			args: {
@@ -105,8 +105,8 @@ function oauth_access(frm) {
 
 function set_default_max_attachment_size(frm) {
 	if (frm.doc.__islocal && !frm.doc["attachment_limit"]) {
-		frappe.call({
-			method: "frappe.core.api.file.get_max_file_size",
+		traquent.call({
+			method: "traquent.core.api.file.get_max_file_size",
 			callback: function (r) {
 				if (!r.exc) {
 					frm.set_value("attachment_limit", Number(r.message) / (1024 * 1024));
@@ -116,13 +116,13 @@ function set_default_max_attachment_size(frm) {
 	}
 }
 
-frappe.ui.form.on("Email Account", {
+traquent.ui.form.on("Email Account", {
 	service: function (frm) {
-		$.each(frappe.email_defaults[frm.doc.service], function (key, value) {
+		$.each(traquent.email_defaults[frm.doc.service], function (key, value) {
 			frm.set_value(key, value);
 		});
 		if (!frm.doc.use_imap) {
-			$.each(frappe.email_defaults_pop[frm.doc.service], function (key, value) {
+			$.each(traquent.email_defaults_pop[frm.doc.service], function (key, value) {
 				frm.set_value(key, value);
 			});
 		}
@@ -130,11 +130,11 @@ frappe.ui.form.on("Email Account", {
 
 	use_imap: function (frm) {
 		if (!frm.doc.use_imap) {
-			$.each(frappe.email_defaults_pop[frm.doc.service], function (key, value) {
+			$.each(traquent.email_defaults_pop[frm.doc.service], function (key, value) {
 				frm.set_value(key, value);
 			});
 		} else {
-			$.each(frappe.email_defaults[frm.doc.service], function (key, value) {
+			$.each(traquent.email_defaults[frm.doc.service], function (key, value) {
 				frm.set_value(key, value);
 			});
 		}
@@ -152,11 +152,11 @@ frappe.ui.form.on("Email Account", {
 		frm.set_df_property("append_to", "only_select", true);
 		frm.set_query(
 			"append_to",
-			"frappe.email.doctype.email_account.email_account.get_append_to"
+			"traquent.email.doctype.email_account.email_account.get_append_to"
 		);
 		frm.set_query("append_to", "imap_folder", function () {
 			return {
-				query: "frappe.email.doctype.email_account.email_account.get_append_to",
+				query: "traquent.email.doctype.email_account.email_account.get_append_to",
 			};
 		});
 		if (frm.doc.__islocal) {
@@ -170,21 +170,21 @@ frappe.ui.form.on("Email Account", {
 		frm.events.enable_incoming(frm);
 		frm.events.show_oauth_authorization_message(frm);
 
-		if (frappe.route_flags.delete_user_from_locals && frappe.route_flags.linked_user) {
-			delete frappe.route_flags.delete_user_from_locals;
-			delete locals["User"][frappe.route_flags.linked_user];
+		if (traquent.route_flags.delete_user_from_locals && traquent.route_flags.linked_user) {
+			delete traquent.route_flags.delete_user_from_locals;
+			delete locals["User"][traquent.route_flags.linked_user];
 		}
 
 		if (!frm.is_dirty() && frm.doc.enable_incoming) {
 			frm.add_custom_button(__("Pull Emails"), () => {
-				frappe.dom.freeze(__("Pulling emails..."));
+				traquent.dom.freeze(__("Pulling emails..."));
 				frm.call({
 					method: "pull_emails",
 					args: { email_account: frm.doc.name },
 				}).then((r) => {
-					frappe.dom.unfreeze();
+					traquent.dom.unfreeze();
 					if (!(r._server_messages && r._server_messages.length)) {
-						frappe.show_alert({ message: __("Emails Pulled"), indicator: "green" });
+						traquent.show_alert({ message: __("Emails Pulled"), indicator: "green" });
 					}
 				});
 			});
@@ -195,11 +195,11 @@ frappe.ui.form.on("Email Account", {
 		oauth_access(frm);
 	},
 
-	validate_frappe_mail_settings: function (frm) {
-		if (frm.doc.service == "Frappe Mail") {
-			frappe.call({
+	validate_traquent_mail_settings: function (frm) {
+		if (frm.doc.service == "traquent Mail") {
+			traquent.call({
 				doc: frm.doc,
-				method: "validate_frappe_mail_settings",
+				method: "validate_traquent_mail_settings",
 			});
 		}
 	},
@@ -210,8 +210,8 @@ frappe.ui.form.on("Email Account", {
 			frm.doc.connected_app &&
 			!frm.doc.backend_app_flow
 		) {
-			frappe.call({
-				method: "frappe.integrations.doctype.connected_app.connected_app.has_token",
+			traquent.call({
+				method: "traquent.integrations.doctype.connected_app.connected_app.has_token",
 				args: {
 					connected_app: frm.doc.connected_app,
 					connected_user: frm.doc.connected_user,
@@ -229,9 +229,9 @@ frappe.ui.form.on("Email Account", {
 		}
 	},
 
-	domain: frappe.utils.debounce((frm) => {
+	domain: traquent.utils.debounce((frm) => {
 		if (frm.doc.domain) {
-			frappe.call({
+			traquent.call({
 				method: "get_domain_values",
 				doc: frm.doc,
 				args: {
@@ -255,7 +255,7 @@ frappe.ui.form.on("Email Account", {
 			var msg = __(
 				"You are selecting Sync Option as ALL, It will resync all read as well as unread message from server. This may also cause the duplication of Communication (emails)."
 			);
-			frappe.confirm(msg, null, function () {
+			traquent.confirm(msg, null, function () {
 				frm.set_value("email_sync_option", "UNSEEN");
 			});
 		}
@@ -266,9 +266,9 @@ frappe.ui.form.on("Email Account", {
 			var msg = __(
 				"Enabling auto reply on an incoming email account will send automated replies to all the synchronized emails. Do you wish to continue?"
 			);
-			frappe.confirm(msg, null, function () {
+			traquent.confirm(msg, null, function () {
 				frm.set_value("enable_auto_reply", 0);
-				frappe.show_alert({ message: __("Disabled Auto Reply"), indicator: "blue" });
+				traquent.show_alert({ message: __("Disabled Auto Reply"), indicator: "blue" });
 			});
 		}
 	},

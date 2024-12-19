@@ -74,7 +74,7 @@ def Table(*args, **kwargs):
 
 def patch_query_execute():
 	"""Patch the Query Builder with helper execute method
-	This excludes the use of `frappe.db.sql` method while
+	This excludes the use of `traquent.db.sql` method while
 	executing the query object
 	"""
 
@@ -141,7 +141,7 @@ def patch_query_execute():
 
 
 def patch_query_aggregation():
-	"""Patch aggregation functions to frappe.qb"""
+	"""Patch aggregation functions to traquent.qb"""
 	from traquent.query_builder.functions import _avg, _max, _min, _sum
 
 	traquent.qb.max = _max

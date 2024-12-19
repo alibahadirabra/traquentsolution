@@ -1,20 +1,20 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
 import GridRow from "./grid_row";
 import GridPagination from "./grid_pagination";
 
-frappe.ui.form.get_open_grid_form = function () {
+traquent.ui.form.get_open_grid_form = function () {
 	return $(".grid-row-open").data("grid_row");
 };
 
-frappe.ui.form.close_grid_form = function () {
-	var open_form = frappe.ui.form.get_open_grid_form();
+traquent.ui.form.close_grid_form = function () {
+	var open_form = traquent.ui.form.get_open_grid_form();
 	open_form && open_form.hide_form();
 
 	// hide editable row too
-	if (frappe.ui.form.editable_row) {
-		frappe.ui.form.editable_row.toggle_editable_row(false);
+	if (traquent.ui.form.editable_row) {
+		traquent.ui.form.editable_row.toggle_editable_row(false);
 	}
 };
 
@@ -25,7 +25,7 @@ export default class Grid {
 		this.doctype = this.df.options;
 
 		if (this.doctype) {
-			this.meta = frappe.get_meta(this.doctype);
+			this.meta = traquent.get_meta(this.doctype);
 		}
 		this.fields_map = {};
 		this.template = null;
@@ -40,7 +40,7 @@ export default class Grid {
 		this.filter = {};
 		this.is_grid = true;
 		this.debounced_refresh = this.refresh.bind(this);
-		this.debounced_refresh = frappe.utils.debounce(this.debounced_refresh, 100);
+		this.debounced_refresh = traquent.utils.debounce(this.debounced_refresh, 100);
 	}
 
 	get perm() {
@@ -116,7 +116,7 @@ export default class Grid {
 		this.set_grid_description();
 		this.set_doc_url();
 
-		frappe.utils.bind_actions_with_object(this.wrapper, this);
+		traquent.utils.bind_actions_with_object(this.wrapper, this);
 
 		this.form_grid = this.wrapper.find(".form-grid");
 
@@ -146,8 +146,8 @@ export default class Grid {
 	}
 
 	set_doc_url() {
-		let unsupported_fieldtypes = frappe.model.no_value_type.filter(
-			(x) => frappe.model.table_fields.indexOf(x) === -1
+		let unsupported_fieldtypes = traquent.model.no_value_type.filter(
+			(x) => traquent.model.table_fields.indexOf(x) === -1
 		);
 
 		if (
@@ -160,7 +160,7 @@ export default class Grid {
 		let $help = $(this.parent).find("span.help");
 		$help.empty();
 		$(`<a href="${this.df.documentation_url}" target="_blank">
-			${frappe.utils.icon("help", "sm")}
+			${traquent.utils.icon("help", "sm")}
 		</a>`).appendTo($help);
 	}
 
@@ -234,7 +234,7 @@ export default class Grid {
 				this.grid_rows_by_docname[doc.name]?.remove();
 				dirty = true;
 			});
-			tasks.push(() => frappe.timeout(0.1));
+			tasks.push(() => traquent.timeout(0.1));
 		});
 
 		if (!this.frm) {
@@ -252,7 +252,7 @@ export default class Grid {
 			}
 		});
 
-		frappe.run_serially(tasks);
+		traquent.run_serially(tasks);
 
 		this.wrapper.find(".grid-heading-row .grid-row-check:checked:first").prop("checked", 0);
 		if (selected_children.length == this.grid_pagination.page_length) {
@@ -261,7 +261,7 @@ export default class Grid {
 	}
 
 	delete_all_rows() {
-		frappe.confirm(__("Are you sure you want to delete all rows?"), () => {
+		traquent.confirm(__("Are you sure you want to delete all rows?"), () => {
 			this.frm.doc[this.df.fieldname] = [];
 			$(this.parent).find(".rows").empty();
 			this.grid_rows = [];
@@ -274,7 +274,7 @@ export default class Grid {
 	}
 
 	scroll_to_top() {
-		frappe.utils.scroll_to(this.wrapper);
+		traquent.utils.scroll_to(this.wrapper);
 	}
 
 	select_row(name) {
@@ -305,7 +305,7 @@ export default class Grid {
 		this.remove_all_rows_button.toggleClass("hidden", !show_delete_all_btn);
 	}
 
-	debounced_refresh_remove_rows_button = frappe.utils.debounce(
+	debounced_refresh_remove_rows_button = traquent.utils.debounce(
 		this.refresh_remove_rows_button,
 		100
 	);
@@ -402,7 +402,7 @@ export default class Grid {
 		this.setup_fields();
 
 		if (this.frm) {
-			this.display_status = frappe.perm.get_field_display_status(
+			this.display_status = traquent.perm.get_field_display_status(
 				this.df,
 				this.frm.doc,
 				this.perm
@@ -536,7 +536,7 @@ export default class Grid {
 		// reset docfield
 		if (this.frm && this.frm.docname) {
 			// use doc specific docfield object
-			this.df = frappe.meta.get_docfield(
+			this.df = traquent.meta.get_docfield(
 				this.frm.doctype,
 				this.df.fieldname,
 				this.frm.docname
@@ -545,14 +545,14 @@ export default class Grid {
 			// use non-doc specific docfield
 			if (this.df.options) {
 				this.df =
-					frappe.meta.get_docfield(this.df.options, this.df.fieldname) ||
+					traquent.meta.get_docfield(this.df.options, this.df.fieldname) ||
 					this.df ||
 					null;
 			}
 		}
 
 		if (this.doctype && this.frm) {
-			this.docfields = frappe.meta.get_docfields(this.doctype, this.frm.docname);
+			this.docfields = traquent.meta.get_docfields(this.doctype, this.frm.docname);
 		} else {
 			// fields given in docfield
 			this.docfields = this.df.fields;
@@ -637,12 +637,12 @@ export default class Grid {
 		let fieldvalue = data[fieldname];
 
 		if (fieldtype === "Check") {
-			value = frappe.utils.string_to_boolean(value);
+			value = traquent.utils.string_to_boolean(value);
 			return Boolean(fieldvalue) === value && data;
 		} else if (fieldtype === "Sr No" && data.idx.toString().includes(value)) {
 			return data;
 		} else if (fieldtype === "Duration" && fieldvalue) {
-			let formatted_duration = frappe.utils.get_formatted_duration(fieldvalue);
+			let formatted_duration = traquent.utils.get_formatted_duration(fieldvalue);
 
 			if (formatted_duration.includes(value)) {
 				return data;
@@ -656,7 +656,7 @@ export default class Grid {
 				return data;
 			}
 		} else if (["Datetime", "Date"].includes(fieldtype) && fieldvalue) {
-			let user_formatted_date = frappe.datetime.str_to_user(fieldvalue);
+			let user_formatted_date = traquent.datetime.str_to_user(fieldvalue);
 
 			if (user_formatted_date.includes(value)) {
 				return data;
@@ -712,7 +712,7 @@ export default class Grid {
 							column.df.hidden = false;
 
 							//Show the static area and hide field area if it is not the editable row
-							if (row != frappe.ui.form.editable_row) {
+							if (row != traquent.ui.form.editable_row) {
 								column.static_area.show();
 								column.field_area && column.field_area.toggle(false);
 							}
@@ -760,7 +760,7 @@ export default class Grid {
 	}
 
 	get_docfield(fieldname) {
-		return frappe.meta.get_docfield(
+		return traquent.meta.get_docfield(
 			this.doctype,
 			fieldname,
 			this.frm ? this.frm.docname : null
@@ -813,7 +813,7 @@ export default class Grid {
 			}
 
 			if (this.frm) {
-				var d = frappe.model.add_child(
+				var d = traquent.model.add_child(
 					this.frm.doc,
 					this.df.options,
 					this.df.fieldname,
@@ -942,7 +942,7 @@ export default class Grid {
 				!df.hidden &&
 				(this.editable_fields || df.in_list_view) &&
 				((this.frm && this.frm.get_perm(df.permlevel, "read")) || !this.frm) &&
-				!frappe.model.layout_fields.includes(df.fieldtype)
+				!traquent.model.layout_fields.includes(df.fieldtype)
 			) {
 				if (df.columns) {
 					df.colsize = df.columns;
@@ -955,9 +955,9 @@ export default class Grid {
 					df.fieldtype == "Link" &&
 					!df.formatter &&
 					df.parent &&
-					frappe.meta.docfield_map[df.parent]
+					traquent.meta.docfield_map[df.parent]
 				) {
-					const docfield = frappe.meta.docfield_map[df.parent][df.fieldname];
+					const docfield = traquent.meta.docfield_map[df.parent][df.fieldname];
 					if (docfield && docfield.formatter) {
 						df.formatter = docfield.formatter;
 					}
@@ -975,7 +975,7 @@ export default class Grid {
 			for (var i in this.visible_columns) {
 				var df = this.visible_columns[i][0];
 				var colsize = this.visible_columns[i][1];
-				if (colsize > 1 && colsize < 11 && frappe.model.is_non_std_field(df.fieldname)) {
+				if (colsize > 1 && colsize < 11 && traquent.model.is_non_std_field(df.fieldname)) {
 					if (
 						passes < 3 &&
 						["Int", "Currency", "Float", "Check", "Percent"].indexOf(df.fieldtype) !==
@@ -1012,11 +1012,11 @@ export default class Grid {
 	setup_user_defined_columns() {
 		if (!this.frm) return;
 
-		let user_settings = frappe.get_user_settings(this.frm.doctype, "GridView");
+		let user_settings = traquent.get_user_settings(this.frm.doctype, "GridView");
 		if (user_settings && user_settings[this.doctype] && user_settings[this.doctype].length) {
 			this.user_defined_columns = user_settings[this.doctype]
 				.map((row) => {
-					let column = frappe.meta.get_docfield(this.doctype, row.fieldname);
+					let column = traquent.meta.get_docfield(this.doctype, row.fieldname);
 
 					if (column) {
 						column.in_list_view = 1;
@@ -1046,7 +1046,7 @@ export default class Grid {
 	set_multiple_add(link, qty) {
 		if (this.multiple_set) return;
 
-		var link_field = frappe.meta.get_docfield(this.df.options, link);
+		var link_field = traquent.meta.get_docfield(this.df.options, link);
 		var btn = $(this.wrapper).find(".grid-add-multiple-rows");
 
 		// show button
@@ -1054,7 +1054,7 @@ export default class Grid {
 
 		// open link selector on click
 		btn.on("click", () => {
-			new frappe.ui.form.LinkSelector({
+			new traquent.ui.form.LinkSelector({
 				doctype: link_field.options,
 				fieldname: link,
 				qty_fieldname: qty,
@@ -1075,7 +1075,7 @@ export default class Grid {
 			this.setup_download();
 
 			const value_formatter_map = {
-				Date: (val) => (val ? frappe.datetime.user_to_str(val) : val),
+				Date: (val) => (val ? traquent.datetime.user_to_str(val) : val),
 				Int: (val) => cint(val),
 				Check: (val) => cint(val),
 				Float: (val) => flt(val),
@@ -1083,20 +1083,20 @@ export default class Grid {
 			};
 
 			// upload
-			frappe.flags.no_socketio = true;
+			traquent.flags.no_socketio = true;
 			$(this.wrapper)
 				.find(".grid-upload")
 				.removeClass("hidden")
 				.on("click", () => {
-					new frappe.ui.FileUploader({
+					new traquent.ui.FileUploader({
 						as_dataurl: true,
 						allow_multiple: false,
 						restrictions: {
 							allowed_file_types: [".csv"],
 						},
 						on_success(file) {
-							var data = frappe.utils.csv_to_array(
-								frappe.utils.get_decoded_string(file.dataurl)
+							var data = traquent.utils.csv_to_array(
+								traquent.utils.get_decoded_string(file.dataurl)
 							);
 							// row #2 contains fieldnames;
 							var fieldnames = data[2];
@@ -1115,7 +1115,7 @@ export default class Grid {
 										var d = me.frm.add_child(me.df.fieldname);
 										$.each(row, (ci, value) => {
 											var fieldname = fieldnames[ci];
-											var df = frappe.meta.get_docfield(
+											var df = traquent.meta.get_docfield(
 												me.df.options,
 												fieldname
 											);
@@ -1132,7 +1132,7 @@ export default class Grid {
 							});
 
 							me.frm.refresh_field(me.df.fieldname);
-							frappe.msgprint({
+							traquent.msgprint({
 								message: __("Table updated"),
 								title: __("Success"),
 								indicator: "green",
@@ -1145,7 +1145,7 @@ export default class Grid {
 	}
 
 	setup_download() {
-		let title = this.df.label || frappe.model.unscrub(this.df.fieldname);
+		let title = this.df.label || traquent.model.unscrub(this.df.fieldname);
 		$(this.wrapper)
 			.find(".grid-download")
 			.removeClass("hidden")
@@ -1159,14 +1159,14 @@ export default class Grid {
 				data.push([__("The CSV format is case sensitive")]);
 				data.push([__("Do not edit headers which are preset in the template")]);
 				data.push(["------"]);
-				$.each(frappe.get_meta(this.df.options).fields, (i, df) => {
+				$.each(traquent.get_meta(this.df.options).fields, (i, df) => {
 					// don't include the read-only field in the template
-					if (frappe.model.is_value_type(df.fieldtype)) {
+					if (traquent.model.is_value_type(df.fieldtype)) {
 						data[1].push(df.label);
 						data[2].push(df.fieldname);
 						let description = (df.description || "") + " ";
 						if (df.fieldtype === "Date") {
-							description += frappe.boot.sysdefaults.date_format;
+							description += traquent.boot.sysdefaults.date_format;
 						}
 						data[3].push(description);
 						docfields.push(df);
@@ -1181,7 +1181,7 @@ export default class Grid {
 
 						// format date
 						if (docfields[i].fieldtype === "Date" && value) {
-							value = frappe.datetime.str_to_user(value);
+							value = traquent.datetime.str_to_user(value);
 						}
 
 						row.push(value || "");
@@ -1189,7 +1189,7 @@ export default class Grid {
 					data.push(row);
 				});
 
-				frappe.tools.downloadify(data, null, title);
+				traquent.tools.downloadify(data, null, title);
 				return false;
 			});
 	}

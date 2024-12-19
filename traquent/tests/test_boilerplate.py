@@ -111,7 +111,7 @@ class TestBoilerPlate(unittest.TestCase):
 		yaml.safe_load(github_workflow_template.format(**self.default_hooks))
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	def test_create_app(self):
 		app_name = "test_app"
@@ -137,7 +137,7 @@ class TestBoilerPlate(unittest.TestCase):
 		self.assertEqual(parse_as_configfile(patches_file), [])
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	def test_create_app_without_git_init(self):
 		app_name = "test_app_no_git"
@@ -177,18 +177,18 @@ class TestBoilerPlate(unittest.TestCase):
 					self.fail(f"Can't parse python file in new app: {python_file}\n" + str(e))
 
 	@unittest.skipUnless(
-		os.access(traquent.get_app_path("frappe"), os.W_OK), "Only run if frappe app paths is writable"
+		os.access(traquent.get_app_path("traquent"), os.W_OK), "Only run if traquent app paths is writable"
 	)
 	def test_new_patch_util(self):
 		user_inputs = [
-			"frappe",  # app name
+			"traquent",  # app name
 			"User",  # doctype
 			"Delete all users",  # docstring
 			"",  # file_name: accept default
 			"Y",  # confirm patch folder
 		]
 
-		patches_txt = pathlib.Path(pathlib.Path(traquent.get_app_path("frappe", "patches.txt")))
+		patches_txt = pathlib.Path(pathlib.Path(traquent.get_app_path("traquent", "patches.txt")))
 		original_patches = patches_txt.read_text()
 
 		with patch("sys.stdin", self.get_user_input_stream(user_inputs)):
@@ -197,7 +197,7 @@ class TestBoilerPlate(unittest.TestCase):
 			patch_creator.create_patch_file()
 
 		patches = get_all_patches()
-		expected_patch = "frappe.core.doctype.user.patches.delete_all_users"
+		expected_patch = "traquent.core.doctype.user.patches.delete_all_users"
 		self.assertIn(expected_patch, patches)
 
 		self.assertTrue(patch_creator.patch_file.exists())

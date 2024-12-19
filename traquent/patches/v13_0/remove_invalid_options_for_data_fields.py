@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe and Contributors
+# Copyright (c) 2022, traquent and Contributors
 # License: MIT. See LICENSE
 
 

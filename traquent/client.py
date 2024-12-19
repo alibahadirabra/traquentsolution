@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import json
 import os
@@ -19,7 +19,7 @@ if TYPE_CHECKING:
 """
 Handle RESTful requests that are mapped to the `/api/resource` route.
 
-Requests via FrappeClient are also handled here.
+Requests via traquentClient are also handled here.
 """
 
 

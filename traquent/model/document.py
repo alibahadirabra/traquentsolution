@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import hashlib
 import json
@@ -40,7 +40,7 @@ DOCUMENT_LOCK_SOFT_EXPIRY = 60 * 60  # Let users force-unlock after 60 minutes
 
 @simple_singledispatch
 def get_doc(*args, **kwargs) -> "Document":
-	"""Return a `frappe.model.Document` object.
+	"""Return a `traquent.model.Document` object.
 
 	:param arg1: Document dict or DocType name.
 	:param arg2: [optional] document name.
@@ -257,8 +257,8 @@ class Document(BaseDocument):
 
 		for df in self._get_table_fields():
 			# Make sure not to query the DB for a child table, if it is a virtual one.
-			# During frappe is installed, the property "is_virtual" is not available in tabDocType, so
-			# we need to filter those cases for the access to frappe.db.get_value() as it would crash otherwise.
+			# During traquent is installed, the property "is_virtual" is not available in tabDocType, so
+			# we need to filter those cases for the access to traquent.db.get_value() as it would crash otherwise.
 			if hasattr(self, "doctype") and not hasattr(self, "module") and is_virtual_doctype(df.options):
 				self.set(df.fieldname, [])
 				continue
@@ -294,13 +294,13 @@ class Document(BaseDocument):
 		return self._doc_before_save
 
 	def check_permission(self, permtype="read", permlevel=None):
-		"""Raise `frappe.PermissionError` if not permitted"""
+		"""Raise `traquent.PermissionError` if not permitted"""
 		if not self.has_permission(permtype):
 			self.raise_no_permission_to(permtype)
 
 	def has_permission(self, permtype="read", *, debug=False, user=None) -> bool:
 		"""
-		Call `frappe.permissions.has_permission` if `ignore_permissions` flag isn't truthy
+		Call `traquent.permissions.has_permission` if `ignore_permissions` flag isn't truthy
 
 		:param permtype: `read`, `write`, `submit`, `cancel`, `delete`, etc.
 		"""
@@ -313,7 +313,7 @@ class Document(BaseDocument):
 		return traquent.permissions.has_permission(self.doctype, permtype, self, debug=debug, user=user)
 
 	def raise_no_permission_to(self, perm_type):
-		"""Raise `frappe.PermissionError`."""
+		"""Raise `traquent.PermissionError`."""
 		traquent.flags.error_message = (
 			_("Insufficient Permission for {0}").format(_(self.doctype)) + f" ({traquent.bold(_(perm_type))})"
 		)
@@ -570,7 +570,7 @@ class Document(BaseDocument):
 		return previous.get(fieldname)
 
 	def set_new_name(self, force=False, set_name=None, set_child_names=True):
-		"""Calls `frappe.naming.set_new_name` for parent and child docs."""
+		"""Calls `traquent.naming.set_new_name` for parent and child docs."""
 
 		if self.flags.name_set and not force:
 			return
@@ -728,7 +728,7 @@ class Document(BaseDocument):
 
 	def validate_workflow(self):
 		"""Validate if the workflow transition is valid"""
-		if traquent.flags.in_install == "frappe":
+		if traquent.flags.in_install == "traquent":
 			return
 		workflow = self.meta.get_workflow()
 		if workflow:
@@ -1130,7 +1130,7 @@ class Document(BaseDocument):
 		return self.save()
 
 	def _rename(self, name: str, merge: bool = False, force: bool = False, validate_rename: bool = True):
-		"""Rename the document. Triggers frappe.rename_doc, then reloads."""
+		"""Rename the document. Triggers traquent.rename_doc, then reloads."""
 		from traquent.model.rename_doc import rename_doc
 
 		self.name = rename_doc(doc=self, new=name, merge=merge, force=force, validate=validate_rename)
@@ -1303,7 +1303,7 @@ class Document(BaseDocument):
 		:param value: value of the property to be updated
 		:param update_modified: default True. updates the `modified` and `modified_by` properties
 		:param notify: default False. run doc.notify_update() to send updates via socketio
-		:param commit: default False. run frappe.db.commit()
+		:param commit: default False. run traquent.db.commit()
 		"""
 		if isinstance(fieldname, dict):
 			self.update(fieldname)
@@ -1643,7 +1643,7 @@ class Document(BaseDocument):
 			if file_lock.lock_age(self.get_signature()) > DOCUMENT_LOCK_SOFT_EXPIRY:
 				primary_action = {
 					"label": "Force Unlock",
-					"server_action": "frappe.model.document.unlock_document",
+					"server_action": "traquent.model.document.unlock_document",
 					"hide_on_success": True,
 					"args": {
 						"doctype": self.doctype,
@@ -1664,7 +1664,7 @@ class Document(BaseDocument):
 			enqueue_after_commit = True
 
 		return enqueue(
-			"frappe.model.document.execute_action",
+			"traquent.model.document.execute_action",
 			__doctype=self.doctype,
 			__name=self.name,
 			__action=action,

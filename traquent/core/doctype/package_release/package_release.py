@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies and contributors
+# Copyright (c) 2021, traquent Technologies and contributors
 # For license information, please see license.txt
 
 import os
@@ -96,7 +96,7 @@ class PackageRelease(Document):
 			with open(traquent.get_site_path("packages", package.package_name, "LICENSE.md"), "w") as license:
 				license.write(package.license)
 
-		# write package.json as `frappe_package.json`
+		# write package.json as `traquent_package.json`
 		with open(
 			traquent.get_site_path("packages", package.package_name, package.package_name + ".json"), "w"
 		) as packagefile:

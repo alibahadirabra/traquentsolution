@@ -5,9 +5,9 @@
 // custom queries
 // add_fetches
 import Awesomplete from "awesomplete";
-frappe.ui.form.recent_link_validations = {};
+traquent.ui.form.recent_link_validations = {};
 
-frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlData {
+traquent.ui.form.ControlLink = class ControlLink extends traquent.ui.form.ControlData {
 	static trigger_change_on_input_event = false;
 	make_input() {
 		var me = this;
@@ -15,10 +15,10 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 			<input type="text" class="input-with-feedback form-control">
 			<span class="link-btn">
 				<a class="btn-clear no-decoration">
-					${frappe.utils.icon("close", "xs", "es-icon")}
+					${traquent.utils.icon("close", "xs", "es-icon")}
 				</a>
 				<a class="btn-open no-decoration" title="${__("Open Link")}">
-					${frappe.utils.icon("arrow-right", "xs")}
+					${traquent.utils.icon("arrow-right", "xs")}
 				</a>
 			</span>
 		</div>`).prependTo(this.input_area);
@@ -34,7 +34,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 					let doctype = me.get_options();
 					let name = me.get_input_value();
 					me.$link.toggle(true);
-					me.$link_open.attr("href", frappe.utils.get_form_link(doctype, name));
+					me.$link_open.attr("href", traquent.utils.get_form_link(doctype, name));
 					me.$link_clear.on("click", function () {
 						me.$input.val("").trigger("input");
 						me.$link.toggle(false);
@@ -71,8 +71,8 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 		// this is used to get the context in which link field is loaded
 		if (this.doctype) return this.doctype;
 		else {
-			return frappe.get_route && frappe.get_route()[0] === "List"
-				? frappe.get_route()[1]
+			return traquent.get_route && traquent.get_route()[0] === "List"
+				? traquent.get_route()[1]
 				: null;
 		}
 	}
@@ -94,10 +94,10 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 		return this.is_translatable() ? __(value) : value;
 	}
 	is_translatable() {
-		return (frappe.boot?.translated_doctypes || []).includes(this.get_options());
+		return (traquent.boot?.translated_doctypes || []).includes(this.get_options());
 	}
 	is_title_link() {
-		return (frappe.boot?.link_title_doctypes || []).includes(this.get_options());
+		return (traquent.boot?.link_title_doctypes || []).includes(this.get_options());
 	}
 	async set_link_title(value) {
 		const doctype = this.get_options();
@@ -108,8 +108,8 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 		}
 
 		const link_title =
-			frappe.utils.get_link_title(doctype, value) ||
-			(await frappe.utils.fetch_link_title(doctype, value));
+			traquent.utils.get_link_title(doctype, value) ||
+			(await traquent.utils.fetch_link_title(doctype, value));
 
 		this.translate_and_set_input_value(link_title, value);
 	}
@@ -123,7 +123,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 		if (this.parse) value = this.parse(value, label);
 		if (label) {
 			this.label = this.get_translated(label);
-			frappe.utils.add_link_title(this.df.options, value, label);
+			traquent.utils.add_link_title(this.df.options, value, label);
 		}
 
 		return this.validate_and_set_in_model(value, e, true);
@@ -147,7 +147,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 	open_advanced_search() {
 		var doctype = this.get_options();
 		if (!doctype) return;
-		new frappe.ui.form.LinkSelector({
+		new traquent.ui.form.LinkSelector({
 			doctype: doctype,
 			target: this,
 			txt: this.get_input_value(),
@@ -167,19 +167,19 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 		}
 		// set values to fill in the new document
 		if (df && df.get_route_options_for_new_doc) {
-			frappe.route_options = df.get_route_options_for_new_doc(this);
+			traquent.route_options = df.get_route_options_for_new_doc(this);
 		} else {
-			frappe.route_options = {};
+			traquent.route_options = {};
 		}
 
 		// partially entered name field
-		frappe.route_options.name_field = this.get_label_value();
+		traquent.route_options.name_field = this.get_label_value();
 
 		// reference to calling link
-		frappe._from_link = frappe.utils.deep_clone(this);
-		frappe._from_link_scrollY = $(document).scrollTop();
+		traquent._from_link = traquent.utils.deep_clone(this);
+		traquent._from_link_scrollY = $(document).scrollTop();
 
-		frappe.ui.form.make_quick_entry(doctype, (doc) => {
+		traquent.ui.form.make_quick_entry(doctype, (doc) => {
 			return me.set_value(doc.name);
 		});
 
@@ -232,7 +232,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 					})
 					.data("item.autocomplete", d)
 					.prop("aria-selected", "false")
-					.html(`<p title="${frappe.utils.escape_html(_label)}">${html}</p>`)
+					.html(`<p title="${traquent.utils.escape_html(_label)}">${html}</p>`)
 					.get(0);
 			},
 			sort: function () {
@@ -244,7 +244,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 
 		this.$input.on(
 			"input",
-			frappe.utils.debounce(function (e) {
+			traquent.utils.debounce(function (e) {
 				var doctype = me.get_options();
 				if (!doctype) return;
 				if (!me.$input.cache[doctype]) {
@@ -262,14 +262,14 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 					doctype: doctype,
 					ignore_user_permissions: me.df.ignore_user_permissions,
 					reference_doctype: me.get_reference_doctype() || "",
-					page_length: cint(frappe.boot.sysdefaults?.link_field_results_limit) || 10,
+					page_length: cint(traquent.boot.sysdefaults?.link_field_results_limit) || 10,
 				};
 
 				me.set_custom_query(args);
 
-				frappe.call({
+				traquent.call({
 					type: "POST",
-					method: "frappe.desk.search.search_link",
+					method: "traquent.desk.search.search_link",
 					no_spinner: true,
 					args: args,
 					callback: function (r) {
@@ -293,7 +293,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 						}
 
 						if (!me.df.only_select) {
-							if (frappe.model.can_create(doctype)) {
+							if (traquent.model.can_create(doctype)) {
 								// new item
 								r.message.push({
 									html:
@@ -309,8 +309,8 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 
 							//custom link actions
 							let custom__link_options =
-								frappe.ui.form.ControlLink.link_options &&
-								frappe.ui.form.ControlLink.link_options(me);
+								traquent.ui.form.ControlLink.link_options &&
+								traquent.ui.form.ControlLink.link_options(me);
 
 							if (custom__link_options) {
 								r.message = r.message.concat(custom__link_options);
@@ -335,7 +335,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 						me.awesomplete.list = me.$input.cache[doctype][term];
 						me.toggle_href(doctype);
 						r.message.forEach((item) => {
-							frappe.utils.add_link_title(doctype, item.value, item.label);
+							traquent.utils.add_link_title(doctype, item.value, item.label);
 						});
 					},
 				});
@@ -400,7 +400,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 			// to defaults so you do not need to set it again
 			// unless it is changed.
 			if (me.df.remember_last_selected_value) {
-				frappe.boot.user.last_selected_values[me.df.options] = item.value;
+				traquent.boot.user.last_selected_values[me.df.options] = item.value;
 			}
 
 			me.parse_validate_and_set_in_model(item.value, null, item.label);
@@ -437,7 +437,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 	}
 
 	toggle_href(doctype) {
-		if (frappe.model.can_select(doctype) && !frappe.model.can_read(doctype)) {
+		if (traquent.model.can_select(doctype) && !traquent.model.can_read(doctype)) {
 			// remove href from link field as user has only select perm
 			this.$input_area.find(".link-btn").addClass("hide");
 		} else {
@@ -450,8 +450,8 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 		let filter_array = [];
 		let meta = null;
 
-		frappe.model.with_doctype(doctype, () => {
-			meta = frappe.get_meta(doctype);
+		traquent.model.with_doctype(doctype, () => {
+			meta = traquent.get_meta(doctype);
 		});
 
 		// convert object style to array
@@ -478,8 +478,8 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 		function get_filter_description(filter) {
 			let doctype = filter[0];
 			let fieldname = filter[1];
-			let docfield = frappe.meta.get_docfield(doctype, fieldname);
-			let label = docfield ? docfield.label : frappe.model.unscrub(fieldname);
+			let docfield = traquent.meta.get_docfield(doctype, fieldname);
+			let label = docfield ? docfield.label : traquent.model.unscrub(fieldname);
 
 			if (docfield && docfield.fieldtype === "Check") {
 				filter[3] = filter[3] ? __("Yes") : __("No");
@@ -506,7 +506,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 			if (value) return true;
 			// check if empty value is valid
 			if (this.frm) {
-				let field = frappe.meta.get_docfield(this.frm.doctype, key);
+				let field = traquent.meta.get_docfield(this.frm.doctype, key);
 				// empty value link fields is invalid
 				return !field || !["Link", "Dynamic Link"].includes(field.fieldtype);
 			} else {
@@ -612,9 +612,9 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 				let context = {
 					doc: this.doc,
 					parent: this.doc.parenttype ? this.frm.doc : null,
-					frappe,
+					traquent,
 				};
-				value = frappe.utils.eval(value, context);
+				value = traquent.utils.eval(value, context);
 			}
 			filters[fieldname] = [operator, value];
 		});
@@ -652,7 +652,7 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 				if (this.layout?.set_value) {
 					this.layout.set_value(target_field, field_value);
 				} else if (this.frm) {
-					frappe.model.set_value(
+					traquent.model.set_value(
 						this.df.parent,
 						this.docname,
 						target_field,
@@ -665,8 +665,8 @@ frappe.ui.form.ControlLink = class ControlLink extends frappe.ui.form.ControlDat
 
 		// to avoid unnecessary request
 		if (value) {
-			return frappe
-				.xcall("frappe.client.validate_link", {
+			return traquent
+				.xcall("traquent.client.validate_link", {
 					doctype: options,
 					docname: value,
 					fields: columns_to_fetch,

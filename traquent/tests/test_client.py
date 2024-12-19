@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 
 from unittest.mock import patch
 
@@ -49,9 +49,9 @@ class TestClient(IntegrationTestCase):
 		traquent.local.request.method = "POST"
 
 		traquent.local.form_dict = traquent._dict(
-			{"doc": dict(doctype="ToDo", description="Valid http method"), "cmd": "frappe.client.save"}
+			{"doc": dict(doctype="ToDo", description="Valid http method"), "cmd": "traquent.client.save"}
 		)
-		todo = execute_cmd("frappe.client.save")
+		todo = execute_cmd("traquent.client.save")
 
 		self.assertEqual(todo.get("description"), "Valid http method")
 
@@ -66,10 +66,10 @@ class TestClient(IntegrationTestCase):
 		traquent.local.request.method = "GET"
 
 		traquent.local.form_dict = traquent._dict(
-			{"doc": dict(doctype="ToDo", description="Invalid http method"), "cmd": "frappe.client.save"}
+			{"doc": dict(doctype="ToDo", description="Invalid http method"), "cmd": "traquent.client.save"}
 		)
 
-		self.assertRaises(traquent.PermissionError, execute_cmd, "frappe.client.save")
+		self.assertRaises(traquent.PermissionError, execute_cmd, "traquent.client.save")
 
 	def test_run_doc_method(self):
 		from traquent.handler import execute_cmd
@@ -136,7 +136,7 @@ class TestClient(IntegrationTestCase):
 			"content-type": "application/json",
 		}
 		url = get_site_url(traquent.local.site)
-		url += "/api/method/frappe.client.get_list"
+		url += "/api/method/traquent.client.get_list"
 
 		res = requests.post(url, json=params, headers=headers)
 		self.assertEqual(res.status_code, 200)

@@ -1,26 +1,26 @@
 import "./libs.bundle.js";
-import "./frappe/class.js";
-import "./frappe/polyfill.js";
-import "./frappe/provide.js";
-import "./frappe/translate.js";
-import "./frappe/form/formatters.js";
-import "./frappe/format.js";
-import "./frappe/utils/number_format.js";
-import "./frappe/utils/utils.js";
-import "./frappe/utils/common.js";
-import "./frappe/ui/messages.js";
-import "./frappe/utils/pretty_date.js";
-import "./frappe/utils/datetime.js";
-import "./frappe/microtemplate.js";
-import "./frappe/query_string.js";
+import "./traquent/class.js";
+import "./traquent/polyfill.js";
+import "./traquent/provide.js";
+import "./traquent/translate.js";
+import "./traquent/form/formatters.js";
+import "./traquent/format.js";
+import "./traquent/utils/number_format.js";
+import "./traquent/utils/utils.js";
+import "./traquent/utils/common.js";
+import "./traquent/ui/messages.js";
+import "./traquent/utils/pretty_date.js";
+import "./traquent/utils/datetime.js";
+import "./traquent/microtemplate.js";
+import "./traquent/query_string.js";
 
-import "./frappe/upload.js";
+import "./traquent/upload.js";
 
-import "./frappe/model/meta.js";
-import "./frappe/model/model.js";
-import "./frappe/model/perm.js";
+import "./traquent/model/meta.js";
+import "./traquent/model/model.js";
+import "./traquent/model/perm.js";
 
 import "./bootstrap-4-web.bundle";
 
 import "../../website/js/website.js";
-import "./frappe/socketio_client.js";
+import "./traquent/socketio_client.js";

@@ -1,5 +1,5 @@
 """
-This module handles the setup and teardown of the test environment for Frappe applications.
+This module handles the setup and teardown of the test environment for traquent applications.
 
 Key components:
 - _initialize_test_environment: Initializes the test environment for a given site

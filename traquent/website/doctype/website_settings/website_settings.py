@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import re
 from urllib.parse import quote
@@ -249,7 +249,7 @@ def get_website_settings(context=None):
 		context.theme = get_active_theme() or traquent._dict()
 
 	if not context.get("favicon"):
-		context["favicon"] = "/assets/frappe/images/traquent_mini.svg"
+		context["favicon"] = "/assets/traquent/images/traquent_mini.svg"
 #UPDATES --sevval
 	if settings.favicon and settings.favicon != "attach_files:":
 		context["favicon"] = settings.favicon

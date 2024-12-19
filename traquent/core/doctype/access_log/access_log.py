@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies and contributors
+# Copyright (c) 2021, traquent Technologies and contributors
 # License: MIT. See LICENSE
 from tenacity import retry, retry_if_exception_type, stop_after_attempt
 
@@ -100,7 +100,7 @@ def _make_access_log(
 	else:
 		access_log.db_insert()
 
-	# `frappe.db.commit` added because insert doesnt `commit` when called in GET requests like `printview`
+	# `traquent.db.commit` added because insert doesnt `commit` when called in GET requests like `printview`
 	# dont commit in test mode. It must be tempting to put this block along with the in_request in the
 	# whitelisted method...yeah, don't do it. That part would be executed possibly on a read only DB conn
 	if not traquent.flags.in_test or in_request:

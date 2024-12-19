@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import os
@@ -150,7 +150,7 @@ def delete_doc(
 				# Enqueued at the end, because it gets committed
 				# All the linked docs should be checked beforehand
 				traquent.enqueue(
-					"frappe.model.delete_doc.delete_dynamic_links",
+					"traquent.model.delete_doc.delete_dynamic_links",
 					doctype=doc.doctype,
 					name=doc.name,
 					now=traquent.flags.in_test,
@@ -181,7 +181,7 @@ def delete_doc(
 
 def add_to_deleted_document(doc):
 	"""Add this document to Deleted Document table. Called after delete"""
-	if doc.doctype != "Deleted Document" and traquent.flags.in_install != "frappe":
+	if doc.doctype != "Deleted Document" and traquent.flags.in_install != "traquent":
 		traquent.get_doc(
 			doctype="Deleted Document",
 			deleted_doctype=doc.doctype,
@@ -317,7 +317,7 @@ def check_if_doc_is_linked(doc, method="Delete"):
 
 
 def check_if_doc_is_dynamically_linked(doc, method="Delete"):
-	"""Raise `frappe.LinkExistsError` if the document is dynamically linked"""
+	"""Raise `traquent.LinkExistsError` if the document is dynamically linked"""
 	for df in get_dynamic_link_map().get(doc.doctype, []):
 		ignore_linked_doctypes = doc.get("ignore_linked_doctypes") or []
 

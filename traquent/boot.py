@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 """
 bootstrap client session
@@ -26,7 +26,7 @@ from traquent.social.doctype.energy_point_settings.energy_point_settings import 
 )
 from traquent.utils import add_user_info, cstr, get_system_timezone
 from traquent.utils.change_log import get_versions
-from traquent.utils.frappecloud import on_frappecloud
+from traquent.utils.traquentcloud import on_traquentcloud
 from traquent.website.doctype.web_page_view.web_page_view import is_tracking_enabled
 
 
@@ -196,7 +196,7 @@ def load_desktop_data(bootinfo):
 				or "",
 				app_logo_url=app_info.get("logo")
 				or traquent.get_hooks("app_logo_url", app_name=app_name)
-				or traquent.get_hooks("app_logo_url", app_name="frappe"),
+				or traquent.get_hooks("app_logo_url", app_name="traquent"),
 				modules=[m.name for m in traquent.get_all("Module Def", dict(app_name=app_name))],
 				workspaces=workspaces,
 			)
@@ -499,13 +499,13 @@ def get_marketplace_apps():
 	import requests
 
 	apps = []
-	cache_key = "frappe_marketplace_apps"
+	cache_key = "traquent_marketplace_apps"
 
-	if traquent.conf.developer_mode or not on_frappecloud():
+	if traquent.conf.developer_mode or not on_traquentcloud():
 		return apps
 
 	def get_apps_from_fc():
-		remote_site = traquent.conf.frappecloud_url or "frappecloud.com"
+		remote_site = traquent.conf.traquentcloud_url or "traquentcloud.com"
 		request_url = f"https://{remote_site}/api/method/press.api.marketplace.get_marketplace_apps"
 		request = requests.get(request_url, timeout=2.0)
 		return request.json()["message"]
@@ -532,4 +532,4 @@ def get_sentry_dsn():
 	if not traquent.get_system_settings("enable_telemetry"):
 		return
 
-	return os.getenv("FRAPPE_SENTRY_DSN")
+	return os.getenv("traquent_SENTRY_DSN")

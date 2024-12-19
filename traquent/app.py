@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import functools
@@ -177,7 +177,7 @@ def init_request(request):
 
 	traquent.local.is_ajax = traquent.get_request_header("X-Requested-With") == "XMLHttpRequest"
 
-	site = _site or request.headers.get("X-Frappe-Site-Name") or get_site_name(request.host)
+	site = _site or request.headers.get("X-traquent-Site-Name") or get_site_name(request.host)
 	traquent.init(site, sites_path=_sites_path, force=True)
 
 	if not (traquent.local.conf and traquent.local.conf.db_name):
@@ -226,8 +226,8 @@ def setup_read_only_mode():
 
 
 def log_request(request, response):
-	if hasattr(traquent.local, "conf") and traquent.local.conf.enable_frappe_logger:
-		traquent.logger("frappe.web", allow_site=traquent.local.site).info(
+	if hasattr(traquent.local, "conf") and traquent.local.conf.enable_traquent_logger:
+		traquent.logger("traquent.web", allow_site=traquent.local.site).info(
 			{
 				"site": get_site_name(request.host),
 				"remote_addr": getattr(request, "remote_addr", "NOTFOUND"),
@@ -273,7 +273,7 @@ def process_response(response):
 		response.headers.extend(traquent.local.rate_limiter.headers())
 
 	if trace_id := traquent.monitor.get_trace_id():
-		response.headers.extend({"X-Frappe-Request-Id": trace_id})
+		response.headers.extend({"X-traquent-Request-Id": trace_id})
 
 	# CORS headers
 	if hasattr(traquent.local, "conf"):
@@ -446,7 +446,7 @@ def sync_database(rollback: bool) -> bool:
 
 
 # Always initialize sentry SDK if the DSN is sent
-if sentry_dsn := os.getenv("FRAPPE_SENTRY_DSN"):
+if sentry_dsn := os.getenv("traquent_SENTRY_DSN"):
 	import sentry_sdk
 	from sentry_sdk.integrations.argv import ArgvIntegration
 	from sentry_sdk.integrations.atexit import AtexitIntegration
@@ -455,7 +455,7 @@ if sentry_dsn := os.getenv("FRAPPE_SENTRY_DSN"):
 	from sentry_sdk.integrations.modules import ModulesIntegration
 	from sentry_sdk.integrations.wsgi import SentryWsgiMiddleware
 
-	from traquent.utils.sentry import FrappeIntegration, before_send
+	from traquent.utils.sentry import traquentIntegration, before_send
 
 	integrations = [
 		AtexitIntegration(),
@@ -469,7 +469,7 @@ if sentry_dsn := os.getenv("FRAPPE_SENTRY_DSN"):
 	kwargs = {}
 
 	if os.getenv("ENABLE_SENTRY_DB_MONITORING"):
-		integrations.append(FrappeIntegration())
+		integrations.append(traquentIntegration())
 		experiments["record_sql_params"] = True
 
 	if tracing_sample_rate := os.getenv("SENTRY_TRACING_SAMPLE_RATE"):
@@ -556,7 +556,7 @@ re.purge()
 # Calling gc.freeze() moves all the objects imported so far into permanant generation and hence
 # doesn't mutate `PyGC_Head`
 #
-# Refer to issue for more info: https://github.com/frappe/frappe/issues/18927
+# Refer to issue for more info: https://github.com/traquent/traquent/issues/18927
 if traquent._tune_gc:
 	gc.collect()  # clean up any garbage created so far before freeze
 	gc.freeze()

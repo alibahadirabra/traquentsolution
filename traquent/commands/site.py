@@ -322,7 +322,7 @@ def restore_backup(
 
 	if is_partial(sql_file_path):
 		click.secho(
-			"Partial Backup file detected. You cannot use a partial file to restore a Frappe site.",
+			"Partial Backup file detected. You cannot use a partial file to restore a traquent site.",
 			fg="red",
 		)
 		click.secho(
@@ -331,7 +331,7 @@ def restore_backup(
 		)
 		sys.exit(1)
 
-	# Check if the backup is of an older version of frappe and the user hasn't specified force
+	# Check if the backup is of an older version of traquent and the user hasn't specified force
 	if is_downgrade(sql_file_path, verbose=True) and not force:
 		warn_message = (
 			"This is not recommended and may lead to unexpected behaviour. " "Do you want to continue anyway?"
@@ -394,7 +394,7 @@ def partial_restore(context: CliCtxObj, sql_file_path, verbose, encryption_key=N
 		with decrypt_backup(sql_file_path, key):
 			if not is_partial(sql_file_path):
 				click.secho(
-					"Full backup file detected. Use `bench restore` to restore a Frappe Site.",
+					"Full backup file detected. Use `bench restore` to restore a traquent Site.",
 					fg="red",
 				)
 				sys.exit(1)
@@ -409,7 +409,7 @@ def partial_restore(context: CliCtxObj, sql_file_path, verbose, encryption_key=N
 	else:
 		if not is_partial(sql_file_path):
 			click.secho(
-				"Full backup file detected. Use `bench restore` to restore a Frappe Site.",
+				"Full backup file detected. Use `bench restore` to restore a traquent Site.",
 				fg="red",
 			)
 			sys.exit(1)
@@ -717,7 +717,7 @@ def migrate(context: CliCtxObj, skip_failing=False, skip_search_index=False):
 @click.command("migrate-to")
 def migrate_to():
 	"Migrates site to the specified provider"
-	from traquent.integrations.frappe_providers import migrate_to
+	from traquent.integrations.traquent_providers import migrate_to
 
 	migrate_to()
 
@@ -920,7 +920,7 @@ def backup(
 @pass_context
 def remove_from_installed_apps(context: CliCtxObj, app):
 	"Remove app from site's installed-apps list"
-	ensure_app_not_frappe(app)
+	ensure_app_not_traquent(app)
 	from traquent.installer import remove_from_installed_apps
 
 	for site in context.sites:
@@ -949,7 +949,7 @@ def remove_from_installed_apps(context: CliCtxObj, app):
 @pass_context
 def uninstall(context: CliCtxObj, app, dry_run, yes, no_backup, force):
 	"Remove app and linked modules from site"
-	ensure_app_not_frappe(app)
+	ensure_app_not_traquent(app)
 	from traquent.installer import remove_app
 	from traquent.utils.synchronization import filelock
 
@@ -1216,7 +1216,7 @@ def browse(context: CliCtxObj, site, user=None):
 @click.command("start-recording")
 @pass_context
 def start_recording(context: CliCtxObj):
-	"""Start Frappe Recorder."""
+	"""Start traquent Recorder."""
 	import traquent.recorder
 
 	for site in context.sites:
@@ -1230,7 +1230,7 @@ def start_recording(context: CliCtxObj):
 @click.command("stop-recording")
 @pass_context
 def stop_recording(context: CliCtxObj):
-	"""Stop Frappe Recorder."""
+	"""Stop traquent Recorder."""
 	import traquent.recorder
 
 	for site in context.sites:
@@ -1445,8 +1445,8 @@ def get_standard_tables():
 	sql_file = os.path.join(
 		"..",
 		"apps",
-		"frappe",
-		"frappe",
+		"traquent",
+		"traquent",
 		"database",
 		traquent.conf.db_type,
 		f"framework_{traquent.conf.db_type}.sql",
@@ -1535,15 +1535,15 @@ def add_new_user(
 		update_password(user=user.name, pwd=password)
 
 
-def ensure_app_not_frappe(app: str) -> None:
+def ensure_app_not_traquent(app: str) -> None:
 	"""
-	Ensure that the app name passed is not 'frappe'
+	Ensure that the app name passed is not 'traquent'
 
 	:param app: Name of the app
 	:return: Nothing
 	"""
-	if app == "frappe":
-		click.secho("You cannot remove or uninstall the app `frappe`", fg="red")
+	if app == "traquent":
+		click.secho("You cannot remove or uninstall the app `traquent`", fg="red")
 		sys.exit(1)
 
 

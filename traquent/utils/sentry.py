@@ -16,8 +16,8 @@ import traquent.monitor
 from traquent.database.database import Database, EmptyQueryValues
 
 
-class FrappeIntegration(Integration):
-	identifier = "frappe"
+class traquentIntegration(Integration):
+	identifier = "traquent"
 
 	@staticmethod
 	def setup_once():
@@ -76,10 +76,10 @@ def set_scope(scope):
 
 	scope.set_user({"id": traquent.local.site})
 	user = getattr(traquent.session, "user", "Unidentified")
-	scope.set_tag("frappe_user", user)
-	# Extract `X-Frappe-Request-ID` to store as a separate field if its present
+	scope.set_tag("traquent_user", user)
+	# Extract `X-traquent-Request-ID` to store as a separate field if its present
 	if trace_id := traquent.monitor.get_trace_id():
-		scope.set_tag("frappe_trace_id", trace_id)
+		scope.set_tag("traquent_trace_id", trace_id)
 
 
 def set_sentry_context():

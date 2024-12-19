@@ -1,1 +1,1 @@
-import "./frappe/logtypes";
+import "./traquent/logtypes";

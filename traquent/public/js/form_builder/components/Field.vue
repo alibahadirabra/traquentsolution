@@ -35,7 +35,7 @@ const component = computed(() => {
 
 function remove_field() {
 	if (store.is_customize_form && props.field.df.is_custom_field == 0) {
-		frappe.msgprint(__("Cannot delete standard field. You can hide it if you want"));
+		traquent.msgprint(__("Cannot delete standard field. You can hide it if you want"));
 		throw "cannot delete standard field";
 	}
 	let index = props.column.fields.indexOf(props.field);
@@ -63,7 +63,7 @@ function duplicate_field() {
 	duplicate_field.df.fieldname = "";
 	duplicate_field.df.__islocal = 1;
 	duplicate_field.df.__unsaved = 1;
-	duplicate_field.df.owner = frappe.session.user;
+	duplicate_field.df.owner = traquent.session.user;
 
 	delete duplicate_field.df.creation;
 	delete duplicate_field.df.modified;
@@ -76,7 +76,7 @@ function duplicate_field() {
 }
 
 function make_dialog(frm) {
-	frm.dialog = new frappe.ui.Dialog({
+	frm.dialog = new traquent.ui.Dialog({
 		title: __("Set Filters"),
 		fields: [
 			{
@@ -109,12 +109,12 @@ function make_dialog(frm) {
 		let property = "link_filters";
 		let property_setter_id = current_doctype + "-" + fieldname + "-" + property;
 
-		frappe.db.exists("Property Setter", property_setter_id).then((exits) => {
+		traquent.db.exists("Property Setter", property_setter_id).then((exits) => {
 			if (exits) {
 				frm.dialog.set_secondary_action_label(__("Reset To Default"));
 				frm.dialog.set_secondary_action(() => {
-					frappe.call({
-						method: "frappe.custom.doctype.customize_form.customize_form.get_link_filters_from_doc_without_customisations",
+					traquent.call({
+						method: "traquent.custom.doctype.customize_form.customize_form.get_link_filters_from_doc_without_customisations",
 						args: {
 							doctype: current_doctype,
 							fieldname: fieldname,
@@ -137,7 +137,7 @@ function make_dialog(frm) {
 }
 
 function make_filter_area(frm, doctype) {
-	frm.filter_group = new frappe.ui.FilterGroup({
+	frm.filter_group = new traquent.ui.FilterGroup({
 		parent: frm.dialog.get_field("filter_area").$wrapper,
 		doctype: doctype,
 		on_change: () => {},
@@ -159,7 +159,7 @@ function edit_filters() {
 
 	make_dialog(frm);
 	make_filter_area(frm, field_doctype);
-	frappe.model.with_doctype(field_doctype, () => {
+	traquent.model.with_doctype(field_doctype, () => {
 		frm.dialog.show();
 		add_existing_filter(frm, props.field.df);
 	});
@@ -213,7 +213,7 @@ onMounted(() => selected.value && label_input.value.focus_on_label());
 					<div
 						class="help-icon"
 						v-if="field.df.documentation_url"
-						v-html="frappe.utils.icon('help', 'sm')"
+						v-html="traquent.utils.icon('help', 'sm')"
 					/>
 				</div>
 			</template>
@@ -225,10 +225,10 @@ onMounted(() => selected.value && label_input.value.focus_on_label());
 						:class="is_filter_applied()"
 						@click="edit_filters"
 					>
-						<div v-html="frappe.utils.icon('filter', 'sm')" />
+						<div v-html="traquent.utils.icon('filter', 'sm')" />
 					</button>
 					<AddFieldButton ref="add_field_ref" :column="column" :field="field">
-						<div v-html="frappe.utils.icon('add', 'sm')" />
+						<div v-html="traquent.utils.icon('add', 'sm')" />
 					</AddFieldButton>
 					<button
 						v-if="column.fields.indexOf(field)"
@@ -238,14 +238,14 @@ onMounted(() => selected.value && label_input.value.focus_on_label());
 						"
 						@click="move_fields_to_column"
 					>
-						<div v-html="frappe.utils.icon('move', 'sm')" />
+						<div v-html="traquent.utils.icon('move', 'sm')" />
 					</button>
 					<button
 						class="btn btn-xs btn-icon"
 						:title="__('Duplicate field')"
 						@click.stop="duplicate_field"
 					>
-						<div v-html="frappe.utils.icon('duplicate', 'sm')" />
+						<div v-html="traquent.utils.icon('duplicate', 'sm')" />
 					</button>
 					<button
 						v-if="field.df.fieldtype === 'Table' && field.df.options"
@@ -253,14 +253,14 @@ onMounted(() => selected.value && label_input.value.focus_on_label());
 						@click="open_child_doctype"
 						:title="__('Edit the {0} Doctype', [field.df.options])"
 					>
-						<div v-html="frappe.utils.icon('external-link', 'sm')" />
+						<div v-html="traquent.utils.icon('external-link', 'sm')" />
 					</button>
 					<button
 						class="btn btn-xs btn-icon"
 						:title="__('Remove field')"
 						@click.stop="remove_field"
 					>
-						<div v-html="frappe.utils.icon('remove', 'sm')" />
+						<div v-html="traquent.utils.icon('remove', 'sm')" />
 					</button>
 				</div>
 			</template>

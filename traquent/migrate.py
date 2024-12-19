@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import contextlib
@@ -131,7 +131,7 @@ class SiteMigration:
 		* Sync fixtures & custom scripts
 		* Sync in-Desk Module Dashboards
 		* Sync customizations: Custom Fields, Property Setters, Custom Permissions
-		* Sync Frappe's internal language master
+		* Sync traquent's internal language master
 		* Flush deferred inserts made during maintenance mode.
 		* Sync Portal Menu Items
 		* Sync Installed Applications Version History

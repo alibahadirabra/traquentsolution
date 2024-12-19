@@ -13,7 +13,7 @@ export default class Tab {
 	}
 
 	make() {
-		const id = `${frappe.scrub(this.doctype, "-")}-${this.df.fieldname}`;
+		const id = `${traquent.scrub(this.doctype, "-")}-${this.df.fieldname}`;
 		this.tab_link = $(`
 			<li class="nav-item">
 				<a class="nav-link ${this.df.active ? "active" : ""}" id="${id}-tab"

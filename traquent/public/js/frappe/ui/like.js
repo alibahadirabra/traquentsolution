@@ -1,21 +1,21 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.ui.is_liked = function (doc) {
-	return frappe.ui.get_liked_by(doc).includes(frappe.session.user);
+traquent.ui.is_liked = function (doc) {
+	return traquent.ui.get_liked_by(doc).includes(traquent.session.user);
 };
 
-frappe.ui.get_liked_by = function (doc) {
+traquent.ui.get_liked_by = function (doc) {
 	return doc._liked_by ? JSON.parse(doc._liked_by) : [];
 };
 
-frappe.ui.toggle_like = function ($btn, doctype, name, callback) {
+traquent.ui.toggle_like = function ($btn, doctype, name, callback) {
 	const add = $btn.hasClass("not-liked") ? "Yes" : "No";
 	// disable click
 	$btn.css("pointer-events", "none");
 
-	frappe.call({
-		method: "frappe.desk.like.toggle_like",
+	traquent.call({
+		method: "traquent.desk.like.toggle_like",
 		quiet: true,
 		args: {
 			doctype: doctype,
@@ -36,14 +36,14 @@ frappe.ui.toggle_like = function ($btn, doctype, name, callback) {
 			// update in locals (form)
 			const doc = locals[doctype] && locals[doctype][name];
 			if (doc) {
-				let liked_by = frappe.ui.get_liked_by(doc);
+				let liked_by = traquent.ui.get_liked_by(doc);
 
-				if (add === "Yes" && !liked_by.includes(frappe.session.user)) {
-					liked_by.push(frappe.session.user);
+				if (add === "Yes" && !liked_by.includes(traquent.session.user)) {
+					liked_by.push(traquent.session.user);
 				}
 
-				if (add === "No" && liked_by.includes(frappe.session.user)) {
-					liked_by = liked_by.filter((user) => user !== frappe.session.user);
+				if (add === "No" && liked_by.includes(traquent.session.user)) {
+					liked_by = liked_by.filter((user) => user !== traquent.session.user);
 				}
 
 				doc._liked_by = JSON.stringify(liked_by);
@@ -56,12 +56,12 @@ frappe.ui.toggle_like = function ($btn, doctype, name, callback) {
 	});
 };
 
-frappe.ui.click_toggle_like = function () {
-	console.warn("`frappe.ui.click_toggle_like` is deprecated and has no effect.");
+traquent.ui.click_toggle_like = function () {
+	console.warn("`traquent.ui.click_toggle_like` is deprecated and has no effect.");
 };
 
-frappe.ui.setup_like_popover = ($parent, selector) => {
-	if (frappe.dom.is_touchscreen()) {
+traquent.ui.setup_like_popover = ($parent, selector) => {
+	if (traquent.dom.is_touchscreen()) {
 		return;
 	}
 
@@ -92,8 +92,8 @@ frappe.ui.setup_like_popover = ($parent, selector) => {
 				liked_by.forEach((user) => {
 					// append user list item
 					liked_by_list.append(`
-						<li data-user=${user}>${frappe.avatar(user, "avatar-xs")}
-							<span>${frappe.user.full_name(user)}</span>
+						<li data-user=${user}>${traquent.avatar(user, "avatar-xs")}
+							<span>${traquent.user.full_name(user)}</span>
 						</li>
 					`);
 				});
@@ -101,7 +101,7 @@ frappe.ui.setup_like_popover = ($parent, selector) => {
 				liked_by_list.children("li").click((ev) => {
 					let user = ev.currentTarget.dataset.user;
 					target_element.popover("hide");
-					frappe.set_route(link_base + user);
+					traquent.set_route(link_base + user);
 				});
 
 				return liked_by_list;

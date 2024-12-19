@@ -1,28 +1,28 @@
-frappe.route_history_queue = [];
+traquent.route_history_queue = [];
 const routes_to_skip = ["Form", "social", "setup-wizard", "recorder"];
 
-const save_routes = frappe.utils.debounce(() => {
-	if (frappe.session.user === "Guest") return;
-	const routes = frappe.route_history_queue;
+const save_routes = traquent.utils.debounce(() => {
+	if (traquent.session.user === "Guest") return;
+	const routes = traquent.route_history_queue;
 	if (!routes.length) return;
 
-	frappe.route_history_queue = [];
+	traquent.route_history_queue = [];
 
-	frappe
-		.xcall("frappe.desk.doctype.route_history.route_history.deferred_insert", {
+	traquent
+		.xcall("traquent.desk.doctype.route_history.route_history.deferred_insert", {
 			routes: routes,
 		})
 		.catch(() => {
-			frappe.route_history_queue.concat(routes);
+			traquent.route_history_queue.concat(routes);
 		});
 }, 10000);
 
-frappe.router.on("change", () => {
-	const route = frappe.get_route();
+traquent.router.on("change", () => {
+	const route = traquent.get_route();
 	if (is_route_useful(route)) {
-		frappe.route_history_queue.push({
-			creation: frappe.datetime.now_datetime(),
-			route: frappe.get_route_str(),
+		traquent.route_history_queue.push({
+			creation: traquent.datetime.now_datetime(),
+			route: traquent.get_route_str(),
 		});
 
 		save_routes();

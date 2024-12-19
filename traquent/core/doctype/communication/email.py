@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import json
@@ -73,7 +73,7 @@ def make(
 		from traquent.utils.commands import warn
 
 		warn(
-			f"Options {kwargs} used in frappe.core.doctype.communication.email.make "
+			f"Options {kwargs} used in traquent.core.doctype.communication.email.make "
 			"are deprecated or unsupported",
 			category=DeprecationWarning,
 		)
@@ -248,7 +248,7 @@ def add_attachments(name: str, attachments: Iterable[str | dict]) -> None:
 				"is_private": attach.is_private,
 			}
 		elif isinstance(a, dict) and "fcontent" in a and "fname" in a:
-			# dict returned by frappe.attach_print()
+			# dict returned by traquent.attach_print()
 			file_args = {
 				"file_name": a["fname"],
 				"content": a["fcontent"],

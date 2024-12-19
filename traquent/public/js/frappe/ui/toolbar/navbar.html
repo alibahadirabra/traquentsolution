@@ -9,8 +9,8 @@
 						<div class="d-flex align-items-center">
 							<div class="sidebar-item-icon">
 								<img class="app-logo"
-									src="{{ frappe.boot.app_data[0].app_logo_url }}" alt="{%= ("App Logo") %}" style="width: 110px;" id="logo-light"><!--#UPDATES --sevval-->
-								<img src="/assets/frappe/images/traquent_white.png" alt="Dark Logo" style="width: 110px;" id="logo-dark"><!--#UPDATES --sevval-->
+									src="{{ traquent.boot.app_data[0].app_logo_url }}" alt="{%= ("App Logo") %}" style="width: 110px;" id="logo-light"><!--#UPDATES --sevval-->
+								<img src="/assets/traquent/images/traquent_white.png" alt="Dark Logo" style="width: 110px;" id="logo-dark"><!--#UPDATES --sevval-->
 
 							</div>
 							<!-- <div class="sidebar-item-label" style="margin-left: 5px; margin-top: 1px">
@@ -35,24 +35,24 @@
 			<a class="navbar-brand navbar-home" href="#">
 				<img
 					class="app-logo"
-					src="{{ frappe.boot.app_data[0].app_logo_url }}"
+					src="{{ traquent.boot.app_data[0].app_logo_url }}"
 					alt="{{ __("App Logo") }}"
 					id="logo-light"
 				>
-				<img src="/assets/frappe/images/traquent_white.png" alt="Dark Logo" style="width: 110px;" id="logo-dark">
+				<img src="/assets/traquent/images/traquent_white.png" alt="Dark Logo" style="width: 110px;" id="logo-dark">
 
 			</a>
 			<!-- <ul class="nav navbar-nav d-none d-sm-flex" id="navbar-breadcrumbs"></ul> -->
 			<div class="collapse navbar-collapse justify-content-end">
 				<form class="form-inline fill-width justify-content-end" role="search" onsubmit="return false;">
-					{% if (frappe.boot.read_only) { %}
+					{% if (traquent.boot.read_only) { %}
 						<span class="indicator-pill yellow no-indicator-dot read-only-banner" title="{%= __("Your site is undergoing maintenance or being updated.") %}">
 							{%= __("Read Only Mode") %}
 						</span>
 					{% } %}
-					{% if (frappe.boot.user.impersonated_by) { %}
+					{% if (traquent.boot.user.impersonated_by) { %}
 						<span class="indicator-pill red no-indicator-dot" title="{%= __("You are impersonating as another user.") %}">
-							{%= __("Impersonating {0}", [frappe.boot.user.name]) %}
+							{%= __("Impersonating {0}", [traquent.boot.user.name]) %}
 						</span>
 					{% } %}
 					<div class="input-group search-bar text-muted hidden">
@@ -60,7 +60,7 @@
 							id="navbar-search"
 							type="text"
 							class="form-control"
-							placeholder="{%= __('Search or type a command ({0})', [frappe.utils.is_mac() ? '⌘ + K' : 'Ctrl + K']) %}"
+							placeholder="{%= __('Search or type a command ({0})', [traquent.utils.is_mac() ? '⌘ + K' : 'Ctrl + K']) %}"
 							aria-haspopup="true"
 						>
 						<span class="search-icon">
@@ -185,7 +185,7 @@
 		<div class="container flex justify-between align-center mx-auto">
 			{{ navbar_settings.announcement_widget }}
 			<div class="close-message p-0 mr-2" style="position: relative;">
-			{{ frappe.utils.icon("close") }}
+			{{ traquent.utils.icon("close") }}
 			</div>
 		</div>
 	</div>

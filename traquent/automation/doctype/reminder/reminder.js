@@ -1,7 +1,7 @@
-// Copyright (c) 2023, Frappe Technologies and contributors
+// Copyright (c) 2023, traquent Technologies and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Reminder", {
+// traquent.ui.form.on("Reminder", {
 // 	refresh(frm) {
 
 // 	},

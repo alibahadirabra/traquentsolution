@@ -396,7 +396,7 @@ def get_definition(fieldtype, precision=None, length=None, *, options=None):
 				size = length
 			elif coltype == "int" and length < 11:
 				# allow setting custom length for int if length provided is less than 11
-				# NOTE: this will only be applicable for mariadb as frappe implements int
+				# NOTE: this will only be applicable for mariadb as traquent implements int
 				# in postgres as bigint (as seen in type_map)
 				size = length
 

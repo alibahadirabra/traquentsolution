@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies and contributors
+# Copyright (c) 2021, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -219,7 +219,7 @@ def get_non_standard_user_types():
 @traquent.whitelist()
 @traquent.validate_and_sanitize_search_inputs
 def get_user_linked_doctypes(doctype, txt, searchfield, start, page_len, filters):
-	modules = [d.get("module_name") for d in get_modules_from_app("frappe")]
+	modules = [d.get("module_name") for d in get_modules_from_app("traquent")]
 
 	filters = [
 		["DocField", "options", "=", "User"],

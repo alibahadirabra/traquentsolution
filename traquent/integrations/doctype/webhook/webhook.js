@@ -1,17 +1,17 @@
-// Copyright (c) 2017, Frappe Technologies and contributors
+// Copyright (c) 2017, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.webhook = {
+traquent.webhook = {
 	set_fieldname_select: (frm) => {
 		if (frm.doc.webhook_doctype) {
-			frappe.model.with_doctype(frm.doc.webhook_doctype, () => {
+			traquent.model.with_doctype(frm.doc.webhook_doctype, () => {
 				// get doctype fields
 				let fields = $.map(
-					frappe.get_doc("DocType", frm.doc.webhook_doctype).fields,
+					traquent.get_doc("DocType", frm.doc.webhook_doctype).fields,
 					(d) => {
 						if (
-							frappe.model.no_value_type.includes(d.fieldtype) &&
-							!frappe.model.table_fields.includes(d.fieldtype)
+							traquent.model.no_value_type.includes(d.fieldtype) &&
+							!traquent.model.table_fields.includes(d.fieldtype)
 						) {
 							return null;
 						} else {
@@ -24,7 +24,7 @@ frappe.webhook = {
 				);
 
 				// add meta fields
-				for (let field of frappe.model.std_fields) {
+				for (let field of traquent.model.std_fields) {
 					if (field.fieldname == "name") {
 						fields.unshift({ label: __("Name (Doc Name)"), value: "name" });
 					} else {
@@ -60,7 +60,7 @@ frappe.webhook = {
 					(row) => row.key === "Content-Type"
 				);
 				if (header_row) {
-					frappe.model.set_value(
+					traquent.model.set_value(
 						header_row.doctype,
 						header_row.name,
 						"value",
@@ -78,12 +78,12 @@ frappe.webhook = {
 	},
 };
 
-frappe.ui.form.on("Webhook", {
+traquent.ui.form.on("Webhook", {
 	refresh: (frm) => {
-		frappe.webhook.set_fieldname_select(frm);
+		traquent.webhook.set_fieldname_select(frm);
 		frm.set_query(
 			"background_jobs_queue",
-			"frappe.integrations.doctype.webhook.webhook.get_all_queues"
+			"traquent.integrations.doctype.webhook.webhook.get_all_queues"
 		);
 
 		if (frm.doc.webhook_doctype) {
@@ -104,18 +104,18 @@ frappe.ui.form.on("Webhook", {
 						},
 					],
 				};
-				let dialog = new frappe.views.RenderPreviewer(args);
+				let dialog = new traquent.views.RenderPreviewer(args);
 				return dialog;
 			});
 		}
 	},
 
 	request_structure: (frm) => {
-		frappe.webhook.set_request_headers(frm);
+		traquent.webhook.set_request_headers(frm);
 	},
 
 	webhook_doctype: (frm) => {
-		frappe.webhook.set_fieldname_select(frm);
+		traquent.webhook.set_fieldname_select(frm);
 	},
 
 	enable_security: (frm) => {
@@ -123,16 +123,16 @@ frappe.ui.form.on("Webhook", {
 	},
 });
 
-frappe.ui.form.on("Webhook Data", {
+traquent.ui.form.on("Webhook Data", {
 	fieldname: (frm, cdt, cdn) => {
 		let row = locals[cdt][cdn];
-		let df = frappe
+		let df = traquent
 			.get_meta(frm.doc.webhook_doctype)
 			.fields.filter((field) => field.fieldname == row.fieldname);
 
 		if (!df.length) {
 			// check if field is a meta field
-			df = frappe.model.std_fields.filter((field) => field.fieldname == row.fieldname);
+			df = traquent.model.std_fields.filter((field) => field.fieldname == row.fieldname);
 		}
 
 		row.key = df.length ? df[0].fieldname : "name";

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import datetime
@@ -791,7 +791,7 @@ class InboundMail(Email):
 		        Ex: when a System User is using Outlook and replies to an email from their own client,
 		        it reaches the Email Account with the threading info lost and the (sender + subject match)
 		        doesn't work because the sender in the first communication was someone different to whom
-		        the system user is replying to via the common email account in Frappe. This fix bypasses
+		        the system user is replying to via the common email account in traquent. This fix bypasses
 		        the sender match when the sender is a system user and subject is atleast 10 chars long
 		        (for additional safety)
 
@@ -882,7 +882,7 @@ class InboundMail(Email):
 
 	@staticmethod
 	def get_document(self, doctype, name):
-		"""Is same as frappe.get_doc but suppresses the DoesNotExist error."""
+		"""Is same as traquent.get_doc but suppresses the DoesNotExist error."""
 		try:
 			return traquent.get_doc(doctype, name)
 		except traquent.DoesNotExistError:

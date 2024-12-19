@@ -1,4 +1,4 @@
-frappe.views.TranslationManager = class TranslationManager {
+traquent.views.TranslationManager = class TranslationManager {
 	constructor(opts) {
 		Object.assign(this, opts);
 		this.make();
@@ -6,7 +6,7 @@ frappe.views.TranslationManager = class TranslationManager {
 
 	make() {
 		this.data = [];
-		this.dialog = new frappe.ui.Dialog({
+		this.dialog = new traquent.ui.Dialog({
 			fields: this.get_fields(),
 			title: __("Translate {0}", [this.df.label]),
 			no_submit_on_enter: true,
@@ -17,7 +17,7 @@ frappe.views.TranslationManager = class TranslationManager {
 
 					this.data = [];
 
-					frappe.msgprint({
+					traquent.msgprint({
 						title: __("Success"),
 						message: __("Successfully updated translations"),
 						indicator: "green",
@@ -73,7 +73,7 @@ frappe.views.TranslationManager = class TranslationManager {
 	}
 
 	get_translations_data() {
-		return frappe.db.get_list("Translation", {
+		return traquent.db.get_list("Translation", {
 			fields: ["name", "language", "translated_text as translation"],
 			filters: {
 				source_text: strip_html(this.source_text),
@@ -87,9 +87,9 @@ frappe.views.TranslationManager = class TranslationManager {
 			translation_dict[row.language] = row.translation;
 		});
 
-		return frappe
+		return traquent
 			.call({
-				method: "frappe.translate.update_translations_for_source",
+				method: "traquent.translate.update_translations_for_source",
 				btn: this.dialog.get_primary_btn(),
 				args: {
 					source,
@@ -97,7 +97,7 @@ frappe.views.TranslationManager = class TranslationManager {
 				},
 			})
 			.fail(() => {
-				frappe.msgprint({
+				traquent.msgprint({
 					title: __("Something went wrong"),
 					message: __("Please try again"),
 					indicator: "red",

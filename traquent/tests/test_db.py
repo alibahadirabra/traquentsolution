@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import datetime
@@ -596,9 +596,9 @@ class TestDB(IntegrationTestCase):
 			modify_query(query),
 		)
 
-		query = 'select locate(".io", "frappe.io"), locate("3", cast(3 as varchar)), locate("3", 3::varchar)'
+		query = 'select locate(".io", "traquent.io"), locate("3", cast(3 as varchar)), locate("3", 3::varchar)'
 		self.assertEqual(
-			'select strpos( "frappe.io", ".io"), strpos( cast(3 as varchar), "3"), strpos( 3::varchar, "3")',
+			'select strpos( "traquent.io", ".io"), strpos( cast(3 as varchar), "3"), strpos( 3::varchar, "3")',
 			modify_query(query),
 		)
 
@@ -749,7 +749,7 @@ class TestDBSetValue(IntegrationTestCase):
 		updated_value = traquent.db.get_value("ToDo", self.todo1.name, "description")
 		self.assertEqual(updated_value, "test_set_value change 1")
 
-	@patch("frappe.db.set_single_value")
+	@patch("traquent.db.set_single_value")
 	def test_set_single_value_with_set_value(self, single_set):
 		traquent.db.set_value("Contact Us Settings", None, "country", "India")
 		single_set.assert_called_once()
@@ -1222,8 +1222,8 @@ class TestPostgresSchemaQueryIndependence(ExtIntegrationTestCase):
 			traquent.db.add_index(doctype="User", fields=("col_c",))
 
 	# TODO: is there some method like remove_index:
-	# TODO: apps/frappe/frappe/patches/v14_0/drop_unused_indexes.py # def drop_index_if_exists()
-	# TODO: apps/frappe/frappe/database/postgres/schema.py # def alter()
+	# TODO: apps/traquent/traquent/patches/v14_0/drop_unused_indexes.py # def drop_index_if_exists()
+	# TODO: apps/traquent/traquent/database/postgres/schema.py # def alter()
 
 	def test_add_unique(self) -> None:
 		# should fail to add a unique constraint on the table in default public schema with those columns which are only present in alt_schema
@@ -1305,7 +1305,7 @@ class TestDbConnectWithEnvCredentials(IntegrationTestCase):
 					del os.environ[key]
 
 		# with wrong db name
-		with set_env_variable("FRAPPE_DB_NAME", "dbiq"):
+		with set_env_variable("traquent_DB_NAME", "dbiq"):
 			traquent.init(self.current_site, force=True)
 			traquent.connect()
 
@@ -1315,7 +1315,7 @@ class TestDbConnectWithEnvCredentials(IntegrationTestCase):
 			self.assertTrue(re.search(r"database [\"']dbiq[\"']", str(cm.exception)))
 
 		# with wrong host
-		with set_env_variable("FRAPPE_DB_HOST", "iqx.local"):
+		with set_env_variable("traquent_DB_HOST", "iqx.local"):
 			traquent.init(self.current_site, force=True)
 			traquent.connect()
 
@@ -1325,7 +1325,7 @@ class TestDbConnectWithEnvCredentials(IntegrationTestCase):
 			self.assertTrue(re.search(r"(host name|server on) [\"']iqx.local[\"']", str(cm.exception)))
 
 		# with wrong user name
-		with set_env_variable("FRAPPE_DB_USER", "uname"):
+		with set_env_variable("traquent_DB_USER", "uname"):
 			traquent.init(self.current_site, force=True)
 			traquent.connect()
 
@@ -1335,7 +1335,7 @@ class TestDbConnectWithEnvCredentials(IntegrationTestCase):
 			self.assertTrue(re.search(r"user [\"']uname[\"']", str(cm.exception)))
 
 		# with wrong password
-		with set_env_variable("FRAPPE_DB_PASSWORD", "pass"):
+		with set_env_variable("traquent_DB_PASSWORD", "pass"):
 			traquent.init(self.current_site, force=True)
 			traquent.connect()
 
@@ -1347,7 +1347,7 @@ class TestDbConnectWithEnvCredentials(IntegrationTestCase):
 			)
 
 		# with wrong password
-		with set_env_variable("FRAPPE_DB_PORT", "1111"):
+		with set_env_variable("traquent_DB_PORT", "1111"):
 			traquent.init(self.current_site, force=True)
 			traquent.connect()
 

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 from contextlib import contextmanager
@@ -52,11 +52,11 @@ class TestWebsiteTheme(IntegrationTestCase):
 			self.assertTrue("fonts.googleapis.com" in css)
 
 	def test_get_scss_paths(self):
-		self.assertIn("frappe/public/scss/website.bundle", get_scss_paths())
+		self.assertIn("traquent/public/scss/website.bundle", get_scss_paths())
 
 	def test_imports_to_ignore(self):
-		with website_theme_fixture(ignored_apps=[{"app": "frappe"}]) as theme:
-			self.assertTrue('@import "frappe/public/scss/website"' not in theme.theme_scss)
+		with website_theme_fixture(ignored_apps=[{"app": "traquent"}]) as theme:
+			self.assertTrue('@import "traquent/public/scss/website"' not in theme.theme_scss)
 
 	def test_backup_files(self):
 		with website_theme_fixture(custom_scss="body { font-size: 16.5px; }") as theme:

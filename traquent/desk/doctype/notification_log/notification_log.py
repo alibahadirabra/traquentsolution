@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and contributors
+# Copyright (c) 2019, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -89,7 +89,7 @@ def enqueue_create_notification(users: list[str] | str, doc: dict):
 	users = list(set(users))
 
 	traquent.enqueue(
-		"frappe.desk.doctype.notification_log.notification_log.make_notification_logs",
+		"traquent.desk.doctype.notification_log.notification_log.make_notification_logs",
 		doc=doc,
 		users=users,
 		now=traquent.flags.in_test,

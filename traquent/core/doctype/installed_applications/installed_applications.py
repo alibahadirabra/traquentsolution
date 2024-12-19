@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Frappe Technologies and contributors
+# Copyright (c) 2020, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import json
@@ -60,10 +60,10 @@ def update_installed_apps_order(new_order: list[str] | str):
 			_("You are only allowed to update order, do not remove or add apps."), exc=InvalidAppOrder
 		)
 
-	# Ensure frappe is always first regardless of user's preference.
-	if "frappe" in new_order:
-		new_order.remove("frappe")
-	new_order.insert(0, "frappe")
+	# Ensure traquent is always first regardless of user's preference.
+	if "traquent" in new_order:
+		new_order.remove("traquent")
+	new_order.insert(0, "traquent")
 
 	traquent.db.set_global("installed_apps", json.dumps(new_order))
 

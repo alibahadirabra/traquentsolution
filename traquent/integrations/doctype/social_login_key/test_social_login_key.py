@@ -1,4 +1,4 @@
-# Copyright (c) 2017, Frappe Technologies and Contributors
+# Copyright (c) 2017, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 from unittest.mock import MagicMock, patch
 
@@ -30,9 +30,9 @@ class TestSocialLoginKey(IntegrationTestCase):
 		super().setUp()
 		traquent.set_user("Guest")
 
-	def test_adding_frappe_social_login_provider(self):
+	def test_adding_traquent_social_login_provider(self):
 		traquent.set_user("Administrator")
-		provider_name = "Frappe"
+		provider_name = "traquent"
 		social_login_key = make_social_login_key(social_login_provider=provider_name)
 		social_login_key.get_social_login_provider(provider_name, initialize=True)
 		self.assertRaises(BaseUrlNotSetError, social_login_key.insert)
@@ -107,10 +107,10 @@ def make_social_login_key(**kwargs):
 def create_or_update_social_login_key():
 	# used in other tests (connected app, oauth20)
 	try:
-		social_login_key = traquent.get_doc("Social Login Key", "frappe")
+		social_login_key = traquent.get_doc("Social Login Key", "traquent")
 	except traquent.DoesNotExistError:
 		social_login_key = traquent.new_doc("Social Login Key")
-	social_login_key.get_social_login_provider("Frappe", initialize=True)
+	social_login_key.get_social_login_provider("traquent", initialize=True)
 	social_login_key.base_url = traquent.utils.get_url()
 	social_login_key.enable_social_login = 0
 	social_login_key.save()

@@ -1,20 +1,20 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 /* eslint-disable no-console */
 
 // __('Modules') __('Domains') __('Places') __('Administration') # for translation, don't remove
 
-frappe.start_app = function () {
-	if (!frappe.Application) return;
-	frappe.assets.check();
-	frappe.provide("frappe.app");
-	frappe.provide("frappe.desk");
-	frappe.app = new frappe.Application();
+traquent.start_app = function () {
+	if (!traquent.Application) return;
+	traquent.assets.check();
+	traquent.provide("traquent.app");
+	traquent.provide("traquent.desk");
+	traquent.app = new traquent.Application();
 };
 
 $(document).ready(function () {
-	if (!frappe.utils.supportsES6) {
-		frappe.msgprint({
+	if (!traquent.utils.supportsES6) {
+		traquent.msgprint({
 			indicator: "red",
 			title: __("Browser not supported"),
 			message: __(
@@ -22,17 +22,17 @@ $(document).ready(function () {
 			),
 		});
 	}
-	frappe.start_app();
+	traquent.start_app();
 });
 
-frappe.Application = class Application {
+traquent.Application = class Application {
 	constructor() {
 		this.startup();
 	}
 
 	startup() {
-		frappe.realtime.init();
-		frappe.model.init();
+		traquent.realtime.init();
+		traquent.model.init();
 
 		this.load_bootinfo();
 		this.load_user_permissions();
@@ -45,7 +45,7 @@ frappe.Application = class Application {
 		this.setup_copy_doc_listener();
 		this.setup_broadcast_listeners();
 
-		frappe.ui.keys.setup();
+		traquent.ui.keys.setup();
 
 		this.setup_theme();
 
@@ -61,77 +61,77 @@ frappe.Application = class Application {
 		this.show_notices();
 		this.show_notes();
 
-		if (frappe.ui.startup_setup_dialog && !frappe.boot.setup_complete) {
-			frappe.ui.startup_setup_dialog.pre_show();
-			frappe.ui.startup_setup_dialog.show();
+		if (traquent.ui.startup_setup_dialog && !traquent.boot.setup_complete) {
+			traquent.ui.startup_setup_dialog.pre_show();
+			traquent.ui.startup_setup_dialog.show();
 		}
 
 		// listen to build errors
 		this.setup_build_events();
 
-		if (frappe.sys_defaults.email_user_password) {
-			var email_list = frappe.sys_defaults.email_user_password.split(",");
+		if (traquent.sys_defaults.email_user_password) {
+			var email_list = traquent.sys_defaults.email_user_password.split(",");
 			for (var u in email_list) {
-				if (email_list[u] === frappe.user.name) {
+				if (email_list[u] === traquent.user.name) {
 					this.set_password(email_list[u]);
 				}
 			}
 		}
 
 		// REDESIGN-TODO: Fix preview popovers
-		this.link_preview = new frappe.ui.LinkPreview();
+		this.link_preview = new traquent.ui.LinkPreview();
 
-		frappe.broadcast.emit("boot", {
-			csrf_token: frappe.csrf_token,
-			user: frappe.session.user,
+		traquent.broadcast.emit("boot", {
+			csrf_token: traquent.csrf_token,
+			user: traquent.session.user,
 		});
 	}
 
 	make_sidebar() {
-		this.sidebar = new frappe.ui.Sidebar({});
+		this.sidebar = new traquent.ui.Sidebar({});
 	}
 
 	setup_theme() {
-		frappe.ui.keys.add_shortcut({
+		traquent.ui.keys.add_shortcut({
 			shortcut: "shift+ctrl+g",
 			description: __("Switch Theme"),
 			action: () => {
-				if (frappe.theme_switcher && frappe.theme_switcher.dialog.is_visible) {
-					frappe.theme_switcher.hide();
+				if (traquent.theme_switcher && traquent.theme_switcher.dialog.is_visible) {
+					traquent.theme_switcher.hide();
 				} else {
-					frappe.theme_switcher = new frappe.ui.ThemeSwitcher();
-					frappe.theme_switcher.show();
+					traquent.theme_switcher = new traquent.ui.ThemeSwitcher();
+					traquent.theme_switcher.show();
 				}
 			},
 		});
 
-		frappe.ui.add_system_theme_switch_listener();
+		traquent.ui.add_system_theme_switch_listener();
 		const root = document.documentElement;
 
 		const observer = new MutationObserver(() => {
-			frappe.ui.set_theme();
+			traquent.ui.set_theme();
 		});
 		observer.observe(root, {
 			attributes: true,
 			attributeFilter: ["data-theme-mode"],
 		});
 
-		frappe.ui.set_theme();
+		traquent.ui.set_theme();
 	}
 
 	setup_tours() {
 		if (
 			!window.Cypress &&
-			frappe.boot.onboarding_tours &&
-			frappe.boot.user.onboarding_status != null
+			traquent.boot.onboarding_tours &&
+			traquent.boot.user.onboarding_status != null
 		) {
-			let pending_tours = !frappe.boot.onboarding_tours.every(
-				(tour) => frappe.boot.user.onboarding_status[tour[0]]?.is_complete
+			let pending_tours = !traquent.boot.onboarding_tours.every(
+				(tour) => traquent.boot.user.onboarding_status[tour[0]]?.is_complete
 			);
-			if (pending_tours && frappe.boot.onboarding_tours.length > 0) {
-				frappe.require("onboarding_tours.bundle.js", () => {
-					frappe.utils.sleep(1000).then(() => {
-						frappe.ui.init_onboarding_tour();
+			if (pending_tours && traquent.boot.onboarding_tours.length > 0) {
+				traquent.require("onboarding_tours.bundle.js", () => {
+					traquent.utils.sleep(1000).then(() => {
+						traquent.ui.init_onboarding_tour();
 					});
 				});
 			}
@@ -139,11 +139,11 @@ frappe.Application = class Application {
 	}
 
 	show_notices() {
-		if (frappe.boot.messages) {
-			frappe.msgprint(frappe.boot.messages);
+		if (traquent.boot.messages) {
+			traquent.msgprint(traquent.boot.messages);
 		}
 
-		if (frappe.user_roles.includes("System Manager")) {
+		if (traquent.user_roles.includes("System Manager")) {
 			// delayed following requests to make boot faster
 			setTimeout(() => {
 				this.show_change_log();
@@ -151,15 +151,15 @@ frappe.Application = class Application {
 			}, 1000);
 		}
 
-		if (!frappe.boot.developer_mode) {
+		if (!traquent.boot.developer_mode) {
 			let console_security_message = __(
 				"Using this console may allow attackers to impersonate you and steal your information. Do not enter or paste code that you do not understand."
 			);
 			console.log(`%c${console_security_message}`, "font-size: large");
 		}
 
-		frappe.realtime.on("version-update", function () {
-			var dialog = frappe.msgprint({
+		traquent.realtime.on("version-update", function () {
+			var dialog = traquent.msgprint({
 				message: __(
 					"The application has been updated to a new version, please refresh this page"
 				),
@@ -174,22 +174,22 @@ frappe.Application = class Application {
 	}
 
 	set_route() {
-		if (frappe.boot && localStorage.getItem("session_last_route")) {
-			frappe.set_route(localStorage.getItem("session_last_route"));
+		if (traquent.boot && localStorage.getItem("session_last_route")) {
+			traquent.set_route(localStorage.getItem("session_last_route"));
 			localStorage.removeItem("session_last_route");
 		} else {
 			// route to home page
-			frappe.router.route();
+			traquent.router.route();
 		}
-		frappe.router.on("change", () => {
+		traquent.router.on("change", () => {
 			$(".tooltip").hide();
 		});
 	}
 
 	set_password(user) {
 		var me = this;
-		frappe.call({
-			method: "frappe.core.doctype.user.user.get_email_awaiting",
+		traquent.call({
+			method: "traquent.core.doctype.user.user.get_email_awaiting",
 			args: {
 				user: user,
 			},
@@ -208,7 +208,7 @@ frappe.Application = class Application {
 	email_password_prompt(email_account, user, i) {
 		var me = this;
 		const email_id = email_account[i]["email_id"];
-		let d = new frappe.ui.Dialog({
+		let d = new traquent.ui.Dialog({
 			title: __("Password missing in Email Account"),
 			fields: [
 				{
@@ -231,7 +231,7 @@ frappe.Application = class Application {
 		d.get_input("submit").on("click", function () {
 			//setup spinner
 			d.hide();
-			var s = new frappe.ui.Dialog({
+			var s = new traquent.ui.Dialog({
 				title: __("Checking one moment"),
 				fields: [
 					{
@@ -242,8 +242,8 @@ frappe.Application = class Application {
 			});
 			s.fields_dict.checking.$wrapper.html('<i class="fa fa-spinner fa-spin fa-4x"></i>');
 			s.show();
-			frappe.call({
-				method: "frappe.email.doctype.email_account.email_account.set_email_password",
+			traquent.call({
+				method: "traquent.email.doctype.email_account.email_account.set_email_password",
 				args: {
 					email_account: email_account[i]["email_account"],
 					password: d.get_value("password"),
@@ -252,7 +252,7 @@ frappe.Application = class Application {
 					s.hide();
 					d.hide(); //hide waiting indication
 					if (!passed["message"]) {
-						frappe.show_alert(
+						traquent.show_alert(
 							{ message: __("Login Failed please try again"), indicator: "error" },
 							5
 						);
@@ -269,113 +269,113 @@ frappe.Application = class Application {
 		d.show();
 	}
 	load_bootinfo() {
-		if (frappe.boot) {
+		if (traquent.boot) {
 			this.setup_workspaces();
-			frappe.model.sync(frappe.boot.docs);
+			traquent.model.sync(traquent.boot.docs);
 			this.check_metadata_cache_status();
 			this.set_globals();
 			this.sync_pages();
-			frappe.router.setup();
+			traquent.router.setup();
 			this.setup_moment();
-			if (frappe.boot.print_css) {
-				frappe.dom.set_style(frappe.boot.print_css, "print-style");
+			if (traquent.boot.print_css) {
+				traquent.dom.set_style(traquent.boot.print_css, "print-style");
 			}
-			frappe.user.name = frappe.boot.user.name;
-			frappe.router.setup();
+			traquent.user.name = traquent.boot.user.name;
+			traquent.router.setup();
 		} else {
 			this.set_as_guest();
 		}
 	}
 
 	setup_workspaces() {
-		frappe.modules = {};
-		frappe.workspaces = {};
-		frappe.boot.allowed_workspaces = frappe.boot.sidebar_pages.pages;
+		traquent.modules = {};
+		traquent.workspaces = {};
+		traquent.boot.allowed_workspaces = traquent.boot.sidebar_pages.pages;
 
-		for (let page of frappe.boot.allowed_workspaces || []) {
-			frappe.modules[page.module] = page;
-			frappe.workspaces[frappe.router.slug(page.name)] = page;
+		for (let page of traquent.boot.allowed_workspaces || []) {
+			traquent.modules[page.module] = page;
+			traquent.workspaces[traquent.router.slug(page.name)] = page;
 		}
 	}
 
 	load_user_permissions() {
-		frappe.defaults.load_user_permission_from_boot();
+		traquent.defaults.load_user_permission_from_boot();
 
-		frappe.realtime.on(
+		traquent.realtime.on(
 			"update_user_permissions",
-			frappe.utils.debounce(() => {
-				frappe.defaults.update_user_permissions();
+			traquent.utils.debounce(() => {
+				traquent.defaults.update_user_permissions();
 			}, 500)
 		);
 	}
 
 	check_metadata_cache_status() {
-		if (frappe.boot.metadata_version != localStorage.metadata_version) {
-			frappe.assets.clear_local_storage();
-			frappe.assets.init_local_storage();
+		if (traquent.boot.metadata_version != localStorage.metadata_version) {
+			traquent.assets.clear_local_storage();
+			traquent.assets.init_local_storage();
 		}
 	}
 
 	set_globals() {
-		frappe.session.user = frappe.boot.user.name;
-		frappe.session.logged_in_user = frappe.boot.user.name;
-		frappe.session.user_email = frappe.boot.user.email;
-		frappe.session.user_fullname = frappe.user_info().fullname;
+		traquent.session.user = traquent.boot.user.name;
+		traquent.session.logged_in_user = traquent.boot.user.name;
+		traquent.session.user_email = traquent.boot.user.email;
+		traquent.session.user_fullname = traquent.user_info().fullname;
 
-		frappe.user_defaults = frappe.boot.user.defaults;
-		frappe.user_roles = frappe.boot.user.roles;
-		frappe.sys_defaults = frappe.boot.sysdefaults;
+		traquent.user_defaults = traquent.boot.user.defaults;
+		traquent.user_roles = traquent.boot.user.roles;
+		traquent.sys_defaults = traquent.boot.sysdefaults;
 
-		frappe.ui.py_date_format = frappe.boot.sysdefaults.date_format
+		traquent.ui.py_date_format = traquent.boot.sysdefaults.date_format
 			.replace("dd", "%d")
 			.replace("mm", "%m")
 			.replace("yyyy", "%Y");
-		frappe.boot.user.last_selected_values = {};
+		traquent.boot.user.last_selected_values = {};
 	}
 	sync_pages() {
 		// clear cached pages if timestamp is not found
 		if (localStorage["page_info"]) {
-			frappe.boot.allowed_pages = [];
+			traquent.boot.allowed_pages = [];
 			var page_info = JSON.parse(localStorage["page_info"]);
-			$.each(frappe.boot.page_info, function (name, p) {
+			$.each(traquent.boot.page_info, function (name, p) {
 				if (!page_info[name] || page_info[name].modified != p.modified) {
 					delete localStorage["_page:" + name];
 				}
-				frappe.boot.allowed_pages.push(name);
+				traquent.boot.allowed_pages.push(name);
 			});
 		} else {
-			frappe.boot.allowed_pages = Object.keys(frappe.boot.page_info);
+			traquent.boot.allowed_pages = Object.keys(traquent.boot.page_info);
 		}
-		localStorage["page_info"] = JSON.stringify(frappe.boot.page_info);
+		localStorage["page_info"] = JSON.stringify(traquent.boot.page_info);
 	}
 	set_as_guest() {
-		frappe.session.user = "Guest";
-		frappe.session.user_email = "";
-		frappe.session.user_fullname = "Guest";
+		traquent.session.user = "Guest";
+		traquent.session.user_email = "";
+		traquent.session.user_fullname = "Guest";
 
-		frappe.user_defaults = {};
-		frappe.user_roles = ["Guest"];
-		frappe.sys_defaults = {};
+		traquent.user_defaults = {};
+		traquent.user_roles = ["Guest"];
+		traquent.sys_defaults = {};
 	}
 	make_page_container() {
 		if ($("#body").length) {
 			$(".splash").remove();
-			frappe.temp_container = $("<div id='temp-container' style='display: none;'>").appendTo(
+			traquent.temp_container = $("<div id='temp-container' style='display: none;'>").appendTo(
 				"body"
 			);
-			frappe.container = new frappe.views.Container();
+			traquent.container = new traquent.views.Container();
 		}
 	}
 	make_nav_bar() {
 		// toolbar
-		if (frappe.boot && frappe.boot.home_page !== "setup-wizard") {
-			frappe.frappe_toolbar = new frappe.ui.toolbar.Toolbar();
+		if (traquent.boot && traquent.boot.home_page !== "setup-wizard") {
+			traquent.traquent_toolbar = new traquent.ui.toolbar.Toolbar();
 		}
 	}
 	logout() {
 		var me = this;
 		me.logged_out = true;
-		return frappe.call({
+		return traquent.call({
 			method: "logout",
 			callback: function (r) {
 				if (r.exc) {
@@ -386,7 +386,7 @@ frappe.Application = class Application {
 		});
 	}
 	handle_session_expired() {
-		frappe.app.redirect_to_login();
+		traquent.app.redirect_to_login();
 	}
 	redirect_to_login() {
 		window.location.href = `/login?redirect-to=${encodeURIComponent(
@@ -408,17 +408,17 @@ frappe.Application = class Application {
 				cur_dialog.get_primary_btn().trigger("click");
 			} else if (cur_frm && cur_frm.page.btn_primary.is(":visible")) {
 				cur_frm.page.btn_primary.trigger("click");
-			} else if (frappe.container.page.save_action) {
-				frappe.container.page.save_action();
+			} else if (traquent.container.page.save_action) {
+				traquent.container.page.save_action();
 			}
 		}, 100);
 	}
 
 	show_change_log() {
 		var me = this;
-		let change_log = frappe.boot.change_log;
+		let change_log = traquent.boot.change_log;
 
-		// frappe.boot.change_log = [{
+		// traquent.boot.change_log = [{
 		// 	"change_log": [
 		// 		[<version>, <change_log in markdown>],
 		// 		[<version>, <change_log in markdown>],
@@ -432,53 +432,53 @@ frappe.Application = class Application {
 			!Array.isArray(change_log) ||
 			!change_log.length ||
 			window.Cypress ||
-			cint(frappe.boot.sysdefaults.disable_change_log_notification)
+			cint(traquent.boot.sysdefaults.disable_change_log_notification)
 		) {
 			return;
 		}
 
 		// Iterate over changelog
-		var change_log_dialog = frappe.msgprint({
-			message: frappe.render_template("change_log", { change_log: change_log }),
+		var change_log_dialog = traquent.msgprint({
+			message: traquent.render_template("change_log", { change_log: change_log }),
 			title: __("Updated To A New Version 🎉"),
 			wide: true,
 		});
 		change_log_dialog.keep_open = true;
 		change_log_dialog.custom_onhide = function () {
-			frappe.call({
-				method: "frappe.utils.change_log.update_last_known_versions",
+			traquent.call({
+				method: "traquent.utils.change_log.update_last_known_versions",
 			});
 			me.show_notes();
 		};
 	}
 
 	show_update_available() {
-		if (!frappe.boot.has_app_updates) return;
-		frappe.xcall("frappe.utils.change_log.show_update_popup");
+		if (!traquent.boot.has_app_updates) return;
+		traquent.xcall("traquent.utils.change_log.show_update_popup");
 	}
 
 	add_browser_class() {
-		$("html").addClass(frappe.utils.get_browser().name.toLowerCase());
+		$("html").addClass(traquent.utils.get_browser().name.toLowerCase());
 	}
 
 	set_fullwidth_if_enabled() {
-		frappe.ui.toolbar.set_fullwidth_if_enabled();
+		traquent.ui.toolbar.set_fullwidth_if_enabled();
 	}
 
 	show_notes() {
 		var me = this;
-		if (frappe.boot.notes.length) {
-			frappe.boot.notes.forEach(function (note) {
+		if (traquent.boot.notes.length) {
+			traquent.boot.notes.forEach(function (note) {
 				if (!note.seen || note.notify_on_every_login) {
-					var d = frappe.msgprint({ message: note.content, title: note.title });
+					var d = traquent.msgprint({ message: note.content, title: note.title });
 					d.keep_open = true;
 					d.custom_onhide = function () {
 						note.seen = true;
 
 						// Mark note as read if the Notify On Every Login flag is not set
 						if (!note.notify_on_every_login) {
-							frappe.call({
-								method: "frappe.desk.doctype.note.note.mark_as_seen",
+							traquent.call({
+								method: "traquent.desk.doctype.note.note.mark_as_seen",
 								args: {
 									note: note.name,
 								},
@@ -494,40 +494,40 @@ frappe.Application = class Application {
 	}
 
 	setup_build_events() {
-		if (frappe.boot.developer_mode) {
-			frappe.require("build_events.bundle.js");
+		if (traquent.boot.developer_mode) {
+			traquent.require("build_events.bundle.js");
 		}
 	}
 
 	setup_energy_point_listeners() {
-		frappe.realtime.on("energy_point_alert", (message) => {
-			frappe.show_alert(message);
+		traquent.realtime.on("energy_point_alert", (message) => {
+			traquent.show_alert(message);
 		});
 	}
 
 	setup_copy_doc_listener() {
 		$("body").on("paste", (e) => {
 			try {
-				let pasted_data = frappe.utils.get_clipboard_data(e);
+				let pasted_data = traquent.utils.get_clipboard_data(e);
 				let doc = JSON.parse(pasted_data);
 				if (doc.doctype) {
 					e.preventDefault();
-					const sleep = frappe.utils.sleep;
+					const sleep = traquent.utils.sleep;
 
-					frappe.dom.freeze(__("Creating {0}", [doc.doctype]) + "...");
+					traquent.dom.freeze(__("Creating {0}", [doc.doctype]) + "...");
 					// to avoid abrupt UX
 					// wait for activity feedback
 					sleep(500).then(() => {
-						let res = frappe.model.with_doctype(doc.doctype, () => {
-							let newdoc = frappe.model.copy_doc(doc);
+						let res = traquent.model.with_doctype(doc.doctype, () => {
+							let newdoc = traquent.model.copy_doc(doc);
 							newdoc.__newname = doc.name;
 							delete doc.name;
 							newdoc.idx = null;
 							newdoc.__run_link_triggers = false;
-							frappe.set_route("Form", newdoc.doctype, newdoc.name);
-							frappe.dom.unfreeze();
+							traquent.set_route("Form", newdoc.doctype, newdoc.name);
+							traquent.dom.unfreeze();
 						});
-						res && res.fail?.(frappe.dom.unfreeze);
+						res && res.fail?.(traquent.dom.unfreeze);
 					});
 				}
 			} catch (e) {
@@ -539,9 +539,9 @@ frappe.Application = class Application {
 	/// Setup event listeners for events across browser tabs / web workers.
 	setup_broadcast_listeners() {
 		// booted in another tab -> refresh csrf to avoid invalid requests.
-		frappe.broadcast.on("boot", ({ csrf_token, user }) => {
-			if (user && user != frappe.session.user) {
-				frappe.msgprint({
+		traquent.broadcast.on("boot", ({ csrf_token, user }) => {
+			if (user && user != traquent.session.user) {
+				traquent.msgprint({
 					message: __(
 						"You've logged in as another user from another tab. Refresh this page to continue using system."
 					),
@@ -558,7 +558,7 @@ frappe.Application = class Application {
 
 			if (csrf_token) {
 				// If user re-logged in then their other tabs won't be usable without this update.
-				frappe.csrf_token = csrf_token;
+				traquent.csrf_token = csrf_token;
 			}
 		});
 	}
@@ -566,19 +566,19 @@ frappe.Application = class Application {
 	setup_moment() {
 		moment.updateLocale("en", {
 			week: {
-				dow: frappe.datetime.get_first_day_of_the_week_index(),
+				dow: traquent.datetime.get_first_day_of_the_week_index(),
 			},
 		});
 		moment.locale("en");
 		moment.user_utc_offset = moment().utcOffset();
-		if (frappe.boot.timezone_info) {
-			moment.tz.add(frappe.boot.timezone_info);
+		if (traquent.boot.timezone_info) {
+			moment.tz.add(traquent.boot.timezone_info);
 		}
 	}
 };
 
-frappe.get_module = function (m, default_module) {
-	var module = frappe.modules[m] || default_module;
+traquent.get_module = function (m, default_module) {
+	var module = traquent.modules[m] || default_module;
 	if (!module) {
 		return;
 	}

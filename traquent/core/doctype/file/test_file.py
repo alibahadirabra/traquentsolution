@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import base64
 import os
@@ -40,7 +40,7 @@ def make_test_doc(ignore_permissions=False):
 
 @contextmanager
 def make_test_image_file(private=False):
-	file_path = traquent.get_app_path("frappe", "tests/data/sample_image_for_optimization.jpg")
+	file_path = traquent.get_app_path("traquent", "tests/data/sample_image_for_optimization.jpg")
 	with open(file_path, "rb") as f:
 		file_content = f.read()
 
@@ -470,7 +470,7 @@ class TestFile(IntegrationTestCase):
 
 	def test_file_url_validation(self):
 		test_file: "File" = traquent.new_doc("File")
-		test_file.update({"file_name": "logo", "file_url": "https://frappe.io/files/frappe.png"})
+		test_file.update({"file_name": "logo", "file_url": "https://traquent.io/files/traquent.png"})
 
 		self.assertIsNone(test_file.validate())
 
@@ -536,7 +536,7 @@ class TestFile(IntegrationTestCase):
 		self.assertEqual(test_file.thumbnail_url, None)
 
 	def test_file_unzip(self):
-		file_path = traquent.get_app_path("frappe", "www/_test/assets/file.zip")
+		file_path = traquent.get_app_path("traquent", "www/_test/assets/file.zip")
 		public_file_path = traquent.get_site_path("public", "files")
 		try:
 			import shutil
@@ -570,7 +570,7 @@ class TestFile(IntegrationTestCase):
 			{
 				"doctype": "File",
 				"file_name": "logo",
-				"content": "frappe",
+				"content": "traquent",
 			}
 		).insert()
 		assert test_file is not None
@@ -815,7 +815,7 @@ class TestFileOptimization(IntegrationTestCase):
 			self.assertNotEqual(original_content_hash, updated_content_hash)
 
 	def test_optimize_svg(self):
-		file_path = traquent.get_app_path("frappe", "tests/data/sample_svg.svg")
+		file_path = traquent.get_app_path("traquent", "tests/data/sample_svg.svg")
 		with open(file_path, "rb") as f:
 			file_content = f.read()
 		test_file = traquent.get_doc(
@@ -846,7 +846,7 @@ class TestFileOptimization(IntegrationTestCase):
 			self.assertEqual(size_before_optimization, size_after_rollback)
 
 	def test_image_header_guessing(self):
-		file_path = traquent.get_app_path("frappe", "tests/data/sample_image_for_optimization.jpg")
+		file_path = traquent.get_app_path("traquent", "tests/data/sample_image_for_optimization.jpg")
 		with open(file_path, "rb") as f:
 			file_content = f.read()
 

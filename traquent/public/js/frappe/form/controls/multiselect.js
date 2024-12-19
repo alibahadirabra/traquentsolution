@@ -1,7 +1,7 @@
 import Awesomplete from "awesomplete";
 
-frappe.ui.form.ControlMultiSelect = class ControlMultiSelect extends (
-	frappe.ui.form.ControlAutocomplete
+traquent.ui.form.ControlMultiSelect = class ControlMultiSelect extends (
+	traquent.ui.form.ControlAutocomplete
 ) {
 	get_awesomplete_settings() {
 		const settings = super.get_awesomplete_settings();

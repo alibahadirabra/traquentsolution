@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Frappe Technologies and Contributors
+# Copyright (c) 2020, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import traquent
 from traquent.tests import IntegrationTestCase, UnitTestCase
@@ -32,14 +32,14 @@ class TestWorkspace(IntegrationTestCase):
 
 	# 	cards = workspace.get_link_groups()
 
-	# 	if frappe.get_system_settings('country') == "France":
+	# 	if traquent.get_system_settings('country') == "France":
 	# 		self.assertEqual(len(cards), 2)
 	# 	else:
 	# 		self.assertEqual(len(cards), 1)
 
 
 def create_module(module_name):
-	module = traquent.get_doc({"doctype": "Module Def", "module_name": module_name, "app_name": "frappe"})
+	module = traquent.get_doc({"doctype": "Module Def", "module_name": module_name, "app_name": "traquent"})
 	module.insert(ignore_if_duplicate=True)
 
 	return module

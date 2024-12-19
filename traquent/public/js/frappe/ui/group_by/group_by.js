@@ -1,6 +1,6 @@
-frappe.provide("frappe.views");
+traquent.provide("traquent.views");
 
-frappe.ui.GroupBy = class {
+traquent.ui.GroupBy = class {
 	constructor(report_view) {
 		this.report_view = report_view;
 		this.page = report_view.page;
@@ -22,7 +22,7 @@ frappe.ui.GroupBy = class {
 		];
 
 		const group_by_template = $(
-			frappe.render_template("group_by", {
+			traquent.render_template("group_by", {
 				doctype: this.doctype,
 				group_by_conditions: this.get_group_by_fields(),
 				aggregate_function_conditions: sql_aggregate_functions,
@@ -76,7 +76,7 @@ frappe.ui.GroupBy = class {
 			this.update_group_by_button();
 		});
 
-		frappe.router.on("change", () => {
+		traquent.router.on("change", () => {
 			this.group_by_button.popover("hide");
 		});
 	}
@@ -146,8 +146,8 @@ frappe.ui.GroupBy = class {
 					const doctype_fields = this.all_fields[doctype];
 					doctype_fields.forEach((field) => {
 						// pick numeric fields for sum / avg
-						if (frappe.model.is_numeric_field(field.fieldtype)) {
-							let field_label = field.label || frappe.model.unscrub(field.fieldname);
+						if (traquent.model.is_numeric_field(field.fieldtype)) {
+							let field_label = field.label || traquent.model.unscrub(field.fieldname);
 							let option_text =
 								doctype == this.doctype
 									? __(field_label, null, field.parent)
@@ -230,7 +230,7 @@ frappe.ui.GroupBy = class {
 			$(`<div class="group-by-selector">
 				<button class="btn btn-default btn-sm group-by-button ellipsis">
 					<span class="group-by-icon">
-						${frappe.utils.icon("es-line-folder-alt")}
+						${traquent.utils.icon("es-line-folder-alt")}
 					</span>
 					<span class="button-label hidden-xs">
 						${__("Add Group")}
@@ -321,7 +321,7 @@ frappe.ui.GroupBy = class {
 			// get properties of "aggregate_on", for example Net Total
 			docfield = Object.assign(
 				{},
-				frappe.meta.docfield_map[this.aggregate_on_doctype][this.aggregate_on_field]
+				traquent.meta.docfield_map[this.aggregate_on_doctype][this.aggregate_on_field]
 			);
 
 			if (this.aggregate_function === "sum") {
@@ -368,7 +368,7 @@ frappe.ui.GroupBy = class {
 		this.all_fields = {};
 
 		let excluded_fields = ["_liked_by", "idx", "name"];
-		const standard_fields = frappe.model.std_fields.filter(
+		const standard_fields = traquent.model.std_fields.filter(
 			(df) => !excluded_fields.includes(df.fieldname)
 		);
 
@@ -392,13 +392,13 @@ frappe.ui.GroupBy = class {
 		this.all_fields[this.doctype] = this.report_view.meta.fields;
 
 		const standard_fields_filter = (df) =>
-			!frappe.model.no_value_type.includes(df.fieldtype) && !df.report_hide;
+			!traquent.model.no_value_type.includes(df.fieldtype) && !df.report_hide;
 
-		const table_fields = frappe.meta.get_table_fields(this.doctype).filter((df) => !df.hidden);
+		const table_fields = traquent.meta.get_table_fields(this.doctype).filter((df) => !df.hidden);
 
 		table_fields.forEach((df) => {
 			const cdt = df.options;
-			const child_table_fields = frappe.meta
+			const child_table_fields = traquent.meta
 				.get_docfields(cdt)
 				.filter(standard_fields_filter)
 				.sort((a, b) => __(cstr(a.label)).localeCompare(__(cstr(b.label))));

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 # metadata
@@ -8,7 +8,7 @@ Load metadata (DocType) class
 
 Example:
 
-	meta = frappe.get_meta('User')
+	meta = traquent.get_meta('User')
 	if meta.has_field('first_name'):
 		print("DocType" table has field "first_name")
 
@@ -88,7 +88,7 @@ def get_table_columns(doctype):
 
 def load_doctype_from_file(doctype):
 	fname = traquent.scrub(doctype)
-	with open(traquent.get_app_path("frappe", "core", "doctype", fname, fname + ".json")) as f:
+	with open(traquent.get_app_path("traquent", "core", "doctype", fname, fname + ".json")) as f:
 		txt = json.loads(f.read())
 
 	for d in txt.get("fields", []):
@@ -676,7 +676,7 @@ class Meta(Document):
 
 		This method will return the `data` property in the `[doctype]_dashboard.py`
 		file in the doctype's folder, along with any overrides or extensions
-		implemented in other Frappe applications via hooks.
+		implemented in other traquent applications via hooks.
 		"""
 		data = traquent._dict()
 		if not self.custom:

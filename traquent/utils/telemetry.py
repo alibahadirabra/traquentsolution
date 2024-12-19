@@ -67,6 +67,6 @@ def capture_doc(doc, action):
 			return
 
 		if doc.get("__islocal") or not doc.get("name"):
-			capture("document_created", "frappe", properties={"doctype": doc.doctype, "action": "Insert"})
+			capture("document_created", "traquent", properties={"doctype": doc.doctype, "action": "Insert"})
 		else:
-			capture("document_modified", "frappe", properties={"doctype": doc.doctype, "action": action})
+			capture("document_modified", "traquent", properties={"doctype": doc.doctype, "action": action})

@@ -1,31 +1,31 @@
-frappe.provide("frappe.ui.form");
+traquent.provide("traquent.ui.form");
 
-frappe.quick_edit = function (doctype, name) {
+traquent.quick_edit = function (doctype, name) {
 	if (!name) name = doctype; // single
-	frappe.db.get_doc(doctype, name).then((doc) => {
-		frappe.ui.form.make_quick_entry(doctype, null, null, doc);
+	traquent.db.get_doc(doctype, name).then((doc) => {
+		traquent.ui.form.make_quick_entry(doctype, null, null, doc);
 	});
 };
 
-frappe.ui.form.make_quick_entry = (doctype, after_insert, init_callback, doc, force) => {
+traquent.ui.form.make_quick_entry = (doctype, after_insert, init_callback, doc, force) => {
 	var trimmed_doctype = doctype.replace(/ /g, "");
 	var controller_name = "QuickEntryForm";
 
-	if (frappe.ui.form[trimmed_doctype + "QuickEntryForm"]) {
+	if (traquent.ui.form[trimmed_doctype + "QuickEntryForm"]) {
 		controller_name = trimmed_doctype + "QuickEntryForm";
 	}
 
-	frappe.quick_entry = new frappe.ui.form[controller_name](
+	traquent.quick_entry = new traquent.ui.form[controller_name](
 		doctype,
 		after_insert,
 		init_callback,
 		doc,
 		force
 	);
-	return frappe.quick_entry.setup();
+	return traquent.quick_entry.setup();
 };
 
-frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
+traquent.ui.form.QuickEntryForm = class QuickEntryForm extends traquent.ui.Dialog {
 	constructor(doctype, after_insert, init_callback, doc, force) {
 		super({ auto_make: false });
 		this.doctype = doctype;
@@ -38,7 +38,7 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 
 	setup() {
 		return new Promise((resolve) => {
-			frappe.model.with_doctype(this.doctype, () => {
+			traquent.model.with_doctype(this.doctype, () => {
 				this.check_quick_entry_doc();
 				this.set_meta_and_mandatory_fields();
 				if (this.is_quick_entry() || this.force) {
@@ -47,8 +47,8 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 					resolve(this);
 				} else {
 					// no quick entry, open full form
-					frappe.quick_entry = null;
-					frappe
+					traquent.quick_entry = null;
+					traquent
 						.set_route("Form", this.doctype, this.doc.name)
 						.then(() => resolve(this));
 					// call init_callback for consistency
@@ -61,7 +61,7 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 	}
 
 	set_meta_and_mandatory_fields() {
-		this.meta = frappe.get_meta(this.doctype);
+		this.meta = traquent.get_meta(this.doctype);
 		let fields = this.meta.fields;
 
 		this.docfields = fields.filter((df) => {
@@ -76,7 +76,7 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 
 	check_quick_entry_doc() {
 		if (!this.doc) {
-			this.doc = frappe.model.get_new_doc(this.doctype, null, null, true);
+			this.doc = traquent.model.get_new_doc(this.doctype, null, null, true);
 		}
 	}
 
@@ -128,7 +128,7 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 	}
 
 	setup_script_manager() {
-		this.script_manager = new frappe.ui.form.ScriptManager({
+		this.script_manager = new traquent.ui.form.ScriptManager({
 			frm: this,
 		});
 		this.script_manager.setup();
@@ -157,7 +157,7 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 		this.render_edit_in_full_page_link();
 		this.setup_cmd_enter_for_save();
 
-		this.onhide = () => (frappe.quick_entry = null);
+		this.onhide = () => (traquent.quick_entry = null);
 		this.show();
 
 		this.refresh_dependency();
@@ -196,7 +196,7 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 						me.dialog.animation_speed = "slow";
 						me.dialog.hide();
 						setTimeout(function () {
-							frappe.show_alert({ message: messagetxt, indicator: "green" }, 3);
+							traquent.show_alert({ message: messagetxt, indicator: "green" }, 3);
 						}, 500);
 					});
 				});
@@ -208,17 +208,17 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 		let me = this;
 		return new Promise((resolve) => {
 			me.update_doc();
-			frappe.call({
-				method: "frappe.client.save",
+			traquent.call({
+				method: "traquent.client.save",
 				args: {
 					doc: me.dialog.doc,
 				},
 				callback: function (r) {
 					if (
-						frappe.model.is_submittable(me.doctype) &&
-						!frappe.model.has_workflow(me.doctype)
+						traquent.model.is_submittable(me.doctype) &&
+						!traquent.model.has_workflow(me.doctype)
 					) {
-						frappe.run_serially([
+						traquent.run_serially([
 							() => (me.dialog.working = true),
 							() => {
 								me.dialog.set_primary_action(__("Submit"), function () {
@@ -245,8 +245,8 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 
 	submit(doc) {
 		var me = this;
-		frappe.call({
-			method: "frappe.client.submit",
+		traquent.call({
+			method: "traquent.client.submit",
 			args: {
 				doc: doc,
 			},
@@ -259,12 +259,12 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 
 	process_after_insert(r) {
 		// delete the old doc
-		frappe.model.clear_doc(this.doc.doctype, this.doc.name);
+		traquent.model.clear_doc(this.doc.doctype, this.doc.name);
 		this.doc = r.message;
 		if (this.script_manager.has_handler("after_save")) {
 			return this.script_manager.trigger("after_save");
-		} else if (frappe._from_link) {
-			frappe.ui.form.update_calling_link(this.doc);
+		} else if (traquent._from_link) {
+			traquent.ui.form.update_calling_link(this.doc);
 		} else if (this.after_insert) {
 			this.after_insert(this.doc);
 		} else {
@@ -277,7 +277,7 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 		// ctrl+enter to save
 		this.wrapper.keydown(function (e) {
 			if ((e.ctrlKey || e.metaKey) && e.which == 13) {
-				if (!frappe.request.ajax_count) {
+				if (!traquent.request.ajax_count) {
 					// not already working -- double entry
 					me.dialog.get_primary_btn().trigger("click");
 					e.preventDefault();
@@ -289,10 +289,10 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 
 	open_form_if_not_list() {
 		if (this.meta.issingle) return;
-		let route = frappe.get_route();
+		let route = traquent.get_route();
 		let doc = this.doc;
 		if (route && !(route[0] === "List" && route[1] === doc.doctype)) {
-			frappe.run_serially([() => frappe.set_route("Form", doc.doctype, doc.name)]);
+			traquent.run_serially([() => traquent.set_route("Form", doc.doctype, doc.name)]);
 		}
 	}
 
@@ -311,12 +311,12 @@ frappe.ui.form.QuickEntryForm = class QuickEntryForm extends frappe.ui.Dialog {
 		this.hide();
 		this.update_doc();
 		if (set_hooks && this.after_insert) {
-			frappe.route_options = frappe.route_options || {};
-			frappe.route_options.after_save = (frm) => {
+			traquent.route_options = traquent.route_options || {};
+			traquent.route_options.after_save = (frm) => {
 				this.after_insert(frm);
 			};
 		}
-		frappe.set_route("Form", this.doctype, this.doc.name);
+		traquent.set_route("Form", this.doctype, this.doc.name);
 	}
 
 	render_edit_in_full_page_link() {

@@ -1,4 +1,4 @@
-# Copyright (c) 2018, Frappe Technologies and Contributors
+# Copyright (c) 2018, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import json
 import time

@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # MIT License. See license.txt
 
 
@@ -14,5 +14,5 @@ def get_google_fonts():
 
 @functools.lru_cache
 def _get_google_fonts():
-	file_path = traquent.get_app_path("frappe", "data", "google_fonts.json")
+	file_path = traquent.get_app_path("traquent", "data", "google_fonts.json")
 	return traquent.parse_json(traquent.read_file(file_path))

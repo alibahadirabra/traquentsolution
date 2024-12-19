@@ -64,8 +64,8 @@ class ThreadWithReturnValue(Thread):
 
 	def run(self):
 		if self._target is not None:
-			with patch("frappe.app.get_site_name", return_value=self.site):
-				header_patch = patch("frappe.get_request_header", new=patch_request_header)
+			with patch("traquent.app.get_site_name", return_value=self.site):
+				header_patch = patch("traquent.get_request_header", new=patch_request_header)
 				if authorization_token:
 					header_patch.start()
 				self._return = self._target(*self._args, **self._kwargs)
@@ -84,7 +84,7 @@ resource_key = {
 }
 
 
-class FrappeAPITestCase(IntegrationTestCase):
+class traquentAPITestCase(IntegrationTestCase):
 	version = ""  # Empty implies v1
 	TEST_CLIENT = get_test_client()
 
@@ -131,7 +131,7 @@ class FrappeAPITestCase(IntegrationTestCase):
 		return make_request(target=self.TEST_CLIENT.delete, args=(path,), kwargs=kwargs)
 
 
-class TestResourceAPI(FrappeAPITestCase):
+class TestResourceAPI(traquentAPITestCase):
 	DOCTYPE = "ToDo"
 	GENERATED_DOCUMENTS: typing.ClassVar[list] = []
 
@@ -240,7 +240,7 @@ class TestResourceAPI(FrappeAPITestCase):
 			self.assertTrue(set(response.json.keys()) == {"exc_type", "exception", "exc", "_server_messages"})
 			self.assertEqual(response.json.get("exc_type"), "PermissionError")
 			self.assertEqual(
-				response.json.get("exception"), "frappe.exceptions.PermissionError: Not permitted"
+				response.json.get("exception"), "traquent.exceptions.PermissionError: Not permitted"
 			)
 			self.assertIsInstance(response.json.get("exc"), str)
 
@@ -250,7 +250,7 @@ class TestResourceAPI(FrappeAPITestCase):
 			self.assertIsInstance(data[0], dict)
 
 
-class TestMethodAPI(FrappeAPITestCase):
+class TestMethodAPI(traquentAPITestCase):
 	def test_ping(self):
 		# test 2: test for /api/method/ping
 		response = self.get(self.method("ping"))
@@ -259,8 +259,8 @@ class TestMethodAPI(FrappeAPITestCase):
 		self.assertEqual(response.json["message"], "pong")
 
 	def test_get_user_info(self):
-		# test 3: test for /api/method/frappe.realtime.get_user_info
-		response = self.get(self.method("frappe.realtime.get_user_info"))
+		# test 3: test for /api/method/traquent.realtime.get_user_info
+		response = self.get(self.method("traquent.realtime.get_user_info"))
 		self.assertEqual(response.status_code, 200)
 		self.assertIsInstance(response.json, dict)
 		self.assertIn(response.json.get("message").get("user"), ("Administrator", "Guest"))
@@ -272,17 +272,17 @@ class TestMethodAPI(FrappeAPITestCase):
 		user = traquent.get_doc("User", "Administrator")
 		api_key, api_secret = user.api_key, user.get_password("api_secret")
 		authorization_token = f"{api_key}:{api_secret}"
-		response = self.get(self.method("frappe.auth.get_logged_user"))
+		response = self.get(self.method("traquent.auth.get_logged_user"))
 
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(response.json["message"], "Administrator")
 
 		authorization_token = f"{api_key}:INCORRECT"
-		response = self.get(self.method("frappe.auth.get_logged_user"))
+		response = self.get(self.method("traquent.auth.get_logged_user"))
 		self.assertEqual(response.status_code, 401)
 
 		authorization_token = "NonExistentKey:INCORRECT"
-		response = self.get(self.method("frappe.auth.get_logged_user"))
+		response = self.get(self.method("traquent.auth.get_logged_user"))
 		self.assertEqual(response.status_code, 401)
 
 		authorization_token = None
@@ -294,7 +294,7 @@ class TestMethodAPI(FrappeAPITestCase):
 		self.assertEqual(response.status_code, 404)
 
 	def test_logs(self):
-		method = "frappe.tests.test_api.test"
+		method = "traquent.tests.test_api.test"
 
 		def get_message(resp, msg_type):
 			return traquent.parse_json(traquent.parse_json(traquent.parse_json(resp.json)[msg_type])[0])
@@ -323,7 +323,7 @@ class TestMethodAPI(FrappeAPITestCase):
 		self.assertIn("Traceback", response.json["exc"])
 
 	def test_array_response(self):
-		method = "frappe.tests.test_api.test_array"
+		method = "traquent.tests.test_api.test_array"
 
 		test_data = list(range(5))
 		response = self.post(self.method(method), test_data)
@@ -331,7 +331,7 @@ class TestMethodAPI(FrappeAPITestCase):
 		self.assertEqual(response.json["message"], test_data)
 
 
-class TestReadOnlyMode(FrappeAPITestCase):
+class TestReadOnlyMode(traquentAPITestCase):
 	"""During migration if read only mode can be enabled.
 	Test if reads work well and writes are blocked"""
 
@@ -358,14 +358,14 @@ class TestReadOnlyMode(FrappeAPITestCase):
 		self.assertEqual(response.json["exc_type"], "InReadOnlyMode")
 
 
-class TestWSGIApp(FrappeAPITestCase):
+class TestWSGIApp(traquentAPITestCase):
 	def test_request_hooks(self):
 		self.addCleanup(lambda: _test_REQ_HOOK.clear())
 
 		with self.patch_hooks(
 			{
-				"before_request": ["frappe.tests.test_api.before_request"],
-				"after_request": ["frappe.tests.test_api.after_request"],
+				"before_request": ["traquent.tests.test_api.before_request"],
+				"after_request": ["traquent.tests.test_api.after_request"],
 			}
 		):
 			self.assertIsNone(_test_REQ_HOOK.get("before_request"))
@@ -386,10 +386,10 @@ def after_request(*args, **kwargs):
 	_test_REQ_HOOK["after_request"] = time()
 
 
-class TestResponse(FrappeAPITestCase):
+class TestResponse(traquentAPITestCase):
 	def test_generate_pdf(self):
 		response = self.get(
-			"/api/method/frappe.utils.print_format.download_pdf",
+			"/api/method/traquent.utils.print_format.download_pdf",
 			{"sid": self.sid, "doctype": "User", "name": "Guest"},
 		)
 		self.assertEqual(response.status_code, 200)
@@ -403,7 +403,7 @@ class TestResponse(FrappeAPITestCase):
 			filters = json.dumps({})
 			fields = json.dumps({"User": ["name"]})
 			return self.post(
-				"/api/method/frappe.core.doctype.data_import.data_import.download_template",
+				"/api/method/traquent.core.doctype.data_import.data_import.download_template",
 				{
 					"sid": self.sid,
 					"doctype": "User",

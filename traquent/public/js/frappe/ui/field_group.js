@@ -1,8 +1,8 @@
 import "../form/layout";
 
-frappe.provide("frappe.ui");
+traquent.provide("traquent.ui");
 
-frappe.ui.FieldGroup = class FieldGroup extends frappe.ui.form.Layout {
+traquent.ui.FieldGroup = class FieldGroup extends traquent.ui.form.Layout {
 	constructor(opts) {
 		super(opts);
 		this.dirty = false;
@@ -29,7 +29,7 @@ frappe.ui.FieldGroup = class FieldGroup extends frappe.ui.form.Layout {
 					let def_value = field.df["default"];
 
 					if (def_value == "Today" && field.df["fieldtype"] == "Date") {
-						def_value = frappe.datetime.get_today();
+						def_value = traquent.datetime.get_today();
 					}
 
 					field.set_input(def_value);
@@ -46,8 +46,8 @@ frappe.ui.FieldGroup = class FieldGroup extends frappe.ui.form.Layout {
 				.find("input, select")
 				.on("change awesomplete-selectcomplete", () => {
 					this.dirty = true;
-					frappe.run_serially([
-						() => frappe.timeout(0.1),
+					traquent.run_serially([
+						() => traquent.timeout(0.1),
 						() => me.refresh_dependency(),
 					]);
 				});
@@ -116,7 +116,7 @@ frappe.ui.FieldGroup = class FieldGroup extends frappe.ui.form.Layout {
 		}
 
 		if (errors.length && !ignore_errors) {
-			frappe.msgprint({
+			traquent.msgprint({
 				title: __("Missing Values Required"),
 				message:
 					__("Following fields have missing values:") +
@@ -129,7 +129,7 @@ frappe.ui.FieldGroup = class FieldGroup extends frappe.ui.form.Layout {
 		}
 
 		if (invalid.length && check_invalid) {
-			frappe.msgprint({
+			traquent.msgprint({
 				title: __("Inavlid Values"),
 				message:
 					__("Following fields have invalid values:") +

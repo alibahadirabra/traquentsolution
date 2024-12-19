@@ -1,38 +1,38 @@
-// Copyright (c) 2016, Frappe Technologies and contributors
+// Copyright (c) 2016, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Auto Email Report", {
+traquent.ui.form.on("Auto Email Report", {
 	refresh: function (frm) {
 		frm.trigger("fetch_report_filters");
 		if (!frm.is_new()) {
 			frm.add_custom_button(__("Download"), function () {
 				var w = window.open(
-					frappe.urllib.get_full_url(
-						"/api/method/frappe.email.doctype.auto_email_report.auto_email_report.download?" +
+					traquent.urllib.get_full_url(
+						"/api/method/traquent.email.doctype.auto_email_report.auto_email_report.download?" +
 							"name=" +
 							encodeURIComponent(frm.doc.name)
 					)
 				);
 				if (!w) {
-					frappe.msgprint(__("Please enable pop-ups"));
+					traquent.msgprint(__("Please enable pop-ups"));
 					return;
 				}
 			});
 			frm.add_custom_button(__("Send Now"), function () {
-				frappe.call({
-					method: "frappe.email.doctype.auto_email_report.auto_email_report.send_now",
+				traquent.call({
+					method: "traquent.email.doctype.auto_email_report.auto_email_report.send_now",
 					args: { name: frm.doc.name },
 					callback: function () {
-						frappe.msgprint(__("Scheduled to send"));
+						traquent.msgprint(__("Scheduled to send"));
 					},
 				});
 			});
 		} else {
 			if (!frm.doc.user) {
-				frm.set_value("user", frappe.session.user);
+				frm.set_value("user", traquent.session.user);
 			}
 			if (!frm.doc.email_to) {
-				frm.set_value("email_to", frappe.session.user);
+				frm.set_value("email_to", traquent.session.user);
 			}
 		}
 
@@ -55,13 +55,13 @@ frappe.ui.form.on("Auto Email Report", {
 			frm.doc.report_type !== "Report Builder" &&
 			frm.script_setup_for !== frm.doc.report
 		) {
-			frappe.call({
-				method: "frappe.desk.query_report.get_script",
+			traquent.call({
+				method: "traquent.desk.query_report.get_script",
 				args: {
 					report_name: frm.doc.report,
 				},
 				callback: function (r) {
-					frappe.dom.eval(r.message.script || "");
+					traquent.dom.eval(r.message.script || "");
 					frm.script_setup_for = frm.doc.report;
 					frm.trigger("show_filters");
 				},
@@ -76,9 +76,9 @@ frappe.ui.form.on("Auto Email Report", {
 		}
 		var wrapper = $(frm.get_field("filters_display").wrapper);
 		wrapper.empty();
-		let reference_report = frappe.query_reports[frm.doc.report];
+		let reference_report = traquent.query_reports[frm.doc.report];
 		if (!reference_report || !reference_report.filters) {
-			reference_report = await frappe.model.with_doc("Report", frm.doc.report);
+			reference_report = await traquent.model.with_doc("Report", frm.doc.report);
 		}
 		if (
 			frm.doc.report_type === "Custom Report" ||
@@ -112,14 +112,14 @@ frappe.ui.form.on("Auto Email Report", {
 				if (frm.doc.filters) {
 					filters = JSON.parse(frm.doc.filters);
 				} else {
-					frappe.db.get_value("Report", frm.doc.report, "json", (r) => {
+					traquent.db.get_value("Report", frm.doc.report, "json", (r) => {
 						if (r && r.json) {
 							filters = JSON.parse(r.json).filters || {};
 						}
 					});
 				}
 
-				report_filters = frappe.query_reports[frm.doc.reference_report].filters;
+				report_filters = traquent.query_reports[frm.doc.reference_report].filters;
 			} else {
 				filters = JSON.parse(frm.doc.filters || "{}");
 				report_filters = reference_report.filters;
@@ -150,13 +150,13 @@ frappe.ui.form.on("Auto Email Report", {
 				const css = f.reqd ? mandatory_css : {};
 				const row = $("<tr></tr>").appendTo(table.find("tbody"));
 				$("<td>" + f.label + "</td>").appendTo(row);
-				$("<td>" + frappe.format(filters[f.fieldname], f) + "</td>")
+				$("<td>" + traquent.format(filters[f.fieldname], f) + "</td>")
 					.css(css)
 					.appendTo(row);
 			});
 
 			table.on("click", function () {
-				var dialog = new frappe.ui.Dialog({
+				var dialog = new traquent.ui.Dialog({
 					fields: report_filters,
 					primary_action: function () {
 						var values = this.get_values();

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import json
@@ -470,7 +470,7 @@ def get_title_values_for_table_and_multiselect_fields(doc, table_fields=None):
 
 
 def send_link_titles(link_titles):
-	"""Append link titles dict in `frappe.local.response`."""
+	"""Append link titles dict in `traquent.local.response`."""
 	if "_link_titles" not in traquent.local.response:
 		traquent.local.response["_link_titles"] = {}
 

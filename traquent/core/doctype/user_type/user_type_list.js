@@ -1,4 +1,4 @@
-frappe.listview_settings["User Type"] = {
+traquent.listview_settings["User Type"] = {
 	add_fields: ["is_standard"],
 	get_indicator: function (doc) {
 		if (doc.is_standard) {

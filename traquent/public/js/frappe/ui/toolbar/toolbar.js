@@ -1,15 +1,15 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.provide("frappe.ui.toolbar");
-frappe.provide("frappe.search");
+traquent.provide("traquent.ui.toolbar");
+traquent.provide("traquent.search");
 
-frappe.ui.toolbar.Toolbar = class {
+traquent.ui.toolbar.Toolbar = class {
 	constructor() {
 		$("header").replaceWith(
-			frappe.render_template("navbar", {
-				avatar: frappe.avatar(frappe.session.user, "avatar-medium"),
-				navbar_settings: frappe.boot.navbar_settings,
+			traquent.render_template("navbar", {
+				avatar: traquent.avatar(traquent.session.user, "avatar-medium"),
+				navbar_settings: traquent.boot.navbar_settings,
 			})
 		);
 		$(".dropdown-toggle").dropdown();
@@ -60,7 +60,7 @@ frappe.ui.toolbar.Toolbar = class {
 	}
 
 	setup_read_only_mode() {
-		if (!frappe.boot.read_only) return;
+		if (!traquent.boot.read_only) return;
 
 		$("header .read-only-banner").tooltip({
 			delay: { show: 600, hide: 100 },
@@ -69,7 +69,7 @@ frappe.ui.toolbar.Toolbar = class {
 	}
 
 	setup_announcement_widget() {
-		let current_announcement = frappe.boot.navbar_settings.announcement_widget;
+		let current_announcement = traquent.boot.navbar_settings.announcement_widget;
 
 		if (!current_announcement) return;
 
@@ -93,18 +93,18 @@ frappe.ui.toolbar.Toolbar = class {
 	}
 
 	setup_help() {
-		if (!frappe.boot.desk_settings.notifications) {
+		if (!traquent.boot.desk_settings.notifications) {
 			// hide the help section
 			$(".navbar .vertical-bar").removeClass("d-sm-block");
 			$(".dropdown-help").removeClass("d-lg-block");
 			return;
 		}
-		frappe.provide("frappe.help");
-		frappe.help.show_results = show_results;
+		traquent.provide("traquent.help");
+		traquent.help.show_results = show_results;
 
-		this.search = new frappe.search.SearchDialog();
-		frappe.provide("frappe.searchdialog");
-		frappe.searchdialog.search = this.search;
+		this.search = new traquent.search.SearchDialog();
+		traquent.provide("traquent.searchdialog");
+		traquent.searchdialog.search = this.search;
 
 		$(".dropdown-help .dropdown-toggle").on("click", function () {
 			$(".dropdown-help input").focus();
@@ -124,14 +124,14 @@ frappe.ui.toolbar.Toolbar = class {
 			var $help_links = $(".dropdown-help #help-links");
 			$help_links.html("");
 
-			var route = frappe.get_route_str();
+			var route = traquent.get_route_str();
 			var breadcrumbs = route.split("/");
 
 			var links = [];
 			for (let i = 0; i < breadcrumbs.length; i++) {
 				var r = route.split("/", i + 1);
 				var key = r.join("/");
-				var help_links = frappe.help.help_links[key] || [];
+				var help_links = traquent.help.help_links[key] || [];
 				links = $.merge(links, help_links);
 			}
 
@@ -155,7 +155,7 @@ frappe.ui.toolbar.Toolbar = class {
 			$(".dropdown-help .dropdown-menu").on("click", "a", show_results);
 		});
 
-		var $result_modal = frappe.get_modal("", "");
+		var $result_modal = traquent.get_modal("", "");
 		$result_modal.addClass("help-modal");
 
 		$(document).on("click", ".help-modal a", show_results);
@@ -174,35 +174,35 @@ frappe.ui.toolbar.Toolbar = class {
 	}
 
 	setup_awesomebar() {
-		if (frappe.boot.desk_settings.search_bar) {
-			let awesome_bar = new frappe.search.AwesomeBar();
+		if (traquent.boot.desk_settings.search_bar) {
+			let awesome_bar = new traquent.search.AwesomeBar();
 			awesome_bar.setup("#navbar-search");
 
-			frappe.search.utils.make_function_searchable(
-				frappe.utils.generate_tracking_url,
+			traquent.search.utils.make_function_searchable(
+				traquent.utils.generate_tracking_url,
 				__("Generate Tracking URL")
 			);
 
-			if (frappe.model.can_read("RQ Job")) {
-				frappe.search.utils.make_function_searchable(function () {
-					frappe.set_route("List", "RQ Job");
+			if (traquent.model.can_read("RQ Job")) {
+				traquent.search.utils.make_function_searchable(function () {
+					traquent.set_route("List", "RQ Job");
 				}, __("Background Jobs"));
 			}
 		}
 	}
 
 	setup_notifications() {
-		if (frappe.boot.desk_settings.notifications && frappe.session.user !== "Guest") {
-			this.notifications = new frappe.ui.Notifications();
+		if (traquent.boot.desk_settings.notifications && traquent.session.user !== "Guest") {
+			this.notifications = new traquent.ui.Notifications();
 		}
 	}
 };
 
-$.extend(frappe.ui.toolbar, {
+$.extend(traquent.ui.toolbar, {
 	add_dropdown_button: function (parent, label, click, icon) {
-		var menu = frappe.ui.toolbar.get_menu(parent);
+		var menu = traquent.ui.toolbar.get_menu(parent);
 		if (menu.find("li:not(.custom-menu)").length && !menu.find(".divider").length) {
-			frappe.ui.toolbar.add_menu_divider(menu);
+			traquent.ui.toolbar.add_menu_divider(menu);
 		}
 
 		return $(
@@ -218,14 +218,14 @@ $.extend(frappe.ui.toolbar, {
 		return $("#navbar-" + label.toLowerCase());
 	},
 	add_menu_divider: function (menu) {
-		menu = typeof menu == "string" ? frappe.ui.toolbar.get_menu(menu) : menu;
+		menu = typeof menu == "string" ? traquent.ui.toolbar.get_menu(menu) : menu;
 
 		$('<li class="divider custom-menu"></li>').prependTo(menu);
 	},
 	add_icon_link(route, icon, index, class_name) {
 		let parent_element = $(".navbar-right").get(0);
 		let new_element = $(`<li class="${class_name}">
-			<a class="btn" href="${route}" title="${frappe.utils.to_title_case(
+			<a class="btn" href="${route}" title="${traquent.utils.to_title_case(
 			class_name,
 			true
 		)}" aria-haspopup="true" aria-expanded="true">
@@ -241,7 +241,7 @@ $.extend(frappe.ui.toolbar, {
 		let fullwidth = JSON.parse(localStorage.container_fullwidth || "false");
 		fullwidth = !fullwidth;
 		localStorage.container_fullwidth = fullwidth;
-		frappe.ui.toolbar.set_fullwidth_if_enabled();
+		traquent.ui.toolbar.set_fullwidth_if_enabled();
 		$(document.body).trigger("toggleFullWidth");
 	},
 	set_fullwidth_if_enabled() {
@@ -250,15 +250,15 @@ $.extend(frappe.ui.toolbar, {
 	},
 	show_shortcuts(e) {
 		e.preventDefault();
-		frappe.ui.keys.show_keyboard_shortcut_dialog();
+		traquent.ui.keys.show_keyboard_shortcut_dialog();
 		return false;
 	},
 });
 
-frappe.ui.toolbar.clear_cache = frappe.utils.throttle(function () {
-	frappe.assets.clear_local_storage();
-	frappe.xcall("frappe.sessions.clear").then((message) => {
-		frappe.show_alert({
+traquent.ui.toolbar.clear_cache = traquent.utils.throttle(function () {
+	traquent.assets.clear_local_storage();
+	traquent.xcall("traquent.sessions.clear").then((message) => {
+		traquent.show_alert({
 			message: message,
 			indicator: "info",
 		});
@@ -266,40 +266,40 @@ frappe.ui.toolbar.clear_cache = frappe.utils.throttle(function () {
 	});
 }, 10000);
 
-frappe.ui.toolbar.show_about = function () {
+traquent.ui.toolbar.show_about = function () {
 	try {
-		frappe.ui.misc.about();
+		traquent.ui.misc.about();
 	} catch (e) {
 		console.log(e);
 	}
 	return false;
 };
 
-frappe.ui.toolbar.route_to_user = function () {
-	frappe.set_route("Form", "User", frappe.session.user);
+traquent.ui.toolbar.route_to_user = function () {
+	traquent.set_route("Form", "User", traquent.session.user);
 };
 
-frappe.ui.toolbar.view_website = function () {
+traquent.ui.toolbar.view_website = function () {
 	let website_tab = window.open();
 	website_tab.opener = null;
 	website_tab.location = "/index";
 };
 
-frappe.ui.toolbar.setup_session_defaults = function () {
+traquent.ui.toolbar.setup_session_defaults = function () {
 	let fields = [];
-	frappe.call({
-		method: "frappe.core.doctype.session_default_settings.session_default_settings.get_session_default_values",
+	traquent.call({
+		method: "traquent.core.doctype.session_default_settings.session_default_settings.get_session_default_values",
 		callback: function (data) {
 			fields = JSON.parse(data.message);
-			let perms = frappe.perm.get_perm("Session Default Settings");
+			let perms = traquent.perm.get_perm("Session Default Settings");
 			//add settings button only if user is a System Manager or has permission on 'Session Default Settings'
-			if (frappe.user_roles.includes("System Manager") || perms[0].read == 1) {
+			if (traquent.user_roles.includes("System Manager") || perms[0].read == 1) {
 				fields[fields.length] = {
 					fieldname: "settings",
 					fieldtype: "Button",
 					label: __("Settings"),
 					click: () => {
-						frappe.set_route(
+						traquent.set_route(
 							"Form",
 							"Session Default Settings",
 							"Session Default Settings"
@@ -307,7 +307,7 @@ frappe.ui.toolbar.setup_session_defaults = function () {
 					},
 				};
 			}
-			frappe.prompt(
+			traquent.prompt(
 				fields,
 				function (values) {
 					//if default is not set for a particular field in prompt
@@ -316,20 +316,20 @@ frappe.ui.toolbar.setup_session_defaults = function () {
 							values[d.fieldname] = "";
 						}
 					});
-					frappe.call({
-						method: "frappe.core.doctype.session_default_settings.session_default_settings.set_session_default_values",
+					traquent.call({
+						method: "traquent.core.doctype.session_default_settings.session_default_settings.set_session_default_values",
 						args: {
 							default_values: values,
 						},
 						callback: function (data) {
 							if (data.message == "success") {
-								frappe.show_alert({
+								traquent.show_alert({
 									message: __("Session Defaults Saved"),
 									indicator: "green",
 								});
-								frappe.ui.toolbar.clear_cache();
+								traquent.ui.toolbar.clear_cache();
 							} else {
-								frappe.show_alert({
+								traquent.show_alert({
 									message: __(
 										"An error occurred while setting Session Defaults"
 									),

@@ -1,11 +1,11 @@
-// Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
 import deep_equal from "fast-deep-equal";
 import number_systems from "./number_systems";
 import cloneDeepWith from "lodash/cloneDeepWith";
 
-frappe.provide("frappe.utils");
+traquent.provide("traquent.utils");
 
 // Array de duplicate
 if (!Array.prototype.uniqBy) {
@@ -131,7 +131,7 @@ String.prototype.plural = function (revert) {
 	return this;
 };
 
-Object.assign(frappe.utils, {
+Object.assign(traquent.utils, {
 	get_random: function (len) {
 		var text = "";
 		var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -143,7 +143,7 @@ Object.assign(frappe.utils, {
 	},
 	get_file_link: function (filename) {
 		filename = cstr(filename);
-		if (frappe.utils.is_url(filename)) {
+		if (traquent.utils.is_url(filename)) {
 			return filename;
 		} else if (filename.indexOf("/") === -1) {
 			return "files/" + filename;
@@ -310,7 +310,7 @@ Object.assign(frappe.utils, {
 		callback,
 		highlight_element = false
 	) {
-		if (frappe.flags.disable_auto_scroll) return;
+		if (traquent.flags.disable_auto_scroll) return;
 
 		element_to_be_scrolled = element_to_be_scrolled || $("html, body");
 		let scroll_top = 0;
@@ -393,10 +393,10 @@ Object.assign(frappe.utils, {
 		return ret;
 	},
 	comma_or: function (list) {
-		return frappe.utils.comma_sep(list, " " + __("or") + " ");
+		return traquent.utils.comma_sep(list, " " + __("or") + " ");
 	},
 	comma_and: function (list) {
-		return frappe.utils.comma_sep(list, " " + __("and") + " ");
+		return traquent.utils.comma_sep(list, " " + __("and") + " ");
 	},
 	comma_sep: function (list, sep) {
 		if (list instanceof Array) {
@@ -522,16 +522,16 @@ Object.assign(frappe.utils, {
 	},
 
 	guess_colour: function (text) {
-		return frappe.utils.guess_style(text, null, true);
+		return traquent.utils.guess_style(text, null, true);
 	},
 
 	get_indicator_color: function (state) {
-		return frappe.db
+		return traquent.db
 			.get_list("Workflow State", { filters: { name: state }, fields: ["name", "style"] })
 			.then((res) => {
 				const state = res[0];
 				if (!state.style) {
-					return frappe.utils.guess_colour(state.name);
+					return traquent.utils.guess_colour(state.name);
 				}
 				const style = state.style;
 				const colour_map = {
@@ -627,7 +627,7 @@ Object.assign(frappe.utils, {
 		}
 		for (var i = 0; i < arr1.length; i++) {
 			if ($.isArray(arr1[i])) {
-				if (!frappe.utils.arrays_equal(arr1[i], arr2[i])) {
+				if (!traquent.utils.arrays_equal(arr1[i], arr2[i])) {
 					return false;
 				}
 			} else if (arr1[i] !== arr2[i]) {
@@ -776,26 +776,26 @@ Object.assign(frappe.utils, {
 	},
 
 	warn_page_name_change: function () {
-		frappe.msgprint(__("Note: Changing the Page Name will break previous URL to this page."));
+		traquent.msgprint(__("Note: Changing the Page Name will break previous URL to this page."));
 	},
 
 	set_title: function (title) {
-		frappe._original_title = title;
-		if (frappe._title_prefix) {
-			title = frappe._title_prefix + " " + title.replace(/<[^>]*>/g, "");
+		traquent._original_title = title;
+		if (traquent._title_prefix) {
+			title = traquent._title_prefix + " " + title.replace(/<[^>]*>/g, "");
 		}
 		document.title = title;
 
 		// save for re-routing
-		const sub_path = frappe.router.get_sub_path();
-		frappe.route_titles[sub_path] = title;
+		const sub_path = traquent.router.get_sub_path();
+		traquent.route_titles[sub_path] = title;
 	},
 
 	set_title_prefix: function (prefix) {
-		frappe._title_prefix = prefix;
+		traquent._title_prefix = prefix;
 
 		// reset the original title
-		frappe.utils.set_title(frappe._original_title);
+		traquent.utils.set_title(traquent._original_title);
 	},
 
 	is_image_file: function (filename) {
@@ -814,7 +814,7 @@ Object.assign(frappe.utils, {
 
 	play_sound: function (name) {
 		try {
-			if (frappe.boot.user.mute_sounds) {
+			if (traquent.boot.user.mute_sounds) {
 				return;
 			}
 
@@ -910,7 +910,7 @@ Object.assign(frappe.utils, {
 		name = encodeURIComponent(name);
 		let route = `/app/${encodeURIComponent(doctype.toLowerCase().replace(/ /g, "-"))}/${name}`;
 		if (query_params_obj) {
-			route += frappe.utils.make_query_string(query_params_obj);
+			route += traquent.utils.make_query_string(query_params_obj);
 		}
 		if (html) {
 			return `<a href="${route}">${display_text}</a>`;
@@ -935,7 +935,7 @@ Object.assign(frappe.utils, {
 		if (route[0] === "dashboard") {
 			return __(route[1]).bold() + " " + __("Dashboard");
 		}
-		return __(frappe.utils.to_title_case(__(route[0]), true));
+		return __(traquent.utils.to_title_case(__(route[0]), true));
 	},
 	report_column_total: function (values, column, type) {
 		if (column.column.disable_total) {
@@ -945,7 +945,7 @@ Object.assign(frappe.utils, {
 				return values.reduce((a, b) => flt(a) + flt(b)) / values.length;
 			} else if (column.column.fieldtype == "Int") {
 				return values.reduce((a, b) => cint(a) + cint(b));
-			} else if (frappe.model.is_numeric_field(column.column.fieldtype)) {
+			} else if (traquent.model.is_numeric_field(column.column.fieldtype)) {
 				return values.reduce((a, b) => flt(a) + flt(b));
 			} else {
 				return null;
@@ -1032,7 +1032,7 @@ Object.assign(frappe.utils, {
 	},
 	copy_to_clipboard(string) {
 		const show_success_alert = () => {
-			frappe.show_alert({
+			traquent.show_alert({
 				indicator: "green",
 				message: __("Copied to clipboard."),
 			});
@@ -1050,7 +1050,7 @@ Object.assign(frappe.utils, {
 		}
 	},
 	is_rtl(lang = null) {
-		return ["ar", "he", "fa", "ps"].includes(lang || frappe.boot.lang);
+		return ["ar", "he", "fa", "ps"].includes(lang || traquent.boot.lang);
 	},
 	bind_actions_with_object($el, object) {
 		// remove previously bound event
@@ -1114,7 +1114,7 @@ Object.assign(frappe.utils, {
 			};
 		}
 		if (value) {
-			let total_duration = frappe.utils.seconds_to_duration(value, duration_options);
+			let total_duration = traquent.utils.seconds_to_duration(value, duration_options);
 
 			if (total_duration.days) {
 				duration += total_duration.days + __("d", null, "Days (Field: Duration)");
@@ -1194,7 +1194,7 @@ Object.assign(frappe.utils, {
 			attribution:
 				'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 		},
-		image_path: "/assets/frappe/images/leaflet/",
+		image_path: "/assets/traquent/images/leaflet/",
 	},
 
 	icon(icon_name, size = "sm", icon_class = "", icon_style = "", svg_class = "") {
@@ -1230,7 +1230,7 @@ Object.assign(frappe.utils, {
 				xIsSeries: 1,
 				shortenYAxisNumbers: 1,
 				xAxisMode: "tick",
-				numberFormatter: frappe.utils.format_chart_axis_number,
+				numberFormatter: traquent.utils.format_chart_axis_number,
 			},
 		};
 
@@ -1242,12 +1242,12 @@ Object.assign(frappe.utils, {
 			}
 		}
 
-		return new frappe.Chart(wrapper, chart_args);
+		return new traquent.Chart(wrapper, chart_args);
 	},
 
 	format_chart_axis_number(label, country) {
-		const default_country = frappe.sys_defaults.country;
-		return frappe.utils.shorten_number(label, country || default_country, 3);
+		const default_country = traquent.sys_defaults.country;
+		return traquent.utils.shorten_number(label, country || default_country, 3);
 	},
 
 	generate_route(item) {
@@ -1260,15 +1260,15 @@ Object.assign(frappe.utils, {
 			if (item.link) {
 				route = strip(item.link, "#");
 			} else if (type === "doctype") {
-				let doctype_slug = frappe.router.slug(item.doctype);
+				let doctype_slug = traquent.router.slug(item.doctype);
 
-				if (frappe.model.is_single(item.doctype)) {
+				if (traquent.model.is_single(item.doctype)) {
 					route = doctype_slug;
 				} else {
 					switch (item.doc_view) {
 						case "List":
 							if (item.filters) {
-								frappe.route_options = item.filters;
+								traquent.route_options = item.filters;
 							}
 							route = `${doctype_slug}/view/list`;
 							break;
@@ -1305,7 +1305,7 @@ Object.assign(frappe.utils, {
 					route = "query-report/" + item.name;
 				} else if (!item.is_query_report && item.report_ref_doctype) {
 					route =
-						frappe.router.slug(item.report_ref_doctype) + "/view/report/" + item.name;
+						traquent.router.slug(item.report_ref_doctype) + "/view/report/" + item.name;
 				} else {
 					route = "report/" + item.name;
 				}
@@ -1327,7 +1327,7 @@ Object.assign(frappe.utils, {
 		}
 
 		// if(type==="page" || type==="help" || type==="report" ||
-		// (item.doctype && frappe.model.can_read(item.doctype))) {
+		// (item.doctype && traquent.model.can_read(item.doctype))) {
 		//     item.shown = true;
 		// }
 		return `/app/${route}`;
@@ -1396,7 +1396,7 @@ Object.assign(frappe.utils, {
 			doc = { currency: summary.currency };
 		}
 
-		let value = frappe.format(summary.value, df, { only_value: true }, doc);
+		let value = traquent.format(summary.value, df, { only_value: true }, doc);
 		let color = summary.indicator
 			? summary.indicator.toLowerCase()
 			: summary.color
@@ -1411,7 +1411,7 @@ Object.assign(frappe.utils, {
 
 	print(doctype, docname, print_format, letterhead, lang_code) {
 		let w = window.open(
-			frappe.urllib.get_full_url(
+			traquent.urllib.get_full_url(
 				"/printview?doctype=" +
 					encodeURIComponent(doctype) +
 					"&name=" +
@@ -1428,7 +1428,7 @@ Object.assign(frappe.utils, {
 		);
 
 		if (!w) {
-			frappe.msgprint(__("Please enable pop-ups"));
+			traquent.msgprint(__("Please enable pop-ups"));
 			return;
 		}
 	},
@@ -1469,12 +1469,12 @@ Object.assign(frappe.utils, {
 		let $select_group_button = $(`
 			<div class="btn-group select-group-btn">
 				<button type="button" class="btn ${btn_type} btn-sm selected-button">
-					<span class="left-icon">${icon && frappe.utils.icon(icon, "xs")}</span>
+					<span class="left-icon">${icon && traquent.utils.icon(icon, "xs")}</span>
 					<span class="label">${selected_action.label}</span>
 				</button>
 
 				<button type="button" class="btn ${btn_type} btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-					${frappe.utils.icon("down", "xs")}
+					${traquent.utils.icon("down", "xs")}
 				</button>
 
 				<ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
@@ -1484,7 +1484,7 @@ Object.assign(frappe.utils, {
 		actions.forEach((action) => {
 			$(`<li>
 				<a class="dropdown-item flex">
-					<div class="tick-icon mr-2">${frappe.utils.icon("check", "xs")}</div>
+					<div class="tick-icon mr-2">${traquent.utils.icon("check", "xs")}</div>
 					<div>
 						<div class="item-label">${action.label}</div>
 						<div class="item-description text-muted small">${action.description || ""}</div>
@@ -1539,11 +1539,11 @@ Object.assign(frappe.utils, {
 	},
 
 	get_link_title(doctype, name) {
-		if (!doctype || !name || !frappe._link_titles) {
+		if (!doctype || !name || !traquent._link_titles) {
 			return;
 		}
 
-		return frappe._link_titles[doctype + "::" + name];
+		return traquent._link_titles[doctype + "::" + name];
 	},
 
 	add_link_title(doctype, name, value) {
@@ -1551,12 +1551,12 @@ Object.assign(frappe.utils, {
 			return;
 		}
 
-		if (!frappe._link_titles) {
+		if (!traquent._link_titles) {
 			// for link titles
-			frappe._link_titles = {};
+			traquent._link_titles = {};
 		}
 
-		frappe._link_titles[doctype + "::" + name] = value;
+		traquent._link_titles[doctype + "::" + name] = value;
 	},
 
 	fetch_link_title(doctype, name) {
@@ -1564,13 +1564,13 @@ Object.assign(frappe.utils, {
 			return;
 		}
 		try {
-			return frappe
-				.xcall("frappe.desk.search.get_link_title", {
+			return traquent
+				.xcall("traquent.desk.search.get_link_title", {
 					doctype: doctype,
 					docname: name,
 				})
 				.then((title) => {
-					frappe.utils.add_link_title(doctype, name, title);
+					traquent.utils.add_link_title(doctype, name, title);
 					return title;
 				});
 		} catch (error) {
@@ -1673,16 +1673,16 @@ Object.assign(frappe.utils, {
 	},
 
 	load_video_player() {
-		return frappe.require("video_player.bundle.js");
+		return traquent.require("video_player.bundle.js");
 	},
 
 	is_current_user(user) {
-		return user === frappe.session.user;
+		return user === traquent.session.user;
 	},
 
 	debug: {
 		watch_property(obj, prop, callback = console.trace) {
-			if (!frappe.boot.developer_mode) {
+			if (!traquent.boot.developer_mode) {
 				return;
 			}
 			console.warn("Adding property watcher, make sure to remove it after debugging.");
@@ -1705,7 +1705,7 @@ Object.assign(frappe.utils, {
 		},
 	},
 	generate_tracking_url() {
-		frappe.prompt(
+		traquent.prompt(
 			[
 				{
 					fieldname: "url",
@@ -1752,11 +1752,11 @@ Object.assign(frappe.utils, {
 				let url = data.url;
 				localStorage.setItem("tracker_url:url", data.url);
 
-				const { message } = await frappe.db.get_value("UTM Source", data.source, "slug");
+				const { message } = await traquent.db.get_value("UTM Source", data.source, "slug");
 				url += "?utm_source=" + encodeURIComponent(message.slug || data.source);
 				localStorage.setItem("tracker_url:source", data.source);
 				if (data.campaign) {
-					const { message } = await frappe.db.get_value(
+					const { message } = await traquent.db.get_value(
 						"UTM Campaign",
 						data.campaign,
 						"slug"
@@ -1765,7 +1765,7 @@ Object.assign(frappe.utils, {
 					localStorage.setItem("tracker_url:campaign", data.campaign);
 				}
 				if (data.medium) {
-					const { message } = await frappe.db.get_value(
+					const { message } = await traquent.db.get_value(
 						"UTM Medium",
 						data.medium,
 						"slug"
@@ -1778,9 +1778,9 @@ Object.assign(frappe.utils, {
 					localStorage.setItem("tracker_url:content", data.content);
 				}
 
-				frappe.utils.copy_to_clipboard(url);
+				traquent.utils.copy_to_clipboard(url);
 
-				frappe.msgprint(
+				traquent.msgprint(
 					__("Tracking URL generated and copied to clipboard") +
 						": <br>" +
 						`<a href="${url}">${url.bold()}</a>`,

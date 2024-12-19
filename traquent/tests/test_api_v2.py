@@ -5,7 +5,7 @@ import requests
 
 import traquent
 from traquent.installer import update_site_config
-from traquent.tests.test_api import FrappeAPITestCase, suppress_stdout
+from traquent.tests.test_api import traquentAPITestCase, suppress_stdout
 
 authorization_token = None
 
@@ -17,7 +17,7 @@ resource_key = {
 }
 
 
-class TestResourceAPIV2(FrappeAPITestCase):
+class TestResourceAPIV2(traquentAPITestCase):
 	version = "v2"
 	DOCTYPE = "ToDo"
 	GENERATED_DOCUMENTS: typing.ClassVar[list] = []
@@ -96,7 +96,7 @@ class TestResourceAPIV2(FrappeAPITestCase):
 
 	def test_execute_doc_method(self):
 		response = self.get(self.resource("Website Theme", "Standard", "method", "get_apps"))
-		self.assertEqual(response.json["data"][0]["name"], "frappe")
+		self.assertEqual(response.json["data"][0]["name"], "traquent")
 
 	def test_update_document(self):
 		generated_desc = traquent.mock("paragraph")
@@ -120,7 +120,7 @@ class TestResourceAPIV2(FrappeAPITestCase):
 		self.assertFalse(response.json["errors"][0].get("exception"))
 
 
-class TestMethodAPIV2(FrappeAPITestCase):
+class TestMethodAPIV2(traquentAPITestCase):
 	version = "v2"
 
 	def setUp(self) -> None:
@@ -134,7 +134,7 @@ class TestMethodAPIV2(FrappeAPITestCase):
 		self.assertEqual(response.json["data"], "pong")
 
 	def test_get_user_info(self):
-		response = self.get(self.method("frappe.realtime.get_user_info"))
+		response = self.get(self.method("traquent.realtime.get_user_info"))
 		self.assertEqual(response.status_code, 200)
 		self.assertIsInstance(response.json, dict)
 		self.assertIn(response.json.get("data").get("user"), ("Administrator", "Guest"))
@@ -146,7 +146,7 @@ class TestMethodAPIV2(FrappeAPITestCase):
 		user = traquent.get_doc("User", "Administrator")
 		api_key, api_secret = user.api_key, user.get_password("api_secret")
 		authorization_token = f"{api_key}:{api_secret}"
-		response = self.get(self.method("frappe.auth.get_logged_user"))
+		response = self.get(self.method("traquent.auth.get_logged_user"))
 
 		self.assertEqual(response.status_code, 200)
 		self.assertEqual(response.json["data"], "Administrator")
@@ -164,7 +164,7 @@ class TestMethodAPIV2(FrappeAPITestCase):
 		self.assertIn("Blogger", shorthand_response.json["data"])
 
 		expanded_response = self.get(
-			self.method("frappe.core.doctype.user.user.get_all_roles"), {"sid": self.sid}
+			self.method("traquent.core.doctype.user.user.get_all_roles"), {"sid": self.sid}
 		)
 		self.assertEqual(expanded_response.data, shorthand_response.data)
 
@@ -201,7 +201,7 @@ class TestMethodAPIV2(FrappeAPITestCase):
 		self.assertEqual(response.status_code, 200)
 
 	def test_logs(self):
-		method = "frappe.tests.test_api.test"
+		method = "traquent.tests.test_api.test"
 
 		expected_message = "Failed v2"
 		response = self.get(self.method(method), {"sid": self.sid, "message": expected_message}).json
@@ -238,7 +238,7 @@ class TestMethodAPIV2(FrappeAPITestCase):
 		self.assertEqual(response["data"]["content"], comment_txt)
 
 
-class TestDocTypeAPIV2(FrappeAPITestCase):
+class TestDocTypeAPIV2(traquentAPITestCase):
 	version = "v2"
 
 	def setUp(self) -> None:
@@ -255,7 +255,7 @@ class TestDocTypeAPIV2(FrappeAPITestCase):
 		self.assertIsInstance(response.json["data"], int)
 
 
-class TestReadOnlyMode(FrappeAPITestCase):
+class TestReadOnlyMode(traquentAPITestCase):
 	"""During migration if read only mode can be enabled.
 	Test if reads work well and writes are blocked"""
 

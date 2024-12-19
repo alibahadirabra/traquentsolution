@@ -14,7 +14,7 @@
 </style>
 
 <script>
-	frappe.ready(function() {
+	traquent.ready(function() {
 		$("#select-all-btn").click(function() {
 			$(".group").prop('checked', true);
 
@@ -40,7 +40,7 @@
 		{% if email_groups %}
 				<form method="post">
 					<input type="hidden" name="user_email" value="{{ email }}">
-					<input type="hidden" name="csrf_token" value="{{ frappe.session.csrf_token }}">
+					<input type="hidden" name="csrf_token" value="{{ traquent.session.csrf_token }}">
 					<!-- Break into columns if there are more than 20 groups -->
 					<div class="portal-items">
 						{% for group in email_groups %}

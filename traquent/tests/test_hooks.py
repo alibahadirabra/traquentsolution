@@ -1,10 +1,10 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import traquent
 from traquent.cache_manager import clear_controller_cache
 from traquent.desk.doctype.todo.todo import ToDo
 from traquent.tests import IntegrationTestCase
-from traquent.tests.test_api import FrappeAPITestCase
+from traquent.tests.test_api import traquentAPITestCase
 
 
 class TestHooks(IntegrationTestCase):
@@ -15,7 +15,7 @@ class TestHooks(IntegrationTestCase):
 		self.assertTrue(isinstance(hooks.get("doc_events").get("*"), dict))
 		self.assertTrue(isinstance(hooks.get("doc_events").get("*"), dict))
 		self.assertTrue(
-			"frappe.desk.notifications.clear_doctype_notifications"
+			"traquent.desk.notifications.clear_doctype_notifications"
 			in hooks.get("doc_events").get("*").get("on_update")
 		)
 
@@ -23,7 +23,7 @@ class TestHooks(IntegrationTestCase):
 		from traquent import hooks
 
 		# Set hook
-		hooks.override_doctype_class = {"ToDo": ["frappe.tests.test_hooks.CustomToDo"]}
+		hooks.override_doctype_class = {"ToDo": ["traquent.tests.test_hooks.CustomToDo"]}
 
 		# Clear cache
 		traquent.cache.delete_value("app_hooks")
@@ -40,7 +40,7 @@ class TestHooks(IntegrationTestCase):
 		if isinstance(address_has_permission_hook, str):
 			address_has_permission_hook = [address_has_permission_hook]
 
-		address_has_permission_hook.append("frappe.tests.test_hooks.custom_has_permission")
+		address_has_permission_hook.append("traquent.tests.test_hooks.custom_has_permission")
 
 		hooks.has_permission["Address"] = address_has_permission_hook
 
@@ -48,7 +48,7 @@ class TestHooks(IntegrationTestCase):
 		if isinstance(wildcard_has_permission_hook, str):
 			wildcard_has_permission_hook = [wildcard_has_permission_hook]
 
-		wildcard_has_permission_hook.append("frappe.tests.test_hooks.custom_has_permission")
+		wildcard_has_permission_hook.append("traquent.tests.test_hooks.custom_has_permission")
 
 		hooks.has_permission["*"] = wildcard_has_permission_hook
 
@@ -118,7 +118,7 @@ class TestHooks(IntegrationTestCase):
 		from traquent import hooks
 		from traquent.utils.fixtures import export_fixtures
 
-		app = "frappe"
+		app = "traquent"
 		if os.path.isdir(traquent.get_app_path(app, "fixtures")):
 			shutil.rmtree(traquent.get_app_path(app, "fixtures"))
 
@@ -129,7 +129,7 @@ class TestHooks(IntegrationTestCase):
 			{"dt": "Role"},
 		]
 		hooks.fixture_auto_order = False
-		# every call to frappe.get_hooks loads the hooks module into cache
+		# every call to traquent.get_hooks loads the hooks module into cache
 		# therefor the cache has to be invalidated after every manual overwriting of hooks
 		# TODO replace with a more elegant solution if there is one or build a util function for this purpose
 		if traquent._load_app_hooks.__wrapped__ in traquent.local.request_cache.keys():
@@ -186,12 +186,12 @@ class TestHooks(IntegrationTestCase):
 		)
 
 
-class TestAPIHooks(FrappeAPITestCase):
+class TestAPIHooks(traquentAPITestCase):
 	def test_auth_hook(self):
-		with self.patch_hooks({"auth_hooks": ["frappe.tests.test_hooks.custom_auth"]}):
+		with self.patch_hooks({"auth_hooks": ["traquent.tests.test_hooks.custom_auth"]}):
 			site_url = traquent.utils.get_site_url(traquent.local.site)
 			response = self.get(
-				site_url + "/api/method/frappe.auth.get_logged_user",
+				site_url + "/api/method/traquent.auth.get_logged_user",
 				headers={"Authorization": "Bearer set_test_example_user"},
 			)
 			# Test!

@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2019, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import os
 from unittest.mock import patch
@@ -141,7 +141,7 @@ class TestDashboardConnections(IntegrationTestCase):
 		with self.patch_hooks(
 			{
 				"override_doctype_dashboards": {
-					"ToDo": ["frappe.tests.test_dashboard_connections.get_dashboard_for_todo"]
+					"ToDo": ["traquent.tests.test_dashboard_connections.get_dashboard_for_todo"]
 				}
 			}
 		):

@@ -96,7 +96,7 @@
 	width: 100%;
 }
 
-.layout-main-section.frappe-card {
+.layout-main-section.traquent-card {
 	overflow: hidden;
 	@include card($padding: 0px);
 	box-shadow: none;
@@ -179,7 +179,7 @@
 .layout-main-section {
 	scroll-margin-top: var(--navbar-height);
 
-	.frappe-list,
+	.traquent-list,
 	.report-wrapper {
 		.result,
 		.no-result,

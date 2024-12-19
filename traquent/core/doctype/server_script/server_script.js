@@ -1,7 +1,7 @@
-// Copyright (c) 2019, Frappe Technologies and contributors
+// Copyright (c) 2019, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Server Script", {
+traquent.ui.form.on("Server Script", {
 	setup: function (frm) {
 		frm.trigger("setup_help");
 	},
@@ -12,12 +12,12 @@ frappe.ui.form.on("Server Script", {
 
 		if (!frm.is_new()) {
 			frm.add_custom_button(__("Compare Versions"), () => {
-				new frappe.ui.DiffView("Server Script", "script", frm.doc.name);
+				new traquent.ui.DiffView("Server Script", "script", frm.doc.name);
 			});
 		}
 
-		frappe
-			.call("frappe.core.doctype.server_script.server_script.get_autocompletion_items")
+		traquent
+			.call("traquent.core.doctype.server_script.server_script.get_autocompletion_items")
 			.then((r) => r.message)
 			.then((items) => {
 				frm.set_df_property("script", "autocompletions", items);
@@ -27,10 +27,10 @@ frappe.ui.form.on("Server Script", {
 	},
 
 	check_safe_exec(frm) {
-		frappe.xcall("frappe.core.doctype.server_script.server_script.enabled").then((enabled) => {
+		traquent.xcall("traquent.core.doctype.server_script.server_script.enabled").then((enabled) => {
 			if (enabled === false) {
 				let docs_link =
-					"https://frappeframework.com/docs/user/en/desk/scripting/server-script";
+					"https://traquentframework.com/docs/user/en/desk/scripting/server-script";
 				let docs = `<a href=${docs_link}>${__("Official Documentation")}</a>`;
 
 				frm.dashboard.clear_comment();
@@ -59,11 +59,11 @@ frappe.ui.form.on("Server Script", {
 
 // # validate
 // if "validate" in doc.description:
-// 	raise frappe.ValidationError
+// 	raise traquent.ValidationError
 
 // # auto create another document
 // if doc.allocated_to:
-// 	frappe.get_doc(dict(
+// 	traquent.get_doc(dict(
 // 		doctype = 'ToDo'
 // 		owner = doc.allocated_to,
 // 		description = doc.subject
@@ -72,7 +72,7 @@ frappe.ui.form.on("Server Script", {
 // </pre>
 
 // <h5>Payment processing</h5>
-// <p>Payment processing events have a special state. See the <a href="https://github.com/frappe/payments/blob/develop/payments/controllers/payment_controller.py">PaymentController in Frappe Payments</a> for details.</p>
+// <p>Payment processing events have a special state. See the <a href="https://github.com/traquent/payments/blob/develop/payments/controllers/payment_controller.py">PaymentController in traquent Payments</a> for details.</p>
 // <pre>
 // 	<code>
 // # retreive payment session state
@@ -112,10 +112,10 @@ frappe.ui.form.on("Server Script", {
 // <pre><code>
 // # respond to API
 
-// if frappe.form_dict.message == "ping":
-// 	frappe.response['message'] = "pong"
+// if traquent.form_dict.message == "ping":
+// 	traquent.response['message'] = "pong"
 // else:
-// 	frappe.response['message'] = "ok"
+// 	traquent.response['message'] = "ok"
 // </code></pre>
 
 // <hr>
@@ -124,7 +124,7 @@ frappe.ui.form.on("Server Script", {
 // <p>Add conditions to the where clause of list queries.</p>
 // <pre><code>
 // # generate dynamic conditions and set it in the conditions variable
-// tenant_id = frappe.db.get_value(...)
+// tenant_id = traquent.db.get_value(...)
 // conditions = f'tenant_id = {tenant_id}'
 
 // # resulting select query

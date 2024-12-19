@@ -1,16 +1,16 @@
-// Copyright (c) 2020, Frappe Technologies and contributors
+// Copyright (c) 2020, traquent Technologies and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on("Module Onboarding", {
+traquent.ui.form.on("Module Onboarding", {
 	refresh: function (frm) {
-		frappe.boot.developer_mode &&
+		traquent.boot.developer_mode &&
 			frm.set_intro(
 				__(
 					"Saving this will export this document as well as the steps linked here as json."
 				),
 				true
 			);
-		if (!frappe.boot.developer_mode) {
+		if (!traquent.boot.developer_mode) {
 			frm.trigger("disable_form");
 		}
 

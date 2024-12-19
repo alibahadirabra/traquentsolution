@@ -16,7 +16,7 @@
 	pointer-events: none;
 }
 
-.show-tooltip .frappe-control:hover .tooltip-content {
+.show-tooltip .traquent-control:hover .tooltip-content {
 	opacity: 1;
 	transform: translate3d(0, 0, 0);
 	pointer-events: auto;
@@ -177,7 +177,7 @@
 			height: 32px;
 			width: 32px;
 		}
-		.frappe-control {
+		.traquent-control {
 			padding-right: 0;
 			.ql-editor {
 				background-color: var(--control-bg) !important;
@@ -317,7 +317,7 @@
 	}
 }
 
-.frappe-rtl .inline-graph {
+.traquent-rtl .inline-graph {
 	direction: ltr;
 	display: block;
 	transform: scaleX(-1);
@@ -426,10 +426,10 @@
 }
 
 .form-group {
-	&.frappe-control:last-child {
+	&.traquent-control:last-child {
 		margin-bottom: 0.5rem;
 	}
-	&:last-child.frappe-control[data-fieldtype="Table"] {
+	&:last-child.traquent-control[data-fieldtype="Table"] {
 		margin-bottom: 0.5rem;
 	}
 }
@@ -437,8 +437,8 @@
 // above mobile
 @media (min-width: map-get($grid-breakpoints, "md")) {
 	// for 1, 2 column layouts, implement horizontal, else vertical
-	.col-sm-12 > form > .frappe-control > .horizontal,
-	.col-sm-6 > form > .frappe-control > .horizontal {
+	.col-sm-12 > form > .traquent-control > .horizontal,
+	.col-sm-6 > form > .traquent-control > .horizontal {
 		display: flex;
 		justify-content: space-between;
 		vertical-align: middle;

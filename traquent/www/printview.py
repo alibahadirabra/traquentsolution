@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import copy
@@ -497,7 +497,7 @@ def make_layout(doc: "Document", meta: "Meta", format_data=None) -> list:
 			doc.set(df.fieldname, True)  # show this field
 
 		if df.fieldtype == "Signature" and not doc.get(df.fieldname):
-			placeholder_image = "/assets/frappe/images/signature-placeholder.png"
+			placeholder_image = "/assets/traquent/images/signature-placeholder.png"
 			doc.set(df.fieldname, placeholder_image)
 
 		if is_visible(df, doc) and has_value(df, doc):

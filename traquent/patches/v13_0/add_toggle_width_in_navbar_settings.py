@@ -15,7 +15,7 @@ def execute():
 		{
 			"item_label": "Toggle Full Width",
 			"item_type": "Action",
-			"action": "frappe.ui.toolbar.toggle_full_width()",
+			"action": "traquent.ui.toolbar.toggle_full_width()",
 			"is_standard": 1,
 			"idx": 6,
 		},

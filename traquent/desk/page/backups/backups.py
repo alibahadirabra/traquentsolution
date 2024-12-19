@@ -82,11 +82,11 @@ def schedule_files_backup(user_email):
 	traquent.only_for("System Manager")
 
 	queued_jobs = get_jobs(site=traquent.local.site, queue="long")
-	method = "frappe.desk.page.backups.backups.backup_files_and_notify_user"
+	method = "traquent.desk.page.backups.backups.backup_files_and_notify_user"
 
 	if method not in queued_jobs[traquent.local.site]:
 		enqueue(
-			"frappe.desk.page.backups.backups.backup_files_and_notify_user",
+			"traquent.desk.page.backups.backups.backup_files_and_notify_user",
 			queue="long",
 			user_email=user_email,
 		)

@@ -8,9 +8,9 @@ let time_zone = ref("");
 let placeholder = ref("");
 
 if (props.df.fieldtype === "Datetime") {
-	let time_zone_text = frappe.boot.time_zone
-		? frappe.boot.time_zone.user
-		: frappe.sys_defaults.time_zone;
+	let time_zone_text = traquent.boot.time_zone
+		? traquent.boot.time_zone.user
+		: traquent.sys_defaults.time_zone;
 	time_zone.value = time_zone_text;
 }
 
@@ -23,7 +23,7 @@ if (props.df.fieldtype === "Icon") {
 </script>
 
 <template>
-	<div class="control frappe-control" :class="{ editable: slots.label }">
+	<div class="control traquent-control" :class="{ editable: slots.label }">
 		<!-- label -->
 		<div v-if="slots.label" class="field-controls">
 			<slot name="label" />
@@ -73,13 +73,13 @@ if (props.df.fieldtype === "Icon") {
 		<div
 			v-if="df.fieldtype == 'Icon'"
 			class="selected-icon no-value"
-			v-html="frappe.utils.icon('folder-normal', 'md')"
+			v-html="traquent.utils.icon('folder-normal', 'md')"
 		/>
 		<!-- phone selector icon -->
 		<div
 			v-if="df.fieldtype == 'Phone'"
 			class="selected-phone no-value"
-			v-html="frappe.utils.icon('down', 'sm')"
+			v-html="traquent.utils.icon('down', 'sm')"
 		/>
 	</div>
 </template>

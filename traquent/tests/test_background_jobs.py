@@ -19,7 +19,7 @@ from traquent.utils.background_jobs import (
 
 class TestBackgroundJobs(IntegrationTestCase):
 	def test_remove_failed_jobs(self):
-		traquent.enqueue(method="frappe.tests.test_background_jobs.fail_function", queue="short")
+		traquent.enqueue(method="traquent.tests.test_background_jobs.fail_function", queue="short")
 		# wait for enqueued job to execute
 		time.sleep(2)
 		conn = get_redis_conn()
@@ -39,7 +39,7 @@ class TestBackgroundJobs(IntegrationTestCase):
 
 	def test_enqueue_at_front(self):
 		kwargs = {
-			"method": "frappe.handler.ping",
+			"method": "traquent.handler.ping",
 			"queue": "short",
 		}
 
@@ -56,16 +56,16 @@ class TestBackgroundJobs(IntegrationTestCase):
 	def test_job_hooks(self):
 		self.addCleanup(lambda: _test_JOB_HOOK.clear())
 		with freeze_local() as locals, traquent.init_site(locals.site), patch(
-			"frappe.get_hooks", patch_job_hooks
+			"traquent.get_hooks", patch_job_hooks
 		):
 			traquent.connect()
 			self.assertIsNone(_test_JOB_HOOK.get("before_job"))
 			r = execute_job(
 				site=traquent.local.site,
 				user="Administrator",
-				method="frappe.handler.ping",
+				method="traquent.handler.ping",
 				event=None,
-				job_name="frappe.handler.ping",
+				job_name="traquent.handler.ping",
 				is_async=True,
 				kwargs={},
 			)
@@ -98,6 +98,6 @@ def freeze_local():
 
 def patch_job_hooks(event: str):
 	return {
-		"before_job": ["frappe.tests.test_background_jobs.before_job"],
-		"after_job": ["frappe.tests.test_background_jobs.after_job"],
+		"before_job": ["traquent.tests.test_background_jobs.before_job"],
+		"after_job": ["traquent.tests.test_background_jobs.after_job"],
 	}[event]

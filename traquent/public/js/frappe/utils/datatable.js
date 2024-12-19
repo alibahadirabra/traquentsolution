@@ -1,8 +1,8 @@
-frappe.provide("frappe.utils.datatable");
+traquent.provide("traquent.utils.datatable");
 
-frappe.utils.datatable.get_translations = function () {
+traquent.utils.datatable.get_translations = function () {
 	let translations = {};
-	translations[frappe.boot.lang] = {
+	translations[traquent.boot.lang] = {
 		"Sort Ascending": __("Sort Ascending"),
 		"Sort Descending": __("Sort Descending"),
 		"Reset sorting": __("Reset sorting"),

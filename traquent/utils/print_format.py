@@ -258,7 +258,7 @@ def print_by_server(
 			doctype, name, print_format, doc=doc, no_letterhead=no_letterhead, as_pdf=True, output=output
 		)
 		if not file_path:
-			file_path = os.path.join("/", "tmp", f"frappe-pdf-{traquent.generate_hash()}.pdf")
+			file_path = os.path.join("/", "tmp", f"traquent-pdf-{traquent.generate_hash()}.pdf")
 		output.write(open(file_path, "wb"))
 		conn.printFile(print_settings.printer_name, file_path, name, {})
 	except OSError as e:

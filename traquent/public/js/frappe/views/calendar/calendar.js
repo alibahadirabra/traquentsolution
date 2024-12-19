@@ -1,18 +1,18 @@
-// Copyright (c) 2018, Frappe Technologies Pvt. Ltd. and Contributors
+// Copyright (c) 2018, traquent Technologies Pvt. Ltd. and Contributors
 // MIT License. See license.txt
 
-frappe.provide("frappe.views.calendar");
-frappe.provide("frappe.views.calendars");
+traquent.provide("traquent.views.calendar");
+traquent.provide("traquent.views.calendars");
 
-frappe.views.CalendarView = class CalendarView extends frappe.views.ListView {
+traquent.views.CalendarView = class CalendarView extends traquent.views.ListView {
 	static load_last_view() {
-		const route = frappe.get_route();
+		const route = traquent.get_route();
 		if (route.length === 3) {
 			const doctype = route[1];
-			const user_settings = frappe.get_user_settings(doctype)["Calendar"] || {};
+			const user_settings = traquent.get_user_settings(doctype)["Calendar"] || {};
 			route.push(user_settings.last_calendar || "default");
-			frappe.route_flags.replace_route = true;
-			frappe.set_route(route);
+			traquent.route_flags.replace_route = true;
+			traquent.set_route(route);
 			return true;
 		} else {
 			return false;
@@ -28,8 +28,8 @@ frappe.views.CalendarView = class CalendarView extends frappe.views.ListView {
 	setup_defaults() {
 		return super.setup_defaults().then(() => {
 			this.page_title = __("{0} Calendar", [this.page_title]);
-			this.calendar_settings = frappe.views.Calendar[this.doctype] || {};
-			this.calendar_name = frappe.get_route()[3];
+			this.calendar_settings = traquent.views.Calendar[this.doctype] || {};
+			this.calendar_name = traquent.get_route()[3];
 		});
 	}
 
@@ -56,7 +56,7 @@ frappe.views.CalendarView = class CalendarView extends frappe.views.ListView {
 		this.load_lib
 			.then(() => this.get_calendar_preferences())
 			.then((options) => {
-				this.calendar = new frappe.views.Calendar(options);
+				this.calendar = new traquent.views.Calendar(options);
 			});
 	}
 
@@ -71,18 +71,18 @@ frappe.views.CalendarView = class CalendarView extends frappe.views.ListView {
 
 		return new Promise((resolve) => {
 			if (calendar_name === "default") {
-				Object.assign(options, frappe.views.calendar[this.doctype]);
+				Object.assign(options, traquent.views.calendar[this.doctype]);
 				resolve(options);
 			} else {
-				frappe.model.with_doc("Calendar View", calendar_name, () => {
-					const doc = frappe.get_doc("Calendar View", calendar_name);
+				traquent.model.with_doc("Calendar View", calendar_name, () => {
+					const doc = traquent.get_doc("Calendar View", calendar_name);
 					if (!doc) {
-						frappe.show_alert(
+						traquent.show_alert(
 							__("{0} is not a valid Calendar. Redirecting to default Calendar.", [
 								calendar_name.bold(),
 							])
 						);
-						frappe.set_route("List", this.doctype, "Calendar", "default");
+						traquent.set_route("List", this.doctype, "Calendar", "default");
 						return;
 					}
 					Object.assign(options, {
@@ -105,7 +105,7 @@ frappe.views.CalendarView = class CalendarView extends frappe.views.ListView {
 	}
 };
 
-frappe.views.Calendar = class Calendar {
+traquent.views.Calendar = class Calendar {
 	constructor(options) {
 		$.extend(this, options);
 		this.field_map = this.field_map || {
@@ -145,10 +145,10 @@ frappe.views.Calendar = class Calendar {
 
 		// add links to other calendars
 		me.page.clear_user_actions();
-		$.each(frappe.boot.calendars, function (i, doctype) {
-			if (frappe.model.can_read(doctype)) {
+		$.each(traquent.boot.calendars, function (i, doctype) {
+			if (traquent.model.can_read(doctype)) {
 				me.page.add_menu_item(__(doctype), function () {
-					frappe.set_route("List", doctype, "Calendar");
+					traquent.set_route("List", doctype, "Calendar");
 				});
 			}
 		});
@@ -161,14 +161,14 @@ frappe.views.Calendar = class Calendar {
 	make() {
 		this.$wrapper = this.parent;
 		this.$cal = $("<div id='fc-calendar-wrapper'>").appendTo(this.$wrapper);
-		this.footnote_area = frappe.utils.set_footnote(
+		this.footnote_area = traquent.utils.set_footnote(
 			this.footnote_area,
 			this.$wrapper,
 			__("Select or drag across time slots to create a new event.")
 		);
 		this.footnote_area.css({ "border-top": "0px" });
 
-		this.fullCalendar = new frappe.FullCalendar(this.$cal[0], this.cal_options);
+		this.fullCalendar = new traquent.FullCalendar(this.$cal[0], this.cal_options);
 		this.fullCalendar.render();
 
 		this.set_css();
@@ -222,13 +222,13 @@ frappe.views.Calendar = class Calendar {
 		this.$wrapper
 			.find(`.fc-prev-button span`)
 			.attr("class", "")
-			.html(frappe.utils.icon("left"));
+			.html(traquent.utils.icon("left"));
 		this.$wrapper
 			.find(`.fc-next-button span`)
 			.attr("class", "")
-			.html(frappe.utils.icon("right"));
+			.html(traquent.utils.icon("right"));
 		if (this.$wrapper.find(".fc-today-button svg").length == 0)
-			this.$wrapper.find(".fc-today-button").prepend(frappe.utils.icon("today"));
+			this.$wrapper.find(".fc-today-button").prepend(traquent.utils.icon("today"));
 
 		// v6.x of fc has weird behaviour which removes all the custom classes
 		// on header buttons on click, event below re-adds all the classes
@@ -246,15 +246,15 @@ frappe.views.Calendar = class Calendar {
 	}
 
 	get_system_datetime(date) {
-		return frappe.datetime.convert_to_system_tz(date, true);
+		return traquent.datetime.convert_to_system_tz(date, true);
 	}
 	setup_options(defaults) {
 		var me = this;
 		defaults.meridiem = "false";
 		this.cal_options = {
-			plugins: frappe.FullCalendar.Plugins,
+			plugins: traquent.FullCalendar.Plugins,
 			initialView: defaults.initialView || "dayGridMonth",
-			locale: frappe.boot.lang,
+			locale: traquent.boot.lang,
 			firstDay: 1,
 			headerToolbar: {
 				left: "prev,title,next",
@@ -277,8 +277,8 @@ frappe.views.Calendar = class Calendar {
 				day: __("Day"),
 			},
 			events: function (info, successCallback, failureCallback) {
-				return frappe.call({
-					method: me.get_events_method || "frappe.desk.calendar.get_events",
+				return traquent.call({
+					method: me.get_events_method || "traquent.desk.calendar.get_events",
 					type: "GET",
 					args: me.get_args(info.start, info.end),
 					callback: function (r) {
@@ -292,8 +292,8 @@ frappe.views.Calendar = class Calendar {
 			eventClick: function (info) {
 				// edit event description or delete
 				var doctype = info.doctype || me.doctype;
-				if (frappe.model.can_read(doctype)) {
-					frappe.set_route("Form", doctype, info.event.id);
+				if (traquent.model.can_read(doctype)) {
+					traquent.set_route("Form", doctype, info.event.id);
 				}
 			},
 			eventDrop: function (info) {
@@ -311,7 +311,7 @@ frappe.views.Calendar = class Calendar {
 					return;
 				}
 
-				var event = frappe.model.get_new_doc(me.doctype);
+				var event = traquent.model.get_new_doc(me.doctype);
 
 				event[me.field_map.start] = me.get_system_datetime(info.start);
 				if (me.field_map.end) event[me.field_map.end] = me.get_system_datetime(info.end);
@@ -324,7 +324,7 @@ frappe.views.Calendar = class Calendar {
 					// incase of all day or multiple day events -1 sec
 					event[me.field_map.end] = me.get_system_datetime(info.end - 1);
 				}
-				frappe.set_route("Form", me.doctype, event.name);
+				traquent.set_route("Form", me.doctype, event.name);
 			},
 			dateClick: function (info) {
 				if (info.view.type === "dayGridMonth") {
@@ -378,7 +378,7 @@ frappe.views.Calendar = class Calendar {
 
 		return (events || []).map((d) => {
 			d.id = d.name;
-			d.editable = frappe.model.can_write(d.doctype || me.doctype);
+			d.editable = traquent.model.can_write(d.doctype || me.doctype);
 
 			// do not allow submitted/cancelled events to be moved / extended
 			if (d.docstatus && d.docstatus > 0) {
@@ -397,22 +397,22 @@ frappe.views.Calendar = class Calendar {
 
 			// convert to user tz
 			if (d.convertToUserTz) {
-				d.start = frappe.datetime.convert_to_user_tz(d.start);
-				d.end = frappe.datetime.convert_to_user_tz(d.end);
+				d.start = traquent.datetime.convert_to_user_tz(d.start);
+				d.end = traquent.datetime.convert_to_user_tz(d.end);
 			}
 
 			// show event on single day if start or end date is invalid
-			if (!frappe.datetime.validate(d.start) && d.end) {
-				d.start = frappe.datetime.add_days(d.end, -1);
+			if (!traquent.datetime.validate(d.start) && d.end) {
+				d.start = traquent.datetime.add_days(d.end, -1);
 			}
 
-			if (d.start && !frappe.datetime.validate(d.end)) {
-				d.end = frappe.datetime.add_days(d.start, 1);
+			if (d.start && !traquent.datetime.validate(d.end)) {
+				d.end = traquent.datetime.add_days(d.start, 1);
 			}
 
 			me.prepare_colors(d);
 
-			d.title = frappe.utils.html2text(d.title);
+			d.title = traquent.utils.html2text(d.title);
 
 			return d;
 		});
@@ -423,30 +423,30 @@ frappe.views.Calendar = class Calendar {
 			color_name = this.color_map[this.get_css_class(d)] || "blue";
 
 			if (color_name.startsWith("#")) {
-				color_name = frappe.ui.color.validate_hex(color_name) ? color_name : "blue";
+				color_name = traquent.ui.color.validate_hex(color_name) ? color_name : "blue";
 			}
 
-			d.backgroundColor = frappe.ui.color.get(color_name, "extra-light");
-			d.textColor = frappe.ui.color.get(color_name, "dark");
+			d.backgroundColor = traquent.ui.color.get(color_name, "extra-light");
+			d.textColor = traquent.ui.color.get(color_name, "dark");
 		} else {
 			color = d.color;
-			if (!frappe.ui.color.validate_hex(color) || !color) {
-				color = frappe.ui.color.get("blue", "extra-light");
+			if (!traquent.ui.color.validate_hex(color) || !color) {
+				color = traquent.ui.color.get("blue", "extra-light");
 			}
 			d.backgroundColor = color;
-			d.textColor = frappe.ui.color.get_contrast_color(color);
+			d.textColor = traquent.ui.color.get_contrast_color(color);
 		}
 		return d;
 	}
 	update_event(event, revertFunc) {
 		var me = this;
-		frappe.model.remove_from_locals(me.doctype, event.id);
-		return frappe.call({
-			method: me.update_event_method || "frappe.desk.calendar.update_event",
+		traquent.model.remove_from_locals(me.doctype, event.id);
+		return traquent.call({
+			method: me.update_event_method || "traquent.desk.calendar.update_event",
 			args: me.get_update_args(event),
 			callback: function (r) {
 				if (r.exc) {
-					frappe.show_alert(__("Unable to update event"));
+					traquent.show_alert(__("Unable to update event"));
 					revertFunc();
 				}
 			},

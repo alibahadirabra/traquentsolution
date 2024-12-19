@@ -1,4 +1,4 @@
-// Copyright (c) 2017, Frappe Technologies and contributors
+// Copyright (c) 2017, traquent Technologies and contributors
 // For license information, please see license.txt
 const fields = [
 	"provider_name",
@@ -13,7 +13,7 @@ const fields = [
 	"auth_url_data",
 ];
 
-frappe.ui.form.on("Social Login Key", {
+traquent.ui.form.on("Social Login Key", {
 	refresh(frm) {
 		frm.trigger("setup_fields");
 	},
@@ -24,7 +24,7 @@ frappe.ui.form.on("Social Login Key", {
 
 	social_login_provider(frm) {
 		if (frm.doc.social_login_provider != "Custom") {
-			frappe
+			traquent
 				.call({
 					doc: frm.doc,
 					method: "get_social_login_provider",

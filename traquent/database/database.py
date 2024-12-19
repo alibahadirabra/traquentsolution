@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2022, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import itertools
@@ -184,13 +184,13 @@ class Database:
 		Examples:
 
 		        # return customer names as dicts
-		        frappe.db.sql("select name from tabCustomer", as_dict=True)
+		        traquent.db.sql("select name from tabCustomer", as_dict=True)
 
 		        # return names beginning with a
-		        frappe.db.sql("select name from tabCustomer where name like %s", "a%")
+		        traquent.db.sql("select name from tabCustomer where name like %s", "a%")
 
 		        # values as dict
-		        frappe.db.sql("select name from tabCustomer where name like %(name)s and owner=%(owner)s",
+		        traquent.db.sql("select name from tabCustomer where name like %(name)s and owner=%(owner)s",
 		                {"name": "a%", "owner":"test@example.com"})
 
 		"""
@@ -229,7 +229,7 @@ class Database:
 		query, values = self._transform_query(query, values)
 
 		if trace_id := get_trace_id():
-			query += f" /* FRAPPE_TRACE_ID: {trace_id} */"
+			query += f" /* traquent_TRACE_ID: {trace_id} */"
 
 		try:
 			self._cursor.execute(query, values)
@@ -407,7 +407,7 @@ class Database:
 		Example:
 
 		        # doctypes = ["DocType", "DocField", "User", ...]
-		        doctypes = frappe.db.sql_list("select name from DocType")
+		        doctypes = traquent.db.sql_list("select name from DocType")
 		"""
 		return self.sql(query, values, **kwargs, debug=debug, pluck=True)
 
@@ -508,16 +508,16 @@ class Database:
 		Example:
 
 		        # return first customer starting with a
-		        frappe.db.get_value("Customer", {"name": ("like a%")})
+		        traquent.db.get_value("Customer", {"name": ("like a%")})
 
 		        # return last login of **User** `test@example.com`
-		        frappe.db.get_value("User", "test@example.com", "last_login")
+		        traquent.db.get_value("User", "test@example.com", "last_login")
 
-		        last_login, last_ip = frappe.db.get_value("User", "test@example.com",
+		        last_login, last_ip = traquent.db.get_value("User", "test@example.com",
 		                ["last_login", "last_ip"])
 
 		        # returns default date_format
-		        frappe.db.get_value("System Settings", None, "date_format")
+		        traquent.db.get_value("System Settings", None, "date_format")
 		"""
 
 		result = self.get_values(
@@ -585,10 +585,10 @@ class Database:
 		Example:
 
 		        # return first customer starting with a
-		        customers = frappe.db.get_values("Customer", {"name": ("like a%")})
+		        customers = traquent.db.get_values("Customer", {"name": ("like a%")})
 
 		        # return last login of **User** `test@example.com`
-		        user = frappe.db.get_values("User", "test@example.com", "*")[0]
+		        user = traquent.db.get_values("User", "test@example.com", "*")[0]
 		"""
 		out = None
 		if cache and isinstance(filters, str) and (doctype, filters, fieldname) in self.value_cache:
@@ -732,7 +732,7 @@ class Database:
 		Example:
 
 		        # Get coulmn and value of the single doctype Accounts Settings
-		        account_settings = frappe.db.get_singles_dict("Accounts Settings")
+		        account_settings = traquent.db.get_singles_dict("Accounts Settings")
 		"""
 		queried_result = traquent.qb.get_query(
 			"Singles",
@@ -802,7 +802,7 @@ class Database:
 		Example:
 
 		        # Update the `deny_multiple_sessions` field in System Settings DocType.
-		        frappe.db.set_single_value("System Settings", "deny_multiple_sessions", True)
+		        traquent.db.set_single_value("System Settings", "deny_multiple_sessions", True)
 		"""
 
 		to_update = self._get_update_dict(
@@ -829,7 +829,7 @@ class Database:
 		Example:
 
 		        # Get the default value of the company from the Global Defaults doctype.
-		        company = frappe.db.get_single_value('Global Defaults', 'default_company')
+		        company = traquent.db.get_single_value('Global Defaults', 'default_company')
 		"""
 
 		if doctype not in self.value_cache:
@@ -1080,7 +1080,7 @@ class Database:
 	def savepoint(self, save_point):
 		"""Savepoints work as a nested transaction.
 
-		Changes can be undone to a save point by doing frappe.db.rollback(save_point)
+		Changes can be undone to a save point by doing traquent.db.rollback(save_point)
 
 		Note: rollback watchers can not work with save points.
 		        so only changes to database are undone when rolling back to a savepoint.
@@ -1387,8 +1387,8 @@ class Database:
 		will be switched and you'll not get complete results.
 
 		Usage:
-		        with frappe.db.unbuffered_cursor():
-		                for row in frappe.db.sql("query with huge result", as_iterator=True):
+		        with traquent.db.unbuffered_cursor():
+		                for row in traquent.db.sql("query with huge result", as_iterator=True):
 		                        continue # Do some processing.
 		"""
 		raise NotImplementedError

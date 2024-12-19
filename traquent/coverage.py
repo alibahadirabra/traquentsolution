@@ -1,10 +1,10 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2021, traquent Technologies Pvt. Ltd. and Contributors
 # MIT License. See LICENSE
 """
-	frappe.coverage
+	traquent.coverage
 	~~~~~~~~~~~~~~~~
 
-	Coverage settings for frappe
+	Coverage settings for traquent
 """
 
 STANDARD_INCLUSIONS = ["*.py"]
@@ -26,20 +26,20 @@ STANDARD_EXCLUSIONS = [
 
 # tested via commands' test suite
 TESTED_VIA_CLI = [
-	"*/frappe/installer.py",
-	"*/frappe/build.py",
-	"*/frappe/database/__init__.py",
-	"*/frappe/database/db_manager.py",
-	"*/frappe/database/**/setup_db.py",
+	"*/traquent/installer.py",
+	"*/traquent/build.py",
+	"*/traquent/database/__init__.py",
+	"*/traquent/database/db_manager.py",
+	"*/traquent/database/**/setup_db.py",
 ]
 
-FRAPPE_EXCLUSIONS = [
+traquent_EXCLUSIONS = [
 	"*/tests/*",
 	"*/commands/*",
-	"*/frappe/change_log/*",
-	"*/frappe/exceptions*",
-	"*/frappe/coverage.py",
-	"*frappe/setup.py",
+	"*/traquent/change_log/*",
+	"*/traquent/exceptions*",
+	"*/traquent/coverage.py",
+	"*traquent/setup.py",
 	"*/doctype/*/*_dashboard.py",
 	"*/patches/*",
 	*TESTED_VIA_CLI,
@@ -49,7 +49,7 @@ FRAPPE_EXCLUSIONS = [
 class CodeCoverage:
 	def __init__(self, with_coverage, app):
 		self.with_coverage = with_coverage
-		self.app = app or "frappe"
+		self.app = app or "traquent"
 
 	def __enter__(self):
 		if self.with_coverage:
@@ -63,8 +63,8 @@ class CodeCoverage:
 			source_path = os.path.join(get_bench_path(), "apps", self.app)
 			omit = STANDARD_EXCLUSIONS[:]
 
-			if self.app == "frappe":
-				omit.extend(FRAPPE_EXCLUSIONS)
+			if self.app == "traquent":
+				omit.extend(traquent_EXCLUSIONS)
 
 			self.coverage = Coverage(source=[source_path], omit=omit, include=STANDARD_INCLUSIONS)
 			self.coverage.start()

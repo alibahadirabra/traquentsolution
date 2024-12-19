@@ -79,7 +79,7 @@ let label_input = ref(null);
 
 // methods
 function edit_html() {
-	let d = new frappe.ui.Dialog({
+	let d = new traquent.ui.Dialog({
 		title: __("Edit HTML"),
 		fields: [
 			{
@@ -90,7 +90,7 @@ function edit_html() {
 			},
 		],
 		primary_action: ({ html }) => {
-			html = frappe.dom.remove_script_and_style(html);
+			html = traquent.dom.remove_script_and_style(html);
 			props.df["html"] = html;
 			d.hide();
 		},
@@ -99,7 +99,7 @@ function edit_html() {
 	d.show();
 }
 function configure_columns() {
-	let dialog = new frappe.ui.Dialog({
+	let dialog = new traquent.ui.Dialog({
 		title: __("Configure columns for {0}", [props.df.label]),
 		fields: [
 			{
@@ -137,7 +137,7 @@ function configure_columns() {
 	dialog.show();
 }
 function get_all_columns() {
-	let meta = frappe.get_meta(props.df.options);
+	let meta = traquent.get_meta(props.df.options);
 	let more_columns = [
 		{
 			label: __("Sr No."),
@@ -147,7 +147,7 @@ function get_all_columns() {
 	return more_columns.concat(
 		meta.fields
 			.map((tf) => {
-				if (frappe.model.no_value_type.includes(tf.fieldtype)) {
+				if (traquent.model.no_value_type.includes(tf.fieldtype)) {
 					return;
 				}
 				return {
@@ -173,7 +173,7 @@ function get_column_to_add(fieldname) {
 	}
 
 	return {
-		...frappe.meta.get_docfield(props.df.options, fieldname),
+		...traquent.meta.get_docfield(props.df.options, fieldname),
 		width: 10,
 	};
 }

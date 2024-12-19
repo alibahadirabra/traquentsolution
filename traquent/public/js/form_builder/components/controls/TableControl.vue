@@ -7,17 +7,17 @@ const props = defineProps(["df", "is-customize-form"]);
 let table_columns = computedAsync(async () => {
 	let doctype = props.df.options;
 	if (!doctype) return [];
-	if (!frappe.get_meta(doctype)) {
+	if (!traquent.get_meta(doctype)) {
 		await load_doctype_model(doctype);
 	}
-	let child_doctype = frappe.get_meta(doctype);
+	let child_doctype = traquent.get_meta(doctype);
 	return get_table_columns(props.df, child_doctype);
 }, []);
 
 function open_new_child_doctype_dialog() {
 	let is_custom = props.isCustomizeForm;
-	frappe.model.with_doctype("DocType").then(() => {
-		frappe.listview_settings["DocType"].new_doctype_dialog({ is_child: 1, is_custom });
+	traquent.model.with_doctype("DocType").then(() => {
+		traquent.listview_settings["DocType"].new_doctype_dialog({ is_child: 1, is_custom });
 	});
 }
 </script>
@@ -49,7 +49,7 @@ function open_new_child_doctype_dialog() {
 		</div>
 		<div class="grid-empty text-center">
 			<img
-				src="/assets/frappe/images/ui-states/grid-empty-state.svg"
+				src="/assets/traquent/images/ui-states/grid-empty-state.svg"
 				:alt="__('Grid Empty State')"
 				class="grid-empty-illustration"
 			/>

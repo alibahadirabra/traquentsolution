@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Frappe Technologies and contributors
+# Copyright (c) 2019, traquent Technologies and contributors
 # License: MIT. See LICENSE
 
 import os
@@ -50,7 +50,7 @@ class ConnectedApp(Document):
 	def validate(self):
 		base_url = traquent.utils.get_url()
 		callback_path = (
-			"/api/method/frappe.integrations.doctype.connected_app.connected_app.callback/" + self.name
+			"/api/method/traquent.integrations.doctype.connected_app.connected_app.callback/" + self.name
 		)
 		self.redirect_uri = urljoin(base_url, callback_path)
 

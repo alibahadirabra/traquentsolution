@@ -1,3 +1,3 @@
 import PhotoSwipe from "photoswipe";
 
-frappe.PhotoSwipe = PhotoSwipe;
+traquent.PhotoSwipe = PhotoSwipe;

@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import json
@@ -72,7 +72,7 @@ def get_notifications_for_doctypes(config, notification_count):
 				except traquent.PermissionError:
 					traquent.clear_messages()
 					pass
-				# frappe.msgprint("Permission Error in notifications for {0}".format(d))
+				# traquent.msgprint("Permission Error in notifications for {0}".format(d))
 
 				except Exception as e:
 					# OperationalError: (1412, 'Table definition has changed, please retry transaction')

@@ -57,7 +57,7 @@ class TypeExporter:
 		self.doctype = doc.name
 		self.field_types = {}
 
-		self.imports = {"from frappe.types import DF"}
+		self.imports = {"from traquent.types import DF"}
 		self.indent = "\t"
 		self.controller_path = Path(inspect.getfile(get_controller(self.doctype)))
 
@@ -189,7 +189,7 @@ class TypeExporter:
 
 	@staticmethod
 	def _validate_code(code) -> bool:
-		"""Make sure whatever code Frappe adds dynamically is valid python."""
+		"""Make sure whatever code traquent adds dynamically is valid python."""
 		try:
 			ast.parse(code)
 			return True

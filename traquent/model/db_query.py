@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 """build query for doclistview and return results"""
 
@@ -611,7 +611,7 @@ class DatabaseQuery:
 	def apply_fieldlevel_read_permissions(self):
 		"""Apply fieldlevel read permissions to the query
 
-		Note: Does not apply to `frappe.model.core_doctype_list`
+		Note: Does not apply to `traquent.model.core_doctype_list`
 
 		Remove fields that user is not allowed to read. If `fields=["*"]` is passed, only permitted fields will
 		be returned.
@@ -619,7 +619,7 @@ class DatabaseQuery:
 		Example:
 		        - User has read permission only on `title` for DocType `Note`
 		        - Query: fields=["*"]
-		        - Result: fields=["title", ...] // will also include Frappe's meta field like `name`, `owner`, etc.
+		        - Result: fields=["title", ...] // will also include traquent's meta field like `name`, `owner`, etc.
 		"""
 		from traquent.desk.reportview import extract_fieldnames
 
@@ -653,7 +653,7 @@ class DatabaseQuery:
 			elif not column or column.isnumeric():
 				continue
 
-			# labels / pseudo columns or frappe internals
+			# labels / pseudo columns or traquent internals
 			elif column[0] in {"'", '"'} or column in optional_fields:
 				continue
 

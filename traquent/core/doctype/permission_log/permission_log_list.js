@@ -1,4 +1,4 @@
-frappe.listview_settings["Permission Log"] = {
+traquent.listview_settings["Permission Log"] = {
 	hide_name_column: true,
 
 	onload(listview) {

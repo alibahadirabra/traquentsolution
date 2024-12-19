@@ -1,4 +1,4 @@
-# Copyright (c) 2020, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2020, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 
 import traquent
@@ -19,7 +19,7 @@ class TestMonitor(IntegrationTestCase):
 		traquent.cache.delete_value(MONITOR_REDIS_KEY)
 
 	def test_enable_monitor(self):
-		set_request(method="GET", path="/api/method/frappe.ping")
+		set_request(method="GET", path="/api/method/traquent.ping")
 		response = build_response("json")
 
 		traquent.monitor.start()
@@ -38,7 +38,7 @@ class TestMonitor(IntegrationTestCase):
 		self.assertEqual(log.request["method"], "GET")
 
 	def test_no_response(self):
-		set_request(method="GET", path="/api/method/frappe.ping")
+		set_request(method="GET", path="/api/method/traquent.ping")
 
 		traquent.monitor.start()
 		traquent.monitor.stop(response=None)
@@ -53,7 +53,7 @@ class TestMonitor(IntegrationTestCase):
 
 	def test_job(self):
 		traquent.utils.background_jobs.execute_job(
-			traquent.local.site, "frappe.ping", None, None, {}, is_async=False
+			traquent.local.site, "traquent.ping", None, None, {}, is_async=False
 		)
 
 		logs = traquent.cache.lrange(MONITOR_REDIS_KEY, 0, -1)
@@ -61,12 +61,12 @@ class TestMonitor(IntegrationTestCase):
 		log = traquent.parse_json(logs[0].decode())
 		self.assertEqual(log.transaction_type, "job")
 		self.assertTrue(log.job)
-		self.assertEqual(log.job["method"], "frappe.ping")
+		self.assertEqual(log.job["method"], "traquent.ping")
 		self.assertEqual(log.job["scheduled"], False)
 		self.assertEqual(log.job["wait"], 0)
 
 	def test_flush(self):
-		set_request(method="GET", path="/api/method/frappe.ping")
+		set_request(method="GET", path="/api/method/traquent.ping")
 		response = build_response("json")
 		traquent.monitor.start()
 		traquent.monitor.stop(response)
@@ -82,7 +82,7 @@ class TestMonitor(IntegrationTestCase):
 		self.assertEqual(log.transaction_type, "request")
 
 	def test_trace_ids(self):
-		set_request(method="GET", path="/api/method/frappe.ping")
+		set_request(method="GET", path="/api/method/traquent.ping")
 		response = build_response("json")
 		traquent.monitor.start()
 		traquent.db.sql("select 1")

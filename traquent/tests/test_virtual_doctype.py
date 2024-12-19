@@ -106,7 +106,7 @@ class TestVirtualDoctypes(IntegrationTestCase):
 		cls.addClassCleanup(cdt.delete, force=True)
 
 		patch_virtual_doc = patch(
-			"frappe.controllers", new={traquent.local.site: {TEST_DOCTYPE_NAME: VirtualDoctypeTest}}
+			"traquent.controllers", new={traquent.local.site: {TEST_DOCTYPE_NAME: VirtualDoctypeTest}}
 		)
 		patch_virtual_doc.start()
 		cls.addClassCleanup(patch_virtual_doc.stop)

@@ -1,4 +1,4 @@
-# Copyright (c) 2017, Frappe Technologies and Contributors
+# Copyright (c) 2017, traquent Technologies and Contributors
 # License: MIT. See LICENSE
 import traquent
 from traquent.contacts.doctype.contact.contact import get_full_name

@@ -1,11 +1,11 @@
 """
-This module contains the TestRunner class, which is responsible for executing test suites in Frappe.
+This module contains the TestRunner class, which is responsible for executing test suites in traquent.
 
 The TestRunner class extends unittest.TextTestRunner and provides additional functionality:
 - Categorization of tests (unit, integration, functional)
 - Priority-based execution of test categories
 - Profiling capabilities
-- Integration with Frappe's configuration and environment setup
+- Integration with traquent's configuration and environment setup
 
 Key components:
 - TestRunner: The main class for running tests
@@ -13,7 +13,7 @@ Key components:
 - Various utility methods for test preparation, profiling, and iteration
 
 Usage:
-The TestRunner is typically instantiated and used by Frappe's test discovery and execution system.
+The TestRunner is typically instantiated and used by traquent's test discovery and execution system.
 It can be customized through the TestConfig object passed during initialization.
 
 """

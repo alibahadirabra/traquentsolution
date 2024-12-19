@@ -1,7 +1,7 @@
-frappe.provide("frappe.ui.misc");
-frappe.ui.misc.about = function () {
-	if (!frappe.ui.misc.about_dialog) {
-		var d = new frappe.ui.Dialog({ title: __("Frappe Framework") });
+traquent.provide("traquent.ui.misc");
+traquent.ui.misc.about = function () {
+	if (!traquent.ui.misc.about_dialog) {
+		var d = new traquent.ui.Dialog({ title: __("traquent Framework") });
 
 		$(d.body).html(
 			repl(
@@ -9,18 +9,18 @@ frappe.ui.misc.about = function () {
 					<p>${__("Open Source Applications for the Web")}</p>
 					<p><i class='fa fa-globe fa-fw'></i>
 						${__("Website")}:
-						<a href='https://frappeframework.com' target='_blank'>https://frappeframework.com</a></p>
+						<a href='https://traquentframework.com' target='_blank'>https://traquentframework.com</a></p>
 					<p><i class='fa fa-github fa-fw'></i>
 						${__("Source")}:
-						<a href='https://github.com/frappe' target='_blank'>https://github.com/frappe</a></p>
+						<a href='https://github.com/traquent' target='_blank'>https://github.com/traquent</a></p>
 					<p><i class='fa fa-graduation-cap fa-fw'></i>
-						Frappe School: <a href='https://frappe.school' target='_blank'>https://frappe.school</a></p>
+						traquent School: <a href='https://traquent.school' target='_blank'>https://traquent.school</a></p>
 					<p><i class='fa fa-linkedin fa-fw'></i>
-						Linkedin: <a href='https://linkedin.com/company/frappe-tech' target='_blank'>https://linkedin.com/company/frappe-tech</a></p>
+						Linkedin: <a href='https://linkedin.com/company/traquent-tech' target='_blank'>https://linkedin.com/company/traquent-tech</a></p>
 					<p><i class='fa fa-twitter fa-fw'></i>
-						Twitter: <a href='https://twitter.com/frappetech' target='_blank'>https://twitter.com/frappetech</a></p>
+						Twitter: <a href='https://twitter.com/traquenttech' target='_blank'>https://twitter.com/traquenttech</a></p>
 					<p><i class='fa fa-youtube fa-fw'></i>
-						YouTube: <a href='https://www.youtube.com/@frappetech' target='_blank'>https://www.youtube.com/@frappetech</a></p>
+						YouTube: <a href='https://www.youtube.com/@traquenttech' target='_blank'>https://www.youtube.com/@traquenttech</a></p>
 					<hr>
 					<h4>${__("Installed Apps")}</h4>
 					<div id='about-app-versions'>${__("Loading versions...")}</div>
@@ -32,24 +32,24 @@ frappe.ui.misc.about = function () {
 						</b>
 					</p>
 					<hr>
-					<p class='text-muted'>${__("&copy; Frappe Technologies Pvt. Ltd. and contributors")} </p>
+					<p class='text-muted'>${__("&copy; traquent Technologies Pvt. Ltd. and contributors")} </p>
 					</div>`,
-				frappe.app
+				traquent.app
 			)
 		);
 
-		frappe.ui.misc.about_dialog = d;
+		traquent.ui.misc.about_dialog = d;
 
-		frappe.ui.misc.about_dialog.on_page_show = function () {
-			if (!frappe.versions) {
-				frappe.call({
-					method: "frappe.utils.change_log.get_versions",
+		traquent.ui.misc.about_dialog.on_page_show = function () {
+			if (!traquent.versions) {
+				traquent.call({
+					method: "traquent.utils.change_log.get_versions",
 					callback: function (r) {
 						show_versions(r.message);
 					},
 				});
 			} else {
-				show_versions(frappe.versions);
+				show_versions(traquent.versions);
 			}
 		};
 
@@ -70,9 +70,9 @@ frappe.ui.misc.about = function () {
 				$(text).appendTo($wrap);
 			});
 
-			frappe.versions = versions;
+			traquent.versions = versions;
 		};
 	}
 
-	frappe.ui.misc.about_dialog.show();
+	traquent.ui.misc.about_dialog.show();
 };

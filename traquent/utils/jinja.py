@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 def get_jenv():
 	import traquent
@@ -11,15 +11,15 @@ def get_jenv():
 
 		UNSAFE_ATTRIBUTES = UNSAFE_ATTRIBUTES - {"format", "format_map"}
 
-		class FrappeSandboxedEnvironment(SandboxedEnvironment):
+		class traquentSandboxedEnvironment(SandboxedEnvironment):
 			def is_safe_attribute(self, obj, attr, *args, **kwargs):
 				if attr in UNSAFE_ATTRIBUTES:
 					return False
 
 				return super().is_safe_attribute(obj, attr, *args, **kwargs)
 
-		# frappe will be loaded last, so app templates will get precedence
-		jenv = FrappeSandboxedEnvironment(loader=get_jloader(), undefined=DebugUndefined)
+		# traquent will be loaded last, so app templates will get precedence
+		jenv = traquentSandboxedEnvironment(loader=get_jloader(), undefined=DebugUndefined)
 		set_filters(jenv)
 
 		jenv.globals.update(get_safe_globals())
@@ -127,8 +127,8 @@ def get_jloader():
 				)
 			)
 
-		if "frappe" not in apps:
-			apps.append("frappe")
+		if "traquent" not in apps:
+			apps.append("traquent")
 
 		traquent.local.jloader = ChoiceLoader(
 			# search for something like app/templates/...

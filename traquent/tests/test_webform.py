@@ -32,7 +32,7 @@ class TestWebform(IntegrationTestCase):
 		# create a hook to get webform_context
 		set_webform_hook(
 			"webform_list_context",
-			"frappe.www._test._test_webform.webform_list_context",
+			"traquent.www._test._test_webform.webform_list_context",
 		)
 		# check context for apps with hook
 		context_list = get_list_context("", "Custom Doctype", "test-webform")

@@ -12,7 +12,7 @@ class VirtualDoctype(Protocol):
 
 
 	Additional requirements:
-	- DocType controller has to inherit from `frappe.model.document.Document` class
+	- DocType controller has to inherit from `traquent.model.document.Document` class
 
 	Note:
 	- "Backend" here means any storage service, it can be a database, flat file or network call to API.

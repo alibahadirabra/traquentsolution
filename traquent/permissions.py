@@ -1,4 +1,4 @@
-# Copyright (c) 2015, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2015, traquent Technologies Pvt. Ltd. and Contributors
 # License: MIT. See LICENSE
 import copy
 import functools
@@ -91,7 +91,7 @@ def has_permission(
 	:param ptype: Permission Type to check
 	:param doc: Check User Permissions for specified document.
 	:param user: User to check permission for. Defaults to current user.
-	:param print_logs: If True, will display a message using frappe.msgprint
+	:param print_logs: If True, will display a message using traquent.msgprint
 	                which explains why the permission check failed.
 	:param parent_doctype:
 	        Required when checking permission for a child DocType (unless doc is specified)

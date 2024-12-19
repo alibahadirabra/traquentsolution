@@ -1,4 +1,4 @@
-import { Chart } from "traquent-charts/dist/traquent-charts.esm";
+import { Chart } from "frappe-charts/dist/frappe-charts.esm";
 
 traquent.provide("traquent.ui");
 traquent.Chart = Chart;

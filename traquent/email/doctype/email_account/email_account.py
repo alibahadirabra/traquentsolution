@@ -12,7 +12,7 @@ import traquent
 from traquent import _, are_emails_muted, safe_encode
 from traquent.desk.form import assign_to
 from traquent.email.doctype.email_domain.email_domain import EMAIL_DOMAIN_FIELDS
-from traquent.email.traquentmail import traquentMail
+from traquent.email.frappemail import traquentMail
 from traquent.email.receive import EmailServer, InboundMail, SentEmailInInboxError
 from traquent.email.smtp import SMTPServer
 from traquent.email.utils import get_port

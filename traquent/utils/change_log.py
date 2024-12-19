@@ -12,7 +12,7 @@ import traquent
 from traquent import _, safe_decode
 from traquent.utils import cstr
 from traquent.utils.caching import redis_cache
-from traquent.utils.traquentcloud import on_traquentcloud
+from traquent.utils.frappecloud import on_traquentcloud
 
 
 def get_change_log(user=None):

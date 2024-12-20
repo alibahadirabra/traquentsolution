@@ -19,8 +19,8 @@
 1. `app_include_js` - include in "app"
 1. `app_include_css` - assets/traquent/css/splash.css
 
-1. `web_include_js` - assets/js/frappe-web.min.js
-1. `web_include_css` - assets/css/frappe-web.css
+1. `web_include_js` - assets/js/traquent-web.min.js
+1. `web_include_css` - assets/css/traquent-web.css
 
 #### Desktop
 

@@ -1,11 +1,31 @@
-.form-control {
-	border: none;
-	height: var(--input-height);
-	@include get_textstyle("base", "regular");
-	border-radius: var(--border-radius-sm);
-	padding: var(--input-padding);
-	position: relative;
-}
+.form-control {//traquent.v1.sevval//
+	border-radius: var(--traquent-radius);
+	height: var(--traquent-input-height);
+	background: #fff !important;
+	padding: 6px 8px;
+	border: 1px solid #e0e1e7;
+	box-shadow: 0px 0px 0px 1px #09194821, 0px 1px 2px 0px #12376914 !important;
+	&:hover{
+		box-shadow: 0px 0px 0px 1px #09194829, 0px 1px 2px 0px #335CFF3D !important;
+	}
+	&:focus{
+		background: #fff !important;
+		border: none !important;
+		box-shadow: 
+			0px 0px 0px 1px #335CFF,
+			0px 0px 0px 2px #FFFFFF, 
+			0px 0px 0px 3px #0C183D52,   
+			0px 1px 2px 0px #0C183D66 !important; 
+		&::placeholder {
+			color: #0D0D12 !important; /* Placeholder metni rengi */
+		}
+	}
+	&:not(:placeholder-shown) {
+		color: #0D0D12;
+		box-shadow: 0px 0px 0px 1px #09194821, 0px 1px 2px 0px #12376914;
+	}
+}//****************/
+
 
 .form-control.bold {
 	font-weight: var(--weight-medium);
@@ -19,8 +39,11 @@
 	border-radius: var(--border-radius-sm);
 	padding: 4px 8px;
 	cursor: default;
-	color: var(--disabled-text-color);
-	background-color: var(--disabled-control-bg);
+	@include traquent-text("body", "s", "regular");//traquent.v1.sevval//
+	//color: var(--disabled-text-color);
+	//background-color: var(--disabled-control-bg);
+	color: var(--traquent-text-disabled-300);//traquent.v1.sevval//
+	background-color: var(--traquent-background-disabled-0);//traquent.v1.sevval//
 }
 
 .head-title {

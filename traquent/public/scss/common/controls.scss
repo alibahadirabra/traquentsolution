@@ -144,7 +144,7 @@ select.form-control {
 	@include get_textstyle("base", "regular");
 	.control-label.reqd:after {
 		content: " *";
-		color: var(--red-400);
+		color: var(var(--traquent-secondary-red-100));//traquent.v1.sevval//
 	}
 	.help:empty {
 		display: none;
@@ -197,12 +197,28 @@ select.form-control {
 .traquent-control:not([data-fieldtype="MultiSelectPills"]):not([data-fieldtype="Table MultiSelect"]) {
 	&.has-error {
 		input {
-			border: 1px solid var(--error-border);
+			box-shadow: 0px 0px 0px 1px #DF1C41,
+			 0px 0px 0px 2px #FFFFFF,
+			 0px 0px 0px 3px #DF1C413D,
+			 0px 1px 2px 0px #96132C52 !important;//traquent.v1.sevval//
+			//border: 1px solid var(--error-border);
 
 			&:focus {
-				box-shadow: 0 0 0 $input-btn-focus-width var(--error-bg);
+				//box-shadow: 0 0 0 $input-btn-focus-width var(--error-bg);
+				box-shadow: 0px 0px 0px 1px #DF1C41,
+					0px 0px 0px 2px #FFFFFF,
+					0px 0px 0px 3px #DF1C413D,
+					0px 1px 2px 0px #96132C52 !important;//traquent.v1.sevval//
 			}
 		}
+		//traquent.v1.sevval//
+		.text-extra-muted{
+			background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M0.833496%207.00004C0.833496%203.59428%203.59441%200.833374%207.00016%200.833374C10.4059%200.833374%2013.1668%203.59429%2013.1668%207.00004C13.1668%2010.4058%2010.4059%2013.1667%207.00016%2013.1667C3.59441%2013.1667%200.833496%2010.4058%200.833496%207.00004Z%22%20fill%3D%22%23FFF0F3%22%2F%3E%3Cpath%20d%3D%22M7.00017%207.66671L7.00016%204.16671M0.833496%207.00004C0.833496%203.59428%203.59441%200.833374%207.00016%200.833374C10.4059%200.833374%2013.1668%203.59429%2013.1668%207.00004C13.1668%2010.4058%2010.4059%2013.1667%207.00016%2013.1667C3.59441%2013.1667%200.833496%2010.4058%200.833496%207.00004Z%22%20stroke%3D%22%23DF1C41%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cg%20transform%3D%22translate(6%2C%208)%22%3E%3Cpath%20d%3D%22M0.999837%202.25004C1.322%202.25004%201.58317%201.98887%201.58317%201.66671C1.58317%201.34454%201.322%201.08337%200.999837%201.08337C0.677671%201.08337%200.416504%201.34454%200.416504%201.66671C0.416504%201.98887%200.677671%202.25004%200.999837%202.25004Z%22%20fill%3D%22%23DF1C41%22%20stroke%3D%22%23DF1C41%22%20stroke-width%3D%220.5%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+			background-repeat: no-repeat;
+			background-size: contain;
+			color: var(--traquent-secondary-red-100) !important;
+			padding-left: 24px;
+		}//****************/
 	}
 }
 
@@ -210,9 +226,21 @@ select.form-control {
 .traquent-control[data-fieldtype="Table MultiSelect"] {
 	&.has-error {
 		.control-input {
-			border: 1px solid var(--error-border);
+			//border: 1px solid var(--error-border);
+			box-shadow: 0px 0px 0px 1px #DF1C41,
+					0px 0px 0px 2px #FFFFFF,
+					0px 0px 0px 3px #DF1C413D,
+					0px 1px 2px 0px #96132C52 !important;//traquent.v1.sevval//
 			border-radius: var(--border-radius);
 		}
+		//traquent.v1.sevval//
+		.text-extra-muted{
+			background-image: url("data:image/svg+xml,%3Csvg%20width%3D%2214%22%20height%3D%2214%22%20viewBox%3D%220%200%2014%2014%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M0.833496%207.00004C0.833496%203.59428%203.59441%200.833374%207.00016%200.833374C10.4059%200.833374%2013.1668%203.59429%2013.1668%207.00004C13.1668%2010.4058%2010.4059%2013.1667%207.00016%2013.1667C3.59441%2013.1667%200.833496%2010.4058%200.833496%207.00004Z%22%20fill%3D%22%23FFF0F3%22%2F%3E%3Cpath%20d%3D%22M7.00017%207.66671L7.00016%204.16671M0.833496%207.00004C0.833496%203.59428%203.59441%200.833374%207.00016%200.833374C10.4059%200.833374%2013.1668%203.59429%2013.1668%207.00004C13.1668%2010.4058%2010.4059%2013.1667%207.00016%2013.1667C3.59441%2013.1667%200.833496%2010.4058%200.833496%207.00004Z%22%20stroke%3D%22%23DF1C41%22%20stroke-width%3D%221.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cg%20transform%3D%22translate(6%2C%208)%22%3E%3Cpath%20d%3D%22M0.999837%202.25004C1.322%202.25004%201.58317%201.98887%201.58317%201.66671C1.58317%201.34454%201.322%201.08337%200.999837%201.08337C0.677671%201.08337%200.416504%201.34454%200.416504%201.66671C0.416504%201.98887%200.677671%202.25004%200.999837%202.25004Z%22%20fill%3D%22%23DF1C41%22%20stroke%3D%22%23DF1C41%22%20stroke-width%3D%220.5%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+			background-repeat: no-repeat;
+			background-size: contain;
+			color: var(--traquent-secondary-red-100) !important;
+			padding-left: 24px;
+		}//***************7
 	}
 }
 
@@ -367,6 +395,68 @@ textarea.form-control {
 .control-value {
 	position: relative;
 }
+//traquent.v1.sevval//
+.traquent-control[data-fieldtype=Data] .control-input{
+	input {
+		padding-left: 33px;
+	}
+	svg {
+		position: absolute;
+		left: 11px;
+		top: 8px;
+	}
+}
+// .traquent-control[data-fieldtype=Check]{
+// 	.input-area input{
+// 		@include traquent-text(label, "s", "medium");
+// 		border: none !important;
+// 		border-radius: 3px;
+// 		background-color: var(--traquent-background-white);
+// 		box-shadow: 0px 0px 0px 1px #DFE1E7, 0px 1px 2px 0px #A4ACB966;
+// 		&:hover{
+// 			background-color: var(--traquent-background-white);
+// 			box-shadow: 0px 0px 0px 1px #C1C7D0, 0px 1px 2px 0px #666D8066;
+// 		}
+// 		&:checked {
+// 			background-color: var(--traquent-lavender-blue-800) !important;
+// 			box-shadow: 0px 0px 0px 1px #5F57FF !important;
+// 		}
+// 		&:focus{
+// 			box-shadow: 0px 0px 0px 1px #335CFF, 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 3px rgba(12, 24, 61, 0.3215686275), 0px 1px 2px 0px rgba(12, 24, 61, 0.4) !important;		
+// 		}
+// 		&.disabled-selected{
+// 			background-color: var(--traquent-background-disabled) !important;	
+// 			border: 1px solid #ECEFF3;
+// 		}
+// 	}
+// }
+// input[type="checkbox"]{
+// 	@include traquent-text(label, "s", "medium");
+// 	border: none !important;
+// 	border-radius: 3px;
+// 	background-color: var(--traquent-background-white);
+// 	box-shadow: 0px 0px 0px 1px #DFE1E7, 0px 1px 2px 0px #A4ACB966;
+// 	&:hover{
+// 		background-color: var(--traquent-background-white);
+// 		box-shadow: 0px 0px 0px 1px #C1C7D0, 0px 1px 2px 0px #666D8066;
+// 	}
+// 	&:checked {
+// 		background-color: var(--traquent-lavender-blue-800) !important;
+// 		box-shadow: 0px 0px 0px 1px #5F57FF !important;
+// 	}
+// 	&:focus{
+// 		box-shadow: 0px 0px 0px 1px #335CFF, 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 3px rgba(12, 24, 61, 0.3215686275), 0px 1px 2px 0px rgba(12, 24, 61, 0.4) !important;		
+// 	}
+// 	// &:disabled{
+// 	// 	background-color: var(--traquent-background-disabled) !important;	
+// 	// 	border: 1px solid #ECEFF3 !important;
+// 	// }
+// 	// &.disabled-selected{
+// 	// 	background-color: var(--traquent-background-disabled) !important;	
+// 	// 	border: 1px solid #ECEFF3 !important;
+// 	// }
+// }
+//****************/
 
 .phone-btn {
 	position: absolute;

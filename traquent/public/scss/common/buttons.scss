@@ -6,28 +6,31 @@
 
 .btn {
 	border: none;
+	height: 32px;//traquent.v1.sevval//
+	padding: 6px 8px;//traquent.v1.sevval//
+	@include traquent-text(label, s, medium);//traquent.v1.sevval//
 	&:not(.btn-md):not(.btn-lg) {
 		padding: 4px 8px;
 	}
 	border-radius: var(--border-radius);
 	box-shadow: none;
-	@include get_textstyle("base", "regular");
+	//traquent.v1.sevval////****************/
+	//@include get_textstyle("base", "regular");
 
-	&:active {
-		// override #dadada that comes from bootstrap (probably) to support dark theme.
-		color: var(--text-color) !important;
-		background-color: var(--control-bg) !important;
-		box-shadow: var(--focus-default) !important;
-	}
-
+	// &:active {
+	// 	// override #dadada that comes from bootstrap (probably) to support dark theme.
+	// 	color: var(--text-color) !important;
+	// 	background-color: var(--control-bg) !important;
+	// 	box-shadow: var(--focus-default) !important;
+	// }
+	//****************/
 	&.icon-btn {
-		height: var(--btn-height);
+		height: var(--btn-height) !important;//traquent.v1.sevval//
+		width: var(--btn-height) !important;//traquent.v1.sevval//
+		border-radius: 50% !important;//traquent.v1.sevval//
 		padding: 0px;
 		@extend .center-content;
-		&.btn-default,
-		&.btn-secondary {
-			min-width: 28px;
-		}
+		
 	}
 }
 
@@ -74,46 +77,108 @@
 	}
 }
 
-.btn.btn-secondary {
-	background-color: var(--control-bg);
-	color: var(--text-color);
-	&:hover,
-	&:active {
-		background-color: var(--btn-default-hover-bg);
-		color: var(--text-color);
-	}
-}
+// .btn.btn-secondary {
+// 	background-color: var(--control-bg);
+// 	color: var(--text-color);
+// 	&:hover,
+// 	&:active {
+// 		background-color: var(--btn-default-hover-bg);
+// 		color: var(--text-color);
+// 	}
+// }
 
+.btn.btn-secondary,
 .btn.btn-default {
-	background-color: var(--control-bg);
-	color: var(--text-color);
-	&:hover,
+	//background-color: var(--control-bg);
+	color: var(--traquent-text-muted-600) !important;
+	background: linear-gradient(0deg, #FFFFFF, #FFFFFF), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.02) 100%);//traquent.v1.sevval//
+	box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;//traquent.v1.sevval//
+	&:hover{
+		background: linear-gradient(0deg, #FFFFFF, #FFFFFF),linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.08) 100%);//traquent.v1.sevval//
+		color: var(--traquent-text-loud-900) !important;//traquent.v1.sevval//
+		box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;//traquent.v1.sevval//
+	}
+	&:active,
+	&:focus {
+		color: var(--traquent-text-loud-900);//traquent.v1.sevval//
+		box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;//traquent.v1.sevval//
+	}
 	&:active {
-		background: var(--btn-default-hover-bg);
-		color: var(--text-color);
+		color: var(--traquent-text-muted-600);
+		background: linear-gradient(0deg, #FFFFFF, #FFFFFF),linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.02) 100%);//traquent.v1.sevval//
+		box-shadow: 0px 0px 0px 1px #335CFF14, 0px 0px 0px 2px #FFFFFF,0px 0px 0px 3px #335CFF80,   0px 1px 2px 0px #A4ACB966 !important;//traquent.v1.sevval//		//background: var(--btn-default-hover-bg);
+		//color: var(--text-color);
+	}
+	&:disabled{
+		background: var(--traquent-background-disabled-0);//traquent.v1.sevval//
+		color: var(--traquent-text-disabled-300);//traquent.v1.sevval//
+		box-shadow:none;
 	}
 }
 
 .btn.btn-primary {
 	background-color: var(--btn-primary);
-	color: var(--neutral);
+	color: var(--traquent-text-white);//traquent.v1.sevval//
+	border: 1px solid;//traquent.v1.sevval//
+	border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);//traquent.v1.sevval//
 	white-space: nowrap;
 	--icon-stroke: currentColor;
 	--icon-fill-bg: var(--btn-primary);
+	box-shadow: 0px 0px 0px 1px #0C183D, 0px 1px 2px 0px #0C183D80;//traquent.v1.sevval//
 	&:hover{
-		background-color: var(--custom-800) !important;/*#UPDATES --sevval*/
+		background: var(--btn-primary) !important;/*#UPDATES --sevval*/
+		box-shadow: 0px 0px 0px 1px #335CFF, 0px 1px 2px 0px #335CFF80;//traquent.v1.sevval//
+	}
+	&:active,
+	&:focus {
+		box-shadow: 0px 0px 0px 1px #335CFF, 0px 1px 2px 0px #0C183D80;//traquent.v1.sevval//
 	}
 	&:active {
-		color: var(--gray-100) !important;
-		background-color: var(--btn-primary) !important;
-		border-color: var(--custom-300) !important;/*#UPDATES --sevval*/
-		box-shadow: var(--custom-300) !important;/*#UPDATES --sevval*/
+		color: var(--traquent-text-white) !important;//traquent.v1.sevval//
+		//background-color: var(--btn-primary) !important;
+		//border-color: var(--custom-300) !important;/*#UPDATES --sevval*/
+		//box-shadow: var(--custom-300) !important;/*#UPDATES --sevval*/
+		box-shadow: 0px 0px 0px 1px #335CFF, 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 3px rgba(12, 24, 61, 0.3215686275), 0px 1px 2px 0px rgba(12, 24, 61, 0.4) !important;		//traquent.v1.sevval//
+	}
+	&:disabled{
+		background: var(--traquent-background-disabled-0);//traquent.v1.sevval//
+		color: var(--traquent-text-disabled-300);//traquent.v1.sevval//
+		box-shadow:none;//traquent.v1.sevval//
 	}
 }
 
 .btn.btn-danger {
-	background-color: var(--danger);
-	color: $white;
+	//traquent.v1.sevval//
+	//background-color: var(--danger);
+	color: var(--traquent-secondary-red-100);
+	background: linear-gradient(0deg, #FFFFFF, #FFFFFF), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.02) 100%);
+	box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D !important;
+	&:hover{
+		background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
+		linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.08) 100%);
+		color: var(--traquent-secondary-red-200);
+		box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;
+	}
+	&:active,
+	&:focus {
+		color: var(--traquent-secondary-red-200);
+		background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
+		linear-gradient(180deg, rgba(193, 199, 208, 0.08) 0%, rgba(255, 255, 255, 0.08) 100%);
+		box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;
+	}
+	&:active {
+		color: var(--traquent-secondary-red-200);
+		background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
+			linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.02) 100%);
+		box-shadow: 0px 0px 0px 1px #335CFF14, 0px 0px 0px 2px #FFFFFF,0px 0px 0px 3px #335CFF80,   0px 1px 2px 0px #A4ACB966;		//background: var(--btn-default-hover-bg);
+			//color: var(--text-color);
+	}
+	&:disabled{
+		background: var(--traquent-background-disabled-0);
+		color: var(--traquent-text-disabled-300);
+		box-shadow:none;
+	}
+	//****************/
 }
 
 .btn-reset {
@@ -141,4 +206,44 @@
 			background-color: var(--custom-orange-500) !important;/*#UPDATES --sevval*/
 		}
 	}
+	//traquent.v1.sevval//
+	.btn.btn-danger {
+		color: var(--traquent-text-white);
+		background: linear-gradient(0deg, #DF1C41, #DF1C41),
+		linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+		border: 1px solid;
+		border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+		box-shadow: 0px 0px 0px 1px #96132C, 0px 1px 2px 0px #96132C80;
+		&:hover{
+			background: linear-gradient(0deg, #DF1C41, #DF1C41),
+				linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 100%);
+			border: 1px solid;
+			border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+			color: var(--traquent-secondary-red-200);
+			box-shadow: 0px 0px 0px 1px #96132C, 0px 1px 2px 0px #96132C80;
+		}
+		&:active,
+		&:focus {
+			color: var(--traquent-text-white);
+			background: linear-gradient(0deg, #DF1C41, #DF1C41),
+				linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.16) 100%);
+			border: 1px solid;
+			border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+			box-shadow: 0px 0px 0px 1px #B71836, 0px 1px 2px 0px #710E2180;
+		}
+		&:active {
+			color: var(--traquent-text-white);
+			background: linear-gradient(0deg, #DF1C41, #DF1C41),
+				linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+			border: 1px solid;
+			border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);				
+			box-shadow: 0px 0px 0px 2px #FFFFFF,0px 0px 0px 3px #96132C80, 0px 0px 0px 1px #96132C,  0px 1px 2px 0px #96132C80;
+		}
+		&:disabled{
+			background: var(--traquent-background-disabled-0);
+			color: var(--traquent-text-disabled-300);
+			box-shadow:none;
+		}
+	}
+	//****************/
 }

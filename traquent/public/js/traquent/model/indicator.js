@@ -57,9 +57,10 @@ traquent.get_indicator = function (doc, doctype, show_workflow_state) {
 					Success: "green",
 					Warning: "orange",
 					Danger: "red",
-					Primary: "blue",
+					Primary: "primary",//traquent.v1.sevval//
+					Secondary: "light-gray",//traquent.v1.sevval//
 					Inverse: "black",
-					Info: "light-blue",
+					Info: "blue",//traquent.v1.sevval//
 				}[locals["Workflow State"][value].style];
 			}
 			if (!colour) colour = "gray";
@@ -92,7 +93,7 @@ traquent.get_indicator = function (doc, doctype, show_workflow_state) {
 
 	// if submittable
 	if (is_submittable && doc.docstatus == 1) {
-		return [__("Submitted"), "blue", "docstatus,=,1"];
+		return [__("Submitted"), "primary", "docstatus,=,1"];//traquent.v1.sevval//
 	}
 
 	// based on status

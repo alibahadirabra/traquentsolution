@@ -13,58 +13,122 @@ body {
 	}
 }
 body[data-path="login"] {
-	@include media-breakpoint-up(sm) {
-	  background-image: url("/assets/traquent/images/pattern.svg");/*#UPDATES --sevval*/
-	  background-size: cover; /* Resmi sayfa boyutuna göre ayarlar */
-	  background-position: center; /* Resmi ortalar */
-	  background-repeat: no-repeat;
-	}
-  }
-
-body[data-path=login] .navbar-light {
-    border-bottom: 1px solid transparent;
-    background: transparent;
+	// @include media-breakpoint-up(sm) {
+	//   background-image: url("/assets/traquent/images/pattern.svg");/*#UPDATES --sevval*/
+	//   background-size: cover; /* Resmi sayfa boyutuna göre ayarlar */
+	//   background-position: center; /* Resmi ortalar */
+	//   background-repeat: no-repeat;
+	// }
+	background-color: var(--traquent-background-disabled-0);
+	box-shadow: 2px 4px 20px 12px #0C183D08;
 }
-body[data-path=login] .navbar .container{
-	.navbar-toggler{
-		display: none;
+
+body[data-path=login] { 
+	nav {
+    	display: none !important;
 	}
-	.navbar-brand {
-		/*#UPDATES --sevval*/
-		// background-image: url(/assets/traquent/images/traquent_logo.png);
-		// background-size: cover;
-		// background-position: center;
-		// background-repeat: no-repeat;
-		// width: 32px;
-		// height: 50px;
-		// border-bottom: none;
-		// background-color: transparent;
-		/**/
-		margin-top: 15px;
-		span {
-			display: none;
+	.container {
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+	.for-login > .for-login-form,
+	.for-email-login > .for-login-form,
+	.for-signup > .for-login-form,
+	.for-forgot > .for-login-form,
+	.for-login-with-email-link > .for-login-form{
+		position: relative;
+		top: 15%;
+		width: 360px;
+		height: 504px;
+		margin: 0 auto;
+		.traquent-logo{
+			width: 52px;
+			height: 52px;
+			border-radius: 6px;
+			box-shadow: 0px 0px 1px 0px #335CFF14, 0px 1px 2px 0px #A4ACB966;
+			svg{
+				position: relative;
+				top: 10px;			
+			}
 		}
 	}
+	section > .login-right{
+		margin-left: 48px;
+		margin-top: 60px;
+		p{
+			margin: 20px 0;
+		}
+		.login-dashboard{
+			
+			position: relative;
+			background-color: #1F3BAD0F;
+			padding: 15px 0 15px 15px;
+			border-radius: 20px 0 0 20px;
+			.frame{
+				position: absolute;
+				bottom: -38px;
+				left: 28px;
+			}
+		}
+
+	}
 }
+
+// body[data-path=login] .navbar-light {
+//     border-bottom: 1px solid transparent;
+//     background: transparent;
+// }
+// body[data-path=login] .navbar .container{
+// 	.navbar-toggler{
+// 		display: none;
+// 	}
+// 	.navbar-brand {
+// 		/*#UPDATES --sevval*/
+// 		// background-image: url(/assets/traquent/images/traquent_logo.png);
+// 		// background-size: cover;
+// 		// background-position: center;
+// 		// background-repeat: no-repeat;
+// 		// width: 32px;
+// 		// height: 50px;
+// 		// border-bottom: none;
+// 		// background-color: transparent;
+// 		/**/
+// 		margin-top: 15px;
+// 		span {
+// 			display: none;
+// 		}
+// 	}
+// }
 
 body[data-path=login] #page-login .page_content .for-login,
 body[data-path=login] #page-login .page_content .for-signup,
 body[data-path=login] #page-login .page_content .for-login-with-email-link,
 body[data-path=login] #page-login .page_content .for-forgot{
-	position: relative;
-    top: 80px;
+	//position: relative;
+    //top: 80px;
+	height: 95vh;
     background-color: #fff;
-    border-radius: 20px;
-    max-width: 400px;
-    margin: 0 auto;
+    //max-width: 400px;
+    //margin: 0 auto;
+	margin: 20px 0 20px 33px;
 	padding: 32px !important;
-    border-radius: var(--border-radius-md);
+    border-radius: var(--border-radius-xl);
     border: 1px solid var(--border-color);
 	.page-card-head{
 		padding: 0 !important;
-		text-align: justify;
+		//text-align: justify;
+		//text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 		h2{
+			@include traquent-display("4xl");
+			color: var(--traquent-text-loud-900);
 			margin: 16px 0;
+		}
+		p{
+			@include traquent-text(body, "l", "regular");
+			color: var(--traquent-text-normal-500);
 		}
 	}
 	.page-card{
@@ -79,7 +143,9 @@ body[data-path=login] #page-login .page_content .for-forgot{
 				position: relative;
 				width: auto;
 				height: auto;	
-				color: #0A0D14;
+				//color: #0A0D14;
+				color: var(--traquent-text-muted-600);
+				@include traquent-text(label, "s", "medium");
 			}
 		}
 	}
@@ -93,17 +159,34 @@ body[data-path=login] #page-login .page_content .for-forgot{
 		}
 		.email-field input,
 		.password-field input{
-			height: 40px;
+			height: 48px;
+			&::placeholder{
+				line-height: 24px;
+				@include traquent-text(label, "m", "medium");
+				color: var(--traquent-text-subdued-400);
+			}
 		}
 		.password-field span{
-			top: 11px;
+			//top: 11px;
+			top: 5px;
+    		right: 43px;
 		}
 	}
 	.page-card-actions {
 		button {
 		  height: 40px;
-		  background-color: #0C0B35;/*#UPDATES --sevval*/
-	  
+		  background-color: var(--traquent-lavender-blue-800);/*#UPDATES --sevval*/
+		  border: 1px solid;
+		  border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+		  box-shadow: 0px 1px 2px 0px #0C183D80, 0px 0px 0px 1px #335CFF;
+		  &.sign-up-message{
+			background: linear-gradient(0deg, #FFFFFF, #FFFFFF),
+				linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.02) 100%);
+			box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;
+			a:hover{
+				text-decoration: none;
+			}
+		  }
 		  &:hover {
 			background-color: #1A198A !important;/*#UPDATES --sevval*/
 		  }
@@ -111,11 +194,14 @@ body[data-path=login] #page-login .page_content .for-forgot{
 	  }
 	  
 	.social-logins .login-with-email-link .btn-login-with-email-link{
+		color: var(--traquent-text-subdued-400) !important;
+		@include traquent-text(label, "s", "medium");
 		background: none !important;
 		justify-content: flex-end;
-		text-decoration: underline;
+		//text-decoration: underline;
 	}
 }
+
 .for-forgot,
 .for-login-with-email-link,
 .for-signup,
@@ -184,8 +270,10 @@ body[data-path=login] #page-login .page_content .for-forgot{
 				line-height: 1;
 
 				> * {
-					color: var(--text-light);
-					@include get_textstyle("sm", "regular");
+					//color: var(--text-light);
+					//@include get_textstyle("sm", "regular");
+					@include traquent-text(body, "s", "regular");
+					color: var(--traquent-text-subdued-400);
 				}
 			}
 
@@ -201,7 +289,8 @@ body[data-path=login] #page-login .page_content .for-forgot{
 				position: relative;
 
 				input {
-					padding-left: 35px;
+					//padding-left: 35px;
+					padding: 12px 10px;
 				}
 
 				.toggle-password {
@@ -268,7 +357,7 @@ body[data-path=login] #page-login .page_content .for-forgot{
 	}
 
 	.sign-up-message {
-		margin-top: 1rem;
+		//margin-top: 1rem;
 		margin-bottom: 0;
 		color: var(--text-light);
 		@include get_textstyle("base", "regular");

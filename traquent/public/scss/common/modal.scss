@@ -39,8 +39,8 @@ body.modal-open[style^="padding-right"] {
 		background: inherit;
 		padding: var(--padding-sm) var(--padding-lg);
 		// padding-bottom: 0;
-		border-bottom: 1px solid var(--border-color);
-
+		//border-bottom: 1px solid var(--border-color);
+		border: none !important;//traquent.v1.sevval//
 		.modal-title {
 			font-weight: 500;
 			line-height: 2em;
@@ -68,7 +68,7 @@ body.modal-open[style^="padding-right"] {
 	}
 
 	.modal-body {
-		padding: var(--padding-md) var(--padding-lg);
+		padding: 0 var(--padding-md) var(--padding-lg);//traquent.v1.sevval//
 		.form-layout:first-child > .form-page {
 			.visible-section:first-child {
 				padding-top: 0;

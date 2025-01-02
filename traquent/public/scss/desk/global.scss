@@ -606,7 +606,8 @@ details > summary:focus {
 }
 
 .text-extra-muted {
-	color: var(--gray-500) !important;
+	@include traquent-text(body, "xs", "regular");//traquent.v1.sevval//
+	color: var(--traquent-text-normal-500) !important;//traquent.v1.sevval//
 }
 
 .grayscale {

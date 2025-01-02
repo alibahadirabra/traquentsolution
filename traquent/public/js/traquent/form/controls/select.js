@@ -15,13 +15,20 @@ traquent.ui.form.ControlSelect = class ControlSelect extends traquent.ui.form.Co
 		const select_icon_html = `<div class="select-icon ${is_xs_input ? "xs" : ""}">
 				${traquent.utils.icon("select", is_xs_input ? "xs" : "sm")}
 			</div>`;
+		//traquent.v1.sevval//
+		const search_icon_html = `<div class="search-icon ${is_xs_input ? "xs" : ""}">
+				${traquent.utils.icon("search", is_xs_input ? "xs" : "sm")}
+			</div>`;//****************/
+
 		if (this.only_input) {
 			this.$wrapper.append(select_icon_html);
+			this.$wrapper.append(search_icon_html);//traquent.v1.sevval//
 		} else {
 			this.$wrapper
 				.find(".control-input")
 				.addClass("flex align-center")
-				.append(select_icon_html);
+				.append(select_icon_html)
+				.append(search_icon_html);//traquent.v1.sevval//
 		}
 	}
 	set_placeholder(is_xs_input) {

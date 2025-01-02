@@ -15,8 +15,10 @@
 }
 .indicator-pill,
 .indicator-pill-right {
-	@include get_textstyle("sm", "regular");
-	padding: 4.5px 8px;
+	//@include get_textstyle("sm", "regular");
+	@include traquent-text(label, "s", "medium");//traquent.v1.sevval//
+	//padding: 4.5px 8px;
+	padding: 2.5px 8px;//traquent.v1.sevval//
 	border-radius: var(--border-radius-full);
 	height: 20px;
 }
@@ -32,9 +34,11 @@
 .indicator-pill:not(.no-indicator-dot)::before,
 .indicator-pill-right::after {
 	content: "";
-	display: inline-table;
-	height: 6px;
-	width: 6px;
+	display: inline-table;	
+	// height: 6px;
+	// width: 6px;
+	height: 4px;//traquent.v1.sevval//
+	width: 4px;//traquent.v1.sevval//
 	border-radius: 50%;
 	margin-right: 6px;
 }
@@ -49,7 +53,7 @@
 }
 
 $indicator-colors: green, cyan, blue, orange, yellow, gray, grey, red, pink, darkgrey, purple,
-	light-blue;
+	light-blue, light-gray, primary;//traquent.v1.sevval//
 @each $color in $indicator-colors {
 	.indicator.#{"" + $color} {
 		&::before,

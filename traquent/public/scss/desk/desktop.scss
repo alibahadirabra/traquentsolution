@@ -143,7 +143,7 @@ body {
 				margin-left: 5px;
 				box-shadow: none;
 			}
-			
+
 
 			.drag-handle {
 				cursor: all-scroll;
@@ -976,26 +976,6 @@ body {
 	.editor-js-container{
 		background-color: var(--traquent-background-white);
 		border-radius: 14px;
-	}
-	.editor-js-header{
-		padding: 32px 20px 0px 20px;
-		h2{
-			@include traquent-heading("3xl");
-			color: var(--traquent-text-loud-900) !important;
-		}
-		p{
-			@include traquent-text(body, "m", "regular");
-			color: var(--traquent-text-subdued-400) !important;
-		}
-		&::after {
-			content: "";
-			display: block;
-			width: 100%;
-			height: 1px; 
-			margin-top: 22px; 
-			border: 1px solid var(--stroke-soft); 
-		}
-
 	}
 
 	.workspace-footer {

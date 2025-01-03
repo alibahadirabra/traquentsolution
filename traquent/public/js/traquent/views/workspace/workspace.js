@@ -65,12 +65,7 @@ traquent.views.Workspace = class Workspace {
 			<div class="workspace-icon"></div>
 			<h4 class="workspace-title"></h4>
 		</div>
-		<div class="editor-js-container">
-			<div class="editor-js-header">	
-				<h2>Welcome to the traquent panel</h2>
-				<p>How can we help you?</p>
-			</div>
-		</div>
+		<div class="editor-js-container"></div>
 		<div class="workspace-footer">
 			<button data-label="New" class="btn btn-default ellipsis btn-new-workspace">
 				<svg class="es-icon es-line icon-xs" style="" aria-hidden="true">

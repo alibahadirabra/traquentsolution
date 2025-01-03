@@ -31,7 +31,7 @@ body {
   
       .sidebar-items {
         display: flex;
-        margin-left: 15px;
+        margin-left: 24px;
       }
   
       .standard-sidebar-section.nested-container {
@@ -41,7 +41,7 @@ body {
   
       .sidebar-item-container {
         position: relative;
-        margin-right: 10px;/*UPDATES --sevval*/
+        margin-right: 24px;/*UPDATES --sevval*/
   
         &:hover .sidebar-child-item,
         .sidebar-child-item:hover {
@@ -67,6 +67,8 @@ body {
   
         a {
           display: flex;
+          color: var(--traquent-text-muted-600) !important;
+          @include traquent-heading("l");
   
           .sidebar-item-icon {
             margin-right: 8px;
@@ -79,12 +81,14 @@ body {
   .nav-bottom {
     .navbar-nav {
       flex-direction: row;
-      
+      height: 64px;
+      align-items: center;
     }
   
     ul {
-      padding: 10px 15px;
-      background: var(--nav-bottom-background);
+      //padding: 10px 15px;
+      padding: 20px 40px;
+      background: var(--traquent-background-white);
     }
     ul#navbar-breadcrumbs{
         max-width: none !important;

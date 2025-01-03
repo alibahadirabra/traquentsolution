@@ -144,7 +144,7 @@ select.form-control {
 	@include get_textstyle("base", "regular");
 	.control-label.reqd:after {
 		content: " *";
-		color: var(var(--traquent-secondary-red-100));//traquent.v1.sevval//
+		color: var(--traquent-secondary-red-100);//traquent.v1.sevval//
 	}
 	.help:empty {
 		display: none;

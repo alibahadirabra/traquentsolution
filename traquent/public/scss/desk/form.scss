@@ -73,9 +73,12 @@
 	}
 }
 
-.section-head,
-.section-body {
+.section-head {
 	max-width: var(--page-max-width);
+	margin: auto !important;
+}
+.section-body {
+	//max-width: var(--page-max-width);
 	margin: auto !important;
 }
 
@@ -461,7 +464,7 @@
 }
 
 .form-footer {
-	max-width: var(--page-max-width);
+	//max-width: var(--page-max-width);
 	margin: auto;
 	padding: 0 15px;
 

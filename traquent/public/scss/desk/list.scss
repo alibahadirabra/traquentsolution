@@ -60,7 +60,8 @@
 .list-row-container {
 	display: flex;
 	flex-direction: column;
-	padding: var(--padding-xs) var(--padding-md);
+	//padding: var(--padding-xs) var(--padding-md);
+	padding: 12px 0;
 	border-bottom: 1px solid $border-color;
 
 	&:focus {
@@ -70,6 +71,7 @@
 	}
 
 	&:first-child {
+		padding: 0;
 		padding-top: 0;
 		border-bottom: none;
 	}
@@ -164,12 +166,16 @@
 .select-like {
 	padding: var(--list-checkbox-padding);
 	cursor: default;
+	&:first-child {
+		padding-left: 18px;
+	}
 }
 
 .list-row-head {
 	@extend .list-row;
 	cursor: default;
-	background-color: var(--subtle-fg);
+	//background-color: var(--subtle-fg);
+	background-color: var(--traquent-neutral-solid-25);
 	border-radius: var(--border-radius);
 	height: var(--list-row-height);
 

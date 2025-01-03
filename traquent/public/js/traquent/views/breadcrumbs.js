@@ -251,8 +251,10 @@ traquent.breadcrumbs = {
 	toggle(show) {
 		if (show) {
 			$("body").addClass("no-breadcrumbs");
+			$('.nav-bottom').attr('hidden', false);
 		} else {
 			$("body").removeClass("no-breadcrumbs");
+			$('.nav-bottom').attr('hidden', true);
 		}
 	},
 };

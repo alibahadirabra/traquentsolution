@@ -48,7 +48,13 @@ use.like-icon {
 		--icon-stroke: var(--invert-neutral);
 		fill: var(--invert-neutral);
 	}
+	.flag-icon,
+	.flag-icon use {
+		--icon-stroke: var(--traquent-flag-color);
+		fill: var(--traquent-flag-color);
+	}
 }
+
 
 .icon-xs {
 	width: 12px;

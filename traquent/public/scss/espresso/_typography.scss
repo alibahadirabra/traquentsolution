@@ -114,9 +114,9 @@ $letter-space-heavy: (
 }
 //traquent.v1.sevval//
 @mixin traquent-display($size, $weight: medium) {
-	font-family: "Instrument Sans", serif;
-	font-size: var(--traquent-text-#{$size});
-	font-weight: var(--traquent-weight-#{$weight});
+	font-family: "Instrument Sans", serif  !important;
+	font-size: var(--traquent-text-#{$size})  !important;
+	font-weight: var(--traquent-weight-#{$weight})  !important;
 }
 
 .traquent-display {
@@ -134,14 +134,14 @@ $letter-space-heavy: (
 		@include traquent-display(3xl);
 	}
 	&-xxsmall {
-		@include traquent-display(2xl);
+		@include traquent-display(xxl);
 	}
 }
 
 @mixin traquent-heading($size, $weight: medium) {
-	font-family: "Instrument Sans", serif;
-	font-weight: var(--traquent-weight-#{$weight});
-	font-size: var(--traquent-text-#{$size});
+	font-family: "Instrument Sans", serif !important;
+	font-weight: var(--traquent-weight-#{$weight}) !important;
+	font-size: var(--traquent-text-#{$size}) !important;
 }
 
 .traquent-heading {
@@ -158,9 +158,9 @@ $letter-space-heavy: (
 }
 
 @mixin traquent-text($type, $size, $weight) {
-	font-family: "Instrument Sans", serif;
+	font-family: "Instrument Sans", serif  !important;
 	font-weight: var(--traquent-weight-#{$weight}) !important;
-	font-size: var(--traquent-text-#{$size});
+	font-size: var(--traquent-text-#{$size}) !important;
 }
 
 .traquent-label {

@@ -6,14 +6,17 @@
 }
 /*! This comment will be included even in compressed mode. */
 #navbar-breadcrumbs {
-	@include get_textstyle("sm", "regular");
+	//@include get_textstyle("sm", "regular");
+	@include traquent-heading("m");
 	a {
 		margin-right: 10px;
+		color: var(--traquent-text-disabled-300);
 		&:before {
 			content: #{"/*!rtl:var(--left-arrow-svg);*/"}var(--right-arrow-svg);
 			display: inline-block;
 			margin-right: 10px;
 		}
+
 	}
 
 	li:first-child a:before {
@@ -23,8 +26,13 @@
 
 	li.disabled {
 		a {
-			color: var(--gray-600);
+			//color: var(--gray-600);
+			color: var(--traquent-text-normal-500);
 			pointer-events: none;
+			&:before {
+				content: #{"/*!rtl:var(--left-arrow-svg);*/"}var(--right-arrow-svg);
+				color: var(--traquent-text-normal-500);
+			}
 		}
 	}
 }

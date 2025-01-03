@@ -8,7 +8,11 @@ body {
 	color: var(--text-muted);
 	font-weight: var(--weight-regular);
 	letter-spacing: 0.02em;
-	background-color: var(--bg-color);
+	//background-color: var(--bg-color);
+	background-color: var(--traquent-background-disabled-0) !important;
+}
+#body{
+	padding: 40px 31px !important;
 }
 
 a {

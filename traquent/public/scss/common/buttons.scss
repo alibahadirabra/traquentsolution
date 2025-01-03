@@ -92,16 +92,16 @@
 	//background-color: var(--control-bg);
 	color: var(--traquent-text-muted-600) !important;
 	background: linear-gradient(0deg, #FFFFFF, #FFFFFF), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.02) 100%);//traquent.v1.sevval//
-	box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;//traquent.v1.sevval//
+	box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D  !important;//traquent.v1.sevval//
 	&:hover{
 		background: linear-gradient(0deg, #FFFFFF, #FFFFFF),linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.08) 100%);//traquent.v1.sevval//
 		color: var(--traquent-text-loud-900) !important;//traquent.v1.sevval//
-		box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;//traquent.v1.sevval//
+		box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D  !important;//traquent.v1.sevval//
 	}
 	&:active,
 	&:focus {
 		color: var(--traquent-text-loud-900);//traquent.v1.sevval//
-		box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;//traquent.v1.sevval//
+		box-shadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D  !important;//traquent.v1.sevval//
 	}
 	&:active {
 		color: var(--traquent-text-muted-600);

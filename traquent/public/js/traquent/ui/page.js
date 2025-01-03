@@ -99,7 +99,7 @@ traquent.ui.Page = class Page {
 				"main",
 				`
 				<div class="layout-main">
-					<div class="layout-side-section"></div>
+					<div class="layout-side-section hidden"></div>
 					<div class="layout-main-section-wrapper">
 						<div class="layout-main-section"></div>
 						<div class="layout-footer hide"></div>

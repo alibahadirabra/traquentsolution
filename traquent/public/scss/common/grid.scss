@@ -49,7 +49,8 @@
 		.static-area {
 			&.reqd:after {
 				content: " *";
-				color: var(--red-400);
+				//color: var(--red-400);
+				color: var(--traquent-secondary-red-100);//traquent.v1.sevval//
 			}
 		}
 	}
@@ -428,7 +429,7 @@
 
 	.grid-delete-row {
 		.icon use {
-			stroke: var(--fg-color);
+			stroke: var(--traquent-secondary-red-100);
 		}
 	}
 

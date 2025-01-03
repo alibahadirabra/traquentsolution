@@ -9315,6 +9315,25 @@ msgstr ""
 msgid "Enter your password"
 msgstr "Şifrenizi Girin"
 
+#: traquent/www/login.html:13
+msgid "Enter your email"
+msgstr "E-posta Adresini Girin"
+
+msgid "Welcome again, please enter your information."
+msgstr "Tekrar hoşgeldin, lütfen bilgilerinizi giriniz."
+
+msgid "Don't worry, we'll send you reset instructions."
+msgstr "Endişelenmeyin, size sıfırlama talimatları göndereceğiz."
+
+msgid "Enter your email address for the login link."
+msgstr "Giriş bağlantısı için e-posta adresinizi girin."
+
+msgid "Welcome to the traquent panel"
+msgstr "Traquent Paneline Hoşgeldiniz"
+
+msgid "How can we help you?"
+msgstr "Size nasıl yardımcı olabiliriz?"
+
 #: traquent/contacts/report/addresses_and_contacts/addresses_and_contacts.js:22
 msgid "Entity Name"
 msgstr ""

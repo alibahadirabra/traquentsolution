@@ -686,9 +686,9 @@ traquent.views.ListView = class ListView extends traquent.views.BaseList {
 		const right_html = `
 			<span class="list-count"></span>
 			<span class="level-item list-liked-by-me hidden-xs">
-				<span title="${__("Liked by me")}">
+				<span title="${__("Flag")}">
 					<svg class="icon icon-sm like-icon">
-						<use href="#icon-heart"></use>
+						<use href="#icon-flag"></use>
 					</svg>
 				</span>
 			</span>
@@ -1774,13 +1774,13 @@ traquent.views.ListView = class ListView extends traquent.views.BaseList {
 			});
 		}
 
-		items.push({
-			label: __("Toggle Sidebar", null, "Button in list view menu"),
-			action: () => this.toggle_side_bar(),
-			condition: () => !this.hide_sidebar,
-			standard: true,
-			shortcut: "Ctrl+K",
-		});
+		// items.push({
+		// 	label: __("Toggle Sidebar", null, "Button in list view menu"),
+		// 	action: () => this.toggle_side_bar(),
+		// 	condition: () => !this.hide_sidebar,
+		// 	standard: true,
+		// 	shortcut: "Ctrl+K",
+		// });
 
 		if (traquent.user.has_role("System Manager") && traquent.boot.developer_mode) {
 			// edit doctype
@@ -2236,7 +2236,7 @@ class ElementFactory {
 	create_like_element(doctype) {
 		const like = document.createElement("span");
 		like.classList.add("like-action");
-		like.innerHTML = `<svg class="icon icon-sm like-icon"><use href="#icon-heart"></use></svg>`;
+		like.innerHTML = `<svg class="icon icon-sm flag-icon"><use href="#icon-flag"></use></svg>`;
 		like.dataset.doctype = doctype;
 
 		return like;

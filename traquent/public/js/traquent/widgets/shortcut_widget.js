@@ -60,7 +60,7 @@ export default class ShortcutWidget extends Widget {
 	set_actions() {
 		if (this.in_customize_mode) return;
 
-		$(traquent.utils.icon("es-line-arrow-up-right", "xs", "", "", "ml-2")).appendTo(
+		$(traquent.utils.icon("es-line-arrow-right", "xs", "", "", "ml-2")).appendTo(
 			this.action_area
 		);
 
@@ -103,7 +103,7 @@ export default class ShortcutWidget extends Widget {
 			`<div class="indicator-pill no-indicator-dot ellipsis ${color}">${label}</div>`
 		).appendTo(this.action_area);
 
-		$(traquent.utils.icon("es-line-arrow-up-right", "xs", "", "", "ml-2")).appendTo(
+		$(traquent.utils.icon("es-line-arrow-right", "xs", "", "", "ml-2")).appendTo(
 			this.action_area
 		);
 	}

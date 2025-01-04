@@ -151,38 +151,38 @@ traquent.search.AwesomeBar = class AwesomeBar {
 			default: "Help",
 			onclick: function () {
 				var txt =
-					'<table class="table table-bordered">\
-					<tr><td style="width: 50%">' +
-					__("Create a new record") +
-					"</td><td>" +
-					__("new type of document") +
-					"</td></tr>\
-					<tr><td>" +
-					__("List a document type") +
-					"</td><td>" +
-					__("document type..., e.g. customer") +
-					"</td></tr>\
-					<tr><td>" +
-					__("Search in a document type") +
-					"</td><td>" +
-					__("text in document type") +
-					"</td></tr>\
-					<tr><td>" +
-					__("Tags") +
-					"</td><td>" +
-					__("tag name..., e.g. #tag") +
-					"</td></tr>\
-					<tr><td>" +
-					__("Open a module or tool") +
-					"</td><td>" +
-					__("module name...") +
-					"</td></tr>\
-					<tr><td>" +
-					__("Calculate") +
-					"</td><td>" +
-					__("e.g. (55 + 434) / 4 or =Math.sin(Math.PI/2)...") +
-					"</td></tr>\
-				</table>";
+				// 	'<table class="table table-bordered">\
+				// 	<tr><td style="width: 50%">' +
+				// 	__("Create a new record") +
+				// 	"</td><td>" +
+				// 	__("new type of document") +
+				// 	"</td></tr>\
+				// 	<tr><td>" +
+				// 	__("List a document type") +
+				// 	"</td><td>" +
+				// 	__("document type..., e.g. customer") +
+				// 	"</td></tr>\
+				// 	<tr><td>" +
+				// 	__("Search in a document type") +
+				// 	"</td><td>" +
+				// 	__("text in document type") +
+				// 	"</td></tr>\
+				// 	<tr><td>" +
+				// 	__("Tags") +
+				// 	"</td><td>" +
+				// 	__("tag name..., e.g. #tag") +
+				// 	"</td></tr>\
+				// 	<tr><td>" +
+				// 	__("Open a module or tool") +
+				// 	"</td><td>" +
+				// 	__("module name...") +
+				// 	"</td></tr>\
+				// 	<tr><td>" +
+				// 	__("Calculate") +
+				// 	"</td><td>" +
+				// 	__("e.g. (55 + 434) / 4 or =Math.sin(Math.PI/2)...") +
+				// 	"</td></tr>\
+				// </table>";
 				traquent.msgprint(txt, __("Search Help"));
 			},
 		});

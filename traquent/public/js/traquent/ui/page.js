@@ -524,8 +524,8 @@ traquent.ui.Page = class Page {
 			$li.addClass("user-action").insertBefore(this.divider);
 		}
 
-		//action button li hidden
-		const hiddenLabels = ["Edit", "Assign To", "Clear Assignment", "Apply Assignment Rule", "Add Tags", "Print"];
+		//actions button li hidden
+		const hiddenLabels = ["Düzenle", "Ata", "Atamayı Temizle", "Arama Kuralı Uygula", "Etiket Ekle", "Yazdır"];
 		$('.actions-btn-group').each(function() {
 			const parent = $(this).find('ul.dropdown-menu'); 
 			
@@ -540,6 +540,7 @@ traquent.ui.Page = class Page {
 				}
 			});
 		});
+		//////traquent.v1.sevval
 
 		// alt shortcut
 		traquent.ui.keys

@@ -63,7 +63,7 @@ traquent.ui.ThemeSwitcher = class ThemeSwitcher {
 				// 	name: "dark",
 				// 	label: __("Timeless Night"),
 				// 	info: __("Dark Theme"),
-				// },
+				// },  ali bahadır kuş kaldırdı
 				{
 					name: "automatic",
 					label: __("Automatic"),

@@ -59,11 +59,11 @@ traquent.ui.ThemeSwitcher = class ThemeSwitcher {
 					label: __("traquent Light"),
 					info: __("Light Theme"),
 				},
-				{
-					name: "dark",
-					label: __("Timeless Night"),
-					info: __("Dark Theme"),
-				},
+				// {
+				// 	name: "dark",
+				// 	label: __("Timeless Night"),
+				// 	info: __("Dark Theme"),
+				// },
 				{
 					name: "automatic",
 					label: __("Automatic"),

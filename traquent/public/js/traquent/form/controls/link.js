@@ -67,22 +67,22 @@ traquent.ui.form.ControlLink = class ControlLink extends traquent.ui.form.Contro
 	}
 	//traquent.v1.sevval//
 	set_icon() {
-		const select_icon_html = `<div class="select-icon ">
-				${traquent.utils.icon("select")}
-			</div>`;
+		// const select_icon_html = `<div class="select-icon ">
+		// 		${traquent.utils.icon("select")}
+		// 	</div>`;
 
 		const search_icon_html = `<div class="search-icon">
 				${traquent.utils.icon("search")}
 			</div>`;
 
 		if (this.only_input) {
-			this.$wrapper.append(select_icon_html);
+			//this.$wrapper.append(select_icon_html);
 			this.$wrapper.append(search_icon_html);
 		} else {
 			this.$wrapper
 				.find(".control-input")
 				//.addClass("flex align-center")
-				.append(select_icon_html)
+				//.append(select_icon_html)
 				.append(search_icon_html);
 		}
 	}//****************/

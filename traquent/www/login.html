@@ -130,7 +130,7 @@
 		</div>
 	</noscript>
 	<div class="row flex-nowrap">
-	<section class='for-login col-6'>
+	<section class='for-login col-xs-12 col-md-6'>
 		<div class="for-login-form">
 			{{ logo_section('Login', 'Welcome again, please enter your information.' ) }}
 			<div class="login-content page-card">
@@ -182,7 +182,7 @@
 	</section>
 
 	{%- if social_login -%}
-	<section class='for-email-login col-6'>
+	<section class='for-email-login col-xs-12 col-md-6'>
 		<div class="for-login-form">
 			{{ logo_section() }}
 			<div class="login-content page-card">
@@ -199,7 +199,7 @@
 		</div>
 	</section>
 	{%- endif -%}
-	<section class='for-signup {{ "signup-disabled" if disable_signup else "" }} col-6'>
+	<section class='for-signup {{ "signup-disabled" if disable_signup else "" }} col-xs-12 col-md-6'>
 		<div class="for-login-form">
 			{{ logo_section(_('Create a {0} Account').format(app_name or _("traquent"))) }}
 			<div class="login-content page-card">
@@ -216,7 +216,7 @@
 		</div>
 	</section>
 
-	<section class='for-forgot col-6'>
+	<section class='for-forgot col-xs-12 col-md-6'>
 		<div class="for-login-form">
 			{{ logo_section('Reset Password', "Don't worry, we'll send you reset instructions.") }}
 			<div class="login-content page-card">
@@ -256,7 +256,7 @@
 		</div>
 	</section>
 
-	<section class='for-login-with-email-link col-6'>
+	<section class='for-login-with-email-link col-xs-12 col-md-6'>
 		<div class="for-login-form">
 			{{ logo_section('Login with Email Link', "Enter your email address for the login link.") }}
 			<div class="login-content page-card">
@@ -293,7 +293,7 @@
 			</div>
 		</div>
 	</section>
-	<section class="col-6 p-0">
+	<section class="col-md-6 p-0 hidden-xs">
 		<div class="login-right">
 			<img src="/assets/traquent/images/traquent_logo.png" width="194" height="54">
 			<p>Müşteri ilişkilerinde fark yaratın: Aracı Kurumlara özel tasarlanmış CRM ile hızlı, güvenli ve verimli çözümlere şimdi giriş yapın.

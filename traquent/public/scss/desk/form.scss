@@ -74,7 +74,7 @@
 }
 
 .section-head {
-	max-width: var(--page-max-width);
+	//max-width: var(--page-max-width);
 	margin: auto !important;
 }
 .section-body {
@@ -449,11 +449,11 @@
 		vertical-align: middle;
 
 		.clearfix {
-			width: 38%;
+			width: 68%;
 		}
 
 		.control-input-wrapper {
-			width: 62%; // golden ratio
+			width: 100%; // golden ratio
 		}
 
 		.control-label {

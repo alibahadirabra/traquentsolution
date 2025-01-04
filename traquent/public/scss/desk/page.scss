@@ -51,16 +51,17 @@
 		}
 	}
 }
-[data-route^="List/"],
-[data-route^="Form/"] {
+[data-route^="Workspaces/"] {
 	.page-container {
 		background-color: var(--bg-color) !important;
-		padding: 20px !important;
-		border-radius: 12px !important;
+		padding: 0 !important;
+		border-radius: 0 !important;
 	}
 }
 .page-container {
-	background-color: var(--bg-color);
+	background-color: var(--bg-color) !important;
+	padding: 20px !important;
+	border-radius: 12px !important;
 
 	.page-body {
 		width: 100%;
@@ -70,6 +71,7 @@
 
 .page-actions {
 	align-items: center;
+	padding: 0;
 	.btn {
 		height: var(--btn-height);
 		margin-left: var(--margin-sm, 8px);

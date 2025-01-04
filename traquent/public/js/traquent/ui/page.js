@@ -524,6 +524,23 @@ traquent.ui.Page = class Page {
 			$li.addClass("user-action").insertBefore(this.divider);
 		}
 
+		//action button li hidden
+		const hiddenLabels = ["Edit", "Assign To", "Clear Assignment", "Apply Assignment Rule", "Add Tags", "Print"];
+		$('.actions-btn-group').each(function() {
+			const parent = $(this).find('ul.dropdown-menu'); 
+			
+			parent.find('li').each(function() {
+				const label = $(this).find('.menu-item-label').text().trim(); 
+				if (!hiddenLabels.includes(label)) {
+					const $li = $(this); 
+					$li.show();
+				} else {
+					const $li = $(this);
+					$li.hide(); 
+				}
+			});
+		});
+
 		// alt shortcut
 		traquent.ui.keys
 			.get_shortcut_group(parent.get(0))

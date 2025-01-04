@@ -53,10 +53,6 @@ export default class GridRowForm {
 							${traquent.utils.icon("duplicate")}
 							${__("Duplicate")}
 						</button>
-						<button class="btn btn-secondary btn-sm pull-right grid-insert-row hidden-xs">
-							${__("Insert Above")}</button>
-						<button class="btn btn-secondary btn-sm pull-right grid-insert-row-below hidden-xs">
-							${__("Insert Below")}</button>
 						<button class="btn btn-danger btn-sm pull-right grid-delete-row">
 							${traquent.utils.icon("delete")}
 						</button>
@@ -83,6 +79,11 @@ export default class GridRowForm {
 			this.set_form_events();
 		}
 	}
+	//template içinden kaldırılan butonlar
+	// 	<button class="btn btn-secondary btn-sm pull-right grid-insert-row hidden-xs">
+	// 	${__("Insert Above")}</button>
+	// <button class="btn btn-secondary btn-sm pull-right grid-insert-row-below hidden-xs">
+	// 	${__("Insert Below")}</button>
 	set_form_events() {
 		var me = this;
 		this.wrapper.find(".grid-delete-row").on("click", function () {

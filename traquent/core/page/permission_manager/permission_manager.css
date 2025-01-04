@@ -47,5 +47,6 @@ button.btn-remove-perm {
 }
 
 button.btn-remove-perm > svg > use {
-	stroke: var(--white);
+	/*stroke: var(--white);*/
+	stroke: var(--traquent-secondary-red-100);
 }

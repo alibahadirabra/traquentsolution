@@ -8678,7 +8678,7 @@ msgstr "E-posta Hesabı ayarlanmamış. Lütfen Ayarlar > E-posta Hesabı bölü
 #: traquent/www/complete_signup.html:11 traquent/www/login.html:183
 #: traquent/www/login.html:215
 msgid "Email Address"
-msgstr "E-posta Address"
+msgstr "E-posta Adresi"
 
 #. Description of the 'Email Address' (Data) field in DocType 'Google Contacts'
 #: traquent/integrations/doctype/google_contacts/google_contacts.json

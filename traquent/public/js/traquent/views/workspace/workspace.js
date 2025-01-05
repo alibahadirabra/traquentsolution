@@ -292,15 +292,18 @@ traquent.views.Workspace = class Workspace {
 		this.clear_page_actions();
 		if (current_page.is_editable) {
 			this.body.find(".btn-edit-workspace").removeClass("hide");
-		} else {
-			this.body.find(".btn-edit-workspace").addClass("hide");
-		}
-		// need to add option for icons in inner buttons as well
-		if (this.has_create_access) {
 			this.body.find(".btn-new-workspace").removeClass("hide");
 		} else {
+			this.body.find(".btn-edit-workspace").addClass("hide");
 			this.body.find(".btn-new-workspace").addClass("hide");
 		}
+		//traquent.v1.sevval alt kısım yorum satırına alındı new buton üstteki bloga dahil edildi
+		// need to add option for icons in inner buttons as well
+		// if (this.has_create_access) {
+		// 	this.body.find(".btn-new-workspace").removeClass("hide");
+		// } else {
+		// 	this.body.find(".btn-new-workspace").addClass("hide");
+		// }
 	}
 
 	initialize_editorjs_undo() {

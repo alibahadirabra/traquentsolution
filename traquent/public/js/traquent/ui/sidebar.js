@@ -335,6 +335,7 @@ traquent.ui.Sidebar = class Sidebar {
 			(page) => page.parent_page == item.name || page.parent_page == item.title
 		);
 		if (child_items.length > 0) {
+			$item_container.find(".item-anchor").attr("href", "#"); //child olan paretpage açılmasın diye
 			let child_container = $item_container.find(".sidebar-child-item");
 			child_container.addClass("hidden"); //dropdownların kapalı gelmesi için açıldı yorum satırıydı //sevval
 			this.prepare_sidebar(child_items, child_container, $item_container);
@@ -393,7 +394,7 @@ traquent.ui.Sidebar = class Sidebar {
 
 	sidebar_item_container(item) {
 
-		const currentPath = window.location.pathname;
+		const currentPath = window.location.pathname;		
 
 		
 		item.indicator_color =
@@ -475,6 +476,16 @@ traquent.ui.Sidebar = class Sidebar {
 			$drop_icon.removeClass("hidden");
 		}
 		$drop_icon.on("click", () => {
+			toggleChildItems($drop_icon, $child_item_section);
+		});
+		item_container.on("click", function (e) {
+			if ($(e.target).closest('.drop-icon').length) {
+				return; // Drop icon'a tıklanınca, bu tıklama olayını engelle
+			}
+			toggleChildItems($drop_icon, $child_item_section);
+		});
+		//tıklama olayı tüm satırdan alınsın
+		function toggleChildItems($drop_icon, $child_item_section)  {
 			let opened = $drop_icon.find("use").attr("href") === "#es-traquent-line-down";
 
 			if (!opened) {
@@ -489,12 +500,12 @@ traquent.ui.Sidebar = class Sidebar {
 			$child_item_section.children(".sidebar-item-container").each(function () {
 				$(this).find(".sidebar-child-item").addClass("hidden"); // İç içe olan alt öğeleri gizli tut
 			});
-		});
+		}
 	}
 
 	setup_sorting() {
 		if (!this.has_access) return;
-
+	
 		for (let container of this.$sidebar.find(".nested-container")) {
 			Sortable.create(container, {
 				group: "sidebar-items",

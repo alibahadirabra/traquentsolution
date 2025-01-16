@@ -76,6 +76,14 @@ body {
 		left: 8px;
 	}
 }
+.traquent-control[data-fieldtype="Link"].form-group {
+	input{
+		padding-left: 30px !important;
+	}
+	.search-icon{
+		left: 14px !important;
+	}
+}//traquent.v1.sevval//
 .traquent-control[data-fieldtype="Dynamic Link"] .control-input,
 .traquent-control[data-fieldtype="Dynamic Link"].form-group {
 	position: relative;

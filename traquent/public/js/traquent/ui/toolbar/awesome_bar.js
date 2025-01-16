@@ -5,6 +5,7 @@ traquent.provide("traquent.tags");
 
 traquent.search.AwesomeBar = class AwesomeBar {
 	setup(element) {
+		console.log("element",element)
 		var me = this;
 
 		$(".search-bar").removeClass("hidden");
@@ -140,6 +141,7 @@ traquent.search.AwesomeBar = class AwesomeBar {
 			if (e.key == "Escape") {
 				$input.trigger("blur");
 			}
+			console.log("99999")
 		});
 		traquent.search.utils.setup_recent();
 	}

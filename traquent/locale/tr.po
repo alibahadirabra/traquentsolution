@@ -21266,28 +21266,28 @@ msgstr "Bu Etkinliği Tekrarla"
 
 #: traquent/utils/password_strength.py:110
 msgid "Repeats like \"aaa\" are easy to guess"
-msgstr ""
+msgstr "\"aaa\" gibi tekrarları tahmin etmek kolaydır"
 
 #: traquent/utils/password_strength.py:105
 msgid "Repeats like \"abcabcabc\" are only slightly harder to guess than \"abc\""
-msgstr ""
+msgstr "\"abcabcabc\" gibi tekrarların tahmin edilmesi, \"abc\"den yalnızca biraz daha zordur"
 
 #: traquent/public/js/traquent/form/sidebar/form_sidebar.js:150
 msgid "Repeats {0}"
-msgstr ""
+msgstr "Tekrarlar {0}"
 
 #: traquent/core/doctype/role_replication/role_replication.js:7
 #: traquent/core/doctype/role_replication/role_replication.js:14
 msgid "Replicate"
-msgstr ""
+msgstr "Kopyala"
 
 #: traquent/core/doctype/role_replication/role_replication.js:8
 msgid "Replicating..."
-msgstr ""
+msgstr "Kopyalanıyor"
 
 #: traquent/core/doctype/role_replication/role_replication.js:13
 msgid "Replication completed."
-msgstr ""
+msgstr "Kopyalama başarılı."
 
 #. Option for the 'Status' (Select) field in DocType 'Contact'
 #. Option for the 'Status' (Select) field in DocType 'Communication'
@@ -22756,8 +22756,8 @@ msgid "Search in a document type"
 msgstr "DocType İçinde Arama"
 
 #: traquent/public/js/traquent/ui/toolbar/navbar.html:29
-msgid "Search or type a command ({0})"
-msgstr "Arama yapın veya komut yazın ({0})"
+msgid "Search ({0})"
+msgstr "Arama yapın ({0})"
 
 #: traquent/public/js/form_builder/components/SearchBox.vue:8
 msgid "Search properties..."
@@ -27374,7 +27374,7 @@ msgstr "Yeni Yazdırma Tasarımcısını Deneyin"
 
 #: traquent/utils/password_strength.py:106
 msgid "Try to avoid repeated words and characters"
-msgstr ""
+msgstr "Tekrarlanan kelime ve karakterlerden kaçının"
 
 #: traquent/utils/password_strength.py:98
 msgid "Try to use a longer keyboard pattern with more turns"

@@ -39,42 +39,49 @@ traquent.ui.Sidebar = class Sidebar {
 			traquent.render_template("sidebar", {
 				app_logo_url: traquent.boot.app_data[0].app_logo_url,
 				app_title: __(traquent.boot.app_data[0].app_title),
+				navbar_settings: traquent.boot.navbar_settings,
 			})
 		).prependTo("body");
 
 		this.$sidebar = this.wrapper.find(".sidebar-items");
-		setTimeout(() => {
-			$(".navbar .container .body-sidebar-top").append(this.$sidebar);
-			$(" .body-sidebar-top").append(this.$sidebar);
-		}, 100);
-		$('.navbar-home').on('click', function(event) {
-			event.preventDefault();  // <a> etiketinin varsayılan link davranışını iptal ediyoruz
-			$('.body-sidebar-container').attr('style', 'display: block !important;');
-		});
-		$('.body-sidebar-container').on('mouseleave', function() {
-			$(this).attr('style', 'display: none !important;');
-		});
-		$('.body-sidebar-bottom .close-sidebar-link').on('click', function(event) {
-			event.preventDefault();  // <a> etiketinin varsayılan link davranışını iptal ediyoruz
-			$('.body-sidebar-container').attr('style', 'display: none !important;');
-		});
+		// setTimeout(() => {
+		// 	$(".navbar .container .body-sidebar-top").append(this.$sidebar);
+		// 	$(" .body-sidebar-top").append(this.$sidebar);
+		// }, 100);
+		// $('.navbar-home').on('click', function(event) {
+		// 	event.preventDefault();  // <a> etiketinin varsayılan link davranışını iptal ediyoruz
+		// 	$('.body-sidebar-container').attr('style', 'display: block !important;');
+		// });
+		// $('.body-sidebar-container').on('mouseleave', function() {
+		// 	$(this).attr('style', 'display: none !important;');
+		// });
+		// $('.body-sidebar-bottom .close-sidebar-link').on('click', function(event) {
+		// 	event.preventDefault();  // <a> etiketinin varsayılan link davranışını iptal ediyoruz
+		// 	$('.body-sidebar-container').attr('style', 'display: none !important;');
+		// });
 		if (this.has_access) {
-			// this.wrapper
-			// 	.find(".edit-sidebar-link")
-			// 	.removeClass("hidden")
-			// 	.on("click", () => {
-			// 		traquent.quick_edit("Workspace Settings");
-			// 	});
-			$(".navbar-nav")
-			.find(".nav-item")
-			.find(".edit-sidebar-link")
-			.removeClass("hidden")
-			.on("click", () => {
-				traquent.quick_edit("Workspace Settings");
-			});
+			this.wrapper
+				.find(".edit-sidebar-link")
+				.removeClass("hidden")
+				.on("click", () => {
+					traquent.quick_edit("Workspace Settings");
+				});
+			// $(".navbar-nav")
+			// .find(".nav-item")
+			// .find(".edit-sidebar-link")
+			// .removeClass("hidden")
+			// .on("click", () => {
+			// 	traquent.quick_edit("Workspace Settings");
+			// });
 		}
 
 		this.setup_app_switcher();
+		let user_avatar = traquent.avatar(traquent.session.user, "avatar-icon");
+		$(`<div class="sidebar-user-icon">${user_avatar}</div>
+			<div class="sidebar-user-info">
+				<div class="sidebar-user-info-fullname">${traquent.session.user_fullname}</div>
+				<div class="sidebar-user-info-email">${traquent.session.user_email}</div>
+			</div>`).appendTo(".sidebar-user");
 	}
 
 	set_all_pages() {
@@ -226,7 +233,7 @@ traquent.ui.Sidebar = class Sidebar {
 			if (typeof page.content == "string") {
 				page.content = JSON.parse(page.content);
 			}
-		});
+		});		
 
 		if (this.all_pages) {
 			traquent.workspaces = {};
@@ -284,7 +291,7 @@ traquent.ui.Sidebar = class Sidebar {
 
 		$(".item-anchor").on("click", () => {
 			$(".list-sidebar.hidden-xs.hidden-sm").removeClass("opened");
-			$(".close-sidebar").css("display", "none");
+			//$(".close-sidebar").css("display", "none");
 			$("body").css("overflow", "auto");
 		});
 
@@ -329,7 +336,7 @@ traquent.ui.Sidebar = class Sidebar {
 		);
 		if (child_items.length > 0) {
 			let child_container = $item_container.find(".sidebar-child-item");
-			//child_container.addClass("hidden");
+			child_container.addClass("hidden"); //dropdownların kapalı gelmesi için açıldı yorum satırıydı //sevval
 			this.prepare_sidebar(child_items, child_container, $item_container);
 		}
 		if (child_items.length < 0) {
@@ -350,9 +357,45 @@ traquent.ui.Sidebar = class Sidebar {
 		if (child_items.length > 0) {
 			$item_container.find(".drop-icon").first().addClass("show-in-edit-mode");
 		}
+		$item_container.click(() => {
+			this.url(item);
+		  });
 	}
+	//bu fonksiyon sidebar üzerinde aktif sayfa durumu kontrolu için eklendi
+	url(item) {		
+		setTimeout(() => {
+		  const currentPath = window.location.pathname;	  
+		  let path;
+		  if (item.public) {
+			path = "/app/" + traquent.router.slug(item.name);
+		  } else {
+			path = "/app/private/" + traquent.router.slug(item.name.split("-")[0]);
+		  }
+	  	  document.querySelectorAll(".sidebar-item-container").forEach(div => {
+			div.classList.remove("-active");
+		  });
+	  
+		  if (currentPath === path && item.type !== "Workspace") {
+	  
+			document.querySelectorAll(".sidebar-item-container").forEach(div => {
+			  let link = div.querySelector("a");
+			  if (link) {
+				const linkPath = link.getAttribute("href");
+				if (linkPath === path) {
+				  div.classList.add("-active");
+				}
+			  }
+			});
+		  }
+		}, 100);
+	  }
+	  
 
 	sidebar_item_container(item) {
+
+		const currentPath = window.location.pathname;
+
+		
 		item.indicator_color =
 			item.indicator_color || this.indicator_colors[Math.floor(Math.random() * 12)];
 		let path;
@@ -379,7 +422,7 @@ traquent.ui.Sidebar = class Sidebar {
 
 		return $(`
 			<div
-				class="sidebar-item-container ${item.is_editable ? "is-draggable" : ""}"
+				class="sidebar-item-container ${item.is_editable ? "is-draggable" : ""} ${currentPath == path && item.type !== "Workspace" ? "-active" : ""}"
 				item-parent="${item.parent_page}"
 				item-name="${item.name}"
 				item-title="${item.title}"
@@ -409,7 +452,7 @@ traquent.ui.Sidebar = class Sidebar {
 	}
 
 	add_toggle_children(item, sidebar_control, item_container) {
-		let drop_icon = "es-line-down";
+		let drop_icon = "es-traquent-line-down";
 		if (
 			this.current_page &&
 			item_container.find(`[item-name="${this.current_page.name}"]`).length
@@ -432,15 +475,20 @@ traquent.ui.Sidebar = class Sidebar {
 			$drop_icon.removeClass("hidden");
 		}
 		$drop_icon.on("click", () => {
-			let opened = $drop_icon.find("use").attr("href") === "#es-line-down";
+			let opened = $drop_icon.find("use").attr("href") === "#es-traquent-line-down";
 
 			if (!opened) {
-				$drop_icon.attr("data-state", "closed").find("use").attr("href", "#es-line-down");
+				$drop_icon.attr("data-state", "closed").find("use").attr("href", "#es-traquent-line-down");
 			} else {
-				$drop_icon.attr("data-state", "opened").find("use").attr("href", "#es-line-up");
+				$drop_icon.attr("data-state", "opened").find("use").attr("href", "#es-traquent-line-up");
 			}
 			``;
 			$child_item_section.toggleClass("hidden");
+
+			//alt öğe içerisindeki alt öğelerin kapalı gelmesi için //sevval
+			$child_item_section.children(".sidebar-item-container").each(function () {
+				$(this).find(".sidebar-child-item").addClass("hidden"); // İç içe olan alt öğeleri gizli tut
+			});
 		});
 	}
 

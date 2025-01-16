@@ -837,6 +837,16 @@
         <path fill-rule="evenodd" d="M2.646 5.686a.5.5 0 0 1 .708 0L8 10.333l4.646-4.647a.5.5 0 0 1 .708.708l-5 5a.5.5 0 0 1-.708 0l-5-5a.5.5 0 0 1 0-.708Z" class="Union" clip-rule="evenodd"/>
       </g>
     </symbol>
+    <symbol id="es-traquent-line-down" viewBox="0 0 16 16">
+      <g class="es-traquent-line-down">
+        <path fill="none" fill-rule="evenodd" d="M6.40039 8.39203L10.0004 11.992L13.6004 8.39203" stroke="#666D80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="Union" clip-rule="evenodd"/>
+      </g>
+    </symbol>
+    <symbol id="es-traquent-line-up" viewBox="0 0 16 16">
+      <g class="es-traquent-line-up">
+        <path fill="none" d="M13.6004 11.8L10.0004 8.20001L6.40039 11.8" stroke="#666D80" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="Union" clip-rule="evenodd"/>
+      </g>
+    </symbol>
     <symbol id="es-line-add" viewBox="0 0 16 16">
       <g class="es-line-add">
         <path fill-rule="evenodd" d="M8.5 2.5a.5.5 0 0 0-1 0v5h-5a.5.5 0 0 0 0 1h5v5a.5.5 0 0 0 1 0v-5h5a.5.5 0 0 0 0-1h-5v-5Z" class="Union" clip-rule="evenodd"/>

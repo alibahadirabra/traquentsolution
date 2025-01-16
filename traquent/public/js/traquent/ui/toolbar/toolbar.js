@@ -16,14 +16,50 @@ traquent.ui.toolbar.Toolbar = class {
 		$("#toolbar-user a[href]").click(function () {
 			$(this).closest(".dropdown-menu").prev().dropdown("toggle");
 		});
-
+		//this.createDropdownAndAppend();
 		this.setup_awesomebar();
 		this.setup_notifications();
 		this.setup_help();
 		this.setup_read_only_mode();
 		this.setup_announcement_widget();
 		this.make();
+		
 	}
+	// createDropdownAndAppend() {
+	// 		// Butona tıklama olayını tanımlıyoruz
+	// 		$("#load-settings-button").click(function() {
+	// 			// Traquent boot içerisindeki navbar_settings dizisini kontrol ediyoruz
+	// 			const navbarSettings = traquent.boot.navbar_settings;
+		
+	// 			// Eğer navbar_settings tanımlıysa işlem yapıyoruz
+	// 			if (navbarSettings && navbarSettings.settings_dropdown) {
+	// 				// İçeriği ekleyeceğimiz div'i seçiyoruz
+	// 				const targetDiv = $("#my-content-div");
+		
+	// 				// settings_dropdown içerisindeki verileri döngüyle işleyip div içerisine ekliyoruz
+	// 				navbarSettings.settings_dropdown.forEach(function(item) {
+	// 					if (!item.hidden) { // Eğer item.hidden false ise işliyoruz
+	// 						let contentHTML = '';
+		
+	// 						if (item.route) {
+	// 							contentHTML = `<a class="dropdown-item" href="${item.route}">${item.item_label}</a>`;
+	// 						} else if (item.action) {
+	// 							contentHTML = `<button class="btn-reset dropdown-item" onclick="return ${item.action}">${item.item_label}</button>`;
+	// 						} else {
+	// 							contentHTML = `<div class="dropdown-divider"></div>`;
+	// 						}
+		
+	// 						// Oluşturulan HTML içeriğini div'e ekliyoruz
+	// 						targetDiv.append(contentHTML);
+	// 					}
+	// 				});
+	// 			} else {
+	// 				console.error("navbar_settings or settings_dropdown not found.");
+	// 			}
+	// 		});
+
+		
+	// }
 
 	make() {
 		this.bind_events();
@@ -177,6 +213,10 @@ traquent.ui.toolbar.Toolbar = class {
 		if (traquent.boot.desk_settings.search_bar) {
 			let awesome_bar = new traquent.search.AwesomeBar();
 			awesome_bar.setup("#navbar-search");
+			$(document).ready(function() {
+				let awesome_bar_sidebar = new traquent.search.AwesomeBar();
+				awesome_bar_sidebar.setup("#sidebar-search");
+			});
 
 			traquent.search.utils.make_function_searchable(
 				traquent.utils.generate_tracking_url,

@@ -44,6 +44,7 @@ body {
 
 .main-section {
 	width: 100%;
+	margin-left: 0;
 	height: 100vh;
 	overflow: scroll;
 	overflow-x: hidden;
@@ -57,14 +58,14 @@ body {
 
 	.body-sidebar-placeholder {
 		display: none;
-		width: 53px;
+		width: 80px;
 		height: 100vh;
 	}
 }
 
 .body-sidebar {
-	width: 53px;
-	background: var(--subtle-fg);
+	width: 80px;
+	background: var(--traquent-background-white);
 	border-right: 1px solid var(--border-color);
 
 	display: flex;
@@ -72,6 +73,7 @@ body {
 	justify-content: space-between;
 	height: 100vh;
 	z-index: 1030;
+	transition: width .2s ease-in ;
 
 	.body-sidebar-top {
 		display: flex;
@@ -82,14 +84,36 @@ body {
 		gap: 2px;
 		justify-content: flex-start;
 		overflow: hidden;
-		padding: 15px;
+		padding: 32px 16px;
 		position: static;
 		font-size: var(--text-base);
 		// transition: width 200ms;
 	}
 
 	.body-sidebar-bottom {
-		padding: 15px;
+		padding: 25px 18px 32px 16px;
+		.nav-link{
+			display: none;
+		}
+		.sidebar-user{
+			&-icon{
+				padding-right: 12px;
+			}
+			&-info{
+				display: none;
+				&-fullname{
+					font-weight: var(--weight-semibold);
+					font-size: var(--traquent-text-s);
+					color: #181D27;
+				}
+				&-email{
+					color: #535862;
+					font-size: var(--traquent-text-s);
+					font-weight: var(--traquent-weight-regular);
+				}
+			}
+		}
+
 	}
 
 	.app-logo {
@@ -98,6 +122,27 @@ body {
 
 	.sidebar-items {
 		width: 100%;
+		.icon{
+			stroke: var(--traquent-icon-normal-500);
+		}
+		.sidebar-search{
+			display: none;
+			margin: 0 0 24px 0;
+		}
+		.search-bar{
+			margin: 0;
+			#sidebar-search{
+				height: 44px;
+			}
+		}
+		&::before {
+			content: "";
+			display: block;
+			height: 1px;
+			width: 100%;
+			background: #E2E4E9;
+			margin: 24px 0;
+		}
 	}
 
 	.divider {
@@ -112,7 +157,7 @@ body {
 			margin-bottom: var(--margin-sm);
 		}
 
-		&:first-child {
+		&:first-of-type {
 			margin-top: 24px;
 		}
 	}
@@ -121,6 +166,17 @@ body {
 		display: flex;
 		justify-content: space-between;
 		padding: 0px;
+		&.logo{
+			height: 41px;
+		}
+		.sidebar-item-icon .logo-icon{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+		.sidebar-item-logo{
+			display: none;
+		}
 
 		.sidebar-item-control {
 			display: none;
@@ -143,15 +199,18 @@ body {
 
 		.sidebar-item-label {
 			display: none;
-			font-size: var(--text-sm);
+			font-size: var(--traquent-text-m);
+			font-weight: var(--weight-semibold);
+
 		}
 
 		.item-anchor {
 			display: flex;
 			overflow: hidden;
-			gap: 5px;
+			//gap: 5px;//*
+			gap: 12px;//*
 			align-items: center;
-			padding: 3px 0px 3px 11px;
+			//padding: 3px 0px 3px 11px; //*
 			flex: 1;
 
 			&:hover {
@@ -166,12 +225,32 @@ body {
 
 	.sidebar-item-container {
 		position: relative;
-		margin-left: -10px;
-		margin-bottom: 6px;
+		//height: 40px;//*
+		padding: 9px 10px 9px 12px;
+		// margin-left: -10px;*
+		// margin-bottom: 6px;*
+		margin-bottom: 2px;//*
+		&:hover{
+			background: #FAFAFA;
+			border-radius: 6px;
+			.sidebar-item-icon .icon{
+				stroke: var(--traquent-icon-muted-600);
+			}
+		}
+		&:active, &.-active{
+
+			background-color: #F5F7FA;
+			border-radius: 6px;
+
+			.sidebar-item-icon .icon{
+				stroke: var(--traquent-lavender-blue-300);
+			}
+		}
 
 		/* nested container */
 		.sidebar-item-container {
 			margin-left: 20px;
+			margin-top: 8px;
 
 			.standard-sidebar-item {
 				justify-content: start;
@@ -187,8 +266,8 @@ body {
 @mixin body-sidebar-expanded {
 	.body-sidebar {
 		// make it an overlay on hover
-		position: absolute;
-		width: 200px;
+		//position: absolute;
+		width: 271px;
 
 		.body-sidebar-top {
 			overflow-y: auto;
@@ -202,6 +281,19 @@ body {
 		.edit-sidebar-link {
 			display: block;
 		}
+		.sidebar-search, 
+		.sidebar-item-logo,
+		.body-sidebar-bottom .nav-link{
+			display: flex;
+		}
+		.logo-icon{
+			display: none;
+		}
+		.sidebar-user-info{
+			display: flex;
+			flex-direction: column;
+		}
+
 	}
 
 	// show placeholder so that main section remains static
@@ -233,7 +325,10 @@ body {
 
 @include media-breakpoint-up(sm) {
 	// for bigger screens, expand / collapse on hover
-	.body-sidebar-container {
+	// .body-sidebar-container {
+	// 	@include body-sidebar-expanded();
+	// }
+	.body-sidebar-container:hover {
 		@include body-sidebar-expanded();
 	}
 }

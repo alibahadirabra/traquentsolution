@@ -1,7 +1,7 @@
 <div class="sticky-top">
 	<header class="navbar navbar-expand" role="navigation">
 		<div class="container">
-			<div class="body-sidebar-top">
+			<div class="body-sidebar-top d-none">
 				<a class="app-switcher-dropdown"
 						style="text-decoration: none; width: 50%; position: relative;">
 
@@ -42,9 +42,9 @@
 				<img src="/assets/traquent/images/traquent_white.png" alt="Dark Logo" style="width: 110px;" id="logo-dark">
 
 			</a>
-			<!-- <ul class="nav navbar-nav d-none d-sm-flex" id="navbar-breadcrumbs"></ul> -->
-			<div class="collapse navbar-collapse justify-content-end">
-				<form class="form-inline fill-width justify-content-end" role="search" onsubmit="return false;">
+			<ul class="nav navbar-nav d-none d-sm-flex" id="navbar-breadcrumbs"></ul>
+			<div class="collapse navbar-collapse justify-content-end d-none">
+				<form class="form-inline fill-width justify-content-end d-none" role="search" onsubmit="return false;">
 					{% if (traquent.boot.read_only) { %}
 						<span class="indicator-pill yellow no-indicator-dot read-only-banner" title="{%= __("Your site is undergoing maintenance or being updated.") %}">
 							{%= __("Read Only Mode") %}
@@ -69,7 +69,7 @@
 					</div>
 				</form>
 				
-				<ul class="navbar-nav">
+				<ul class="navbar-nav d-none">
 					<!-- <li class="nav-item dropdown dropdown-notifications dropdown-mobile hidden">
 						<button
 							class="btn-reset nav-link notifications-icon text-muted"
@@ -177,9 +177,10 @@
 			</div>
 		</div>
 	</header>
-	<div class="nav-bottom">
+	<!-- //sidebar üste alınınca breadcrumbs için eklenen alandı geri sidebara alınınca üste alındı -->
+	<!-- <div class="nav-bottom">
 		<ul class="nav navbar-nav d-none d-sm-flex" id="navbar-breadcrumbs"></ul>
-	</div>
+	</div> -->
 
 	{% if !localStorage.getItem("dismissed_announcement_widget") && strip_html(navbar_settings.announcement_widget) != '' %}
 	<div class="announcement-widget form-message p-2 m-0" style="position: relative; z-index: -1; border-radius: 0; background-color: var(--bg-blue);">

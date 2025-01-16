@@ -345,18 +345,21 @@ select.input-xs {
 
 .dropdown-item {
 	border-radius: 8px;
-	padding: var(--dropdown-padding) !important;
+	padding: 8px 12px !important;//traquent.v1.sevval//
+	@include traquent-text("body", "s", "regular");//traquent.v1.sevval//
+	color: var(--traquent-text-muted-600);//traquent.v1.sevval//
 }
 
 .dropdown-menu {
 	padding: 4px;
-	@include get_textstyle("base", "regular");
+	//@include get_textstyle("base", "regular");
+	@include traquent-text("body", "s", "regular");//traquent.v1.sevval//
 	max-height: 500px;
 	overflow: auto;
 	border: 1px solid var(--subtle-accent);
-
+	border-radius: 10px !important;//traquent.v1.sevval//
 	.dropdown-divider {
-		margin: 4px 0;
+		margin: 4px -4px;//traquent.v1.sevval//
 	}
 
 	.divider {
@@ -377,7 +380,7 @@ select.input-xs {
 
 	.divider,
 	.dropdown-divider {
-		margin: 4px;
+		//margin: 4px;//traquent.v1.sevval//
 	}
 
 	:last-child {

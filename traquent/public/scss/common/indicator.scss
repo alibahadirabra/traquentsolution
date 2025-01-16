@@ -5,6 +5,9 @@
 	display: inline-flex;
 	align-items: center;
 }
+div.indicator-pill{
+	padding: 3px 8px;
+}//traquent.v1.sevval//
 
 .indicator::before {
 	content: "";
@@ -18,10 +21,31 @@
 	//@include get_textstyle("sm", "regular");
 	@include traquent-text(label, "s", "medium");//traquent.v1.sevval//
 	//padding: 4.5px 8px;
-	padding: 2.5px 8px;//traquent.v1.sevval//
+	padding: 0;//traquent.v1.sevval//
 	border-radius: var(--border-radius-full);
 	height: 20px;
+	&:has(> span) {
+		padding: 3px 8px;//traquent.v1.sevval//
+	}
 }
+//traquent.v1.sevval//
+	.indicator-icon{
+		position: relative;
+		top: 2px;
+		.icon{
+			position: relative;
+			left: 2px;
+		}
+	}
+	.indicator-icon-left{
+		justify-content: center;
+		flex-direction: row;
+	}
+	.indicator-icon-right{
+		justify-content: center;
+		flex-direction: row-reverse;
+	}
+//**********/
 
 .indicator-pill-round {
 	@include get_textstyle("sm", "regular");

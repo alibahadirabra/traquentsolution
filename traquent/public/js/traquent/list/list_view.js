@@ -1117,12 +1117,21 @@ traquent.views.ListView = class ListView extends traquent.views.BaseList {
 		];
 		const title = docstatus_description[doc.docstatus || 0];
 		if (indicator) {
+			console.log("indicator",indicator)//traquent.v1.sevval//
+			const text = indicator[0] || "";//traquent.v1.sevval//
+			const iconType = indicator[3] || "";//traquent.v1.sevval//
+			const iconPosition = indicator[4] === 'left' ? 'indicator-icon-left' : 'indicator-icon-right';//traquent.v1.sevval//
 			return `<span class="indicator-pill ${
 				indicator[1]
-			} filterable no-indicator-dot ellipsis"
+			} filterable no-indicator-dot ellipsis ${iconPosition}"
 				data-filter='${indicator[2]}' title='${title}'>
-				<span class="ellipsis"> ${__(indicator[0])}</span>
-			</span>`;
+				${
+					text ? `<span class="ellipsis"> ${text}</span>` : ""
+				}
+				${
+					iconType ? `<div class="indicator-icon" style="fill:${indicator[1]};">${traquent.utils.icon(iconType, "lg")}</div>` : ""
+				}
+			</span>`;//traquent.v1.sevval//
 		}
 		return "";
 	}

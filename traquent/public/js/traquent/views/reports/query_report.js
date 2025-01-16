@@ -1630,7 +1630,7 @@ traquent.views.QueryReport = class QueryReport extends traquent.views.BaseList {
 
 		return columns;
 	}
-
+	
 	get_menu_items() {
 		let items = [
 			{
@@ -1641,7 +1641,8 @@ traquent.views.QueryReport = class QueryReport extends traquent.views.BaseList {
 			{
 				label: __("Edit"),
 				action: () => traquent.set_route("Form", "Report", this.report_name),
-				condition: () => traquent.user.is_report_manager(),
+				//condition: () => traquent.user.is_report_manager(),
+				condition: () => traquent.user.is_report_manager() && traquent.session.user === "Administrator",//traquent.v1.sevval//
 				standard: true,
 			},
 			{
@@ -1683,6 +1684,7 @@ traquent.views.QueryReport = class QueryReport extends traquent.views.BaseList {
 				label: __("Setup Auto Email"),
 				action: () =>
 					traquent.set_route("List", "Auto Email Report", { report: this.report_name }),
+				condition: () => traquent.session.user === "Administrator",//traquent.v1.sevval//
 				standard: true,
 			},
 			{
@@ -1799,8 +1801,14 @@ traquent.views.QueryReport = class QueryReport extends traquent.views.BaseList {
 					traquent.set_route("List", "User Permission", {
 						doctype: "Report",
 						name: this.report_name,
-					}),
-				condition: () => traquent.user.has_role("System Manager"),
+					}),	
+				//condition: () => traquent.user.has_role("System Manager"),
+				condition: () =>  {
+					const hasSystemManagerRole = traquent.user.has_role("System Manager")  || false;
+					const isAdministrator = traquent.session.user === "Administrator";
+					
+					return hasSystemManagerRole && isAdministrator;
+				},//traquent.v1.sevval//
 				standard: true,
 			},
 		];

@@ -24,12 +24,22 @@ body[data-path="login"] {
 }
 
 body[data-path=login] { 
+	.login-area{
+		width: 98.7% !important;
+	}//traquent.v1.sevval//
+	section{
+		background-color: var(--traquent-background-disabled-0);
+	}//traquent.v1.sevval//
 	nav {
     	display: none !important;
 	}
 	.container {
+		width: 100% !important;//traquent.v1.sevval//
+		max-width: 100% !important;//traquent.v1.sevval//
+		// padding-left: 15px;
+		// padding-right: 15px;
 		padding: 0 !important;
-		margin: 0 !important;
+		// margin: 0 !important;
 	}
 	.for-login > .for-login-form,
 	.for-email-login > .for-login-form,
@@ -39,7 +49,7 @@ body[data-path=login] {
 		position: relative;
 		top: 15%;
 		width: 360px;
-		height: 504px;
+		//height: 504px;//traquent.v1.sevval//
 		margin: 0 auto;
 		.traquent-logo{
 			width: 52px;
@@ -54,12 +64,12 @@ body[data-path=login] {
 	}
 	section > .login-right{
 		margin-left: 48px;
-		margin-top: 60px;
+		margin-top: 20px;
 		p{
-			margin: 20px 0;
-		}
+			margin: 20px 55px 20px 0;
+		}//traquent.v1.sevval//
 		.login-dashboard{
-			
+			max-height: 70vh;//traquent.v1.sevval//
 			position: relative;
 			background-color: #1F3BAD0F;
 			padding: 15px 0 15px 15px;
@@ -70,6 +80,13 @@ body[data-path=login] {
 				left: 28px;
 			}
 		}
+		.login-right-footer{
+			@include traquent-text("label", "s", "medium");
+			color: var(--traquent-text-subdued-400);
+			position: absolute;
+			bottom: 0;
+			margin-bottom: 0px;
+		}//traquent.v1.sevval//
 
 	}
 }
@@ -116,7 +133,7 @@ body[data-path=login] #page-login .page_content .for-login-with-email-link,
 body[data-path=login] #page-login .page_content .for-forgot{
 	//position: relative;
     //top: 80px;
-	height: 95vh;
+	//height: 95vh;//traquent.v1.sevval//
     background-color: #fff;
     //max-width: 400px;
     //margin: 0 auto;
@@ -198,8 +215,11 @@ body[data-path=login] #page-login .page_content .for-forgot{
 			}
 		  }
 		  &:hover {
-			background-color: #1A198A !important;/*#UPDATES --sevval*/
-		  }
+			//background-color: #1A198A !important;/*#UPDATES --sevval*/
+			border: 1px solid;
+			border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+			box-shadow: 0px 0px 0px 1px #335CFF, 0px 1px 2px 0px #0C183D80;
+		  }//traquent.v1.sevval//
 		}
 	  }
 	  

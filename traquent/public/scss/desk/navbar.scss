@@ -16,7 +16,7 @@
 
 	.navbar-nav {
 		.dropdown-item {
-			padding: 6px 8px !important;
+			padding: 6px 8px ;
 		}
 
 		.nav-link {
@@ -84,9 +84,9 @@
 			padding: 10px 36px 10px 12px;
 			height: 44px;
 			//@include get_textstyle("sm", "regular");
-			@include traquent-text(label, "m", "medium");
+			@include traquent-text("label", "m", "medium");
 			border: 1px solid var(--stroke-soft, #E2E4E9);
-			box-shadow: 2px 4px 3px 0px #00000005;
+			box-shadow: 2px 4px 3px 0px #00000005 !important;
 		}
 		input:focus {
 			border-bottom-left-radius: 0;

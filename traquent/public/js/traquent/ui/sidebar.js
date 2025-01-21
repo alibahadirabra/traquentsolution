@@ -77,10 +77,13 @@ traquent.ui.Sidebar = class Sidebar {
 
 		this.setup_app_switcher();
 		let user_avatar = traquent.avatar(traquent.session.user, "avatar-icon");
+		const userEmail = traquent.session.user_email;
+		const displayedEmail = userEmail.length > 18 ? userEmail.substring(0, 18) + "..." : userEmail;
+
 		$(`<div class="sidebar-user-icon">${user_avatar}</div>
 			<div class="sidebar-user-info">
 				<div class="sidebar-user-info-fullname">${traquent.session.user_fullname}</div>
-				<div class="sidebar-user-info-email">${traquent.session.user_email}</div>
+				<div class="sidebar-user-info-email" title="${userEmail}">${displayedEmail}</div>
 			</div>`).appendTo(".sidebar-user");
 	}
 
@@ -479,8 +482,9 @@ traquent.ui.Sidebar = class Sidebar {
 			toggleChildItems($drop_icon, $child_item_section);
 		});
 		item_container.on("click", function (e) {
+			e.stopPropagation();  
 			if ($(e.target).closest('.drop-icon').length) {
-				return; // Drop icon'a tıklanınca, bu tıklama olayını engelle
+				return;
 			}
 			toggleChildItems($drop_icon, $child_item_section);
 		});

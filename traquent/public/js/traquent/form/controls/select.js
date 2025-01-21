@@ -16,8 +16,8 @@ traquent.ui.form.ControlSelect = class ControlSelect extends traquent.ui.form.Co
 				${traquent.utils.icon("select", is_xs_input ? "xs" : "sm")}
 			</div>`;
 		//traquent.v1.sevval//
-		const search_icon_html = `<div class="search-icon ${is_xs_input ? "xs" : ""}">
-				${traquent.utils.icon("search", is_xs_input ? "xs" : "sm")}
+		const search_icon_html = `<div class="search-icon">
+				${traquent.utils.icon("search")}
 			</div>`;//****************/
 
 		if (this.only_input) {

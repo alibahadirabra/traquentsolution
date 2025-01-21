@@ -86,13 +86,14 @@
 			//@include get_textstyle("sm", "regular");
 			@include traquent-text("label", "m", "medium");
 			border: 1px solid var(--stroke-soft, #E2E4E9);
-			box-shadow: 2px 4px 3px 0px #00000005 !important;
+			box-shadow: 0px 0px 0px 1px #335CFF, 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 3px rgba(12, 24, 61, 0.3215686275), 0px 1px 2px 0px rgba(12, 24, 61, 0.4) !important;
 		}
 		input:focus {
 			border-bottom-left-radius: 0;
 			border-bottom-right-radius: 0;
 			box-shadow: var(--awesomebar-shadow);
 			background-color: var(--awesomebar-focus-bg);
+			box-shadow: 2px 4px 3px 0px #00000005 !important;
 		}
 		ul {
 			border: none;

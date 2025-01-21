@@ -5,7 +5,6 @@ traquent.provide("traquent.tags");
 
 traquent.search.AwesomeBar = class AwesomeBar {
 	setup(element) {
-		console.log("element",element)
 		var me = this;
 
 		$(".search-bar").removeClass("hidden");

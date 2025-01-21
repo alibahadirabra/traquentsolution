@@ -56,16 +56,22 @@
 		background-color: var(--bg-color) !important;
 		padding: 0 !important;
 		border-radius: 0 !important;
+		.page-body {
+			width: 100%;
+			padding: 0px;
+			//padding: 0 20px 20px 20px;
+		}
 	}
 }
 .page-container {
 	background-color: var(--bg-color) !important;
-	padding: 20px !important;
+	//padding: 20px !important;
 	border-radius: 12px !important;
 
 	.page-body {
 		width: 100%;
-		padding: 0px;
+		//padding: 0px;
+		padding: 0 20px 20px 20px;
 	}
 }
 
@@ -117,7 +123,9 @@
 	z-index: 6;
 	position: sticky;
 	top: var(--navbar-height);
-	//background: var(--bg-color);
+	background: var(--traquent-background-white);
+	padding: 20px 20px 6px 20px;
+	border-radius: 12px 12px 0 0;
 	border-bottom: 1px solid var(--border-color);
 	transition: 0.5s top;
 

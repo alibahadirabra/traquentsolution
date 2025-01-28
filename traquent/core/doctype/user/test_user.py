@@ -20,7 +20,7 @@ from traquent.core.doctype.user.user import (
 	verify_password,
 )
 from traquent.desk.notifications import extract_mentions
-from traquent.frappeclient import traquentClient
+from traquent.traquentclient import traquentClient
 from traquent.model.delete_doc import delete_doc
 from traquent.tests import IntegrationTestCase, UnitTestCase
 from traquent.tests.test_api import traquentAPITestCase

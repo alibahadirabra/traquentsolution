@@ -14,7 +14,7 @@ from traquent.core.utils import html2text
 from traquent.database.database import savepoint
 from traquent.email.doctype.email_account.email_account import EmailAccount
 from traquent.email.email_body import add_attachment, get_email, get_formatted_html
-from traquent.email.frappemail import traquentMail
+from traquent.email.traquentmail import traquentMail
 from traquent.email.queue import get_unsubcribed_url, get_unsubscribe_message
 from traquent.email.smtp import SMTPServer
 from traquent.model.document import Document

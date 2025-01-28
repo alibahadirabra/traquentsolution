@@ -7,7 +7,7 @@ import requests
 
 import traquent
 from traquent.core.doctype.user.user import generate_keys
-from traquent.frappeclient import traquentClient, traquentException
+from traquent.traquentclient import traquentClient, traquentException
 from traquent.model import default_fields
 from traquent.tests import IntegrationTestCase
 from traquent.utils.data import get_url

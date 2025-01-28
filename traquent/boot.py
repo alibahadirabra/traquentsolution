@@ -26,7 +26,7 @@ from traquent.social.doctype.energy_point_settings.energy_point_settings import 
 )
 from traquent.utils import add_user_info, cstr, get_system_timezone
 from traquent.utils.change_log import get_versions
-from traquent.utils.frappecloud import on_traquentcloud
+from traquent.utils.traquentcloud import on_traquentcloud
 from traquent.website.doctype.web_page_view.web_page_view import is_tracking_enabled
 
 

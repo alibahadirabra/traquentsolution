@@ -401,6 +401,7 @@ override_whitelisted_methods = {
 	"traquent.www.login.login_via_office365": "traquent.integrations.oauth2_logins.login_via_office365",
 	"traquent.www.login.login_via_salesforce": "traquent.integrations.oauth2_logins.login_via_salesforce",
 	"traquent.www.login.login_via_fairlogin": "traquent.integrations.oauth2_logins.login_via_fairlogin",
+	"traquent.api.validatetoken.validate_token": "traquent.api.validatetoken.validate_token"
 }
 
 ignore_links_on_delete = [

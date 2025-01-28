@@ -5,7 +5,7 @@ import requests
 import traquent
 from traquent.core.doctype.scheduled_job_type.scheduled_job_type import ScheduledJobType, sync_jobs
 from traquent.core.doctype.server_script.server_script import ServerScript
-from traquent.frappeclient import traquentClient, traquentException
+from traquent.traquentclient import traquentClient, traquentException
 from traquent.tests import IntegrationTestCase, UnitTestCase
 from traquent.utils import get_site_url
 

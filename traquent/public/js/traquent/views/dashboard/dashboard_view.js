@@ -199,8 +199,8 @@ traquent.views.DashboardView = class DashboardView extends traquent.views.ListVi
 
 		const empty_state_html = `<div class="msg-box no-border empty-dashboard">
 			<div>
-				<svg class="icon icon-xl" style="stroke: var(--text-light);">
-					<use href="#icon-small-file"></use>
+				<svg class="icon icon-3xl">
+					<use href="#icon-traquent-file"></use>
 				</svg>
 			</div>
 			${no_result_message_html}

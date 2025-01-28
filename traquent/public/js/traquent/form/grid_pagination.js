@@ -5,10 +5,10 @@ export default class GridPagination {
 	}
 
 	setup_pagination() {
-		this.page_length = 50;
+		this.page_length = 10; //sayfada listelenmesi istenen veri sayısı <<sevval
 		this.page_index = 1;
 		this.total_pages = Math.ceil(this.grid.data.length / this.page_length);
-
+		
 		this.render_pagination();
 	}
 
@@ -120,14 +120,15 @@ export default class GridPagination {
 			</div>`;
 
 		return $(`<button class="btn btn-secondary btn-xs first-page"">
-				<span>${__("First")}</span>
+				${traquent.utils.icon("sidebar-collapse", "xs")}
 			</button>
 			<button class="btn btn-secondary btn-xs prev-page">${traquent.utils.icon("left", "xs")}</button>
 			${page_text_html}
 			<button class="btn btn-secondary btn-xs next-page">${traquent.utils.icon("right", "xs")}</button>
 			<button class="btn btn-secondary btn-xs last-page">
-				<span>${__("Last")}</span>
+				${traquent.utils.icon("sidebar-expand", "xs")}
 			</button>`);
+			// first ve last için text vardı ikon eklendi "<span>${__("First")}</span>" <<sevval
 	}
 
 	render_next_page() {

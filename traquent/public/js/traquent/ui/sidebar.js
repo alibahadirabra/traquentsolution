@@ -76,6 +76,7 @@ traquent.ui.Sidebar = class Sidebar {
 		}
 
 		this.setup_app_switcher();
+		this.dropdownListUser();
 		let user_avatar = traquent.avatar(traquent.session.user, "avatar-icon");
 		const userEmail = traquent.session.user_email;
 		const displayedEmail = userEmail.length > 18 ? userEmail.substring(0, 18) + "..." : userEmail;
@@ -85,6 +86,25 @@ traquent.ui.Sidebar = class Sidebar {
 				<div class="sidebar-user-info-fullname">${traquent.session.user_fullname}</div>
 				<div class="sidebar-user-info-email" title="${userEmail}">${displayedEmail}</div>
 			</div>`).appendTo(".sidebar-user");
+	}
+
+	dropdownListUser(){
+		// Belirli bir sınıfa sahip li elemanlarını bulup gizle
+		if(traquent.session.user !== "Administrator"){
+			setTimeout(() => {
+				const dropdownMenu = document.getElementById("toolbar-user");
+				const buttons = dropdownMenu.querySelectorAll(".dropdown-item");			  
+				for (let i = 0; i < 8; i++) {
+					if(i == 0 || i == 3 || i == 5){
+						continue;
+					}
+					if (buttons[i]) {
+						buttons[i].style.display = 'none'; 
+					}
+				}
+			}, 100);
+		}
+		//////traquent.v1.sevval
 	}
 
 	set_all_pages() {
@@ -304,6 +324,7 @@ traquent.ui.Sidebar = class Sidebar {
 		) {
 			sidebar_section.addClass("hidden show-in-edit-mode");
 		}
+		sidebar_section.find(".sidebar-child-item .sidebar-item-icon").addClass('hidden'); //child itemların ikonları gizlendi
 	}
 
 	prepare_sidebar(items, child_container, item_container) {

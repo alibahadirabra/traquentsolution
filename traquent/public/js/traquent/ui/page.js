@@ -524,22 +524,20 @@ traquent.ui.Page = class Page {
 			$li.addClass("user-action").insertBefore(this.divider);
 		}
 
-		//actions button li hidden
-		const hiddenLabels = ["Düzenle", "Ata", "Atamayı Temizle", "Arama Kuralı Uygula", "Etiket Ekle", "Yazdır"];
-		$('.actions-btn-group').each(function() {
-			const parent = $(this).find('ul.dropdown-menu'); 
-			
-			parent.find('li').each(function() {
-				const label = $(this).find('.menu-item-label').text().trim(); 
-				if (!hiddenLabels.includes(label)) {
-					const $li = $(this); 
-					$li.show();
-				} else {
-					const $li = $(this);
-					$li.hide(); 
+		// Belirli bir sınıfa sahip li elemanlarını bulup gizle
+		if(traquent.session.user !== "Administrator"){
+			setTimeout(() => {
+				const itemsToHide = document.querySelectorAll('.actions-btn-group ul.dropdown-menu li');
+				for (let i = 0; i < 6; i++) {
+					if(i == 1){
+						continue;
+					}
+					if (itemsToHide[i]) {
+						itemsToHide[i].closest('li').style.display = 'none';
+					}
 				}
-			});
-		});
+			}, 100);
+		}
 		//////traquent.v1.sevval
 
 		// alt shortcut

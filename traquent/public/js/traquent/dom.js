@@ -345,12 +345,8 @@ traquent.get_modal = function (title, content) {
 	return $(`<div class="modal fade" style="overflow: auto;" tabindex="-1">
 		<div class="modal-dialog">
 			<div class="modal-content">
-				<div class="modal-header">
-					<div class="fill-width flex title-section">
-						<span class="indicator hidden"></span>
-						<h4 class="modal-title">${title}</h4>
-					</div>
-					<div class="modal-actions">
+				<div class="modal-header justify-content-end">
+					<div class="modal-actions ">
 						<button class="btn btn-modal-minimize btn-link hide">
 							${traquent.utils.icon("collapse")}
 						</button>
@@ -359,7 +355,13 @@ traquent.get_modal = function (title, content) {
 						</button>
 					</div>
 				</div>
-				<div class="modal-body ui-front">${content}</div>
+				<div class="modal-body ui-front">
+					<div class="fill-width flex title-section">
+						<span class="indicator hidden"></span>
+						<h4 class="modal-title">${title}</h4>
+					</div>
+					${content}
+				</div>
 				<div class="modal-footer hide">
 					<div class="custom-actions"></div>
 					<div class="standard-actions">

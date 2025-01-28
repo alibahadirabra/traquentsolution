@@ -96,8 +96,6 @@ export default class Grid {
 								${__("Add Multiple")}</a>
 							</button>
 						</div>
-						<div class="grid-pagination">
-						</div>
 						<div class="grid-bulk-actions text-right">
 							<button type="button" class="grid-download btn btn-xs btn-secondary hidden">
 								${__("Download")}
@@ -106,10 +104,12 @@ export default class Grid {
 								${__("Upload")}
 							</button>
 						</div>
+						<div class="grid-pagination">
+						</div>
 					</div>
 				</div>
 			</div>
-		`;
+		`;//pagination buton yeri değişti
 
 		this.wrapper = $(template).appendTo(this.parent);
 		$(this.parent).addClass("form-group");

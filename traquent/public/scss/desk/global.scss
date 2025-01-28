@@ -9,7 +9,7 @@ body {
 	font-weight: var(--weight-regular);
 	letter-spacing: 0.02em;
 	//background-color: var(--bg-color);
-	background-color: var(--traquent-background-disabled-0) !important;
+	background-color: var(--traquent-background-disabled-0);
 }
 #body{
 	padding: 40px 31px !important;
@@ -347,11 +347,11 @@ select.input-xs {
 	border-radius: 8px;
 	padding: 8px 12px !important;//traquent.v1.sevval//
 	@include traquent-text("body", "s", "regular");//traquent.v1.sevval//
-	color: var(--traquent-text-muted-600);//traquent.v1.sevval//
+	color: var(--dropdown-text);//traquent.v1.sevval//
 }
 
 .dropdown-menu {
-	padding: 4px;
+	padding: 16px 12px;
 	//@include get_textstyle("base", "regular");
 	@include traquent-text("body", "s", "regular");//traquent.v1.sevval//
 	max-height: 500px;
@@ -614,7 +614,7 @@ details > summary:focus {
 
 .text-extra-muted {
 	@include traquent-text(body, "xs", "regular");//traquent.v1.sevval//
-	color: var(--traquent-text-normal-500) !important;//traquent.v1.sevval//
+	color: var(--input-hint) !important;//traquent.v1.sevval//
 }
 
 .grayscale {

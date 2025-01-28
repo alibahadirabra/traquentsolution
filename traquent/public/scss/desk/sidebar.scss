@@ -65,7 +65,7 @@ body {
 
 .body-sidebar {
 	width: 80px;
-	background: var(--traquent-background-white);
+	background: var(--bg-color);
 	border-right: 1px solid var(--border-color);
 
 	display: flex;
@@ -104,10 +104,10 @@ body {
 				&-fullname{
 					font-weight: var(--weight-semibold);
 					font-size: var(--traquent-text-s);
-					color: #181D27;
+					color: var(--traquent-sidebar-header);
 				}
 				&-email{
-					color: #535862;
+					color: var(--traquent-sidebar-content);
 					font-size: var(--traquent-text-s);
 					font-weight: var(--traquent-weight-regular);
 				}
@@ -140,8 +140,8 @@ body {
 			display: block;
 			height: 1px;
 			width: 100%;
-			background: #E2E4E9;
-			margin: 24px 0;
+			background: var(--border-traquent-color);
+			margin: 20px 0;
 		}
 	}
 
@@ -230,8 +230,10 @@ body {
 		// margin-left: -10px;*
 		// margin-bottom: 6px;*
 		margin-bottom: 2px;//*
+		//background: var(--traquent-sidebar-item);
+		border-radius: 6px;
 		&:hover{
-			background: #FAFAFA;
+			//background: var(--traquent-sidebar-light);
 			border-radius: 6px;
 			.sidebar-item-icon .icon{
 				stroke: var(--traquent-icon-muted-600);
@@ -239,7 +241,7 @@ body {
 		}
 		&:active, &.-active{
 
-			background-color: #F5F7FA;
+			background-color: var(--traquent-sidebar-hover);
 			border-radius: 6px;
 
 			.sidebar-item-icon .icon{
@@ -260,6 +262,12 @@ body {
 		.indicator {
 			margin-left: 5px;
 		}
+	}
+	
+}
+@media (max-width: 80px) {
+	.body-sidebar .sidebar-item-container {
+		background-color: transparent !important;
 	}
 }
 
@@ -286,12 +294,18 @@ body {
 		.body-sidebar-bottom .nav-link{
 			display: flex;
 		}
-		.logo-icon{
+		#icon-light, #icon-dark{
 			display: none;
 		}
 		.sidebar-user-info{
 			display: flex;
 			flex-direction: column;
+		}
+		.sidebar-item-container{
+			background-color: var(--traquent-sidebar-dark);
+		}
+		.sidebar-item-container:hover{
+			background: var(--traquent-sidebar-light);
 		}
 
 	}

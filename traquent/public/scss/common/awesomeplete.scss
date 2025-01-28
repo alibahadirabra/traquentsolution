@@ -22,7 +22,7 @@
 		position: absolute;
 		width: 100%;
 		list-style: none;
-		background-color: var(--bg-color);
+		background-color: var(--input-bg);
 		max-height: unquote("min(60vh, 300px)");
 		overflow-y: auto;
 		overflow-x: hidden;
@@ -33,7 +33,7 @@
 		margin: 0;
 		padding: var(--padding-xs);
 		z-index: 4;
-		min-width: 250px;
+		min-width: 238px;
 
 		& > li,
 		& > [role="option"] {

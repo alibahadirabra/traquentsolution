@@ -308,7 +308,10 @@ traquent.ui.FilterGroup = class {
 						+ ${__("Add a Filter")}
 					</button>
 					<div>
-						<button class="btn btn-secondary btn-xs clear-filters">
+						<button class="btn btn-secondary btn-xs clear-filters mr-2">
+							<svg class="icon icon-sm mb-1">
+								<use href="#icon-clear" class="clear"></use>
+							</svg>
 							${__("Clear Filters")}
 						</button>
 						${

@@ -53,7 +53,7 @@
 }
 [data-route^="Workspaces/"] {
 	.page-container {
-		background-color: var(--bg-color) !important;
+		background-color: var(--bg-color);
 		padding: 0 !important;
 		border-radius: 0 !important;
 		.page-body {
@@ -64,7 +64,7 @@
 	}
 }
 .page-container {
-	background-color: var(--bg-color) !important;
+	background-color: var(--bg-color);
 	//padding: 20px !important;
 	border-radius: 12px !important;
 
@@ -123,7 +123,7 @@
 	z-index: 6;
 	position: sticky;
 	top: var(--navbar-height);
-	background: var(--traquent-background-white);
+	background: var(--bg-color);
 	padding: 20px 20px 6px 20px;
 	border-radius: 12px 12px 0 0;
 	border-bottom: 1px solid var(--border-color);

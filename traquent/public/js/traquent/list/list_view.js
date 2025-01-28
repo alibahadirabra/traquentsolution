@@ -485,14 +485,14 @@ traquent.views.ListView = class ListView extends traquent.views.BaseList {
 
 		return `<div class="msg-box no-border">
 			<div class="mb-4">
-			  	<svg class="icon icon-xl" style="stroke: var(--text-light);">
-					<use href="#icon-small-file"></use>
+			  	<svg class="icon icon-3xl">
+					<use href="#icon-traquent-file"></use>
 				</svg>
 			</div>
 			<p>${no_result_message}</p>
 			${new_button}
 			${help_link}
-		</div>`;
+		</div>`; //tablo boş iken ekrana gelen svg değişti <<sevval
 	}
 
 	freeze() {
@@ -1117,7 +1117,6 @@ traquent.views.ListView = class ListView extends traquent.views.BaseList {
 		];
 		const title = docstatus_description[doc.docstatus || 0];
 		if (indicator) {
-			console.log("indicator",indicator)//traquent.v1.sevval//
 			const text = indicator[0] || "";//traquent.v1.sevval//
 			const iconType = indicator[3] || "";//traquent.v1.sevval//
 			const iconPosition = indicator[4] === 'left' ? 'indicator-icon-left' : 'indicator-icon-right';//traquent.v1.sevval//

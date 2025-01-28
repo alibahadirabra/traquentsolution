@@ -1,6 +1,6 @@
 html,
 body {
-	background-color: var(--bg-color);
+	background-color: var(--bg-second-color);
 	::selection {
 		color: var(--neutral-black);
 		background: var(--gray-300);
@@ -87,7 +87,13 @@ body {
 		}
 	}
 }
+.codex-editor__redactor .widget.shortcut-widget-box:nth-of-type(1) {
+    background-color: #FF5733; /* İlk widget */
+}
 
+.codex-editor__redactor .widget.shortcut-widget-box:nth-of-type(2) {
+    background-color: #33FF57; /* İkinci widget */
+}
 .widget {
 	@include flex(flex, null, null, column);
 	min-height: 1px;
@@ -960,7 +966,7 @@ body {
 	}
 
 	.layout-main-section {
-		background-color: var(--traquent-background-disabled-0) !important;
+		background-color: var(--bg-second-color);
 		box-shadow: none;
 		padding: var(--padding-sm) var(--padding-md);
 
@@ -974,7 +980,8 @@ body {
 		}
 	}
 	.editor-js-container{
-		background-color: var(--traquent-background-white);
+		background-color: var(--bg-color);
+		border: 1px solid var(--border-traquent-color);
 		border-radius: 14px;
 	}
 

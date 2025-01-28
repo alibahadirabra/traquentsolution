@@ -37,7 +37,7 @@ body.modal-open[style^="padding-right"] {
 		top: 0;
 		z-index: 3;
 		background: inherit;
-		padding: var(--padding-sm) var(--padding-lg);
+		padding: var(--padding-xl) var(--padding-xl) 0;
 		// padding-bottom: 0;
 		//border-bottom: 1px solid var(--border-color);
 		border: none !important;//traquent.v1.sevval//
@@ -68,7 +68,10 @@ body.modal-open[style^="padding-right"] {
 	}
 
 	.modal-body {
-		padding: 0 var(--padding-md) var(--padding-lg);//traquent.v1.sevval//
+		max-height: 500px;//traquent.v1.sevval//
+		min-height: 200px;//traquent.v1.sevval//
+		overflow: scroll;//traquent.v1.sevval//
+		padding: 0 var(--padding-xl) var(--padding-lg);//traquent.v1.sevval//
 		.form-layout:first-child > .form-page {
 			.visible-section:first-child {
 				padding-top: 0;
@@ -95,8 +98,9 @@ body.modal-open[style^="padding-right"] {
 		bottom: 0;
 		z-index: 1;
 		background: inherit;
-		padding: var(--padding-md) var(--padding-lg);
+		padding: 0 var(--padding-xl) var(--padding-xl);
 		justify-content: space-between;
+		border-top: none !important;
 
 		button {
 			box-shadow: none;

@@ -1,38 +1,104 @@
-<div class="body-sidebar-container d-none">
-	<!-- <div class="body-sidebar-placeholder"></div> -->
+<div class="body-sidebar-container">
+	<!-- <div class="body-sidebar-placeholder"></div>  -->
 		<div class="body-sidebar">
 			<div class="body-sidebar-top">
-				<a class="app-switcher-dropdown"
-						style="text-decoration: none; width: 100%; position: relative;">
-
-					<div class="standard-sidebar-item align-items-center">
+				<!-- <a class="app-switcher-dropdown" 
+						style="text-decoration: none; width: 100%; position: relative;"> -->
+					<div class="standard-sidebar-item align-items-center logo">
 						<div class="d-flex align-items-center">
 							<div class="sidebar-item-icon">
+								<svg class="logo-icon" width="36" height="26" viewBox="0 0 36 33" fill="none" xmlns="http://www.w3.org/2000/svg" id="icon-light">
+									<path d="M0 5.20058V14.3091C0 14.7197 0.395864 15.0162 0.795411 14.9075L7.95595 12.9724C8.24503 12.8932 8.44756 12.6318 8.44756 12.3317V3.09421C8.44756 2.70019 8.07011 2.41664 7.69266 2.52527L0.452942 4.60402C0.184123 4.68135 0 4.92439 0 5.20058Z" fill="#19A5F6"/>
+									<path d="M9.18359 2.69953V12.204C9.18359 12.5096 9.47267 12.7305 9.76726 12.6514L17.2795 10.6205C17.4875 10.5653 17.6312 10.3756 17.6312 10.1602V0.4698C17.6312 0.156791 17.331 -0.067839 17.0309 0.0186988L9.56657 2.18767C9.3401 2.25395 9.18359 2.46201 9.18359 2.69769V2.69953Z" fill="#FF6634"/>
+									<path d="M9.18359 13.9386V23.3823C9.18359 23.7321 9.51686 23.9862 9.85564 23.8942L17.1414 21.8983C17.4323 21.8191 17.633 21.5558 17.633 21.2539V11.8194C17.633 11.5377 17.3642 11.3315 17.0917 11.4051L9.56473 13.4397C9.3401 13.5004 9.18359 13.7048 9.18359 13.9368V13.9386Z" fill="#FCB93C"/>
+									<path d="M18.3682 11.1455V20.7512C18.3682 21.031 18.6333 21.2317 18.9021 21.1581L26.3701 19.1125C26.6334 19.0406 26.8157 18.8013 26.8157 18.5288V8.88995C26.8157 8.59903 26.5377 8.39097 26.2597 8.47199L18.7272 10.6667C18.5136 10.7293 18.3682 10.9227 18.3682 11.1455Z" fill="#13C2BB"/>
+									<path d="M27.5508 8.42988V17.8441C27.5508 18.1994 27.8896 18.4572 28.232 18.3633L35.5417 16.3637C35.8124 16.2901 36.0002 16.0434 36.0002 15.7635V6.19647C36.0002 5.88162 35.6982 5.65515 35.3963 5.74353L27.9393 7.91434C27.7091 7.98062 27.5508 8.19236 27.5508 8.43172V8.42988Z" fill="#1F70CB"/>
+									<path d="M18.3681 22.7377V32.0175C18.3681 32.406 18.7381 32.6877 19.1137 32.5864L26.2725 30.6255C26.5928 30.5371 26.8156 30.2462 26.8156 29.9129V20.4417C26.8156 20.1194 26.5063 19.8856 26.1951 19.9758L18.8302 22.1209C18.5559 22.2 18.3662 22.4523 18.3662 22.7377H18.3681Z" fill="#FF6634"/>
+								</svg>	
+								<svg class="logo-icon" width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg" id="icon-dark">
+									<rect width="52" height="52" rx="6" fill="white"/>
+									<path d="M8 15.2006V24.3092C8 24.7198 8.39586 25.0162 8.79541 24.9076L15.956 22.9725C16.245 22.8933 16.4476 22.6318 16.4476 22.3317V13.0943C16.4476 12.7002 16.0701 12.4167 15.6927 12.5253L8.45294 14.6041C8.18412 14.6814 8 14.9245 8 15.2006Z" fill="#666D78"/>
+									<path d="M17.1836 12.6995V22.204C17.1836 22.5096 17.4727 22.7305 17.7673 22.6514L25.2795 20.6205C25.4875 20.5653 25.6312 20.3756 25.6312 20.1602V10.4698C25.6312 10.1568 25.331 9.93216 25.0309 10.0187L17.5666 12.1877C17.3401 12.254 17.1836 12.462 17.1836 12.6977V12.6995Z" fill="#666D78"/>
+									<path d="M17.1836 23.9387V33.3824C17.1836 33.7322 17.5169 33.9863 17.8556 33.8942L25.1414 31.8983C25.4323 31.8192 25.633 31.5559 25.633 31.2539V21.8195C25.633 21.5377 25.3642 21.3315 25.0917 21.4052L17.5647 23.4397C17.3401 23.5005 17.1836 23.7049 17.1836 23.9369V23.9387Z" fill="#666D78"/>
+									<path d="M26.3682 21.1455V30.7512C26.3682 31.031 26.6333 31.2317 26.9021 31.1581L34.3701 29.1125C34.6334 29.0406 34.8157 28.8013 34.8157 28.5288V18.8899C34.8157 18.599 34.5377 18.391 34.2597 18.472L26.7272 20.6667C26.5136 20.7293 26.3682 20.9227 26.3682 21.1455Z" fill="#666D78"/>
+									<path d="M35.5508 18.4298V27.844C35.5508 28.1993 35.8896 28.4571 36.232 28.3632L43.5417 26.3636C43.8124 26.29 44.0002 26.0432 44.0002 25.7634V16.1963C44.0002 15.8815 43.6982 15.655 43.3963 15.7434L35.9393 17.9142C35.7091 17.9805 35.5508 18.1922 35.5508 18.4316V18.4298Z" fill="#666D78"/>
+									<path d="M26.3681 32.7377V42.0175C26.3681 42.406 26.7381 42.6877 27.1137 42.5864L34.2725 40.6255C34.5928 40.5371 34.8156 40.2462 34.8156 39.9129V30.4417C34.8156 30.1194 34.5063 29.8856 34.1951 29.9758L26.8302 32.1209C26.5559 32.2 26.3662 32.4523 26.3662 32.7377H26.3681Z" fill="#666D78"/>
+								</svg>																	
+								<!-- <img class="app-logo"
+									src="/assets/traquent/images/traquent_main_logo_icon.svg" alt="{%= ("App Logo") %}" style="width:110px" id="logo-light">#UPDATES --sevval-->
+								<!--<img src="/assets/traquent/images/traquent_white_logo_icon.svg" alt="Dark Logo" style="width: 110px;" id="logo-dark"> #UPDATES --sevval -->
+							</div> 
+							
+							<div class="sidebar-item-logo" style="margin-left: 5px; margin-top: 1px">
+								
 								<img class="app-logo"
 									src="/assets/traquent/images/traquent_logo.png" alt="{%= ("App Logo") %}" style="width:110px" id="logo-light"> <!--#UPDATES --sevval-->
-								<img src="/assets/traquent/images/traquent_white.png" alt="Dark Logo" style="width: 110px;" id="logo-dark"> <!--#UPDATES --sevval-->
-							</div> 
-							<!-- <div class="sidebar-item-label" style="margin-left: 5px; margin-top: 1px">
-								{%= app_title %}
-							</div> --> <!--#UPDATES --sevval-->
+								<img src="/assets/traquent/images/traquent_gray.png" alt="Dark Logo" style="width: 110px;" id="logo-dark"> <!--#UPDATES --sevval-->
+							</div> <!--#UPDATES --sevval --> 
 						</div>
-						<div class="sidebar-item-control">
+						<!-- <div class="sidebar-item-control">
 							<button class="btn-reset drop-icon show-in-edit-mode">
 								<svg class="es-icon es-line  icon-sm" style="" aria-hidden="true">
 									<use class="" href="#es-line-down"></use>
 								</svg>
 							</button>
-						</div>
+						</div> -->
 					</div>
-				</a>
-
-				<div class="app-switcher-menu hidden" role="menu">
-				</div>
+				<!-- </a>-->
+				
+				<!-- <div class="app-switcher-menu hidden" role="menu">
+				</div> -->
 				<div class="sidebar-items">
+					<div class="sidebar-search">
+						<form class="form-inline fill-width justify-content-end" role="search" onsubmit="return false;">
+							<div class="input-group search-bar text-muted">
+								<input
+									id="sidebar-search"
+									type="text"
+									class="form-control"
+									placeholder="{%= __('Search ({0})', [traquent.utils.is_mac() ? '⌘ + K' : 'Ctrl + K']) %}"
+									aria-haspopup="true"
+								>
+								<span class="search-icon">
+									<svg class="icon icon-sm"><use href="#icon-search"></use></svg>
+								</span>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
-			<div class="body-sidebar-bottom">
-				<a class="edit-sidebar-link text-extra-muted hidden">
+
+			<div class="body-sidebar-bottom d-flex align-items-center">
+				<div class="sidebar-user d-flex">
+				</div>
+					<button
+					class="btn-reset nav-link"
+					data-toggle="dropdown"
+					aria-label="{{ __('User Menu') }}"
+					>
+						<svg class="es-icon es-line  icon-sm" style="" aria-hidden="true">
+							<use class="" href="#es-traquent-line-down"></use>
+						</svg>
+					</button>
+					<div class="dropdown-menu dropdown-menu-right" id="toolbar-user" role="menu">
+						{% for item in navbar_settings.settings_dropdown %}
+							{% if (!item.hidden) { %}
+								{% if (item.route) { %}
+									<a class="dropdown-item" href="{{ item.route }}">
+										{%= __(item.item_label) %}
+									</a>
+								{% } else if (item.action) { %}
+									<button class="btn-reset dropdown-item" onclick="return {{ item.action }}">
+										{%= __(item.item_label) %}
+									</button>
+								{% } else { %}
+									<div class="dropdown-divider"></div>
+								{% } %}
+							{% } %}
+						{% endfor %}
+					</div>
+				
+				<a class="edit-sidebar-link text-extra-muted hidden d-none">
 					<svg class="icon icon-sm" style="margin-top: -2px;">
 						<use href="#icon-setting-gear"></use></svg> Settings</a>
 				<a class="close-sidebar-link text-extra-muted hidden">

@@ -60,6 +60,7 @@
 .list-row-container {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 	//padding: var(--padding-xs) var(--padding-md);
 	padding: 12px 0;
 	border-bottom: 1px solid $border-color;
@@ -175,9 +176,10 @@
 	@extend .list-row;
 	cursor: default;
 	//background-color: var(--subtle-fg);
-	background-color: var(--traquent-neutral-solid-25);
+	background-color: var(--list-head-bg);
 	border-radius: var(--border-radius);
 	height: var(--list-row-height);
+	border-radius: 10px 10px 0 0;
 
 	.list-subject {
 		font-weight: normal;

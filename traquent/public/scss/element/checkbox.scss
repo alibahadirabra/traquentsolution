@@ -14,8 +14,8 @@ input[type="checkbox"] {
 	@include traquent-text(label, "s", "medium");//traquent.v1.sevval//
 	border: none !important;//traquent.v1.sevval//
 	border-radius: 3px;//traquent.v1.sevval//
-	background-color: var(--traquent-background-white);//traquent.v1.sevval//
-	box-shadow: 0px 0px 0px 1px #DFE1E7, 0px 1px 2px 0px #A4ACB966;//traquent.v1.sevval//
+	background-color: var(--checkbox-radio-bg);//traquent.v1.sevval//
+	box-shadow: var(--checkbox-radio-boxshadow);//traquent.v1.sevval//
 
 	// Reset browser behavior
 	-webkit-appearance: none;
@@ -36,13 +36,13 @@ input[type="checkbox"] {
 		//box-shadow: none;//traquent.v1.sevval//
 		border: none;
 		background-color: var(--traquent-lavender-blue-800) !important;//traquent.v1.sevval//
-		box-shadow: 0px 0px 0px 1px #5F57FF !important;//traquent.v1.sevval//
+		box-shadow: var(--checkbox-checked-boxshadow) !important;//traquent.v1.sevval//
 	}
 
 	&:focus {
 		outline: none; // Prevent browser behavior
 		//box-shadow: var(--checkbox-focus-shadow);//traquent.v1.sevval//
-		box-shadow: 0px 0px 0px 1px #335CFF, 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 3px rgba(12, 24, 61, 0.3215686275), 0px 1px 2px 0px rgba(12, 24, 61, 0.4) !important;		//traquent.v1.sevval//
+		box-shadow: var(--checkbox-checked-focus) !important;		//traquent.v1.sevval//
 
 	}
 
@@ -53,7 +53,7 @@ input[type="checkbox"] {
 		box-shadow: inset 0px 1px 7px rgba(0, 0, 0, 0.1);//traquent.v1.sevval//
 		//border: 0.5px solid var(--dark-border-color);
 		pointer-events: none;
-		background-color: var(--traquent-background-disabled) !important;	//traquent.v1.sevval//
+		background-color: var(--checkbox-checked-disabled) !important;	//traquent.v1.sevval//
 		border: 1px solid var(--traquent-background-pressed-100) !important;//traquent.v1.sevval//
 	}
 

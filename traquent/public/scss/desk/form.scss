@@ -133,7 +133,7 @@
 
 .control-label,
 .grid-heading-row {
-	color: var(--traquent-text-muted-600);//traquent.v1.sevval//
+	color: var(--input-label);//traquent.v1.sevval//
 	//@include get_textstyle("sm", "regular");
 	@include traquent-text(label, "s", "medium");//traquent.v1.sevval//
 }
@@ -519,7 +519,7 @@
 	top: calc(var(--navbar-height) - 1px);
 }
 .form-tabs-sticky-down {
-	top: calc(var(--navbar-height) + var(--page-head-height) - 1px);
+	top: calc(var(--navbar-height) + var(--page-head-height) - -27px);
 }
 
 .progress-area {

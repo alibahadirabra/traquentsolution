@@ -36,7 +36,7 @@ body {
 
 .traquent-control[data-fieldtype="Select"].traquent-control[data-fieldname="color"] {
 	.color-select {
-		padding-left: 40px;
+		padding-left: 30px;
 	}
 
 	.color-box {
@@ -76,6 +76,14 @@ body {
 		left: 8px;
 	}
 }
+.traquent-control[data-fieldtype="Link"].form-group {
+	input{
+		padding-left: 30px !important;
+	}
+	.search-icon{
+		left: 8px !important;
+	}
+}//traquent.v1.sevval//
 .traquent-control[data-fieldtype="Dynamic Link"] .control-input,
 .traquent-control[data-fieldtype="Dynamic Link"].form-group {
 	position: relative;
@@ -133,6 +141,7 @@ body {
 		pointer-events: none;
 		position: absolute;
 		left: 8px;
+		top: 4px;
 
 		&.xs {
 			top: 3px;

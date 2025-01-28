@@ -51,7 +51,7 @@ traquent.get_indicator = function (doc, doctype, show_workflow_state) {
 		var value = doc[workflow_fieldname];
 		if (value) {
 			let colour = "";
-
+			let icon = "traquent-info"; //traquent.v1.sevval//
 			if (locals["Workflow State"][value] && locals["Workflow State"][value].style) {
 				colour = {
 					Success: "green",
@@ -64,8 +64,8 @@ traquent.get_indicator = function (doc, doctype, show_workflow_state) {
 				}[locals["Workflow State"][value].style];
 			}
 			if (!colour) colour = "gray";
-
-			return [__(value), colour, workflow_fieldname + ",=," + value];
+            const icon_html = `<div class="indicator-icon ">${traquent.utils.icon(icon)}</div>`;//traquent.v1.sevval//
+			return [__(value), colour, workflow_fieldname + ",=," + value, icon_html];//traquent.v1.sevval//
 		}
 	}
 

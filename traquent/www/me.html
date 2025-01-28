@@ -79,9 +79,34 @@
 		<svg class="right-icon icon icon-md"><use href="#icon-grid"></use></svg>
 		{{ _("Apps") }}
 	</a>
-	<a href="/logout">
+	<!-- //traquent.v1.sevval// -->
+	<a href="javascript:void(0);" id="logout-link">
 		<svg class="right-icon icon icon-md"><use href="#icon-logout"></use></svg>
 		{{ _("Logout") }}
 	</a>
 </div>
 {% endblock %}
+
+<!-- //traquent.v1.sevval// -->
+{% block script %}
+<script>
+	$(document).ready(function() {
+		$('#logout-link').on('click', function(event) {
+			event.preventDefault();
+			traquent.call({
+				method: "logout",
+				callback: function (r) {
+					if (r.exc) {
+						console.error('Logout failed');
+						return;
+					}
+					window.location.href = `/login?redirect-to=${encodeURIComponent(
+						window.location.pathname + window.location.search
+					)}`;
+				},
+			});
+		});
+	});
+</script>
+{% endblock %}
+<!-- //traquent.v1.sevval// -->

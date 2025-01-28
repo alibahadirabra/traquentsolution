@@ -1,28 +1,25 @@
 .form-control {//traquent.v1.sevval//
 	border-radius: var(--traquent-radius);
 	height: var(--traquent-input-height);
-	background: #fff !important;
+	background: var(--input-bg) !important;
 	padding: 6px 8px;
-	border: 1px solid #e0e1e7;
-	box-shadow: 0px 0px 0px 1px #09194821, 0px 1px 2px 0px #12376914 !important;
+	border: 1px solid var(--input-solid);
+	box-shadow: var(--input-boxshadow) !important;
 	&:hover{
-		box-shadow: 0px 0px 0px 1px #0919482E, 1px 1px 2px 0px #335CFF42 !important;
+		box-shadow: var(--input-boxshadow-hover) !important;
 
 	}
 	&:focus{
-		background: #fff !important;
+		background: var(--input-bg)  !important;
 		border: none !important;
 		box-shadow: 
-			0px 0px 0px 1px #335CFF,
-			0px 0px 0px 2px #FFFFFF, 
-			0px 0px 0px 3px #0C183D52,   
-			0px 1px 2px 0px #0C183D66 !important; 
+			var(--input-boxshadow-focus) !important; 
 		&::placeholder {
-			color: #0D0D12 !important; /* Placeholder metni rengi */
+			color: var(--input-placeholder) !important; /* Placeholder metni rengi */
 		}
 	}
 	&:not(:placeholder-shown) {
-		color: #0D0D12;
+		color: var(--input-placeholder);
 		box-shadow: 0px 0px 0px 1px #09194821, 0px 1px 2px 0px #12376914;
 	}
 }//****************/
@@ -44,7 +41,7 @@
 	//color: var(--disabled-text-color);
 	//background-color: var(--disabled-control-bg);
 	color: var(--traquent-text-disabled-300);//traquent.v1.sevval//
-	background-color: var(--traquent-background-disabled-0);//traquent.v1.sevval//
+	background-color: var(--input-disabled);//traquent.v1.sevval//
 }
 
 .head-title {

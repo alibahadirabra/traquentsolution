@@ -50,7 +50,7 @@ use.like-icon {
 	}
 	.flag-icon,
 	.flag-icon use {
-		--icon-stroke: var(--traquent-flag-color);
+		stroke: var(--traquent-flag-color);
 		fill: var(--traquent-flag-color);
 	}
 }
@@ -80,6 +80,10 @@ use.like-icon {
 .icon-xl {
 	width: 40px;
 	height: 40px;
+}
+.icon-3xl {
+	width: 80px;
+	height: 80px;
 }
 
 .no-stroke {

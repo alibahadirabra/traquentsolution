@@ -4,10 +4,10 @@ $disabled-input-height: 22px;
 :root,
 [data-theme="light"] {
 	/*#UPDATES --sevval*/
-	#logo-dark {
+	#logo-dark, #icon-dark {
 		display: none;
 	}
-	#logo-light {
+	#logo-light, #icon-light {
 		display: block;
 	}
 	/**/
@@ -34,8 +34,8 @@ $disabled-input-height: 22px;
 	--btn-shadow: var(--shadow-xs);
 
 	// navbar
-	//--navbar-height: 48px;
-	--navbar-height: 85px;
+	--navbar-height: 48px;
+	//--navbar-height: 85px;
 
 	//nav-bottom
 	--nav-bottom-background: var(--custom-orange-300);
@@ -92,6 +92,7 @@ $disabled-input-height: 22px;
 	--text-on-red: var(--traquent-secondary-red-300);
 	--text-on-green: var(--traquent-secondary-green-300);
 	--text-on-gray: var(--traquent-text-loud-900);
+	--dropdown-text: var(--traquent-text-muted-600);
 	//****************/
 
 	// alert colors
@@ -111,11 +112,12 @@ $disabled-input-height: 22px;
 	//**************/
 
 	// Layout Colors
-	--bg-color: white;
+	--bg-second-color: var(--traquent-background-disabled-0);
+	--bg-color: var(--traquent-background-white);
 	--fg-color: white;
 	--subtle-accent: var(--gray-50);
 	--subtle-fg: var(--gray-100);
-	--navbar-bg: var(--neutral);
+	--navbar-bg: var(--traquent-background-white);
 	--fg-hover-color: var(--gray-100);
 	--card-bg: var(--fg-color);
 	--disabled-text-color: var(--gray-600);
@@ -126,15 +128,37 @@ $disabled-input-height: 22px;
 	--modal-bg: white;
 	--toast-bg: var(--modal-bg);
 	--popover-bg: white;
+	--traquent-sidebar-dark: transparent;
+	--traquent-sidebar-light: #FAFAFA;
+	--traquent-sidebar-hover: #F5F7FA;
+	--traquent-sidebar-header: #181D27;
+	--traquent-sidebar-content: #535862;
+	--list-head-bg: var(--traquent-neutral-solid-25);
 
 	--awesomplete-hover-bg: var(--control-bg);
 
 	// Button Colors
 	//--btn-primary: var(--gray-900);
 	--btn-primary: var(--traquent-lavender-blue-800);//traquent.v1.sevval//
-	--btn-default-bg: var(--gray-100);
-	--btn-default-hover-bg: var(--gray-300);
-
+	--btn-primary-hover: var(--traquent-lavender-blue-800);
+	--btn-primary-boxshadow: 0px 0px 0px 1px #0C183D, 0px 1px 2px 0px #0C183D80;
+	--btn-primary-hover-boxshadow: 0px 0px 0px 1px #335CFF, 0px 1px 2px 0px #335CFF80;
+	--btn-primary-focus: var(--traquent-lavender-blue-800);
+	--btn-primary-focus-boxshadow: 0px 0px 0px 1px #335CFF, 0px 1px 2px 0px #0C183D80;
+	--btn-primary-active: 0px 0px 0px 1px #335CFF, 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 3px rgba(12, 24, 61, 0.3215686275), 0px 1px 2px 0px rgba(12, 24, 61, 0.4);
+	--btn-disabled: var(--traquent-background-disabled-0);
+	--btn-primary-border-image-source: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+	
+	//--btn-default-bg: var(--gray-100);
+	--btn-default-bg: linear-gradient(0deg, #FFFFFF, #FFFFFF), linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.02) 100%);
+	--btn-default-boxshadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;
+	--btn-default-hover-bg: linear-gradient(0deg, #FFFFFF, #FFFFFF),linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.08) 100%);
+	--btn-default-hover-text: var(--traquent-text-muted-600);
+	--btn-default-hover-boxshadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D;
+	--btn-default-color: var(--traquent-text-muted-600);
+	--btn-default-focus-color: var(--traquent-text-loud-900);
+	--btn-default-focus-boxshadow: 0px 0px 0px 1px #0C183D14, 0px 1px 2px 0px #A4ACB93D ;
+	--btn-default-active-bg: linear-gradient(0deg, #FFFFFF, #FFFFFF),linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(193, 199, 208, 0.02) 100%);
 	// Border Colors
 	--border-primary: var(--gray-900);
 
@@ -146,6 +170,9 @@ $disabled-input-height: 22px;
 
 	--shadow-inset: inset 0px -1px 0px var(--gray-300);
 	--border-color: var(--gray-200);
+	--border-traquent-color: var(--stroke-soft);
+	--search-border: var(--stroke-soft);
+	--traquent-divider: var(--traquent-divider-color);//traquent.v1.sevval//
 	--dark-border-color: var(--gray-300);
 	--table-border-color: var(--gray-200);
 	--highlight-color: var(--gray-50);
@@ -169,6 +196,18 @@ $disabled-input-height: 22px;
 	--input-height: #{$input-height};
 	--input-disabled-bg: var(--gray-200);
 	--traquent-input-height: 32px;//traquent.v1.sevval//
+	--input-bg: var(--traquent-background-white);
+	--input-solid: var(--traquent-light-solid);
+	--input-boxshadow: 0px 0px 0px 1px #09194821, 0px 1px 2px 0px #12376914;
+	--input-boxshadow-hover: 0px 0px 0px 1px #0919482E, 1px 1px 2px 0px #335CFF42;
+	--input-boxshadow-focus: 0px 0px 0px 1px #335CFF,
+			0px 0px 0px 2px #FFFFFF, 
+			0px 0px 0px 3px #0C183D52,   
+			0px 1px 2px 0px #0C183D66;
+	--input-placeholder: var(--traquent-neutral-solid-900);
+	--input-disabled: var(--traquent-background-disabled-0);
+	--input-label: var(--traquent-text-muted-600);
+	--input-hint: var(--traquent-text-normal-500);
 
 	// Checkbox
 	--checkbox-right-margin: var(--margin-xs);
@@ -182,7 +221,16 @@ $disabled-input-height: 22px;
 		var(--disabled-control-bg) -124.51%,
 		var(--disabled-control-bg) 100%
 	);
-
+	--input-focus: 0px 0px 0px 1px #335CFF, 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 3px rgba(12, 24, 61, 0.3215686275), 0px 1px 2px 0px rgba(12, 24, 61, 0.4);
+	--checkbox-radio-bg: var(--traquent-background-white);
+	--checkbox-radio-boxshadow: 0px 0px 0px 1px #DFE1E7, 0px 1px 2px 0px #A4ACB966;
+	--checkbox-checked-boxshadow: 0px 0px 0px 1px #5F57FF;
+	--checkbox-checked-focus:0px 0px 0px 1px #335CFF, 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 3px rgba(12, 24, 61, 0.3215686275), 0px 1px 2px 0px rgba(12, 24, 61, 0.4);
+	--checkbox-checked-disabled: var(--traquent-background-disabled);
+	--radio-hover:  0px 0px 0px 1px #C1C7D0, 0px 1px 2px 0px #666D8066;
+	--radio-focus: 0px 0px 0px 1px #335CFF, 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 3px rgba(12, 24, 61, 0.3215686275), 0px 1px 2px 0px rgba(12, 24, 61, 0.4);
+	--radio-checked: var(--traquent-lavender-blue-100);
+	--radio-checked-boxshadow: 0px 0px 0px 1px #335CFF, 0px 0px 0px 2px #FFFFFF, 0px 0px 0px 3px #0C183D80, 0px 1px 2px 0px #0C183D80;
 	// switch
 	--switch-bg: var(--gray-300);
 

@@ -31,7 +31,7 @@ $theme-colors: (
 );
 
 $navbar-height: 48px;
-$traquent-navbar-height: 84px;
+$traquent-navbar-height: 64px;
 
 $body-color: var(--text-muted);
 $component-active-color: var(--fg-color);
@@ -62,7 +62,7 @@ $dropdown-link-hover-color: var(--text-color);
 $dropdown-link-hover-bg: var(--fg-hover-color);
 $dropdown-link-disabled-color: var(--gray-600);
 $dropdown-header-color: var(--gray-600);
-$dropdown-divider-bg: var(--border-color);
+$dropdown-divider-bg: var(--border-traquent-color);//traquent.v1.sevval//
 $dropdown-min-width: 200px;
 
 // button

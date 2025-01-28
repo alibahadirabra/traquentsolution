@@ -140,6 +140,7 @@ traquent.search.AwesomeBar = class AwesomeBar {
 			if (e.key == "Escape") {
 				$input.trigger("blur");
 			}
+			console.log("99999")
 		});
 		traquent.search.utils.setup_recent();
 	}

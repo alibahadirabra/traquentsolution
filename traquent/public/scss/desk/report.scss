@@ -86,6 +86,8 @@
 
 .report-wrapper {
 	overflow: auto;
+	border: 1px solid var(--border-color);//traquent.v1.sevval
+	border-radius: 10px;//traquent.v1.sevval
 }
 
 .report-view {
@@ -245,7 +247,7 @@
 }
 
 .report-footer {
-	border-top: 1px solid var(--border-color);
+	//border-top: 1px solid var(--border-color);//traquent.v1.sevval
 	@include get_textstyle("sm", "regular");
 	padding: var(--padding-sm) 0;
 }

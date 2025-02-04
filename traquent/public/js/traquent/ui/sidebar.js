@@ -128,12 +128,13 @@ traquent.ui.Sidebar = class Sidebar {
 		});
 
 		// hover out of the sidebar
-		this.wrapper.find(".body-sidebar").on("mouseleave", () => {
-			app_switcher_menu.addClass("hidden");
+		 this.wrapper.find(".body-sidebar").on("mouseleave", () => {
+			$("#toolbar-user").removeClass("show");
+		// 	app_switcher_menu.addClass("hidden");
 
-			// hide any expanded menus as they leave a blank space in the sidebar
-			this.wrapper.find(".drop-icon[data-state='opened'").click();
-		});
+		// 	// hide any expanded menus as they leave a blank space in the sidebar
+		// 	this.wrapper.find(".drop-icon[data-state='opened'").click();
+		 });
 
 		traquent.boot.app_data_map = {};
 		this.add_private_app(app_switcher_menu);
@@ -363,6 +364,28 @@ traquent.ui.Sidebar = class Sidebar {
 			let child_container = $item_container.find(".sidebar-child-item");
 			child_container.addClass("hidden"); //dropdownların kapalı gelmesi için açıldı yorum satırıydı //sevval
 			this.prepare_sidebar(child_items, child_container, $item_container);
+
+			const currentPath = window.location.pathname;
+			$item_container.find('a.item-anchor').each(function() {
+				const anchorHref = $(this).attr('href');
+				if (anchorHref && anchorHref === currentPath) {
+					child_container.removeClass('hidden');
+					//$item_container.addClass('-active');
+					// if ($item_container.find('-active') ) {
+					// 	console.log("sdfsdf")
+					// 	$item_container.find('.sidebar-item-icon svg').css("stroke", "var(--traquent-lavender-blue-300)"); // İkonu kırmızıya boyuyoruz
+					// }
+					if (!$item_container.attr('item-parent')) {
+						$item_container.addClass('-active');
+						let $nextItem = $item_container.find('.-active .standard-sidebar-item').first();
+						if ($nextItem.length) {
+							$nextItem.find('.standard-sidebar-item').css('background-color', '#f0f0f0');
+						}
+					}
+					
+				}
+			});
+			
 		}
 		if (child_items.length < 0) {
 			//let child_container = $item_container.find(".sidebar-child-item");
@@ -382,45 +405,44 @@ traquent.ui.Sidebar = class Sidebar {
 		if (child_items.length > 0) {
 			$item_container.find(".drop-icon").first().addClass("show-in-edit-mode");
 		}
-		$item_container.click(() => {
-			this.url(item);
-		  });
+		//$item_container.click(() => {
+			//this.url(item);
+		//});
+
 	}
 	//bu fonksiyon sidebar üzerinde aktif sayfa durumu kontrolu için eklendi
-	url(item) {		
-		setTimeout(() => {
-		  const currentPath = window.location.pathname;	  
-		  let path;
-		  if (item.public) {
-			path = "/app/" + traquent.router.slug(item.name);
-		  } else {
-			path = "/app/private/" + traquent.router.slug(item.name.split("-")[0]);
-		  }
-	  	  document.querySelectorAll(".sidebar-item-container").forEach(div => {
-			div.classList.remove("-active");
-		  });
+	// url(item) {		
+	// 	setTimeout(() => {
+	// 	  const currentPath = window.location.pathname;	  
+	// 	  let path;
+	// 	  if (item.public) {
+	// 		path = "/app/" + traquent.router.slug(item.name);
+	// 	  } else {
+	// 		path = "/app/private/" + traquent.router.slug(item.name.split("-")[0]);
+	// 	  }
+	//   	  document.querySelectorAll(".sidebar-item-container").forEach(div => {
+	// 		div.classList.remove("-active");
+	// 	  });
 	  
-		  if (currentPath === path && item.type !== "Workspace") {
+	// 	  if (currentPath === path) {
 	  
-			document.querySelectorAll(".sidebar-item-container").forEach(div => {
-			  let link = div.querySelector("a");
-			  if (link) {
-				const linkPath = link.getAttribute("href");
-				if (linkPath === path) {
-				  div.classList.add("-active");
-				}
-			  }
-			});
-		  }
-		}, 100);
-	  }
+	// 		document.querySelectorAll(".sidebar-item-container").forEach(div => {
+	// 		  let link = div.querySelector("a");
+	// 		  if (link) {
+	// 			const linkPath = link.getAttribute("href");
+	// 			if (linkPath === path) {
+	// 			  div.classList.add("-active");
+	// 			}
+	// 		  }
+	// 		});
+	// 	  }
+	// 	}, 100);
+	//   }
 	  
 
 	sidebar_item_container(item) {
 
-		const currentPath = window.location.pathname;		
-
-		
+		const currentPath = window.location.pathname;				
 		item.indicator_color =
 			item.indicator_color || this.indicator_colors[Math.floor(Math.random() * 12)];
 		let path;
@@ -444,10 +466,9 @@ traquent.ui.Sidebar = class Sidebar {
 				path = "/app/private/" + traquent.router.slug(item.name.split("-")[0]);
 			}
 		}
-
 		return $(`
 			<div
-				class="sidebar-item-container ${item.is_editable ? "is-draggable" : ""} ${currentPath == path && item.type !== "Workspace" ? "-active" : ""}"
+				class="sidebar-item-container ${item.is_editable ? "is-draggable" : ""} ${currentPath == path ? "-active" : ""}"
 				item-parent="${item.parent_page}"
 				item-name="${item.name}"
 				item-title="${item.title}"

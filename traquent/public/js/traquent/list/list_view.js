@@ -685,14 +685,15 @@ traquent.views.ListView = class ListView extends traquent.views.BaseList {
 
 		const right_html = `
 			<span class="list-count"></span>
-			<span class="level-item list-liked-by-me hidden-xs">
-				<span title="${__("Flag")}">
-					<svg class="icon icon-sm like-icon">
-						<use href="#icon-flag"></use>
-					</svg>
-				</span>
-			</span>
 		`;
+		//tablo ikon >> const right_html değişkenen tanımlı olan favorite kısmı için ikon <<sevval
+		// <span class="level-item list-liked-by-me hidden-xs">
+		// 		<span title="${__("Flag")}">
+		// 			<svg class="icon icon-sm like-icon">
+		// 				<use href="#icon-flag"></use>
+		// 			</svg>
+		// 		</span>
+		// 	</span>
 
 		return this.get_header_html_skeleton($columns, right_html);
 	}
@@ -933,14 +934,14 @@ traquent.views.ListView = class ListView extends traquent.views.BaseList {
 					${traquent.avatar_group(assigned_users, 3, { filterable: true })[0].outerHTML}
 				</div>`;
 		}
-
-		let comment_count = null;
-		if (this.list_view_settings && !this.list_view_settings.disable_comment_count) {
-			comment_count = `<span class="comment-count d-flex align-items-center">
-				${traquent.utils.icon("es-line-chat-alt")}
-				${doc._comment_count > 99 ? "99+" : doc._comment_count || 0}
-			</span>`;
-		}
+		//tablo comment >> alan kaldırıldıgı için fonksiyonda kaldırıldı <<sevval
+		// let comment_count = null;
+		// if (this.list_view_settings && !this.list_view_settings.disable_comment_count) {
+		// 	comment_count = `<span class="comment-count d-flex align-items-center hidden">
+		// 		${traquent.utils.icon("es-line-chat-alt")}
+		// 		${doc._comment_count > 99 ? "99+" : doc._comment_count || 0}
+		// 	</span>`;
+		// }
 
 		html += `
 			<div class="level-item list-row-activity hidden-xs">
@@ -948,16 +949,18 @@ traquent.views.ListView = class ListView extends traquent.views.BaseList {
 					${button_section || assigned_to}
 				</div>
 				<span class="modified">${modified}</span>
-				${comment_count || ""}
-				${comment_count ? '<span class="mx-2">·</span>' : ""}
-				<span class="list-row-like hidden-xs" style="margin-bottom: 1px;">
-					${this.get_like_html(doc)}
-				</span>
+				
 			</div>
 			<div class="level-item visible-xs text-right">
 				${this.get_indicator_html(doc)}
 			</div>
 		`;
+		//html değişkeni içerisinden çıkarılan comment ve favorite ikonları <<sevval
+		// ${comment_count || ""}
+		// 		${comment_count ? '<span class="mx-2">·</span>' : ""}
+		// 		<span class="list-row-like hidden-xs" style="margin-bottom: 1px;">
+		// 			${this.get_like_html(doc)}
+		// 		</span>
 
 		return html;
 	}
@@ -1050,19 +1053,19 @@ traquent.views.ListView = class ListView extends traquent.views.BaseList {
 		const seen_by = doc._seen ? JSON.parse(doc._seen) : [];
 		return seen_by.includes(traquent.session.user) ? "" : "bold";
 	}
+	//tablo >> alanı gizlendiği için fonksiyonu kaldırıldı <<sevval
+	// get_like_html(doc) {
+	// 	const liked_by = doc._liked_by ? JSON.parse(doc._liked_by) : [];
+	// 	const is_liked = liked_by.includes(traquent.session.user);
+	// 	const title = liked_by.map((u) => traquent.user_info(u).fullname).join(", ");
 
-	get_like_html(doc) {
-		const liked_by = doc._liked_by ? JSON.parse(doc._liked_by) : [];
-		const is_liked = liked_by.includes(traquent.session.user);
-		const title = liked_by.map((u) => traquent.user_info(u).fullname).join(", ");
+	// 	const div = document.createElement("div");
+	// 	div.appendChild(
+	// 		this._element_factory.get_like_element(doc.name, is_liked, liked_by, title)
+	// 	);
 
-		const div = document.createElement("div");
-		div.appendChild(
-			this._element_factory.get_like_element(doc.name, is_liked, liked_by, title)
-		);
-
-		return div.innerHTML;
-	}
+	// 	return div.innerHTML;
+	// }
 
 	get_subject_element(doc, title) {
 		const ef = this._element_factory;

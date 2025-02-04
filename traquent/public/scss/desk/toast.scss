@@ -12,27 +12,27 @@
 .desk-alert {
 	&.red {
 		--toast-bg: var(--alert-bg-danger);
-		--box-shadow: 0px 0px 0px 1px #DF1C4129, 0px 1px 2px 0px #96132C1F, 0px 12px 24px -12px #96132C3D;//traquent.v1.sevval//
+		--box-shadow: var(--alert-bg-danger-boxshadow);//traquent.v1.sevval//
 	}
 
 	&.yellow {
 		--toast-bg: var(--alert-bg-warning);
-		--box-shadow: 0px 0px 0px 1px #9B762733, 0px 1px 2px 0px #9B6D271F, 0px 12px 24px -12px #6041203D;//traquent.v1.sevval//
+		--box-shadow: var(--alert-bg-warning-boxshadow);//traquent.v1.sevval//
 	}
 
 	&.orange {
 		--toast-bg: var(--alert-bg-warning);
-		--box-shadow: 0px 0px 0px 1px #9B762733, 0px 1px 2px 0px #9B6D271F, 0px 12px 24px -12px #6041203D;//traquent.v1.sevval//
+		--box-shadow: var(--alert-bg-warning-boxshadow);//traquent.v1.sevval//
 	}
 
 	&.blue {
 		--toast-bg: var(--alert-bg-info);
-		--box-shadow: 0px 0px 0px 1px #7E43FF33, 0px 1px 2px 0px #7E43FF1F, 0px 12px 24px -12px #361D6D3D;//traquent.v1.sevval//
+		--box-shadow: var(--alert-bg-info-boxshadow);//traquent.v1.sevval//
 	}
 
 	&.green {
 		--toast-bg: var(--alert-bg-success);
-		--box-shadow: 0px 0px 0px 1px #40C4AA47, 0px 1px 2px 0px #40C4AA29, 0px 12px 24px -12px #184E443D;//traquent.v1.sevval//
+		--box-shadow: var(--alert-bg-success-boxshadow);//traquent.v1.sevval//
 	}
 
 	box-shadow: var(--box-shadow) !important;//traquent.v1.sevval//

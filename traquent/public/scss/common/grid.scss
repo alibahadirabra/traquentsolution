@@ -2,7 +2,7 @@
 	border: 1px solid var(--table-border-color);
 	border-radius: var(--border-radius-md);
 	color: var(--text-color);
-	min-height: 150px;
+	min-height: 107px;//traquent.v1.sevval//
 	background-color: var(--subtle-accent);
 }
 
@@ -119,9 +119,10 @@
 
 .grid-empty {
 	height: 110px;
-	background-color: var(--subtle-accent);
+	//background-color: var(--subtle-accent);
 	display: flex;
 	vertical-align: middle;
+	border-radius: var(--border-radius);//traquent.v1.sevval//
 }
 
 .grid-static-col,
@@ -207,7 +208,7 @@
 }
 
 .grid-body {
-	background-color: var(--subtle-accent);
+	//background-color: var(--subtle-accent);
 	border-bottom-left-radius: var(--border-radius);
 	border-bottom-right-radius: var(--border-radius);
 	margin-bottom: -1px; // double bottom border
@@ -215,6 +216,13 @@
 	.col:last-child {
 		border: none;
 	}
+	.grid-row{
+		// REDESIGN TODO: Fix border bottom for last item
+		&:last-child {
+			border-bottom-left-radius: var(--border-radius);
+			border-bottom-right-radius: var(--border-radius);
+		}
+	}//traquent.v1.sevval//
 
 	.btn-open-row {
 		display: flex;
@@ -355,10 +363,10 @@
 
 	@include transition(0.2s);
 	// REDESIGN TODO: Fix border bottom for last item
-	&:last-child {
-		border-bottom-left-radius: var(--border-radius);
-		border-bottom-right-radius: var(--border-radius);
-	}
+	// &:last-child {
+	// 	border-bottom-left-radius: var(--border-radius);
+	// 	border-bottom-right-radius: var(--border-radius);
+	// }//sevval
 
 	td {
 		vertical-align: top;

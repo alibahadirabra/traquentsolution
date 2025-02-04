@@ -71,7 +71,7 @@
 	.page-body {
 		width: 100%;
 		//padding: 0px;
-		padding: 0 20px 20px 20px;
+		padding: 20px;//traquent.v1.sevval
 	}
 }
 
@@ -124,15 +124,36 @@
 	position: sticky;
 	top: var(--navbar-height);
 	background: var(--bg-color);
-	padding: 20px 20px 6px 20px;
+	padding: 20px;//traquent.v1.sevval
 	border-radius: 12px 12px 0 0;
-	border-bottom: 1px solid var(--border-color);
+	//border-bottom: 1px solid var(--border-color);//traquent.v1.sevval
 	transition: 0.5s top;
 
 	.page-head-content {
 		height: var(--page-head-height);
 		padding: 8px 0px;
 	}
+	&::after{
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 20px;
+		right: 20px;
+		height: 1px;
+		background-color: var(--border-color);
+		z-index: 5;
+	}//traquent.v1.sevval
+}
+
+[data-route^="dashboard-view/"] {
+	.page-head::after {
+		content: none; /* dashboard-view rotasında after elementini kaldır */
+	}
+
+		.page-body{
+			padding-top: 0 !important;
+		}
+	
 }
 
 .page-form {
@@ -202,7 +223,7 @@
 		.result,
 		.no-result,
 		.freeze {
-			min-height: "200px";
+			min-height: 200px;//traquent.v1.sevval
 		}
 
 		.result {

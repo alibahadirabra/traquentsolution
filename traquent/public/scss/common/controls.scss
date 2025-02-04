@@ -35,7 +35,7 @@
 
 		.toggle-password {
 			position: absolute;
-			top: 0;
+			top: 5px;//traquent.v1.sevval//
 			right: 8px;
 			padding: 3px;
 			z-index: 3;
@@ -253,11 +253,11 @@ select.form-control {
 
 .ace_editor {
 	min-height: 48px;
-	background-color: var(--control-bg);
+	background-color: var(--input-bg);//traquent.v1.sevval//
 	color: var(--text-color);
 	.ace_gutter {
 		z-index: auto;
-		background: var(--control-bg);
+		background: var(--input-bg);//traquent.v1.sevval//
 		color: var(--text-light);
 		.ace_gutter-active-line {
 			background-color: var(--control-bg-on-gray);
@@ -342,7 +342,7 @@ textarea.form-control {
 
 .barcode-wrapper {
 	text-align: center;
-	background-color: var(--control-bg);
+	background-color: var(--input-bg);//traquent.v1.sevval//
 	border-radius: var(--border-radius);
 	padding: var(--padding-md);
 
@@ -410,7 +410,7 @@ textarea.form-control {
 	svg {
 		position: absolute;
 		left: 11px;
-		top: 8px;
+		top: 11px;//traquent.v1.sevval//
 	}
 }
 // .traquent-control[data-fieldtype=Check]{

@@ -537,6 +537,22 @@ traquent.ui.Page = class Page {
 					}
 				}
 			}, 100);
+			//rapor dropdowndan kaldırılan etiket <<sevval
+			const hiddenLabels = ["Düzenle", "Edit"];
+			$('.menu-btn-group').each(function() {
+				const parent = $(this).find('ul.dropdown-menu'); 
+				
+				parent.find('li').each(function() {
+					const label = $(this).find('.menu-item-label').text().trim(); 
+					if (!hiddenLabels.includes(label)) {
+						const $li = $(this); 
+						$li.show();
+					} else {
+						const $li = $(this);
+						$li.hide(); 
+					}
+				});
+			});
 		}
 		//////traquent.v1.sevval
 

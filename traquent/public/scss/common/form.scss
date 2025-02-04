@@ -3,7 +3,8 @@
 	height: var(--traquent-input-height);
 	background: var(--input-bg) !important;
 	padding: 6px 8px;
-	border: 1px solid var(--input-solid);
+	//border: 1px solid var(--input-solid);
+	border: none;//traquent.v1.sevval//
 	box-shadow: var(--input-boxshadow) !important;
 	&:hover{
 		box-shadow: var(--input-boxshadow-hover) !important;

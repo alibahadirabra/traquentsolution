@@ -63,7 +63,9 @@
 	justify-content: center;
 	//padding: var(--padding-xs) var(--padding-md);
 	padding: 12px 0;
-	border-bottom: 1px solid $border-color;
+	border-bottom: 0.75px solid $border-color;//traquent.v1.sevval
+	border-right: 0.75px solid $border-color;//traquent.v1.sevval
+    border-left: 0.75px solid $border-color;//traquent.v1.sevval
 
 	&:focus {
 		.list-row {
@@ -75,10 +77,12 @@
 		padding: 0;
 		padding-top: 0;
 		border-bottom: none;
+		border: none;//traquent.v1.sevval
 	}
 
 	&:last-child {
-		border-bottom: none;
+		//border-bottom: none;
+		border-radius: 0 0 10px 10px;//traquent.v1.sevval
 	}
 }
 
@@ -218,7 +222,9 @@ $level-margin-right: 8px;
 		font-weight: normal;
 	}
 }
-
+.list-paging-area{
+	border-top: none !important;
+}//traquent.v1.sevval
 .list-paging-area,
 .footnote-area {
 	border-top: 1px solid var(--border-color);

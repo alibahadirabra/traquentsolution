@@ -89,7 +89,8 @@ $input-transition: none;
 $enable-shadows: true;
 $popover-border-radius: 12px;
 $popover-bg: var(--popover-bg);
-$popover-box-shadow: var(--shadow-2xl);
+//$popover-box-shadow: var(--shadow-2xl);
+$popover-box-shadow: 0px 16px 32px -12px #0720450F;//traquent.v1.sevval
 $popover-body-padding-x: var(--padding-md);
 $popover-body-padding-y: var(--padding-md);
 $popover-border-color: transparent;

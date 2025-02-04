@@ -17,7 +17,7 @@ traquent.ui.form.ControlComment = class ControlComment extends traquent.ui.form.
 					<div class="form-stats-likes">
 						<span class="liked-by like-action d-flex align-items-center">
 							<svg class="icon icon-sm like-icon">
-								<use href="#icon-heart"></use>
+								<use href="#icon-flag"></use>
 							</svg>
 							<span class="like-count ml-2"></span>
 						</span>
@@ -33,7 +33,7 @@ traquent.ui.form.ControlComment = class ControlComment extends traquent.ui.form.
 			</div>
 		`)
 			: $('<div class="traquent-control"></div>');
-
+		//icon-heart icon-flag olarak değişti  <<sevval
 		this.comment_wrapper.appendTo(this.parent);
 
 		// wrapper should point to traquent-control

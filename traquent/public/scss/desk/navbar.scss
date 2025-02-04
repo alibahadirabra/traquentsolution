@@ -93,7 +93,7 @@
 			border-bottom-right-radius: 0;
 			box-shadow: var(--input-focus);
 			background-color: var(--awesomebar-focus-bg);
-			box-shadow: 2px 4px 3px 0px #00000005 !important;
+			box-shadow: var(--input-boxshadow-focus) !important;//traquent.v1.sevval
 		}
 		ul {
 			border: none;

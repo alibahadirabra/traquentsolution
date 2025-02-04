@@ -36,3 +36,13 @@
 		}
 	}
 }
+//navbar-breadcrumbs tıklanamaz olması için yapılan düzenleme <<sevval
+#navbar-breadcrumbs li:not(:last-child) a {
+	pointer-events: none; 
+	color: gray; 
+	text-decoration: none; 
+  }
+  
+  #navbar-breadcrumbs li:last-child a {
+	pointer-events: auto;
+  }

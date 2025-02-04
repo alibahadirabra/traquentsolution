@@ -6,7 +6,7 @@
 
 .btn {
 	border: none;
-	height: 32px;//traquent.v1.sevval//
+	height: 40px;//traquent.v1.sevval//
 	padding: 6px 8px;//traquent.v1.sevval//
 	@include traquent-text(label, s, medium);//traquent.v1.sevval//
 	&:not(.btn-md):not(.btn-lg) {
@@ -27,7 +27,7 @@
 	&.icon-btn {
 		height: var(--btn-height) !important;//traquent.v1.sevval//
 		width: var(--btn-height) !important;//traquent.v1.sevval//
-		border-radius: 50% !important;//traquent.v1.sevval//
+		//border-radius: 50% !important;//traquent.v1.sevval//
 		padding: 0px;
 		@extend .center-content;
 		

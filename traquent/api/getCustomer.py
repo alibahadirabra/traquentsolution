@@ -24,7 +24,7 @@ def get_filtered_records( filters=None, fields=None):
     "customer_owner",                             #Aday Sahibi 
     "birth_date",                                 #Doğum Tarihi
     "citizen",                                    #Vatandaşlık
-    "contacts_email",                             #Email
+    "contacs_email",                             #Email
     "contacts_phone",                             #Cep Telefonu:
     "phone",                                      #Telefon
     "phone_ext",                                  #Dahili Telefon

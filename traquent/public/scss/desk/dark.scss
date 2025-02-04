@@ -34,11 +34,14 @@ $check-icon-dark: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xm
 	//--bg-color: var(--gray-900);
 	--bg-second-color: var(--traquent-dark-background);
 	--bg-color: var(--traquent-dark-bg);
+	--image-card-bg: var(--traquent-dark-background);
+	--sidebar-icon: var(--traquent-background-white);
 	--fg-color: var(--traquent-dark-bg);
-	--subtle-accent: var(--traquent-dark-background);
-	--subtle-fg: var(--gray-700);
+	--subtle-accent: var(--traquent-dark-bg);
+	--subtle-fg: var(--traquent-background-dark);
 	--fg-hover-color: var(--traquent-dark-background);
 	--card-bg: var(--traquent-dark-bg);
+	--widget-card-bg: var(--traquent-dark-background);
 	--disabled-text-color: var(--gray-400);
 	--disabled-control-bg: var(--traquent-dark-background);
 	--control-bg: var(--traquent-dark-background);
@@ -49,10 +52,11 @@ $check-icon-dark: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xm
 	--toast-bg: var(--modal-bg);
 	--popover-bg: var(--bg-color);
 	--traquent-sidebar-dark: var(--traquent-dark-hover);
-	--traquent-sidebar-light: none;
-	--traquent-sidebar-hover: #212735;
+	--traquent-sidebar-light: var(--traquent-dark-bg);
+	--traquent-sidebar-hover: var(--traquent-dark-background);
 	--traquent-sidebar-header: #fff;
 	--traquent-sidebar-content: #A4ACB9;
+	--traquent-sidebar-logo-bg: var(--traquent-background-white);
 	--list-head-bg: var(--traquent-background-dark);
 
 	// Button Colors
@@ -123,10 +127,15 @@ $check-icon-dark: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xm
 	--alert-text-warning: var(--yellow-300);
 	--alert-text-info: var(--blue-300);
 	--alert-text-success: var(--green-300);
-	--alert-bg-danger: var(--red-900);
-	--alert-bg-warning: var(--yellow-900);
-	--alert-bg-info: var(--blue-900);
-	--alert-bg-success: var(--green-900);
+
+	--alert-bg-danger: var(--traquent-dark-mode-white);
+	--alert-bg-danger-boxshadow: var(--traquent-dark-mode-white-boxshadow);
+	--alert-bg-warning: var(--traquent-dark-mode-white);
+	--alert-bg-warning-boxshadow: var(--traquent-dark-mode-white-boxshadow);
+	--alert-bg-info: var(--traquent-dark-mode-grey);
+	--alert-bg-info-boxshadow: var(--traquent-dark-mode-grey-boxshadow);
+	--alert-bg-success: var(--traquent-dark-mode-grey);
+	--alert-bg-success-boxshadow: var(--traquent-dark-mode-grey-boxshadow);
 
 	--sidebar-select-color: var(--gray-800);
 
@@ -137,7 +146,7 @@ $check-icon-dark: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xm
 	--timeline-badge-bg: var(--traquent-dark-bg);
 
 	--shadow-inset: var(--fg-color);
-	--border-color: var(--gray-800);
+	--border-color: var(--traquent-dark-border);
 	--border-traquent-color: var(--traquent-dark-border);
 	--search-border: var(--stroke-soft-dark);
 	--dark-border-color: var(--gray-600);

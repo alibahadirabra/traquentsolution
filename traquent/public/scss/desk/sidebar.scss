@@ -165,9 +165,13 @@ body {
 	.standard-sidebar-item {
 		display: flex;
 		justify-content: space-between;
-		padding: 0px;
+		padding: 9px 10px 9px 10px;//traquent.v1.sevval
 		&.logo{
-			height: 41px;
+			height: 52px;//traquent.v1.sevval
+			width: 52px;//traquent.v1.sevval
+			padding: 8px 6px;//traquent.v1.sevval
+			background: var(--traquent-sidebar-logo-bg);//traquent.v1.sevval
+			border-radius: 6px;//traquent.v1.sevval
 		}
 		.sidebar-item-icon .logo-icon{
 			display: flex;
@@ -210,6 +214,7 @@ body {
 			//gap: 5px;//*
 			gap: 12px;//*
 			align-items: center;
+			justify-content: center;//traquent.v1.sevval
 			//padding: 3px 0px 3px 11px; //*
 			flex: 1;
 
@@ -226,12 +231,13 @@ body {
 	.sidebar-item-container {
 		position: relative;
 		//height: 40px;//*
-		padding: 9px 10px 9px 12px;
+		//padding: 9px 10px 9px 12px;//traquent.v1.sevval
 		// margin-left: -10px;*
 		// margin-bottom: 6px;*
-		margin-bottom: 2px;//*
+		margin-bottom: 4px;//*//traquent.v1.sevval
 		//background: var(--traquent-sidebar-item);
 		border-radius: 6px;
+		max-height: 40px;//traquent.v1.sevval
 		&:hover{
 			//background: var(--traquent-sidebar-light);
 			border-radius: 6px;
@@ -239,14 +245,18 @@ body {
 				stroke: var(--traquent-icon-muted-600);
 			}
 		}
-		&:active, &.-active{
+		.sidebar-child-item.nested-container{
+			display: none;
+		}//traquent.v1.sevval
+		&:active, &.-active:first-child{
+			.standard-sidebar-item{
+				background-color: var(--traquent-sidebar-hover) !important;
+				border-radius: 6px;
 
-			background-color: var(--traquent-sidebar-hover);
-			border-radius: 6px;
-
-			.sidebar-item-icon .icon{
-				stroke: var(--traquent-lavender-blue-300);
-			}
+				.sidebar-item-icon .icon{
+					stroke: var(--traquent-lavender-blue-300);
+				}
+			}//traquent.v1.sevval
 		}
 
 		/* nested container */
@@ -262,14 +272,33 @@ body {
 		.indicator {
 			margin-left: 5px;
 		}
+	
+		&.-active {
+			background-color: var(--traquent-sidebar-hover);
+			border-radius: 6px;
+		
+			.sidebar-item-icon .icon {
+			stroke: var(--traquent-lavender-blue-300);
+			}
+		}//traquent.v1.sevval
+	
 	}
 	
 }
-@media (max-width: 80px) {
-	.body-sidebar .sidebar-item-container {
-		background-color: transparent !important;
-	}
-}
+// @media (max-width: 80px) {
+// 	.body-sidebar .sidebar-item-container {
+// 		background-color: transparent !important;
+// 	}
+// }
+// @media (max-width: 80px) {
+// 	.-active{
+// 		background-color: var(--traquent-sidebar-hover);
+// 		border-radius: 6px;
+// 		.sidebar-item-icon .icon{
+// 			stroke: var(--traquent-lavender-blue-300);
+// 		}
+// 	}
+// }
 
 @mixin body-sidebar-expanded {
 	.body-sidebar {
@@ -302,13 +331,44 @@ body {
 			flex-direction: column;
 		}
 		.sidebar-item-container{
-			background-color: var(--traquent-sidebar-dark);
+			//background-color: var(--traquent-sidebar-dark);
+			max-height: max-content;
+			&[item-parent=""] {
+				> .standard-sidebar-item:first-of-type {
+				  background-color: var(--traquent-sidebar-dark);
+				  border-radius: 6px;
+				}
+			}
+			.sidebar-item-icon .icon{
+				stroke: var(--sidebar-icon);
+			}
+			&.-active {
+				background-color: var(--bg-color);
+				border-radius: 6px;
+			
+				.sidebar-item-icon .icon {
+				stroke: var(--traquent-lavender-blue-300);
+				}
+			}
 		}
-		.sidebar-item-container:hover{
-			background: var(--traquent-sidebar-light);
+		.sidebar-child-item.nested-container{
+			display: block;
+		}
+		.standard-sidebar-item{
+			&.logo{
+				background: none;
+				padding: 0;
+			}
+			&:hover{
+				background: var(--traquent-sidebar-light);
+				border-radius: 6px;
+			}
+		}
+		.item-anchor{
+			justify-content: flex-start !important;
 		}
 
-	}
+	}//traquent.v1.sevval
 
 	// show placeholder so that main section remains static
 	.body-sidebar-placeholder {
@@ -335,7 +395,15 @@ body {
 			width: 200px;
 		}
 	}
+	.navbar .navbar-brand{
+		display: none;
+	}
 }
+@include media-breakpoint-down(xs){
+	.navbar .navbar-brand{
+		display: block;
+	}
+} 
 
 @include media-breakpoint-up(sm) {
 	// for bigger screens, expand / collapse on hover
@@ -679,7 +747,7 @@ body {
 				position: absolute;
 				left: 10px;
 				.icon use {
-					stroke-width: 2;
+					stroke-width: 1.5px;//traquent.v1.sevval
 				}
 			}
 		}

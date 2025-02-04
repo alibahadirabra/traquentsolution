@@ -200,7 +200,7 @@ function delete_tab(tab, with_children) {
 .tab-header {
 	display: flex;
 	justify-content: space-between;
-	min-height: 42px;
+	min-height: 70px;
 	align-items: center;
 	background-color: var(--fg-color);
 	border-bottom: 1px solid var(--border-color);

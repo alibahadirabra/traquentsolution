@@ -37,8 +37,8 @@ body {
 	.grid-col-3 {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-		column-gap: 15px;
-		row-gap: 15px;
+		column-gap: 20px;//traquent.v1.sevval
+		row-gap: 20px;//traquent.v1.sevval
 		align-items: center;
 	}
 
@@ -46,8 +46,8 @@ body {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		// grid-auto-rows: minmax(62px, 1fr);
-		column-gap: 15px;
-		row-gap: 15px;
+		column-gap: 20px;//traquent.v1.sevval
+		row-gap: 20px;//traquent.v1.sevval
 		align-items: center;
 
 		.full-width {
@@ -60,8 +60,8 @@ body {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(550px, 1fr));
 		// grid-auto-rows: minmax(62px, 1fr);
-		column-gap: 15px;
-		row-gap: 15px;
+		column-gap: 20px;//traquent.v1.sevval
+		row-gap: 20px;//traquent.v1.sevval
 		align-items: center;
 	}
 
@@ -91,10 +91,10 @@ body {
 .widget {
 	@include flex(flex, null, null, column);
 	min-height: 1px;
-	padding: 7px;
+	padding: 20px 24px;//traquent.v1.sevval
 	border-radius: var(--border-radius-lg);
 	height: 100%;
-	background-color: var(--card-bg);
+	background-color: var(--widget-card-bg);//traquent.v1.sevval
 
 	.btn {
 		box-shadow: none;
@@ -537,7 +537,7 @@ body {
 		cursor: pointer;
 		padding: 27px 12px;
 		//border: 1px solid var(--border-color);
-		border: 1.25px solid var(--stroke-soft);
+		border: 1.25px solid var(--border-color);//traquent.v1.sevval
 		box-shadow: 0px 0px 0px 1px #09194821, 0px 1px 2px 0px #12376914;
 
 		&:hover {
@@ -572,7 +572,7 @@ body {
 		}
 
 		padding: 10px;
-		border: 1px solid var(--border-color);
+		border: 1.06px solid var(--border-color);//traquent.v1.sevval
 
 		.link-item {
 			display: flex;
@@ -640,12 +640,12 @@ body {
 		cursor: pointer;
 		min-height: 84px;
 		padding: var(--number-card-padding);
-		border: 1px solid var(--border-color);
+		//border: 1px solid var(--border-color);//traquent.v1.sevval
 
 		.widget-head {
 			.widget-title {
 				font-weight: var(--weight-medium);
-				color: var(--text-muted);
+				color: var(--traquent-text-loud-900);//traquent.v1.sevval
 				text-transform: uppercase;
 				font-size: var(--text-tiny);
 				margin-top: var(--margin-xs);
@@ -838,7 +838,25 @@ body {
 		}
 	}
 }
+//traquent.v1.sevval
+$colors: linear-gradient(179.11deg, #DDF3EF -20.22%, rgba(221, 243, 239, 0.5) 195.02%),
+linear-gradient(133.02deg, #D5E2FF -21.75%, rgba(213, 226, 255, 0.5) 165.85%),
+#ECEFF3, linear-gradient(176.54deg, #FADBE1 -94.29%, rgba(250, 219, 225, 0.5) 202.14%),
+#FAEDCC, #FFD7CA;
+$text-colors: #184E44, #0C4E6E, #1A1B25, #710E21, #5C3D1F, #1A1B25;
 
+.widget-group-body {
+	@for $i from 1 through 100 { // Varsayılan olarak 100 eleman, arttırılabilir
+	  .number-widget-box:nth-child(#{$i}) {
+		background: nth($colors, ((($i - 1) % length($colors)) + 1));
+		
+		.widget-body .widget-content .number {
+		  color: nth($text-colors, ((($i - 1) % length($text-colors)) + 1)) !important;
+		}
+	  }
+	}
+}
+//traquent.v1.sevval
 .onboarding-success {
 	margin: var(--margin-lg) auto;
 	max-width: 75%;

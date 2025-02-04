@@ -228,11 +228,22 @@ $light-yellow: #fef4e2;
 
 	--traquent-divider-color: #12376914;//traquent.v1.sevval//
 
-	--traquent-alert-yellow: #FFCD4C0D;
-	--traquent-alert-red: #DF1C4105;
-	--traquent-alert-green: #40C4AA0D;
-	--traquent-alert-blue: #5F57FF0A;	
-
+	--traquent-alert-yellow: linear-gradient(0deg, rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)),
+	linear-gradient(0deg, rgba(255, 205, 76, 0.05), rgba(255, 205, 76, 0.05));
+	--traquent-alert-yellow-boxshadow: 0px 0px 0px 1px rgba(255, 102, 52, 0.24), 0px 1px 2px 0px rgba(255, 102, 52, 0.12), 0px 12px 24px -12px rgba(255, 102, 52, 0.2);
+	--traquent-alert-red: linear-gradient(0deg, rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)),
+	linear-gradient(0deg, rgba(223, 28, 65, 0.02), rgba(223, 28, 65, 0.02));
+	--traquent-alert-red-boxshadow: 0px 0px 0px 1px rgba(223, 28, 65, 0.16), 0px 1px 2px 0px rgba(150, 19, 44, 0.12), 0px 12px 24px -12px rgba(150, 19, 44, 0.24);
+	--traquent-alert-green: linear-gradient(0deg, rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)),
+	linear-gradient(0deg, rgba(64, 196, 170, 0.05), rgba(64, 196, 170, 0.05));
+	--traquent-alert-green-boxshadow: 0px 0px 0px 1px rgba(64, 196, 170, 0.28), 0px 1px 2px 0px rgba(64, 196, 170, 0.16), 0px 12px 24px -12px rgba(24, 78, 68, 0.24);
+	--traquent-alert-blue: linear-gradient(0deg, rgba(255, 255, 255, 0.93), rgba(255, 255, 255, 0.93)),
+	linear-gradient(0deg, rgba(95, 87, 255, 0.04), rgba(95, 87, 255, 0.04));
+	--traquent-alert-blue-boxshadow: 0px 0px 0px 1px rgba(126, 67, 255, 0.2), 0px 1px 2px 0px rgba(126, 67, 255, 0.12), 0px 12px 24px -12px rgba(54, 29, 109, 0.24);
+	--traquent-dark-mode-white: rgba(255, 255, 255, 0.95);
+	--traquent-dark-mode-white-boxshadow: 0px 0px 0px 1px rgba(18, 55, 105, 0.04), 0px 1px 2px 0px rgba(164, 172, 185, 0.12), 0px 12px 24px -12px rgba(54, 57, 74, 0.12);
+	--traquent-dark-mode-grey: rgba(142, 145, 158, 0.95);
+	--traquent-dark-mode-grey-boxshadow: 0px 0px 0px 1px rgba(18, 55, 105, 0.04), 0px 1px 2px 0px rgba(164, 172, 185, 0.12), 0px 12px 24px -12px rgba(54, 57, 74, 0.12);
 	--traquent-flag-color: #FF6634;
 
 	/****************/

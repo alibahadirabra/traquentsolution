@@ -267,7 +267,7 @@ traquent.PermissionEngine = class PermissionEngine {
 		return $("<td>")
 			.appendTo(row)
 			.attr("data-fieldname", fieldname)
-			.addClass("pt-4")
+			.addClass("p-4")
 			.html(__(d[fieldname]));
 	}
 
@@ -361,7 +361,7 @@ traquent.PermissionEngine = class PermissionEngine {
 				"delete"
 			)}</button>`
 		)
-			.appendTo($(`<td class="pt-4">`).appendTo(row))
+			.appendTo($(`<td class="p-4">`).appendTo(row))
 			.attr("data-doctype", d.parent)
 			.attr("data-role", d.role)
 			.attr("data-permlevel", d.permlevel)

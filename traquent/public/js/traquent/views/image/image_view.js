@@ -107,14 +107,7 @@ traquent.views.ImageView = class ImageView extends traquent.views.ListView {
 
 		return `
 			<div class="image-view-item ellipsis">
-				<div class="image-view-header">
-					<div>
-						<input class="level-item list-row-checkbox hidden-xs"
-							type="checkbox" data-name="${escape(item.name)}">
-						${this.get_like_html(item)}
-					</div>
-				</span>
-				</div>
+			
 				<div class="image-view-body ${_class}">
 					<a data-name="${encoded_name}"
 						title="${encoded_name}"
@@ -142,6 +135,15 @@ traquent.views.ImageView = class ImageView extends traquent.views.ListView {
 			</div>
 		`;
 	}
+	//favorite kısmı kaldırıldı <<sevval ilk div alanıydı
+	// <div class="image-view-header">
+	// 				<div>
+	// 					<input class="level-item list-row-checkbox hidden-xs"
+	// 						type="checkbox" data-name="${escape(item.name)}">
+	// 					${this.get_like_html(item)}
+	// 				</div>
+	// 			</span>
+	// 			</div>
 
 	get_attached_images() {
 		return traquent

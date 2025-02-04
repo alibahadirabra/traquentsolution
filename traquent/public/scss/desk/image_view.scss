@@ -27,8 +27,10 @@
 
 	.image-view-container {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));//traquent.v1.sevval
 		max-width: 100%;
+		grid-column-gap: 20px;//traquent.v1.sevval
+		grid-row-gap: 20px;//traquent.v1.sevval
 
 		.image-view-row {
 			display: flex;
@@ -37,12 +39,16 @@
 
 		.image-view-item {
 			position: relative;
-			padding: var(--padding-sm);
+			padding: 16px;//traquent.v1.sevval
 			display: flex;
 			flex-direction: column;
 			width: 100%;
-			height: 250px;
+			height: 220px;//traquent.v1.sevval
 			border-radius: var(--border-radius);
+			border: 1px solid var(--border-color);//traquent.v1.sevval
+			background: var(--image-card-bg);//traquent.v1.sevval
+			//box-shadow: 0px 1px 2px 0px rgba(18, 55, 105, 0.08), 0px 0px 0px 1px rgba(9, 25, 72, 0.16);
+			
 
 			.list-row-checkbox {
 				&:before {
@@ -61,10 +67,11 @@
 		}
 
 		.image-view-item:hover {
-			border: none;
+			//border: none;
 			// background-color: var(--highlight-color);
-			box-shadow: var(--shadow-md);
-
+			//box-shadow: var(--shadow-md);
+			box-shadow: 0px 0px 0px 1px #09194829, 0px 1px 2px 0px #12376914;//traquent.v1.sevval
+			
 			.list-row-checkbox {
 				&:before {
 					display: block;
@@ -119,11 +126,21 @@
 
 			a {
 				text-decoration: none;
+				text-transform: uppercase;//traquent.v1.sevval
+				border-radius: 50%;//traquent.v1.sevval
+				padding: 15px 12px;//traquent.v1.sevval
+				height: 62px;//traquent.v1.sevval
+				width: 62px;//traquent.v1.sevval
+				font-size: 24px;//traquent.v1.sevval
+				font-weight: 700;//traquent.v1.sevval
+				line-height: 31px;//traquent.v1.sevval
+				background: rgba(221, 243, 239, 1);//traquent.v1.sevval
+				box-shadow: 0px 1px 2px 0px rgba(228, 229, 231, 0.24);//traquent.v1.sevval
 			}
 
 			&.no-image {
 				@include flex(flex, center, center, null);
-				background-color: var(--bg-color);
+				background-color: var(--image-card-bg);//traquent.v1.sevval
 				border-radius: $border-radius;
 			}
 		}
@@ -135,6 +152,7 @@
 			width: 100%;
 			min-width: 100%;
 			border-radius: var(--border-radius);
+			justify-content: center;//traquent.v1.sevval
 
 			.image-wrapper {
 				@include flex(flex, null, center, null);
@@ -171,7 +189,7 @@
 
 		.placeholder-text {
 			font-size: $font-size-4xl;
-			color: var(--gray-500);
+			color: rgba(64, 196, 170, 1);//traquent.v1.sevval
 		}
 
 		.zoom-view {

@@ -771,8 +771,9 @@ traquent.provide("traquent.views");
 
 			html += `
 				<span class="kanban-assignments"></span>
-				${cur_list.get_like_html(card)}
+				
 			`;
+			//${cur_list.get_like_html(card)} html değişkeni içerisinden çıkarılan kısım <<sevval
 
 			if (card.color && traquent.ui.color.validate_hex(card.color)) {
 				const $div = $("<div>");

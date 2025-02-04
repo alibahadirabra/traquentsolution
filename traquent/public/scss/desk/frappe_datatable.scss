@@ -122,7 +122,7 @@
 		}
 
 		.dt-filter.dt-input {
-			border-radius: var(--border-radius);
+			border-radius: calc(var(--border-radius) / 2);//traquent.v1.sevval
 			height: 100%;
 			background-color: var(--control-bg);
 			padding-left: 8px;

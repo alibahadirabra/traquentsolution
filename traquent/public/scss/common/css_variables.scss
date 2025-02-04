@@ -1,5 +1,5 @@
-$input-height: 28px;
-$disabled-input-height: 22px;
+$input-height: 40px; //28px
+$disabled-input-height: 40px;//22px;
 
 :root,
 [data-theme="light"] {
@@ -106,23 +106,30 @@ $disabled-input-height: 22px;
 	//--alert-bg-success: var(--green-100);
 	//traquent.v1.sevval//
 	--alert-bg-danger: var(--traquent-alert-red);
+	--alert-bg-danger-boxshadow: var(--traquent-alert-red-boxshadow);
 	--alert-bg-warning: var(--traquent-alert-yellow);
+	--alert-bg-warning-boxshadow: var(--traquent-alert-yellow-boxshadow);
 	--alert-bg-info: var(--traquent-alert-blue);
+	--alert-bg-info-boxshadow: var(--traquent-alert-blue-boxshadow);
 	--alert-bg-success: var(--traquent-alert-green);
+	--alert-bg-success-boxshadow: var(--traquent-alert-green-boxshadow);
 	//**************/
 
 	// Layout Colors
 	--bg-second-color: var(--traquent-background-disabled-0);
 	--bg-color: var(--traquent-background-white);
+	--image-card-bg: var(--traquent-background-white);
+	--sidebar-icon: var(--traquent-icon-normal-500);
 	--fg-color: white;
-	--subtle-accent: var(--gray-50);
-	--subtle-fg: var(--gray-100);
+	--subtle-accent: var(--traquent-background-white);
+	--subtle-fg: var(--traquent-neutral-solid-25);
 	--navbar-bg: var(--traquent-background-white);
-	--fg-hover-color: var(--gray-100);
+	--fg-hover-color: var(--traquent-neutral-solid-25);
 	--card-bg: var(--fg-color);
+	--widget-card-bg: var(--traquent-background-white);
 	--disabled-text-color: var(--gray-600);
 	--disabled-control-bg: var(--gray-50);
-	--control-bg: var(--gray-100);
+	--control-bg: var(--traquent-neutral-solid-25);
 	--control-bg-on-gray: var(--gray-200);
 	--awesomebar-focus-bg: var(--fg-color);
 	--modal-bg: white;
@@ -133,6 +140,7 @@ $disabled-input-height: 22px;
 	--traquent-sidebar-hover: #F5F7FA;
 	--traquent-sidebar-header: #181D27;
 	--traquent-sidebar-content: #535862;
+	--traquent-sidebar-logo-bg: transparent;
 	--list-head-bg: var(--traquent-neutral-solid-25);
 
 	--awesomplete-hover-bg: var(--control-bg);
@@ -169,12 +177,12 @@ $disabled-input-height: 22px;
 	--scrollbar-track-color: var(--gray-200);
 
 	--shadow-inset: inset 0px -1px 0px var(--gray-300);
-	--border-color: var(--gray-200);
+	--border-color: var(--stroke-soft);
 	--border-traquent-color: var(--stroke-soft);
 	--search-border: var(--stroke-soft);
 	--traquent-divider: var(--traquent-divider-color);//traquent.v1.sevval//
 	--dark-border-color: var(--gray-300);
-	--table-border-color: var(--gray-200);
+	--table-border-color: var(--stroke-soft);
 	--highlight-color: var(--gray-50);
 	--yellow-highlight-color: var(--yellow-50);
 
@@ -190,12 +198,12 @@ $disabled-input-height: 22px;
 
 	--primary-color: var(--gray-900);
 	//--btn-height: 28px;
-	--btn-height: 32px;//traquent.v1.sevval//
+	--btn-height: 40px;//traquent.v1.sevval//
 	
 	// input
 	--input-height: #{$input-height};
 	--input-disabled-bg: var(--gray-200);
-	--traquent-input-height: 32px;//traquent.v1.sevval//
+	--traquent-input-height: 40px;//traquent.v1.sevval//
 	--input-bg: var(--traquent-background-white);
 	--input-solid: var(--traquent-light-solid);
 	--input-boxshadow: 0px 0px 0px 1px #09194821, 0px 1px 2px 0px #12376914;

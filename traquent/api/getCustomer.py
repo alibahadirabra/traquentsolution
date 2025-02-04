@@ -25,7 +25,7 @@ def get_filtered_records( filters=None, fields=None):
     "birth_date",                                 #Doğum Tarihi
     "citizen",                                    #Vatandaşlık
     "contacs_email",                             #Email
-    "contacts_phone",                             #Cep Telefonu:
+    "contacs_phone",                             #Cep Telefonu:
     "phone",                                      #Telefon
     "phone_ext",                                  #Dahili Telefon
 # Hesap Bilgileri

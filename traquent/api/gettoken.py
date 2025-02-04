@@ -19,7 +19,7 @@ def generate_token():
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
         
         save_token_to_doctype(user_id, token, exp)  # Token kaydetme
-        return {"token": token, "userid": user_id}
+        return {"token": token, "userid": user_id,"exp": exp}
     else:
         return {"error": "Secret Key is not allowed"}
 

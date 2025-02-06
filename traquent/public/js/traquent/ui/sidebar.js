@@ -95,7 +95,7 @@ traquent.ui.Sidebar = class Sidebar {
 				const dropdownMenu = document.getElementById("toolbar-user");
 				const buttons = dropdownMenu.querySelectorAll(".dropdown-item");			  
 				for (let i = 0; i < 8; i++) {
-					if(i == 0 || i == 3 || i == 5){
+					if(i == 0 || i == 3 || i == 5 || i == 7){
 						continue;
 					}
 					if (buttons[i]) {

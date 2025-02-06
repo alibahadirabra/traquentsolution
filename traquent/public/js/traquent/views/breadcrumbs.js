@@ -90,6 +90,9 @@ traquent.breadcrumbs = {
 	},
 
 	append_breadcrumb_element(route, label) {
+		if (label === "Yönetim" || label==="Panel" || label==="Kullanıcılar" || label==="Araçlar" || label==="Geliştir" ) {
+			return; // Fonksiyonu durdur ve ekleme yapma
+		}//geçici olarak eklendi. breadcrumbs düzelince silinecek <<traquent.v1.sevval
 		const el = document.createElement("li");
 		const a = document.createElement("a");
 		a.href = route;

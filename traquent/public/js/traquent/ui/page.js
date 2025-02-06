@@ -524,7 +524,7 @@ traquent.ui.Page = class Page {
 			$li.addClass("user-action").insertBefore(this.divider);
 		}
 
-		// Belirli bir sınıfa sahip li elemanlarını bulup gizle
+		// doctype daki action <<Belirli bir sınıfa sahip li elemanlarını bulup gizle
 		if(traquent.session.user !== "Administrator"){
 			setTimeout(() => {
 				const itemsToHide = document.querySelectorAll('.actions-btn-group ul.dropdown-menu li');

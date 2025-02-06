@@ -198,6 +198,10 @@ body {
 
 		.filter-chart {
 			background-color: var(--control-bg);
+			&.btn svg{
+				position: relative;
+				top: 7px;
+			}//traquent.v1.sevval//
 		}
 
 		.btn-xs {

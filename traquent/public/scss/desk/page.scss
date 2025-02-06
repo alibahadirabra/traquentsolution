@@ -158,7 +158,7 @@
 
 .page-form {
 	margin: 0;
-	padding: var(--padding-xs) 0;
+	padding: var(--padding-xs) 0 var(--padding-lg) 0;//traquent.v1.sevval//
 	display: flex;
 	flex-wrap: wrap;
 	background-color: var(--card-bg);

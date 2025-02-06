@@ -108,7 +108,7 @@
 		min-width: 80%;
 	}
 	.level-right {
-		flex: 1;
+		flex: 0.3; //tablodaki sağ alanın daraltılması için yapıldı //traquent.v1.sevval//
 		overflow: visible;
 		align-items: center;
 	}
@@ -211,7 +211,7 @@
 $level-margin-right: 8px;
 
 .list-subject {
-	flex: 2;
+	flex: 1; //tablodaki ID alanının daraltılması için yapıldı //traquent.v1.sevval//
 	justify-content: start;
 
 	a {

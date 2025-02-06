@@ -460,6 +460,10 @@ export default class ChartWidget extends Widget {
 	}
 
 	set_chart_actions(actions) {
+		//chart cardlardaki edit butonu kaldırılması <<traquent.v1.sevval
+		if (traquent.session.user !== "Administrator") {
+			actions = actions.filter((action) => action.action !== "action-edit");
+		}
 		this.chart_actions = $(`<div class="chart-actions dropdown pull-right">
 			<button data-toggle="dropdown"
 				aria-haspopup="true"aria-expanded="false"

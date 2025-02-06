@@ -341,6 +341,11 @@ export default class NumberCardWidget extends Widget {
 	}
 
 	set_card_actions(actions) {
+		//number cardlardaki edit butonu kaldırılması <<traquent.v1.sevval
+		if (traquent.session.user !== "Administrator") {
+			actions = actions.filter((action) => action.action !== "action-edit");
+		}
+	
 		this.card_actions = $(`<div class="card-actions dropdown pull-right">
 				<a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				...

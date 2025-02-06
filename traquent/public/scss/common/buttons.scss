@@ -196,8 +196,11 @@
 
 [data-theme="dark"] {
 	.btn-primary-light {
-		background-color: var(--bg-dark-gray);
+		//background-color: var(--bg-dark-gray);
 		box-shadow: none;
+		background-color: var(--traquent-dark-background);
+		color: var(--traquent-text-white);
+		box-shadow: var(--btn-default-boxshadow) !important;
 	}
 	// .btn-primary{
 	// 	color: var(--neutral-white) !important;

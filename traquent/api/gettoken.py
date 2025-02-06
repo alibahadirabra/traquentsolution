@@ -6,9 +6,8 @@ import traquent
 
 SECRET_KEY = "20122910"
 
-@traquent.whitelist()
+@traquent.whitelist(allow_guest=True)
 def generate_token():
-    save_token_to_doctype("user_id", "token", "exp")
     user_id = traquent.local.session.user
     exp = now_datetime() + timedelta(minutes=15)
     
@@ -20,7 +19,7 @@ def generate_token():
         token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
         
         save_token_to_doctype(user_id, token, exp)  # Token kaydetme
-        return {"token": token, "userid": user_id}
+        return {"token": token, "userid": user_id,"exp": exp}
     else:
         return {"error": "Secret Key is not allowed"}
 

@@ -1,7 +1,7 @@
 import traquent
 from traquent import _
 
-@traquent.whitelist(allow_guest=True)
+@traquent.whitelist()
 def get_filtered_records(filters=None, fields=None, limit=5, offset=0):
     filters = filters or {}
     fields = fields or [                

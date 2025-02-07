@@ -10,16 +10,12 @@ def get_filtered_records(filters=None, fields=None, limit=5, offset=0):
         "name",                                      # id
         "trade_name",                                # Ticaret Unvanı
         "scope",                                     # Faaliyet Alanı
-        "channel",                                   # Kanal
-        "corporate_owner_user",                      # Aday Sahibi
-        "corporate_customer_group",                  # Müşteri Grubu
+        "lead_source",                               # Kanal
         "company_email",                             # Şirket E-Posta
         "company_tel",                               # Şirket Telefonu
-        "company_website",                           # Web Sitesi
         "customer_name",                             # İsim
         "customer_surname",                          # Soyisim
         "customer_group",                            # Müşteri Grubu
-        "lead_source",                               # Kaynak
         "territory",                                 # Bölge
         "customer_owner",                            # Aday Sahibi 
         "birth_date",                                # Doğum Tarihi

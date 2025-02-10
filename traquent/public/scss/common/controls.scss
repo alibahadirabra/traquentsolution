@@ -288,6 +288,8 @@ select.form-control {
 		}
 		.btn {
 			padding: 0px 8px;
+			display: flex; //<<traquent.v1.sevval
+			align-items: center;//<<traquent.v1.sevval
 		}
 	}
 }

@@ -508,7 +508,7 @@
 
 				&.active {
 					font-weight: 600;
-					border-bottom: 1px solid var(--primary);
+					border-bottom: 2px solid var(--traquent-active-border-bottom); //<<traquent.v1.sevval
 					color: var(--text-color);
 				}
 			}
@@ -523,7 +523,7 @@
 	top: calc(var(--navbar-height) - 1px);
 }
 .form-tabs-sticky-down {
-	top: calc(var(--navbar-height) + var(--page-head-height) - -27px);
+	top: calc(var(--navbar-height) + var(--page-head-height) - -39px);//<<traquent.v1.sevval
 }
 
 .progress-area {

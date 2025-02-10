@@ -140,7 +140,6 @@ traquent.search.AwesomeBar = class AwesomeBar {
 			if (e.key == "Escape") {
 				$input.trigger("blur");
 			}
-			console.log("99999")
 		});
 		traquent.search.utils.setup_recent();
 	}
@@ -223,6 +222,22 @@ traquent.search.AwesomeBar = class AwesomeBar {
 		if (txt.charAt(0) === "#") {
 			options = traquent.tags.utils.get_tags(txt);
 		}
+
+		//administrator olmayan kullanıcılar verilen kelimelerin search işlemini yapabilecek <<traquent.v1.sevval
+		if (traquent.session.user !== "Administrator") {
+			const keywordsToShow = ["lead", "customer", "issue", "task tracking", "transfer of tasks",
+				"communication", "performance", "sla", "service level", "customer group", "department", "campaign",
+				"lead source", "issue priority", "issue type", "territory", "sales person", "sales stage",
+				"user", "email account", "scripted message", "contracts", "activity log", "view log"
+			];
+			options = options.filter(item => {
+				return keywordsToShow.some(keyword => 
+					(typeof item.match === 'string' && item.match.toLowerCase().includes(keyword.toLowerCase())) ||
+					(typeof item.value === 'string' && item.value.toLowerCase().includes(keyword.toLowerCase()))
+				);
+			});
+		}
+
 		var out = this.deduplicate(options);
 		return out.sort(function (a, b) {
 			return b.index - a.index;
@@ -296,22 +311,24 @@ traquent.search.AwesomeBar = class AwesomeBar {
 		if (txt.charAt(0) === "#") {
 			return;
 		}
-
-		this.options.push({
-			label: `
-				<span class="flex justify-between text-medium">
-					<span class="ellipsis">${__("Search for {0}", [traquent.utils.xss_sanitise(txt).bold()])}</span>
-					<kbd>↵</kbd>
-				</span>
-			`,
-			value: __("Search for {0}", [txt]),
-			match: txt,
-			index: 100,
-			default: "Search",
-			onclick: function () {
-				traquent.searchdialog.search.init_search(txt, "global_search");
-			},
-		});
+		//sadece administrator genel arama yapabilecek <<traquent.v1.sevval
+		if(traquent.session.user === "Administrator"){
+			this.options.push({
+				label: `
+					<span class="flex justify-between text-medium">
+						<span class="ellipsis">${__("Search for {0}", [traquent.utils.xss_sanitise(txt).bold()])}</span>
+						<kbd>↵</kbd>
+					</span>
+				`,
+				value: __("Search for {0}", [txt]),
+				match: txt,
+				index: 100,
+				default: "Search",
+				onclick: function () {
+					traquent.searchdialog.search.init_search(txt, "global_search");
+				},
+			});
+		}
 	}
 
 	make_search_in_current(txt) {

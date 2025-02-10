@@ -10,7 +10,7 @@ class WorkflowBuilder {
 		this.page = page;
 		this.workflow = workflow;
 
-		this.page.set_indicator("Beta", "orange");
+		//this.page.set_indicator("Beta", "orange");//workflow sayfasından kaldırılmıştır <<traquent.v1.sevval
 
 		this.init();
 	}

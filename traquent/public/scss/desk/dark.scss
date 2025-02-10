@@ -58,6 +58,7 @@ $check-icon-dark: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xm
 	--traquent-sidebar-content: #A4ACB9;
 	--traquent-sidebar-logo-bg: var(--traquent-background-white);
 	--list-head-bg: var(--traquent-background-dark);
+	--traquent-active-border-bottom: #FFFFFF;
 
 	// Button Colors
 	//--btn-default-bg: var(--gray-800);
@@ -136,6 +137,8 @@ $check-icon-dark: url("data:image/svg+xml, <svg viewBox='0 0 8 7' fill='none' xm
 	--alert-bg-info-boxshadow: var(--traquent-dark-mode-grey-boxshadow);
 	--alert-bg-success: var(--traquent-dark-mode-grey);
 	--alert-bg-success-boxshadow: var(--traquent-dark-mode-grey-boxshadow);
+	--traquent-text-color: var(--traquent-text-white);
+	--grid-head-text: var(--traquent-icon-subdued-400);
 
 	--sidebar-select-color: var(--gray-800);
 

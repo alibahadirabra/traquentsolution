@@ -842,6 +842,9 @@ body {
 		}
 	}
 }
+.chart-container .legend-dataset-value {
+    fill: var(--charts-label-color) !important;//<<traquent.v1.sevval
+}
 //traquent.v1.sevval
 $colors: linear-gradient(179.11deg, #DDF3EF -20.22%, rgba(221, 243, 239, 0.5) 195.02%),
 linear-gradient(133.02deg, #D5E2FF -21.75%, rgba(213, 226, 255, 0.5) 165.85%),

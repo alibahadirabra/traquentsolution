@@ -1,6 +1,7 @@
 @import "traquent/public/css/fonts/fontawesome/font-awesome.min.css";
 @import "traquent/public/css/octicons/octicons.css";
-@import "traquent/public/css/fonts/inter/inter.scss";
+//@import "traquent/public/css/fonts/inter/inter.scss";
+@import "traquent/public/css/fonts/figtree/figtree.scss";
 @import "~frappe-charts/dist/frappe-charts.min";
 @import "~plyr/dist/plyr";
 @import "./desk/index";
@@ -13,7 +14,8 @@
 
 body {
 	/*font-family: "Roboto", sans-serif !important;*/
-  font-family: "Instrument Sans", serif !important;//traquent.v1.sevval//
+  //font-family: "Instrument Sans", serif !important;//traquent.v1.sevval//
+  font-family: "Figtree", serif !important;//traquent.v1.sevval//
 }
 /**/
 [data-page-route=Workspaces] .layout-main {

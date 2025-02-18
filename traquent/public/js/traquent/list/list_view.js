@@ -1051,7 +1051,7 @@ traquent.views.ListView = class ListView extends traquent.views.BaseList {
 
 	get_seen_class(doc) {
 		const seen_by = doc._seen ? JSON.parse(doc._seen) : [];
-		return seen_by.includes(traquent.session.user) ? "" : "bold";
+		return seen_by.includes(traquent.session.user) ? "" : "regular";//bold yerine regular verildi <<traquent.v1.sevval
 	}
 	//tablo >> alanı gizlendiği için fonksiyonu kaldırıldı <<sevval
 	// get_like_html(doc) {

@@ -13,31 +13,31 @@
 	&.red {
 		--toast-bg: var(--alert-bg-danger);
 		--box-shadow: var(--alert-bg-danger-boxshadow);//traquent.v1.sevval//
-		--toast-text: var(--traquent-text-normal-500);//<<traquent.v1.sevval
+		--toast-text: var(--traquent-text-color);//<<traquent.v1.sevval
 	}
 
 	&.yellow {
 		--toast-bg: var(--alert-bg-warning);
 		--box-shadow: var(--alert-bg-warning-boxshadow);//traquent.v1.sevval//
-		--toast-text: var(--traquent-text-normal-500);//<<traquent.v1.sevval
+		--toast-text: var(--traquent-text-color);//<<traquent.v1.sevval
 	}
 
 	&.orange {
 		--toast-bg: var(--alert-bg-warning);
 		--box-shadow: var(--alert-bg-warning-boxshadow);//traquent.v1.sevval//
-		--toast-text: var(--traquent-text-normal-500);//<<traquent.v1.sevval
+		--toast-text: var(--traquent-text-color);//<<traquent.v1.sevval
 	}
 
 	&.blue {
 		--toast-bg: var(--alert-bg-info);
 		--box-shadow: var(--alert-bg-info-boxshadow);//traquent.v1.sevval//
-		--toast-text: var(--traquent-text-color);//<<traquent.v1.sevval
+		--toast-text: var(--traquent-text-normal-500);//<<traquent.v1.sevval
 	}
 
 	&.green {
 		--toast-bg: var(--alert-bg-success);
 		--box-shadow: var(--alert-bg-success-boxshadow);//traquent.v1.sevval//
-		--toast-text: var(--traquent-text-color);//<<traquent.v1.sevval
+		--toast-text: var(--traquent-text-normal-500);//<<traquent.v1.sevval
 	}
 
 	box-shadow: var(--box-shadow) !important;//traquent.v1.sevval//

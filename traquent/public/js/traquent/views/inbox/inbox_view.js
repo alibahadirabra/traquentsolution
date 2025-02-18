@@ -76,8 +76,8 @@ traquent.views.InboxView = class InboxView extends traquent.views.ListView {
 	get_seen_class(doc) {
 		return Boolean(doc.seen) || JSON.parse(doc._seen || "[]").includes(traquent.session.user)
 			? ""
-			: "bold";
-	}
+			: "regular";
+	}//bold yerine regular verildi <<traquent.v1.sevval
 
 	get is_sent_emails() {
 		const f = this.filter_area.get().find((filter) => filter[1] === "sent_or_received");

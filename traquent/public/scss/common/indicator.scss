@@ -21,6 +21,7 @@ div.indicator-pill{
 	//@include get_textstyle("sm", "regular");
 	@include traquent-text(label, "s", "medium");//traquent.v1.sevval//
 	//padding: 4.5px 8px;
+	font-weight: var(--weight-regular) !important;//traquent.v1.sevval
 	padding: 0;//traquent.v1.sevval//
 	border-radius: var(--border-radius-full);
 	height: 20px;

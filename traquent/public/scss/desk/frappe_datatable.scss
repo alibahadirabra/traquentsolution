@@ -193,3 +193,14 @@ table td.dt-cell {
 		background-color: transparent;
 	}
 }
+.datatable{
+	border-radius: 10px;
+}//traquent.v1.sevval
+[data-route^="List/"][data-route$="/Report"] {
+	.datatable{
+		border: 1px solid var(--border-color);
+	}
+}//traquent.v1.sevval
+.dt-row-header .dt-cell {
+    border-top: none;
+}//traquent.v1.sevval

@@ -365,9 +365,15 @@ traquent.ui.Sidebar = class Sidebar {
 			child_container.addClass("hidden"); //dropdownların kapalı gelmesi için açıldı yorum satırıydı //sevval
 			this.prepare_sidebar(child_items, child_container, $item_container);
 
-			const currentPath = window.location.pathname;
+			let currentPath = window.location.pathname;
+			if (currentPath.startsWith('/app/query-report')) {	
+				currentPath = '/app/raporlar';
+			}	
 			$item_container.find('a.item-anchor').each(function() {
-				const anchorHref = $(this).attr('href');
+				let anchorHref = $(this).attr('href');
+				if (anchorHref && anchorHref.startsWith('/app/query-report')) {
+					anchorHref = '/app/raporlar';
+				}
 				if (anchorHref && anchorHref === currentPath) {
 					child_container.removeClass('hidden');
 					//$item_container.addClass('-active');
@@ -377,10 +383,10 @@ traquent.ui.Sidebar = class Sidebar {
 					// }
 					if (!$item_container.attr('item-parent')) {
 						$item_container.addClass('-active');
-						let $nextItem = $item_container.find('.-active .standard-sidebar-item').first();
-						if ($nextItem.length) {
-							$nextItem.find('.standard-sidebar-item').css('background-color', '#f0f0f0');
-						}
+						// let $nextItem = $item_container.find('.-active .standard-sidebar-item').first();
+						// if ($nextItem.length) {console.log("118888")
+						// 	$nextItem.find('.standard-sidebar-item').css('background-color', 'red');
+						// }
 					}
 					
 				}
@@ -442,7 +448,11 @@ traquent.ui.Sidebar = class Sidebar {
 
 	sidebar_item_container(item) {
 
-		const currentPath = window.location.pathname;				
+		let currentPath = window.location.pathname;
+		//sidebar rapor aktifliği için eklendi <<traquent.v1.sevval
+		if (currentPath.startsWith('/app/query-report')) {	
+			currentPath = '/app/raporlar';
+		}
 		item.indicator_color =
 			item.indicator_color || this.indicator_colors[Math.floor(Math.random() * 12)];
 		let path;

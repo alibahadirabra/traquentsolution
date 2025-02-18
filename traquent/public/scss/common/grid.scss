@@ -181,6 +181,9 @@
 .editable-form .grid-static-col.bold {
 	font-weight: bold;
 }
+.editable-form .grid-static-col.regular {
+	font-weight: var(--weight-regular);
+}//traquent.v1.sevval
 
 .editable-form .grid-static-col.invalid {
 	background-color: var(--error-bg);

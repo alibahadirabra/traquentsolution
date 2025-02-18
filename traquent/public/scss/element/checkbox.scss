@@ -54,7 +54,7 @@ input[type="checkbox"] {
 		//border: 0.5px solid var(--dark-border-color);
 		pointer-events: none;
 		background-color: var(--checkbox-checked-disabled) !important;	//traquent.v1.sevval//
-		border: 1px solid var(--traquent-background-pressed-100) !important;//traquent.v1.sevval//
+		border: 1px solid var(--checkbox-checked-disabled-border) !important;//traquent.v1.sevval//
 	}
 
 	&.disabled-selected,

@@ -91,9 +91,9 @@
 }
 
 .dropdown-item:active {
-	color: var(--fg-color);
+	color: var(--traquent-text-color);//traquent.v1.sevval
 	text-decoration: none;
-	background-color: var(--gray-600);
+	background-color: var(--traquent-dropdown-active-bg) !important;//traquent.v1.sevval
 }
 
 .dropdown-item:active:hover {

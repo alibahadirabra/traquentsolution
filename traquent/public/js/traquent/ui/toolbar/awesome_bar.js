@@ -145,6 +145,9 @@ traquent.search.AwesomeBar = class AwesomeBar {
 	}
 
 	add_help() {
+		this.options = this.options.filter(item => {
+			return typeof item.route === 'string' && !item.route.startsWith('Workspaces');
+		}); //liste ilk yüklendiğinde workspace alanalrı listelenmesin diye eklendi
 		this.options.push({
 			value: __("Help on Search"),
 			index: -10,
@@ -224,6 +227,7 @@ traquent.search.AwesomeBar = class AwesomeBar {
 		}
 
 		//administrator olmayan kullanıcılar verilen kelimelerin search işlemini yapabilecek <<traquent.v1.sevval
+		//search kelimeleri
 		if (traquent.session.user !== "Administrator") {
 			const keywordsToShow = ["lead", "customer", "issue", "task tracking", "transfer of tasks",
 				"communication", "performance", "sla", "service level", "customer group", "department", "campaign",

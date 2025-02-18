@@ -285,10 +285,10 @@ traquent.ui.Page = class Page {
 
 	get_icon_label(icon, label) {
 		let icon_name = icon;
-		let size = "xs";
+		let size = "sm"; //xs değeri sm oalrak değişti
 		if (typeof icon === "object") {
 			icon_name = icon.icon;
-			size = icon.size || "xs";
+			size = icon.size || "sm";//traquent.v1.sevval
 		}
 		return `${icon ? traquent.utils.icon(icon_name, size) : ""} <span class="hidden-xs"> ${__(
 			label

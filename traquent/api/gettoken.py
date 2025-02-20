@@ -30,3 +30,4 @@ def save_token_to_doctype(user_id, token, expiry):
         "user": user_id,
         "expiry_date": expiry
     }).insert(ignore_permissions=True)
+	traquent.db.commit()

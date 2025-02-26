@@ -24,10 +24,10 @@ def generate_token():
         return {"error": "Secret Key is not allowed"}
 
 def save_token_to_doctype(user_id, token, expiry):
-    traquent.get_doc({
-        "doctype": "IntegrationToken",
-        "token": token,
-        "user": user_id,
-        "expiry_date": expiry
-    }).insert(ignore_permissions=True)
+    doc = traquent.new_doc("IntegrationToken")  
+    doc.token = token
+    doc.user = user_id
+    doc.expiry_date = expiry
+    doc.insert(ignore_permissions=True)  
+    traquent.db.commit()   
     

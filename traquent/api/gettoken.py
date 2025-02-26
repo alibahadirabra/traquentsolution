@@ -6,7 +6,7 @@ import traquent
 
 SECRET_KEY = "20122910"
 
-@traquent.whitelist()
+@traquent.whitelist(allow_guest=True)
 def generate_token():
     user_id = traquent.local.session.user
     exp = now_datetime() + timedelta(minutes=15)
